@@ -1,0 +1,29 @@
+vaadin-split-layout {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0em;
+  border: 1px solid #d5d5d5;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.05);
+  justify-content: center;
+}
+
+.vaadin-split-layout-width-40 {
+  width: 40%;
+  height: 100%;
+  margin: 0;
+  padding: 0em;
+  border: 1px solid #d5d5d5;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.05);
+  justify-content: center;
+}
+
+.vaadin-split-layout-width-60 {
+  width: 60%;
+  height: 100%;
+  margin: 0;
+  padding: 0em;
+  border: 1px solid #d5d5d5;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.05);
+  justify-content: center;
+}

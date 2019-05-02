@@ -1,0 +1,41 @@
+// common
+@import "./commons/footer.scss";
+@import "./commons/content.scss";
+@import "./commons/pageDescription.scss";
+@import "./commons/label.scss";
+
+// layouts
+@import "./layouts/vaadin-app-layout.scss";
+@import "./layouts/vaadin-form-layout.scss";
+@import "./layouts/vaadin-horizontal-layout.scss";
+@import "./layouts/vaadin-split-layout.scss";
+@import "./layouts/vaadin-vertical-layout.scss";
+
+// components
+@import "./components/vaadin-button.scss";
+@import "./components/vaadin-combo-box.scss";
+@import "./components/vaadin-date-picker.scss";
+@import "./components/vaadin-text-field.scss";
+@import "./components/vaadin-select.scss";
+@import "./components/vaadin-grid.scss";
+@import "./components/vaadin-dialog.scss";
+
+body {
+    margin-left: 100;
+    margin-right: 100;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding: 0;
+    width: 95%;
+    height: 100%;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+      "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+      sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+  
+code {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
