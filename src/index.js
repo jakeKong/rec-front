@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import './styles/index.scss';
 import Root from './Root';
 import * as serviceWorker from './serviceWorker';
+import 'react-app-polyfill/ie11';
 
 // import '@babel/polyfill';
 

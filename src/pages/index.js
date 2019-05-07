@@ -8,3 +8,6 @@ export { default as OrderHistoryByEmailPage } from './oms/OrderHistoryByEmailPag
 export { default as ReportMakeHistoryPage } from './oms/ReportMakeHistoryPage';
 export { default as ChangePointHistoryPage } from './oms/ChangePointHistoryPage';
 export { default as ProductManagePage } from './oms/ProductManagePage';
+
+// BMS
+export { default as NoticePage } from './bms/NoticePage';

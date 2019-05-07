@@ -17,18 +17,20 @@ import product, { productSaga } from './oms/ProductManageModule';
 
 // rootSaga 설정
 export function* rootSaga() {
-    yield fork(orderHistorySaga);
-    yield fork(reportMakeHistorySaga);
-    yield fork(changePointHistorySaga);
-    yield fork(purchaseHistorySaga);
-    yield fork(productSaga);
+  // OMS
+  yield fork(orderHistorySaga);
+  yield fork(reportMakeHistorySaga);
+  yield fork(changePointHistorySaga);
+  yield fork(purchaseHistorySaga);
+  yield fork(productSaga);
+  // BMS
 }
 
 // 통합 reducer
 export default combineReducers({
-    orderHistory,
-    reportMakeHistory,
-    changePointHistory,
-    purchaseHistory,
-    product
+  orderHistory,
+  reportMakeHistory,
+  changePointHistory,
+  purchaseHistory,
+  product
 });

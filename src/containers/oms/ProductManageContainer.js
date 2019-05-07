@@ -110,14 +110,6 @@ class ProductManageContainer extends Component {
   }
 
   popupClose = async (dataClickChild) => {
-    // document.childNodes.removeChild(document.querySelector('#popup'))
-    // const popup = document.querySelector('#popup');
-    // const mountPopupNode = ReactDOM.findDOMNode(this.refs.popup);
-    // try {
-    //   ReactDOM.unmountComponentAtNode(mountPopupNode);
-    // } catch (error) {
-    //   console.error(error);
-    // }
     this.setState({popupOpened: dataClickChild});
     this.setState({productDto: {
       productSid: null,
@@ -209,7 +201,6 @@ class ProductManageContainer extends Component {
           </vaadin-horizontal-layout>
         </vaadin-vertical-layout>
         <ProductRegister id="popup" addCallback={ this.addCallback } updateCallback={ this.updateCallback } productDto={ productDto } popupOpened={ popupOpened } popupClose={ this.popupClose }/>
-        {/* { popupOpened ? <ProductRegister ref="popup" id="popup" addCallback={ this.addCallback } productDto={ productDto } popupOpened={ popupOpened } popupClose={ this.popupClose }/> : null} */}
       </Fragment>
     );
   }

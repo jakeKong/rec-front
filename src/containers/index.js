@@ -4,3 +4,6 @@ export { default as OrderHistoryByEmailContainer } from './oms/OrderHistoryByEma
 export { default as ReportMakeHistoryContainer } from './oms/ReportMakeHistoryContainer';
 export { default as ChangePointHistoryContainer } from './oms/ChangePointHistoryContainer';
 export { default as ProductManageContainer } from './oms/ProductManageContainer';
+
+// BMS
+export { default as NoticeContainer } from './bms/NoticeContainer';
