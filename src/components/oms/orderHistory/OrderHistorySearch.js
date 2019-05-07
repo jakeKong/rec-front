@@ -207,24 +207,24 @@ class OrderHistorySearch extends Component {
         return (
             <Fragment>
                 <vaadin-horizontal-layout id="searchLayout" theme="spacing">
-                    <label className="label-center" id="lbStatus"></label>
+                    <label className="label-center" id="lbStatus" />
                         {/* <vaadin-combo-box id="cbStatus"/> */}
                         <vaadin-select id="slStatus" />
 
-                    <label className="label-center" id="lbDate"></label>
-                        <vaadin-date-picker id="dpStart"></vaadin-date-picker>
-                            <label className="label-center" id="lbPunct"></label>
-                        <vaadin-date-picker id="dpEnd"></vaadin-date-picker>
+                    <label className="label-center" id="lbDate" />
+                        <vaadin-date-picker id="dpStart" />
+                            <label className="label-center" id="lbPunct" />
+                        <vaadin-date-picker id="dpEnd" />
 
-                    <label className="label-center" id="lbRealEstateType"></label>
+                    <label className="label-center" id="lbRealEstateType" />
                         <vaadin-select id="slRealEstateType" />
 
                     <vaadin-combo-box id="cbSearch"/>
                         <vaadin-text-field id="tfSearch">
-                            <iron-icon icon="vaadin:search" slot="prefix"></iron-icon>
+                            <iron-icon icon="vaadin:search" slot="prefix" />
                         </vaadin-text-field>
 
-                    <vaadin-button id="btnSearch"></vaadin-button>
+                    <vaadin-button id="btnSearch" />
                 </vaadin-horizontal-layout>
             </Fragment>
         );

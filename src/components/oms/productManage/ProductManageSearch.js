@@ -65,22 +65,22 @@ class ProductManageSearch extends Component {
         return (
           <Fragment>
               <vaadin-horizontal-layout id="searchLayout" theme="spacing">
-                  <label className="label-center" id="lbProductCd"></label>
+                  <label className="label-center" id="lbProductCd" />
                     <vaadin-text-field id="tfProductCd">
-                      <iron-icon icon="vaadin:search" slot="prefix"></iron-icon>
+                      <iron-icon icon="vaadin:search" slot="prefix" />
                     </vaadin-text-field>
 
-                  <label className="label-center" id="lbProductNm"></label>
+                  <label className="label-center" id="lbProductNm" />
                     <vaadin-text-field id="tfProductNm">
-                      <iron-icon icon="vaadin:search" slot="prefix"></iron-icon>
+                      <iron-icon icon="vaadin:search" slot="prefix" />
                     </vaadin-text-field>
 
-                  <label className="label-center" id="lbProductPoint"></label>
+                  <label className="label-center" id="lbProductPoint" />
                     <vaadin-text-field id="tfProductPoint">
-                        <iron-icon icon="vaadin:search" slot="prefix"></iron-icon>
+                        <iron-icon icon="vaadin:search" slot="prefix" />
                     </vaadin-text-field>
 
-                  <vaadin-button id="btnSearch"></vaadin-button>
+                  <vaadin-button id="btnSearch" />
               </vaadin-horizontal-layout>
           </Fragment>
       );

@@ -21,7 +21,8 @@ class Menu extends Component {
     ];
 
     const BoardMenuItems = [
-      {value: '/#/bms/board/list', textContent: '공지사항'},
+      {value: '/#/bms/notice/list', textContent: '공지사항'},
+      {value: '/#/bms/notice/manage/list', textContent: '(관리)공지사항'},
       {value: '/#/bms/question/list', textContent: '문의사항'},
     ];
 

@@ -6,4 +6,4 @@ export { getPurchaseHistoryList } from './oms/purchaseHistoryAxios';
 export { getProductList, addProduct, updateProduct, deleteProduct } from './oms/productManageAxios';
 
 // BMS - BOARD MANAGEMENT SYSTEM
-export { getNoticeList, getNotice, addNotice, updateNotice, deleteNotice } from './bms/noticeAxios';
+export { getNoticeList, /*getNotice,*/ addNotice, updateNotice, deleteNotice } from './bms/noticeAxios';

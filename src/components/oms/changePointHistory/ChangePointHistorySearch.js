@@ -141,20 +141,20 @@ class ChangePointHistorySearch extends Component {
         return (
             <Fragment>
                 <vaadin-horizontal-layout id="searchLayout" theme="spacing">
-                    <label className="label-center" id="lbChangeType"></label>
+                    <label className="label-center" id="lbChangeType" />
                         <vaadin-select id="slChangeType" />
 
-                    <label className="label-center" id="lbDate"></label>
-                        <vaadin-date-picker id="dpStart"></vaadin-date-picker>
-                            <label className="label-center" id="lbPunct"></label>
-                        <vaadin-date-picker id="dpEnd"></vaadin-date-picker>
+                    <label className="label-center" id="lbDate" />
+                        <vaadin-date-picker id="dpStart" />
+                            <label className="label-center" id="lbPunct" />
+                        <vaadin-date-picker id="dpEnd" />
 
                     <label className="label-center" id="lbSearch"/>
                         <vaadin-text-field id="tfSearch" hidden={ hide }>
-                            <iron-icon icon="vaadin:search" slot="prefix"></iron-icon>
+                            <iron-icon icon="vaadin:search" slot="prefix" />
                         </vaadin-text-field>
 
-                    <vaadin-button id="btnSearch"></vaadin-button>
+                    <vaadin-button id="btnSearch" />
                 </vaadin-horizontal-layout>
             </Fragment>
         );

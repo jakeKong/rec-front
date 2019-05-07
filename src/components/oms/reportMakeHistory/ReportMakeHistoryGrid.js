@@ -43,15 +43,15 @@ class ReportMakeHistoryGrid extends Component {
       return (
         <Fragment>
           <vaadin-grid theme="column-borders row-stripes" height-by-rows column-reordering-allowed>
-            <vaadin-grid-sort-column id="grdIndex" header="번호" text-align="end" flex-grow="0.25"></vaadin-grid-sort-column>
-            <vaadin-grid-column path="reportMakeNo" header="보고서 생성번호" text-align="center" flex-grow="2"></vaadin-grid-column>
-            <vaadin-grid-column path="pnu" header="지번" text-align="center" flex-grow="1"></vaadin-grid-column>
-            <vaadin-grid-column path="marketPrice" header="시세가" text-align="center" flex-grow="0.5"></vaadin-grid-column>
-            <vaadin-grid-column path="reportMakeDt" header="생성일자" text-align="center" flex-grow="2"></vaadin-grid-column>
-            <vaadin-grid-column path="reportEndDt" header="생성 만료기간" text-align="center" flex-grow="2"></vaadin-grid-column>
-            <vaadin-grid-column path="reportMakeCnt" header="생성 횟수" text-align="center" flex-grow="0.25"></vaadin-grid-column>
-            <vaadin-grid-column path="reportType" header="보고서 종류" text-align="center" flex-grow="0.5"></vaadin-grid-column>
-            <vaadin-grid-column path="orderBy" header="주문자" text-align="center" flex-grow="0.5"></vaadin-grid-column>
+            <vaadin-grid-sort-column id="grdIndex" header="번호" text-align="end" flex-grow="0.25" />
+            <vaadin-grid-column path="reportMakeNo" header="보고서 생성번호" text-align="center" flex-grow="2" />
+            <vaadin-grid-column path="pnu" header="지번" text-align="center" flex-grow="1" />
+            <vaadin-grid-column path="marketPrice" header="시세가" text-align="center" flex-grow="0.5" />
+            <vaadin-grid-column path="reportMakeDt" header="생성일자" text-align="center" flex-grow="2" />
+            <vaadin-grid-column path="reportEndDt" header="생성 만료기간" text-align="center" flex-grow="2" />
+            <vaadin-grid-column path="reportMakeCnt" header="생성 횟수" text-align="center" flex-grow="0.25" />
+            <vaadin-grid-column path="reportType" header="보고서 종류" text-align="center" flex-grow="0.5" />
+            <vaadin-grid-column path="orderBy" header="주문자" text-align="center" flex-grow="0.5" />
           </vaadin-grid>
         </Fragment>
       );

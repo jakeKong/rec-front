@@ -11,3 +11,4 @@ export { default as ProductManagePage } from './oms/ProductManagePage';
 
 // BMS
 export { default as NoticePage } from './bms/NoticePage';
+export { default as NoticeManagePage } from './bms/NoticeManagePage';

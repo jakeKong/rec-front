@@ -5,8 +5,9 @@ import * as noticeActions from "../../store/modules/bms/NoticeModule";
 import { NoticeGrid, NoticeDetail } from "../../components/bms";
 
 import '@vaadin/vaadin-ordered-layout';
+import '@vaadin/vaadin-button';
 
-class NoticeContainer extends Component {
+class NoticeManageContainer extends Component {
 
   constructor(props) {
     super(props);
@@ -32,6 +33,17 @@ class NoticeContainer extends Component {
     if (!noticeList || noticeList === undefined || noticeList.isEmpty()) {
       this.getNoticeList();
     }
+
+    const btnSelectDelete = document.querySelector('#btnSelectDelete');
+    btnSelectDelete.innerHTML = '선택삭제';
+    btnSelectDelete.addEventListener('click', function() {  
+      
+    });
+    const btnRegister = document.querySelector('#btnRegister');
+    btnRegister.innerHTML = '등록';
+    btnRegister.addEventListener('click', function() {
+      
+    });
   }
 
   getNoticeList = async () => {
@@ -58,15 +70,19 @@ class NoticeContainer extends Component {
 
   render() {
     const { detailStatus, notice } = this.state;
-    const { noticeList, pending, error, success } = this.props;
+    const { noticeList, pending, error, success, role } = this.props;
     return (
       <Fragment>
         <vaadin-vertical-layout>
           { pending && "Loading..." }
           { error && <h1>Server Error!</h1> }
-          { !detailStatus && success && <NoticeGrid noticeList={ noticeList } detailCallback={ this.detailCallback } />}
-          { detailStatus && <NoticeDetail notice={ notice } detailToListCallback={ this.detailToListCallback } /> }
+          { !detailStatus && success && <NoticeGrid noticeList={ noticeList } detailCallback={ this.detailCallback } role={ role } />}
+          { detailStatus && <NoticeDetail notice={ notice } detailToListCallback={ this.detailToListCallback } role={ role } /> }
         </vaadin-vertical-layout>
+        <vaadin-horizontal-layout>
+          <vaadin-button id="btnSelectDelete"/>
+          <vaadin-button id="btnRegister"/>
+        </vaadin-horizontal-layout>
       </Fragment>
     );
   }
@@ -77,9 +93,12 @@ export default connect(
     noticeList: state.notice.noticeList,
     pending: state.notice.pending,
     error: state.notice.error,
-    success: state.notice.success
+    success: state.notice.success,
+
+    // 임시 설정
+    role: 'ROLE_ADMIN'
   }),
   dispatch => ({
     NoticeModule: bindActionCreators(noticeActions, dispatch)
   })
-)(NoticeContainer);
+)(NoticeManageContainer);

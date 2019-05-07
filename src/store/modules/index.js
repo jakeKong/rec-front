@@ -15,6 +15,9 @@ import changePointHistory, { changePointHistorySaga } from './oms/ChangePointHis
 import purchaseHistory, { purchaseHistorySaga } from './oms/PurchaseHistoryModule';
 import product, { productSaga } from './oms/ProductManageModule';
 
+// BMS
+import notice, { noticeSaga } from './bms/NoticeModule';
+
 // rootSaga 설정
 export function* rootSaga() {
   // OMS
@@ -24,13 +27,13 @@ export function* rootSaga() {
   yield fork(purchaseHistorySaga);
   yield fork(productSaga);
   // BMS
+  yield fork(noticeSaga);
 }
 
 // 통합 reducer
 export default combineReducers({
-  orderHistory,
-  reportMakeHistory,
-  changePointHistory,
-  purchaseHistory,
-  product
+  // OMS
+  orderHistory, reportMakeHistory, changePointHistory, purchaseHistory, product,
+  // BMS
+  notice
 });

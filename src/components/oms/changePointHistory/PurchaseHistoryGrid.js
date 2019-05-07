@@ -36,10 +36,10 @@ class PurchaseHistoryGrid extends Component {
         <Fragment>
             <label className="label-center" id="lbTitle"/>
             <vaadin-grid theme="column-borders row-stripes" height-by-rows column-reordering-allowed>
-                <vaadin-grid-column path="purchaseNo" header="구매번호" text-align="center" flex-grow="3"></vaadin-grid-column>
-                <vaadin-grid-column path="purchaseDt" header="구매일자" text-align="center" flex-grow="3"></vaadin-grid-column>
-                <vaadin-grid-column path="purchasePoint" header="구매 포인트" text-align="center" flex-grow="2"></vaadin-grid-column>
-                <vaadin-grid-column path="purchaseMoney" header="구매 금액" text-align="center" flex-grow="2"></vaadin-grid-column>
+                <vaadin-grid-column path="purchaseNo" header="구매번호" text-align="center" flex-grow="3" />
+                <vaadin-grid-column path="purchaseDt" header="구매일자" text-align="center" flex-grow="3" />
+                <vaadin-grid-column path="purchasePoint" header="구매 포인트" text-align="center" flex-grow="2" />
+                <vaadin-grid-column path="purchaseMoney" header="구매 금액" text-align="center" flex-grow="2" />
             </vaadin-grid>
         </Fragment>
       );

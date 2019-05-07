@@ -82,7 +82,7 @@ function* deleteProductSaga(action) {
   try {
     const response = yield call(api.deleteProduct, action.payload.productSid);
     yield put({type: DELETE_PRODUCT_RECEIVED, payload: response})
-    // 상품 추가완료 이후 상품목록 갱신을 위한 상품목록 호출
+    // 상품 삭제완료 이후 상품목록 갱신을 위한 상품목록 호출
     yield call(getProductListSaga, action);
   } catch (error) {
     yield put({type: DELETE_PRODUCT_FAILURE, payload: error});

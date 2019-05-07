@@ -7,3 +7,4 @@ export { default as ProductManageContainer } from './oms/ProductManageContainer'
 
 // BMS
 export { default as NoticeContainer } from './bms/NoticeContainer';
+export { default as NoticeManageContainer } from './bms/NoticeManageContainer';
