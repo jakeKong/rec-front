@@ -16,156 +16,149 @@ import '@vaadin/vaadin-item'
 
 class ReportMakeHistorySearch extends Component {
 
-    constructor(props) {
-        super(props);
-        this.state ={
-            search: {
-                reportMakeNo: null,
-                pnu: null,
-                marketPrice: null,
-                fromDt: null,
-                toDt: null,
-                reportType: null
-            }
+  constructor(props) {
+    super(props);
+    this.state ={
+      search: {
+        reportMakeNo: null,
+        pnu: null,
+        marketPrice: null,
+        fromDt: null,
+        toDt: null,
+        reportType: null
+      }
+    }
+    // this.setSearchState = this.setSearchState.bind(this);
+  }
+
+  componentDidMount() {
+    // search parameter default setting
+    const { search } = this.state;
+
+    // date set --> Common DateUtil로 변경 필요
+    let date = new Date(), 
+    weekBeforeDate = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + (date.getDate() - 7),
+    currentDate = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
+
+    // Oms UtilType으로 변경 필요
+    const reportTypeItems = [
+      {value: 'MARKET_PRICE_ANALYSIS', textContent: '시세분석'},
+    ];
+
+    // search label set
+    document.querySelector('#lbReportType').innerHTML = '부동산 유형';
+    document.querySelector('#lbDate').innerHTML = '기간';
+    document.querySelector('#lbPunct').innerHTML = '~';
+    
+    // status Box set
+    const slReportType = document.querySelector('#slReportType')
+    // default status Select set
+    slReportType.value = 'ALL';
+    search.status = slReportType.value;
+    slReportType.renderer = function(root) {
+      if (root.firstChild) {
+        return;
+      }
+      const listBox = document.createElement('vaadin-list-box');
+      const select = document.createElement('vaadin-item');
+
+      select.textContent = '전체';
+      select.setAttribute('value', 'ALL');
+      listBox.appendChild(select);
+
+      const divider = document.createElement('hr');
+      listBox.appendChild(divider);
+
+      reportTypeItems.forEach(function(row){
+        const item = document.createElement('vaadin-item');
+        item.textContent = row.textContent;
+        if (row.value) {
+          item.setAttribute('value', row.value);
         }
-        // this.setSearchState = this.setSearchState.bind(this);
+        listBox.appendChild(item);
+      });
+      root.appendChild(listBox);
     }
+    // 상태 콤보박스의 값 변경 시 SearchParameter에 선택한 값으로 변경
+    slReportType.addEventListener('value-changed', function(e) {
+      search.reportType = slReportType.value;
+    })
 
-    componentDidMount() {
-        // search parameter default setting
-        const { search } = this.state;
+    // Start date-picker set
+    const dpStart = document.querySelector('#dpStart')
+    // default before Week date set
+    dpStart.value = weekBeforeDate;
+    search.fromDt = dpStart.value;
+    dpStart.addEventListener('value-changed', function() {
+      search.fromDt = dpStart.value;
+    })
 
-        // date set --> Common DateUtil로 변경 필요
-        let date = new Date(), 
-        weekBeforeDate = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + (date.getDate() - 7),
-        currentDate = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
+    // End date-picker set
+    const dpEnd = document.querySelector('#dpEnd')
+    // default today
+    dpEnd.value = currentDate;
+    search.toDt = dpEnd.value;
+    dpEnd.addEventListener('value-changed', function() {
+      search.toDt = dpEnd.value;
+    })
 
-        // Oms UtilType으로 변경 필요
-        const reportTypeItems = [
-            {value: 'MARKET_PRICE_ANALYSIS', textContent: '시세분석'},
-        ];
+    // Search combo-box set
+    const cbSearch = document.querySelector('#cbSearch')
+    // ByAll || byEmail Check
+    cbSearch.items = ['보고서생성번호', '지번', '주문자'];
+    cbSearch.value = '보고서생성번호';
+    cbSearch.addEventListener('value-changed', function() {
+      search.reportMakeNo = null;
+      search.pnu = null;
+      search.orderBy = null;
+      tfSearch.value = null;
+    })
 
-        // search label set
-        document.querySelector('#lbReportType').innerHTML = '부동산 유형';
-        document.querySelector('#lbDate').innerHTML = '기간';
-        document.querySelector('#lbPunct').innerHTML = '~';
-        
-        // status Box set
-        const slReportType = document.querySelector('#slReportType')
-        // default status Select set
-        slReportType.value = 'ALL';
-        search.status = slReportType.value;
-        slReportType.renderer = function(root) {
-            if (root.firstChild) {
-                return;
-            }
-            const listBox = document.createElement('vaadin-list-box');
-            const select = document.createElement('vaadin-item');
+    // Search text-field set
+    const tfSearch = document.querySelector('#tfSearch')
+    tfSearch.placeholder = '검색어를 입력해주세요.';
+    tfSearch.maxlength = '15';
+    tfSearch.addEventListener('input', function() {
+      if (cbSearch.value === '보고서생성번호') {
+        search.reportMakeNo = tfSearch.value;
+      }
+      if (cbSearch.value === '지번') {
+        search.pnu = tfSearch.value;
+      }
+      if (cbSearch.value === '주문자') {
+        search.orderBy = tfSearch.value;
+      }
+    })
 
-            select.textContent = '전체';
-            select.setAttribute('value', 'ALL');
-            listBox.appendChild(select);
+    // Search button set
+    const { searchCallback } = this.props;
+    const btnSearch = document.querySelector('#btnSearch')
+    btnSearch.innerHTML = '조회';
+    btnSearch.addEventListener('click', function() {
+      searchCallback(search);
+    })
+  }
 
-            const divider = document.createElement('hr');
-            listBox.appendChild(divider);
+  render() {
+    return (
+      <Fragment>
+        <label className="label-center" id="lbReportType" />
+          <vaadin-select id="slReportType" />
 
-            reportTypeItems.forEach(function(row){
-                const item = document.createElement('vaadin-item');
-                item.textContent = row.textContent;
-                if (row.value) {
-                    item.setAttribute('value', row.value);
-                }
-                listBox.appendChild(item);
-            });
-            root.appendChild(listBox);
-
-        }
-        // 상태 콤보박스의 값 변경 시 SearchParameter에 선택한 값으로 변경
-        slReportType.addEventListener('value-changed', function(e) {
-            search.reportType = slReportType.value;
-        })
-
-        // Start date-picker set
-        const dpStart = document.querySelector('#dpStart')
-        // default before Week date set
-        dpStart.value = weekBeforeDate;
-        search.fromDt = dpStart.value;
-        dpStart.addEventListener('value-changed', function() {
-            search.fromDt = dpStart.value;
-        })
-
-        // End date-picker set
-        const dpEnd = document.querySelector('#dpEnd')
-        // default today
-        dpEnd.value = currentDate;
-        search.toDt = dpEnd.value;
-        dpEnd.addEventListener('value-changed', function() {
-            search.toDt = dpEnd.value;
-        })
-
-        // Search combo-box set
-        const cbSearch = document.querySelector('#cbSearch')
-        // ByAll || byEmail Check
-        cbSearch.items = ['보고서생성번호', '지번', '주문자'];
-        cbSearch.value = '보고서생성번호';
-        cbSearch.addEventListener('value-changed', function() {
-            search.reportMakeNo = null;
-            search.pnu = null;
-            search.orderBy = null;
-            tfSearch.value = null;
-        })
-
-        // Search text-field set
-        const tfSearch = document.querySelector('#tfSearch')
-        tfSearch.placeholder = '검색어를 입력해주세요.';
-        tfSearch.maxlength = '15';
-        tfSearch.addEventListener('input', function() {
-            if (cbSearch.value === '보고서생성번호') {
-                search.reportMakeNo = tfSearch.value;
-                console.log('reportMakeNo = ' + search.reportMakeNo)
-            }
-            if (cbSearch.value === '지번') {
-                search.pnu = tfSearch.value;
-                console.log('pnu = ' + search.pnu)
-            }
-            if (cbSearch.value === '주문자') {
-                search.orderBy = tfSearch.value;
-                console.log('orderBy = ' + search.orderBy)
-            }
-        })
-
-        // Search button set
-        const { searchCallback } = this.props;
-        const btnSearch = document.querySelector('#btnSearch')
-        btnSearch.innerHTML = '조회';
-        btnSearch.addEventListener('click', function() {
-          searchCallback(search);
-        })
-    }
-
-    render() {
-        return (
-            <Fragment>
-                <vaadin-horizontal-layout id="searchLayout" theme="spacing">
-
-                    <label className="label-center" id="lbReportType" />
-                        <vaadin-select id="slReportType" />
-
-                    <label className="label-center" id="lbDate" />
-                        <vaadin-date-picker id="dpStart" />
-                            <label className="label-center" id="lbPunct" />
-                        <vaadin-date-picker id="dpEnd" />
+        <label className="label-center" id="lbDate" />
+          <vaadin-date-picker id="dpStart" />
+            <label className="label-center" id="lbPunct" />
+          <vaadin-date-picker id="dpEnd" />
 
 
-                    <vaadin-combo-box id="cbSearch"/>
-                        <vaadin-text-field id="tfSearch">
-                            <iron-icon icon="vaadin:search" slot="prefix" />
-                        </vaadin-text-field>
+        <vaadin-combo-box id="cbSearch"/>
+          <vaadin-text-field id="tfSearch">
+            <iron-icon icon="vaadin:search" slot="prefix" />
+          </vaadin-text-field>
 
-                    <vaadin-button id="btnSearch" />
-                </vaadin-horizontal-layout>
-            </Fragment>
-        );
-    }
+        <vaadin-button id="btnSearch" />
+      </Fragment>
+    );
+  }
 }
 export default ReportMakeHistorySearch ;

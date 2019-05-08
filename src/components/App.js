@@ -8,7 +8,7 @@ import { MainPage,
 
 const App = () => {
   return (
-    <div>
+    <div className="index">
       <Switch>
         <Route exact path="/" component={MainPage} />
 

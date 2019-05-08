@@ -61,12 +61,12 @@ class NoticeContainer extends Component {
     const { noticeList, pending, error, success } = this.props;
     return (
       <Fragment>
-        <vaadin-vertical-layout>
+        <div className="main-div">
           { pending && "Loading..." }
           { error && <h1>Server Error!</h1> }
           { !detailStatus && success && <NoticeGrid noticeList={ noticeList } detailCallback={ this.detailCallback } />}
           { detailStatus && <NoticeDetail notice={ notice } detailToListCallback={ this.detailToListCallback } /> }
-        </vaadin-vertical-layout>
+        </div>
       </Fragment>
     );
   }

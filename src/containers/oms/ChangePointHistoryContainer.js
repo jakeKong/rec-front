@@ -106,23 +106,21 @@ class ChangePointHistoryContainer extends Component {
     const { style } = this.state;
     return (
       <Fragment>
-        <vaadin-vertical-layout>
+        <div className="search-div">
           <ChangePointHistorySearch searchCallback={ this.searchCallback } />
-          <vaadin-split-layout>
-            {/* <vaadin-vertical-layout style={style.firstSplit}> */}
-            <vaadin-vertical-layout className="vaadin-split-layout-width-40">
-                { purchasePending && "Loading..." }
-                { purchaseError && <h1>Server Error!</h1> }
-                { purchaseSuccess && <PurchaseHistoryGrid purchaseHistoryList={ purchaseHistoryList } /> }
-            </vaadin-vertical-layout>
-            {/* <vaadin-vertical-layout style={style.secondStyle}> */}
-            <vaadin-vertical-layout className="vaadin-split-layout-width-60">
-                { pending && "Loading..." }
-                { error && <h1>Server Error!</h1> }
-                { success && <ChangePointHistoryGrid changePointHistoryList={ changePointHistoryList } /> }
-            </vaadin-vertical-layout>
-          </vaadin-split-layout>
-        </vaadin-vertical-layout>
+        </div>
+        <vaadin-split-layout>
+          <div>
+            { purchasePending && "Loading..." }
+            { purchaseError && <h1>Server Error!</h1> }
+            { purchaseSuccess && <PurchaseHistoryGrid purchaseHistoryList={ purchaseHistoryList } /> }
+          </div>
+          <div>
+            { pending && "Loading..." }
+            { error && <h1>Server Error!</h1> }
+            { success && <ChangePointHistoryGrid changePointHistoryList={ changePointHistoryList } /> }
+          </div>
+        </vaadin-split-layout>
       </Fragment>
     );
   }

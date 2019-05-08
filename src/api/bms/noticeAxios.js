@@ -60,6 +60,7 @@ export const updateNotice = (noticeSid, email, dto) =>
     });
 
 // 공지사항 삭제
+/*
 export const deleteNotice = (noticeSid) => 
   axios({
       method: 'DELETE',
@@ -68,4 +69,17 @@ export const deleteNotice = (noticeSid) =>
           'Content-Type': 'application/json; charset=UTF-8',
           'Accept': 'application/json'
       }
+  });
+*/
+
+// 공지사항 선택삭제
+export const deleteNoticeList = (selectNoticeSidList) => 
+  axios({
+      method: 'DELETE',
+      url: `${config.boardService}/notice/delete/list`,
+      headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Accept': 'application/json'
+      },
+      data: JSON.stringify(selectNoticeSidList)
   });

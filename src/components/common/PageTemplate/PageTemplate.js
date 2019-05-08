@@ -9,11 +9,11 @@ import '@vaadin/vaadin-ordered-layout';
 // react의 Fragment로 감싸야만 Vaadin Component를 사용 할 수 있다.
 const PageTemplate = ({ children }) => (
   <Fragment>
-      <vaadin-vertical-layout>
+      <div className="page-template">
         <Header />
         {children}
         <Footer />
-      </vaadin-vertical-layout>
+      </div>
   </Fragment>
 );
 

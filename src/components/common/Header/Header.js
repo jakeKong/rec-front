@@ -8,10 +8,10 @@ import '@vaadin/vaadin-ordered-layout';
 class Header extends Component {
   render() {
     return (
-      <vaadin-horizontal-layout theme="spacing">
+      <div className="header">
         <Menu />
         <label>부동산 커뮤니티</label>
-      </vaadin-horizontal-layout>
+      </div>
     );
   }
 }

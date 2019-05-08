@@ -69,12 +69,14 @@ class OrderHistoryContainer extends Component {
     const { orderHistoryList, pending, error, success } = this.props;
     return (
       <Fragment>
-        <vaadin-vertical-layout>
+        <div className="search-div">
           <OrderHistorySearch searchCallback={ this.searchCallback } />
+        </div>
+        <div className="main-div">
           { pending && "Loading..." }
           { error && <h1>Server Error!</h1> }
           { success && <OrderHistoryGrid orderHistoryList={ orderHistoryList } />}
-        </vaadin-vertical-layout>
+        </div>
       </Fragment>
     );
   }

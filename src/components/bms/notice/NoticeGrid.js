@@ -13,8 +13,56 @@ class NoticeGrid extends Component {
     }
 
     const { role } = this.props;
-    if (role === 'ROLE_ADMIN') {
+    if (role === 'ROLE_ADMIN' || role === 'ROLE_SYSADMIN') {
+      let inverted = false, indeterminate = false;
 
+      const grdSelect = document.querySelector('#grdSelect');
+      grdSelect.hidden = false;
+      /*
+      grdSelect.headerRenderer = function(cell) {
+        var checkbox = cell.firstElementChild;
+        if (!checkbox) {
+          checkbox = window.document.createElement('vaadin-checkbox');
+          checkbox.setAttribute('aria-label', 'Select All');
+          checkbox.setAttribute('style', 'font-size: var(--lumo-font-size-m)');
+          checkbox.addEventListener('change', function(e) {
+            if (e.target.checked) {
+              grid.selectedItems = grid.item;
+            } else {
+              grid.selectedItems = [];
+            }
+            inverted = !inverted;
+            indeterminate = false;
+            grid.render();
+          });
+          cell.appendChild(checkbox);
+        }
+        checkbox.checked = indeterminate || inverted;
+        checkbox.indeterminate = indeterminate;
+      };
+      */
+      const { selectCallback, deselectCallback } = this.props;
+      grdSelect.renderer = function(cell, column, rowData) {
+        var checkbox = cell.firstElementChild;
+        if (!checkbox) {
+          checkbox = window.document.createElement('vaadin-checkbox');
+          checkbox.setAttribute('aria-label', 'Select Row');
+          checkbox.addEventListener('change', function(e) {
+            if (e.target.checked === inverted) {
+              grid.deselectItem(checkbox.__item);
+              deselectCallback(checkbox.__item);
+            } else {
+              grid.selectItem(checkbox.__item);
+              selectCallback(checkbox.__item);
+            }
+            indeterminate = grid.selectedItems.length > 0;
+            grid.render();
+          });
+          cell.appendChild(checkbox);
+        }
+        checkbox.__item = rowData.item;
+        checkbox.checked = inverted !== rowData.selected;
+      };
     }
     
     let dateFormat = require('dateformat');
@@ -34,7 +82,7 @@ class NoticeGrid extends Component {
     // Grid Items Setting
     const grid = document.querySelector('vaadin-grid');
     grid.items = list;
-    grid.pageSize = '15';
+    grid.pageSize = 15;
 
     // number set
     document.querySelector('#grdIndex').renderer = function(root, column, rowData) {
@@ -128,14 +176,16 @@ class NoticeGrid extends Component {
   render() {
     return (
       <Fragment>
-        <vaadin-grid theme="column-borders" height-by-rows column-reordering-allowed>
-          <vaadin-grid-selection-column auto-select />
-          <vaadin-grid-sort-column id="grdIndex" header="번호" text-align="end" flex-grow="0.2" />
-          <vaadin-grid-column id="grdNoticeTitle" header="제목" text-align="center" flex-grow="6.3" />
-          <vaadin-grid-column path="noticeWriter" header="작성자" text-align="center" flex-grow="1" />
-          <vaadin-grid-column path="reportingDt" header="작성일자" text-align="center" flex-grow="2.5" />
-        </vaadin-grid>
-        <div id="pages" />
+        <div>
+          <vaadin-grid theme="column-borders" height-by-rows column-reordering-allowed>
+            <vaadin-grid-column auto-select hidden id="grdSelect" flex-grow="0.1" width="50px" />
+            <vaadin-grid-sort-column id="grdIndex" header="번호" text-align="end" flex-grow="0.2" />
+            <vaadin-grid-column id="grdNoticeTitle" header="제목" text-align="center" flex-grow="6.2" />
+            <vaadin-grid-column path="noticeWriter" header="작성자" text-align="center" flex-grow="1" />
+            <vaadin-grid-column path="reportingDt" header="작성일자" text-align="center" flex-grow="2.5" />
+          </vaadin-grid>
+          <div id="pages"/>
+        </div>
       </Fragment>
     );
   }

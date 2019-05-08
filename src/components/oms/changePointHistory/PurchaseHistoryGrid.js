@@ -7,7 +7,7 @@ class PurchaseHistoryGrid extends Component {
   componentDidMount() {
     const { purchaseHistoryList } = this.props;
     if (!purchaseHistoryList || purchaseHistoryList === undefined || purchaseHistoryList.isEmpty()) {
-        return
+      return
     }
     
     let dateFormat = require('dateformat');
@@ -25,24 +25,23 @@ class PurchaseHistoryGrid extends Component {
     
     // Grid Items Setting
     const grid = document.querySelector('vaadin-grid');
-      grid.items = list;
+    grid.items = list;
 
     document.querySelector('#lbTitle').innerHTML = '포인트 구매내역';
-
   }
 
   render() {
-      return (
-        <Fragment>
-            <label className="label-center" id="lbTitle"/>
-            <vaadin-grid theme="column-borders row-stripes" height-by-rows column-reordering-allowed>
-                <vaadin-grid-column path="purchaseNo" header="구매번호" text-align="center" flex-grow="3" />
-                <vaadin-grid-column path="purchaseDt" header="구매일자" text-align="center" flex-grow="3" />
-                <vaadin-grid-column path="purchasePoint" header="구매 포인트" text-align="center" flex-grow="2" />
-                <vaadin-grid-column path="purchaseMoney" header="구매 금액" text-align="center" flex-grow="2" />
-            </vaadin-grid>
-        </Fragment>
-      );
+    return (
+      <Fragment>
+        <label className="label-center" id="lbTitle"/>
+        <vaadin-grid theme="column-borders row-stripes" height-by-rows column-reordering-allowed>
+          <vaadin-grid-column path="purchaseNo" header="구매번호" text-align="center" flex-grow="3" />
+          <vaadin-grid-column path="purchaseDt" header="구매일자" text-align="center" flex-grow="3" />
+          <vaadin-grid-column path="purchasePoint" header="구매 포인트" text-align="center" flex-grow="2" />
+          <vaadin-grid-column path="purchaseMoney" header="구매 금액" text-align="center" flex-grow="2" />
+        </vaadin-grid>
+      </Fragment>
+    );
   }
 }
 export default PurchaseHistoryGrid;

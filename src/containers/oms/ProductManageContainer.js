@@ -88,7 +88,7 @@ class ProductManageContainer extends Component {
     if ( complete ) {
       const nfDeleteComplete = document.createElement('vaadin-notification');
       nfDeleteComplete.renderer = function(root) {
-        root.textContent = '삭제가 정상적으로 처리완료되었습니다.'
+        root.textContent = '삭제가 정상적으로 완료되었습니다.'
       }
       
       document.body.appendChild(nfDeleteComplete);
@@ -191,15 +191,17 @@ class ProductManageContainer extends Component {
     const { productList, pending, error, success } = this.props;
     return (
       <Fragment>
-        <vaadin-vertical-layout>
+        <div className="search-div">
           <ProductManageSearch searchCallback={ this.searchCallback } />
+        </div>
+        <div className="main-div">
           { pending && "Loading..." }
           { error && <h1>Server Error!</h1> }
           { success && <ProductManageGrid productList={ productList } productDtoCallback={ this.productDtoCallback } deleteCallback={ this.deleteCallback } />}
-          <vaadin-horizontal-layout>
-            <vaadin-button id="btnRegister"/>
-          </vaadin-horizontal-layout>
-        </vaadin-vertical-layout>
+        </div>
+        <div className="sub-main-div">
+          <vaadin-button id="btnRegister"/>
+        </div>
         <ProductRegister id="popup" addCallback={ this.addCallback } updateCallback={ this.updateCallback } productDto={ productDto } popupOpened={ popupOpened } popupClose={ this.popupClose }/>
       </Fragment>
     );

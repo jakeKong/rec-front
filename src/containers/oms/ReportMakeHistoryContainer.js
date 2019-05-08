@@ -67,12 +67,14 @@ class ReportMakeHistoryContainer extends Component {
     const { reportMakeHistoryList, pending, error, success } = this.props;
     return (
       <Fragment>
-        <vaadin-vertical-layout>
+        <div className="search-div">
           <ReportMakeHistorySearch searchCallback={ this.searchCallback } />
+        </div>
+        <div className="main-div">
           { pending && "Loading..." }
           { error && <h1>Server Error!</h1> }
           { success && <ReportMakeHistoryGrid reportMakeHistoryList={ reportMakeHistoryList } />}
-        </vaadin-vertical-layout>
+          </div>
       </Fragment>
     );
   }

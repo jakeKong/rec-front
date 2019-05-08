@@ -31,18 +31,18 @@ class NoticeDetail extends Component {
   render() {
     return (
       <Fragment>
-        <vaadin-vertical-layout>
+        <div>
           <label id="lbTitle" />
-        </vaadin-vertical-layout>
-        <vaadin-vertical-layout>
+        </div>
+        <div>
           <label id="lbSubtitle" />
-        </vaadin-vertical-layout>
-        <vaadin-vertical-layout>
+        </div>
+        <div>
           <vaadin-details id="dlsTxt" />
-        </vaadin-vertical-layout>
-        <vaadin-vertical-layout>
+        </div>
+        <div>
           <vaadin-button id="goList" />
-        </vaadin-vertical-layout>
+        </div>
       </Fragment>
     );
   }
