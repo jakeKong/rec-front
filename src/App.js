@@ -4,6 +4,7 @@ import { Switch, Route } from 'react-router-dom';
 import { MainPage, NotFoundPage } from './common';
 import { OrderHistoryPage, OrderHistoryByEmailPage, ReportMakeHistoryPage, ChangePointHistoryPage, ProductManagePage } from './oms';
 import { NoticePage, NoticeManagePage } from './bms';
+import { BrRecapTitleInfoPage } from './mpa';
 
 const App = () => {
   return (
@@ -19,6 +20,8 @@ const App = () => {
 
         <Route exact path="/bms/notice/list" component={ NoticePage }/>
         <Route exact path="/bms/notice/manage/list" component={ NoticeManagePage }/>
+        
+        <Route exact path="/mpa/recaptitle/list" component={ BrRecapTitleInfoPage }/>
         <Route component={NotFoundPage}/>
       </Switch>
     </div>

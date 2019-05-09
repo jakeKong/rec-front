@@ -26,6 +26,9 @@ class Menu extends Component {
       {value: '/#/bms/question/list', textContent: '문의사항'},
     ];
 
+    const MarketPriceMenuItems = [
+      {value: '/#/mpa/recaptitle/list', textContent: '건축물대장 표제부'},
+    ];
     // 임시 select 설정
     const slOperationMenu = document.querySelector('#slOperationMenu')
     // default Select set
@@ -88,13 +91,50 @@ class Menu extends Component {
     slBoardMenu.addEventListener('value-changed', function(e) {
       window.location.href = slBoardMenu.value;
     })
+
+    
+    const slMarketPriceMenu = document.querySelector('#slMarketPriceMenu')
+    // default Select set
+    slMarketPriceMenu.renderer = function(root) {
+      if (root.firstChild) {
+        return;
+      }
+      const listBox = document.createElement('vaadin-list-box');
+      const select = document.createElement('vaadin-item');
+
+      select.textContent = '건축물대장 표제부';
+      select.setAttribute('value', '');
+      listBox.appendChild(select);
+
+      const divider = document.createElement('hr');
+      listBox.appendChild(divider);
+
+      MarketPriceMenuItems.forEach(function(row){
+        const item = document.createElement('vaadin-item');
+        item.textContent = row.textContent;
+        if (row.value) {
+            item.setAttribute('value', row.value);
+        }
+        listBox.appendChild(item);
+      });
+      root.appendChild(listBox);
+    }
+    
+    slMarketPriceMenu.addEventListener('value-changed', function(e) {
+      window.location.href = slMarketPriceMenu.value;
+    })
   }
+
+
+  
+
 
   render() {
     return (
       <Fragment>
         <vaadin-select id="slOperationMenu"/>
         <vaadin-select id="slBoardMenu"/>
+        <vaadin-select id="slMarketPriceMenu"/>
       </Fragment>
     );
   }

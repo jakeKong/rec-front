@@ -18,6 +18,9 @@ import product, { productSaga } from './oms/modules/ProductManageModule';
 // BMS
 import notice, { noticeSaga } from './bms/modules/NoticeModule';
 
+// MPA
+import bldRgst, { brRecapTitleInfoSaga } from './mpa/modules/BrRecapTitleInfoModule';
+
 // rootSaga 설정
 export function* rootSaga() {
   // OMS
@@ -28,6 +31,8 @@ export function* rootSaga() {
   yield fork(productSaga);
   // BMS
   yield fork(noticeSaga);
+  // MPA
+  yield fork(brRecapTitleInfoSaga);
 }
 
 // 통합 reducer
@@ -35,5 +40,7 @@ export default combineReducers({
   // OMS
   orderHistory, reportMakeHistory, changePointHistory, purchaseHistory, product,
   // BMS
-  notice
+  notice,
+  // MPA
+  bldRgst
 });
