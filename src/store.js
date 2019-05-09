@@ -1,7 +1,7 @@
 import { createStore, applyMiddleware, compose} from 'redux';
 import { createLogger } from 'redux-logger';
 import createSagaMiddleware from 'redux-saga';
-import modules, { rootSaga } from './module';
+import modules, { rootSaga } from './rootSaga';
 
 const isDev = process.env.NODE_ENV === 'development';
 const devtools = isDev && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__;
