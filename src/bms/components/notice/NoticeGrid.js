@@ -16,6 +16,7 @@ class NoticeGrid extends Component {
     if (role === 'ROLE_ADMIN' || role === 'ROLE_SYSADMIN') {
       let inverted = false, indeterminate = false;
 
+      // 선택삭제 사용을 위한 그리트 체크박스
       const grdSelect = document.querySelector('#grdSelect');
       grdSelect.hidden = false;
       /*
@@ -67,10 +68,11 @@ class NoticeGrid extends Component {
     
     let dateFormat = require('dateformat');
     let list =[];
-    // odrDt  dateType format 필요
+    let i=1;
     noticeList.forEach(e => {
       // push Value type is JSON
       list.push({
+        index: i++,
         noticeSid: e.get("noticeSid"),
         noticeTitle: e.get("noticeTitle"),
         noticeTxt: e.get("noticeTxt"),
@@ -84,11 +86,13 @@ class NoticeGrid extends Component {
     grid.items = list;
     grid.pageSize = 15;
 
-    // number set
-    document.querySelector('#grdIndex').renderer = function(root, column, rowData) {
-      root.textContent = rowData.index;
-    }
+    // 더블클릭한 컬럼 정보를 전달하여 수정 이벤트 요청
+    const { noticeDtoCallback } = this.props;
+    grid.addEventListener('dblclick', function(e) {
+      noticeDtoCallback(grid.getEventContext(e).item);
+    });
 
+    // 제목 컬럼 선택시 상세정보조회 이벤트 요청
     const { detailCallback } = this.props;
     document.querySelector('#grdNoticeTitle').renderer = function(root, column, rowData) {
       root.innerHTML = '';
@@ -106,6 +110,7 @@ class NoticeGrid extends Component {
     let pages;
     updateItemsFromPage(1);
     
+    // 그리드 페이징
     // pageController
     function updateItemsFromPage(page) {
       if (page === undefined) {
@@ -179,7 +184,7 @@ class NoticeGrid extends Component {
         <div>
           <vaadin-grid theme="column-borders" height-by-rows column-reordering-allowed>
             <vaadin-grid-column auto-select hidden id="grdSelect" flex-grow="0.1" width="50px" />
-            <vaadin-grid-sort-column id="grdIndex" header="번호" text-align="end" flex-grow="0.2" />
+            <vaadin-grid-sort-column path="index" header="번호" text-align="end" flex-grow="0.2" />
             <vaadin-grid-column id="grdNoticeTitle" header="제목" text-align="center" flex-grow="6.2" />
             <vaadin-grid-column path="noticeWriter" header="작성자" text-align="center" flex-grow="1" />
             <vaadin-grid-column path="reportingDt" header="작성일자" text-align="center" flex-grow="2.5" />

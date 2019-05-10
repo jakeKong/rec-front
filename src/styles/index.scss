@@ -6,6 +6,7 @@
 @import "./commons/label.scss";
 @import "./commons/pageTemplate.scss";
 @import "./commons/div.scss";
+@import "./commons/ckeditor.scss";
 
 // layouts
 @import "./layouts/vaadin-app-layout.scss";
@@ -22,6 +23,7 @@
 @import "./components/vaadin-select.scss";
 @import "./components/vaadin-grid.scss";
 @import "./components/vaadin-dialog.scss";
+@import "./components/vaadin-details.scss";
 
 .index {
   width: 100%;

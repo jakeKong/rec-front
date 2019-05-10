@@ -4,6 +4,7 @@ export { getNoticeList, /*getNotice,*/ addNotice, updateNotice, /*deleteNotice,*
 // BMS - component
 export { default as NoticeGrid } from './components/notice/NoticeGrid';
 export { default as NoticeDetail } from './components/notice/NoticeDetail';
+export { default as NoticeRegister } from './components/notice/NoticeRegister';
 
 // BMS - container
 export { default as NoticeContainer } from './containers/NoticeContainer';

@@ -20,3 +20,39 @@
   padding: 0;
   border-spacing: 0;
 }
+
+
+.board-title-div {
+  // width: 100%;
+  height: 50px;
+  margin-left: 5em;
+  margin-right: 5em;
+  border-spacing: 0;
+  text-align: center;
+  border: 1px solid #d5d5d5;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.05);
+}
+
+.board-sub-title-div {
+  // width: 100%;
+  height: 30px;
+  margin-left: 5em;
+  margin-right: 5em;
+  padding-right: 3em;
+  border-spacing: 0;
+  text-align: right;
+  border: 1px solid #d5d5d5;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.05);
+}
+
+.board-txt-div {
+  // width: 100%;
+  height: 500px;
+  margin-left: 5em;
+  margin-right: 5em;
+  padding-left: 1em;
+  border-spacing: 0;
+  text-align: left;
+  border: 1px solid #d5d5d5;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.05);
+}

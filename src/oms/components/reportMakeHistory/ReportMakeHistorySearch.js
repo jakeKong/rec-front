@@ -11,6 +11,9 @@ import '@vaadin/vaadin-select'
 import '@vaadin/vaadin-list-box'
 import '@vaadin/vaadin-item'
 
+import { reportTypeItems } from '../../items';
+import { weekBeforeDate, currentDate } from '../../../common/items';
+
 class ReportMakeHistorySearch extends Component {
 
   constructor(props) {
@@ -31,16 +34,6 @@ class ReportMakeHistorySearch extends Component {
   componentDidMount() {
     // search parameter default setting
     const { search } = this.state;
-
-    // date set --> Common DateUtil로 변경 필요
-    let date = new Date(), 
-    weekBeforeDate = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + (date.getDate() - 7),
-    currentDate = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
-
-    // Oms UtilType으로 변경 필요
-    const reportTypeItems = [
-      {value: 'MARKET_PRICE_ANALYSIS', textContent: '시세분석'},
-    ];
 
     // search label set
     document.querySelector('#lbReportType').innerHTML = '부동산 유형';

@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 
 import '@vaadin/vaadin-grid';
+import { changeTypeItems } from '../../items';
 
 class ChangePointHistoryGrid extends Component {
 
@@ -12,12 +13,18 @@ class ChangePointHistoryGrid extends Component {
     
     let dateFormat = require('dateformat');
     let list =[];
-    // odrDt  dateType format 필요
     changePointHistoryList.forEach(e => {
+      let changeType = '';
+      changeTypeItems.forEach(function(row){
+        if (e.get('changeType') === row.value) {
+          changeType = row.textContent;
+        };
+      });
       // push Value type is JSON
       list.push({
         changeDt: dateFormat(new Date(e.get("changeDt")), 'yyyy년mm월dd일 HH:MM:ss'),
-        changeType: e.get("changeType"),
+        // changeType: e.get("changeType"),
+        changeType: changeType,
         changePoint: e.get("changePoint"),
         currentBalPoint: e.get("currentBalPoint"),
         odrNo: e.get("odrNo"),

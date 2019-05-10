@@ -15,12 +15,13 @@ class NoticeDetail extends Component {
     const lbTitle = document.querySelector('#lbTitle')
     lbTitle.innerHTML = notice.noticeTitle;
     
-    const lbSubtitle = document.querySelector('#lbSubtitle')
-    lbSubtitle.innerHTML = '작성일 : '+notice.reportingDt+' 작성자 : '+notice.noticeWriter;
+    document.querySelector('#lbReportingDt').innerHTML = '작성일 : '+notice.reportingDt+'&nbsp&nbsp';
+    document.querySelector('#lbNoticeWriter').innerHTML = '작성자 : '+notice.noticeWriter;
 
     const dlsTxt = document.querySelector('#dlsTxt')
+    dlsTxt.className = 'details-board-txt';
     dlsTxt.innerHTML = notice.noticeTxt;
-
+    
     const goList = document.querySelector('#goList');
     goList.textContent = "돌아가기";
     goList.addEventListener('click', function() {
@@ -31,13 +32,14 @@ class NoticeDetail extends Component {
   render() {
     return (
       <Fragment>
-        <div>
-          <label id="lbTitle" />
+        <div className="board-title-div">
+          <label id="lbTitle" className="label-board-title"/>
         </div>
-        <div>
-          <label id="lbSubtitle" />
+        <div className="board-sub-title-div">
+          <label id="lbReportingDt" />
+          <label id="lbNoticeWriter" />
         </div>
-        <div>
+        <div className="board-txt-div">
           <vaadin-details id="dlsTxt" />
         </div>
         <div>

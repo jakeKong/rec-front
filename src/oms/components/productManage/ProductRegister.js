@@ -196,7 +196,7 @@ class ProductRegister extends Component {
             <vaadin-text-field id="tnfCashRatio" required prevent-invalid-input pattern="^(\d{1,1}([.]\d{0,2})?)?$"/>
             <vaadin-horizontal-layout theme="spacing">
               <vaadin-button id="btnOk"/>
-              <vaadin-button id="btnCancle"/>
+              <vaadin-button id="btnCancle" theme="error"/>
             </vaadin-horizontal-layout>
           </vaadin-vertical-layout>
         </vaadin-dialog-overlay>

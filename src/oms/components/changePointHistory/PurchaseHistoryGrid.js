@@ -12,7 +12,6 @@ class PurchaseHistoryGrid extends Component {
     
     let dateFormat = require('dateformat');
     let list =[];
-    // odrDt  dateType format 필요
     purchaseHistoryList.forEach(e => {
       // push Value type is JSON
       list.push({
