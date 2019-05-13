@@ -1,6 +1,6 @@
 vaadin-split-layout {
-  width: 100%;
-  height: 100%;
+  // width: 100%;
+  // height: 100%;
   margin: 0;
   padding: 0em;
   border: 1px solid #d5d5d5;
@@ -8,22 +8,11 @@ vaadin-split-layout {
   justify-content: center;
 }
 
-.vaadin-split-layout-width-40 {
-  width: 40%;
-  height: 100%;
+.vaadin-split-layout-main {
+  // width: 100%;
+  height: 70%;
   margin: 0;
-  padding: 0em;
-  border: 1px solid #d5d5d5;
-  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.05);
-  justify-content: center;
-}
-
-.vaadin-split-layout-width-60 {
-  width: 60%;
-  height: 100%;
-  margin: 0;
-  padding: 0em;
-  border: 1px solid #d5d5d5;
-  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.05);
-  justify-content: center;
+  padding: 0;
+  border-spacing: 0;
+  text-align: center;
 }

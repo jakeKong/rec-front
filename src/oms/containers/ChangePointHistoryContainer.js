@@ -21,21 +21,6 @@ class ChangePointHistoryContainer extends Component {
         toDt: null,
         changeType: null
       },
-      // style set
-      style: {
-        sizefull: {
-          'position': 'relative',
-          'width': '100%',
-          'height': '100%'
-        },
-        firstSplit: {
-          'width': '40%',
-          'height': '100%'
-        }, secondStyle: {
-          'width': '60%',
-          'height': '100%'
-        }
-      }
     }
   }
 
@@ -80,6 +65,9 @@ class ChangePointHistoryContainer extends Component {
             this.getPurchaseHistoryList(email, search)
         }
     }
+
+    const splitLayout = document.querySelector('#splitLayout');
+    splitLayout.className = "vaadin-split-layout-main"
   }
 
   getChangePointHistoryList = async (email, search) => {
@@ -103,19 +91,18 @@ class ChangePointHistoryContainer extends Component {
   render() {
     const { changePointHistoryList, pending, error, success,
             purchaseHistoryList, purchasePending, purchaseError, purchaseSuccess } = this.props;
-    const { style } = this.state;
     return (
       <Fragment>
-        <div className="search-div">
+        <div className="div-search">
           <ChangePointHistorySearch searchCallback={ this.searchCallback } />
         </div>
-        <vaadin-split-layout>
-          <div>
+        <vaadin-split-layout id="splitLayout">
+          <div className="div-width-40">
             { purchasePending && "Loading..." }
             { purchaseError && <h1>Server Error!</h1> }
             { purchaseSuccess && <PurchaseHistoryGrid purchaseHistoryList={ purchaseHistoryList } /> }
           </div>
-          <div>
+          <div className="div-width-60">
             { pending && "Loading..." }
             { error && <h1>Server Error!</h1> }
             { success && <ChangePointHistoryGrid changePointHistoryList={ changePointHistoryList } /> }

@@ -67,10 +67,10 @@ class ReportMakeHistoryContainer extends Component {
     const { reportMakeHistoryList, pending, error, success } = this.props;
     return (
       <Fragment>
-        <div className="search-div">
+        <div className="div-search">
           <ReportMakeHistorySearch searchCallback={ this.searchCallback } />
         </div>
-        <div className="main-div">
+        <div className="div-main">
           { pending && "Loading..." }
           { error && <h1>Server Error!</h1> }
           { success && <ReportMakeHistoryGrid reportMakeHistoryList={ reportMakeHistoryList } />}

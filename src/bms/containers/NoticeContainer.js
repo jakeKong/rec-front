@@ -65,7 +65,7 @@ class NoticeContainer extends Component {
     const { noticeList, pending, error, success } = this.props;
     return (
       <Fragment>
-        <div className="main-div">
+        <div className="div-main">
           { pending && "Loading..." }
           { error && <h1>Server Error!</h1> }
           { !detailStatus && success && <NoticeGrid noticeList={ noticeList } detailCallback={ this.detailCallback } />}

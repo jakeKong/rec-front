@@ -69,10 +69,10 @@ class OrderHistoryContainer extends Component {
     const { orderHistoryList, pending, error, success } = this.props;
     return (
       <Fragment>
-        <div className="search-div">
+        <div className="div-search">
           <OrderHistorySearch searchCallback={ this.searchCallback } />
         </div>
-        <div className="main-div">
+        <div className="div-main">
           { pending && "Loading..." }
           { error && <h1>Server Error!</h1> }
           { success && <OrderHistoryGrid orderHistoryList={ orderHistoryList } />}

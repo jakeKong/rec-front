@@ -223,16 +223,18 @@ class NoticeManageContainer extends Component {
     const { noticeList, pending, error, success, role } = this.props;
     return (
       <Fragment>
-        <div className="main-div">
-          { pending && "Loading..." }
-          { error && <h1>Server Error!</h1> }
-          { !registerStatus && !detailStatus && success && <NoticeGrid noticeList={ noticeList } detailCallback={ this.detailCallback } role={ role } selectCallback={ this.selectCallback } deselectCallback={ this.deselectCallback } /* registerCallback={ this.registerCallback } */ />}
-          { detailStatus && <NoticeDetail notice={ notice } detailToListCallback={ this.detailToListCallback } role={ role } registerCallback={ this.registerCallback } deleteCallback={this.deleteCallback } /> }
-          { registerStatus ? <NoticeRegister registerToListCallback={ this.registerToListCallback } addCallback={ this.addCallback } noticeDto={ notice } updateCallback={ this.updateCallback } registerToDetailCallback={ this.registerToDetailCallback } /> : null }
-        </div>
-        <div className="sub-main-div" hidden={registerStatus || detailStatus}>
-          <vaadin-button id="btnSelectDelete" theme="error" />
-          <vaadin-button id="btnRegister" />
+        <div>
+          <div className="div-main">
+            { pending && "Loading..." }
+            { error && <h1>Server Error!</h1> }
+            { !registerStatus && !detailStatus && success && <NoticeGrid noticeList={ noticeList } detailCallback={ this.detailCallback } role={ role } selectCallback={ this.selectCallback } deselectCallback={ this.deselectCallback } /* registerCallback={ this.registerCallback } */ />}
+            { detailStatus && <NoticeDetail notice={ notice } detailToListCallback={ this.detailToListCallback } role={ role } registerCallback={ this.registerCallback } deleteCallback={this.deleteCallback } /> }
+            { registerStatus ? <NoticeRegister registerToListCallback={ this.registerToListCallback } addCallback={ this.addCallback } noticeDto={ notice } updateCallback={ this.updateCallback } registerToDetailCallback={ this.registerToDetailCallback } /> : null }
+          </div>
+          <div className="div-sub-main" hidden={registerStatus || detailStatus}>
+            <vaadin-button id="btnSelectDelete" theme="error" />
+            <vaadin-button id="btnRegister" />
+          </div>
         </div>
       </Fragment>
     );

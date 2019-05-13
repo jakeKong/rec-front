@@ -191,15 +191,15 @@ class ProductManageContainer extends Component {
     const { productList, pending, error, success } = this.props;
     return (
       <Fragment>
-        <div className="search-div">
+        <div className="div-search">
           <ProductManageSearch searchCallback={ this.searchCallback } />
         </div>
-        <div className="main-div">
+        <div className="div-main">
           { pending && "Loading..." }
           { error && <h1>Server Error!</h1> }
           { success && <ProductManageGrid productList={ productList } productDtoCallback={ this.productDtoCallback } deleteCallback={ this.deleteCallback } />}
         </div>
-        <div className="sub-main-div">
+        <div className="div-sub-main">
           <vaadin-button id="btnRegister"/>
         </div>
         <ProductRegister id="popup" addCallback={ this.addCallback } updateCallback={ this.updateCallback } productDto={ productDto } popupOpened={ popupOpened } popupClose={ this.popupClose }/>
