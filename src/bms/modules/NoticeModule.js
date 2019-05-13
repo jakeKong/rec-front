@@ -27,11 +27,9 @@ const UPDATE_NOTICE_RECEIVED = 'notice/UPDATE_NOTICE_RECEIVED';
 const UPDATE_NOTICE_FAILURE = 'notice/UPDATE_NOTICE_FAILURE';
 
 // deleteNotice Action Types
-/*
 const DELETE_NOTICE = 'notice/DELETE_NOTICE';
 const DELETE_NOTICE_RECEIVED = 'notice/DELETE_NOTICE_RECEIVED';
 const DELETE_NOTICE_FAILURE = 'notice/DELETE_NOTICE_FAILURE';
-*/
 
 // deleteNoticeList Action Types
 const DELETE_NOTICE_LIST = 'notice/DELETE_NOTICE_LIST';
@@ -44,7 +42,7 @@ export const getNoticeList = createAction(GET_NOTICE_LIST);
 // export const getNotice = createAction(GET_NOTICE, noticeSid => noticeSid);
 export const addNotice = createAction(ADD_NOTICE, (email, dto) => ({email, dto}));
 export const updateNotice = createAction(UPDATE_NOTICE, (noticeSid, email, dto) => ({noticeSid, email, dto}));
-// export const deleteNotice = createAction(DELETE_NOTICE, noticeSid => noticeSid);
+export const deleteNotice = createAction(DELETE_NOTICE, noticeSid => noticeSid);
 export const deleteNoticeList = createAction(DELETE_NOTICE_LIST, selectList => selectList);
 
 // 초기 state값 설정
@@ -104,7 +102,6 @@ function* updateNoticeSaga(action) {
 }
 
 // deleteNotice Saga
-/*
 function* deleteNoticeSaga(action) {
   try {
     const response = yield call(api.deleteNotice, action.payload);
@@ -115,7 +112,6 @@ function* deleteNoticeSaga(action) {
     yield put({type: DELETE_NOTICE_FAILURE, payload: error});
   }
 }
-*/
 
 // deleteNoticeList Saga
 function* deleteNoticeListSaga(action) {
@@ -133,7 +129,7 @@ function* deleteNoticeListSaga(action) {
 export function* noticeSaga() {
   yield takeLatest(ADD_NOTICE, addNoticeSaga);
   yield takeLatest(UPDATE_NOTICE, updateNoticeSaga);
-  // yield takeLatest(DELETE_NOTICE, deleteNoticeSaga);
+  yield takeLatest(DELETE_NOTICE, deleteNoticeSaga);
   yield takeLatest(DELETE_NOTICE_LIST, deleteNoticeListSaga);
   yield takeEvery(GET_NOTICE_LIST, getNoticeListSaga);
   // yield takeEvery(GET_NOTICE, getNoticeSaga);
@@ -205,7 +201,6 @@ export default handleActions({
   },
 
   // deleteNotice Handler
-  /*
   [DELETE_NOTICE]: (state, action) => {
     console.log('DELETE_NOTICE onPending')
   },
@@ -217,7 +212,7 @@ export default handleActions({
     console.log('DELETE_NOTICE_FAILURE onFailure')
     return {complete: false};
   },  
-  */
+
 
   [DELETE_NOTICE_LIST]: (state, action) => {
     console.log('DELETE_NOTICE_LIST onPending')

@@ -1,5 +1,5 @@
 // BMS - api
-export { getNoticeList, /*getNotice,*/ addNotice, updateNotice, /*deleteNotice,*/ deleteNoticeList } from './api/noticeAxios';
+export { getNoticeList, /*getNotice,*/ addNotice, updateNotice, deleteNotice, deleteNoticeList } from './api/noticeAxios';
 
 // BMS - component
 export { default as NoticeGrid } from './components/notice/NoticeGrid';

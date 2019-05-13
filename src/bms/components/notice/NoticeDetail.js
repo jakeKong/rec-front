@@ -3,6 +3,7 @@ import React, { Component, Fragment } from 'react';
 import '@vaadin/vaadin-ordered-layout';
 import '@vaadin/vaadin-button';
 
+// 공지사항 상세조회 컴포넌트
 class NoticeDetail extends Component {
 
   componentDidMount() {
@@ -10,7 +11,6 @@ class NoticeDetail extends Component {
     if (!notice || notice === undefined) {
       return
     }
-    console.log(notice);
 
     const lbTitle = document.querySelector('#lbTitle')
     lbTitle.innerHTML = notice.noticeTitle;
@@ -22,11 +22,31 @@ class NoticeDetail extends Component {
     dlsTxt.className = 'details-board-txt';
     dlsTxt.innerHTML = notice.noticeTxt;
     
-    const goList = document.querySelector('#goList');
-    goList.textContent = "돌아가기";
-    goList.addEventListener('click', function() {
+    const btnGoList = document.querySelector('#btnGoList');
+    btnGoList.textContent = "돌아가기";
+    btnGoList.addEventListener('click', function() {
       detailToListCallback();
     })
+
+    const { registerCallback } = this.props;
+    const btnUpdate = document.querySelector('#btnUpdate');
+    btnUpdate.textContent = "수정";
+    btnUpdate.addEventListener('click', function() {
+      registerCallback(notice);
+      detailToListCallback();
+    })
+
+    const { deleteCallback } = this.props;
+    const btnDelete = document.querySelector('#btnDelete');
+    btnDelete.textContent = "삭제";
+    btnDelete.addEventListener('click', function() {
+      const check = window.confirm('공지사항을 삭제 하시겠습니까?');
+      if (check === true) {
+        deleteCallback(notice.noticeSid);
+        detailToListCallback();
+      }
+    })
+
   }
 
   render() {
@@ -43,7 +63,9 @@ class NoticeDetail extends Component {
           <vaadin-details id="dlsTxt" />
         </div>
         <div>
-          <vaadin-button id="goList" />
+          <vaadin-button id="btnGoList" />
+          <vaadin-button id="btnUpdate" />
+          <vaadin-button id="btnDelete" theme="error" />
         </div>
       </Fragment>
     );

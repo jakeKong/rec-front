@@ -14,7 +14,8 @@ class NoticeGrid extends Component {
 
     const { role } = this.props;
     if (role === 'ROLE_ADMIN' || role === 'ROLE_SYSADMIN') {
-      let inverted = false, indeterminate = false;
+      let inverted = false;
+      // let indeterminate = false;
 
       // 선택삭제 사용을 위한 그리트 체크박스
       const grdSelect = document.querySelector('#grdSelect');
@@ -42,7 +43,8 @@ class NoticeGrid extends Component {
         checkbox.indeterminate = indeterminate;
       };
       */
-      const { selectCallback, deselectCallback } = this.props;
+     const { selectCallback, deselectCallback } = this.props;
+     // 그리드 컬럼 안의 체크박스 이벤트
       grdSelect.renderer = function(cell, column, rowData) {
         var checkbox = cell.firstElementChild;
         if (!checkbox) {
@@ -51,12 +53,14 @@ class NoticeGrid extends Component {
           checkbox.addEventListener('change', function(e) {
             if (e.target.checked === inverted) {
               grid.deselectItem(checkbox.__item);
+              // 컨테이너로 선택취소된 공지사항 컬럼값 전달
               deselectCallback(checkbox.__item);
             } else {
               grid.selectItem(checkbox.__item);
+              // 컨테이너로 선택된 공지사항 컬럼값 전달
               selectCallback(checkbox.__item);
             }
-            indeterminate = grid.selectedItems.length > 0;
+            // indeterminate = grid.selectedItems.length > 0;
             grid.render();
           });
           cell.appendChild(checkbox);
@@ -68,6 +72,7 @@ class NoticeGrid extends Component {
     
     let dateFormat = require('dateformat');
     let list =[];
+    // 그리드 컬럼 인덱스를 위한 변수
     let i=1;
     noticeList.forEach(e => {
       // push Value type is JSON
@@ -87,10 +92,12 @@ class NoticeGrid extends Component {
     grid.pageSize = 15;
 
     // 더블클릭한 컬럼 정보를 전달하여 수정 이벤트 요청
-    const { noticeDtoCallback } = this.props;
+    /*
+    const { registerCallback } = this.props;
     grid.addEventListener('dblclick', function(e) {
-      noticeDtoCallback(grid.getEventContext(e).item);
+      registerCallback(grid.getEventContext(e).item);
     });
+    */
 
     // 제목 컬럼 선택시 상세정보조회 이벤트 요청
     const { detailCallback } = this.props;
