@@ -52,14 +52,14 @@ class NoticeDetail extends Component {
   render() {
     return (
       <Fragment>
-        <div className="board-title-div">
+        <div className="div-board-title">
           <label id="lbTitle" className="label-board-title"/>
         </div>
-        <div className="board-sub-title-div">
+        <div className="div-board-sub-title">
           <label id="lbReportingDt" />
           <label id="lbNoticeWriter" />
         </div>
-        <div className="board-txt-div">
+        <div className="div-board-txt">
           <vaadin-details id="dlsTxt" />
         </div>
         <div>
