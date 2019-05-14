@@ -24,6 +24,7 @@ class Menu extends Component {
       {value: '/#/bms/notice/list', textContent: '공지사항'},
       {value: '/#/bms/notice/manage/list', textContent: '(관리)공지사항'},
       {value: '/#/bms/question/list', textContent: '문의사항'},
+      {value: '/#/bms/question/manage/list', textContent: '(관리)문의사항'},
     ];
 
     // 임시 select 설정
