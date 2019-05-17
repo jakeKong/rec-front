@@ -19,28 +19,39 @@
   text-align: center;
 }
 
+.label-comment-title {
+  font-size: 12px;
+}
+
+.label-comment-title-count {
+  font-size: 12px;
+  font-weight: 550;
+  text-align: left;
+}
+
 .label-comment-answer-writer {
-  font-size: 16px;
+  font-size: 12px;
   font-weight: 700;
 }
 
 .label-comment-answer-dt {
-  font-size: 14px;
+  font-size: 11px;
+  margin-right: 5px;
 }
 
 .label-comment-answer-txt {
-  font-size: 15px;
+  font-size: 12px;
 }
 
 .label-comment-cmt-writer {
-  font-size: 16px;
+  font-size: 12px;
   font-weight: 700;
 }
 
 .label-comment-cmt-dt {
-  font-size: 14px;
+  font-size: 11px;
 }
 
 .label-comment-cmt-txt {
-  font-size: 15px;
+  font-size: 12px;
 }
