@@ -3,7 +3,7 @@ import { Switch, Route } from 'react-router-dom';
 
 import { MainPage, NotFoundPage } from './common';
 import { OrderHistoryPage, OrderHistoryByEmailPage, ReportMakeHistoryPage, ChangePointHistoryPage, ProductManagePage } from './oms';
-import { NoticePage, NoticeManagePage } from './bms';
+import { NoticePage, NoticeManagePage, QuestionPage, QuestionManagePage } from './bms';
 
 const App = () => {
   return (
@@ -19,6 +19,8 @@ const App = () => {
 
         <Route exact path="/bms/notice/list" component={ NoticePage }/>
         <Route exact path="/bms/notice/manage/list" component={ NoticeManagePage }/>
+        <Route exact path="/bms/question/list" component={ QuestionPage }/>
+        <Route exact path="/bms/question/manage/list" component={ QuestionManagePage }/>
         <Route component={NotFoundPage}/>
       </Switch>
     </div>

@@ -33,13 +33,19 @@ export const deleteQuestionByList = (selectQuestionSidList) => axios({
 });
 
 // 사용자별 문의사항 목록 조회
-export const getQuestionListByEmail = (email) => axios({
-  method: 'GET',
+export const getQuestionListByEmail = (email, search) => axios({
+  method: 'POST',
   url: `${config.boardService}/question/list/${email}`,
   headers: {
     'Content-Type': 'application/json; charset=UTF-8',
     'Accept': 'application/json'
-  }
+  },
+  data: JSON.stringify({
+    'fromDt': search.fromDt,
+    'toDt': search.toDt,
+    'questionTitle': search.questionTitle,
+    'questionWriter': search.questionWriter
+  })
 });
 
 // 문의사항 단일항목에 대한 답변 목록 조회
@@ -110,7 +116,7 @@ export const addQuestionAnswerCmt = (questionAnswerSid, email, dto) => axios({
 
 // 문의사항 수정
 export const updateQuestion = (questionSid, email, dto) => axios({
-  method: 'POST',
+  method: 'PUT',
   url: `${config.boardService}/question/update/${questionSid}/${email}`,
   headers: {
     'Content-Type': 'application/json; charset=UTF-8',
@@ -124,7 +130,7 @@ export const updateQuestion = (questionSid, email, dto) => axios({
 
 // 문의사항 답변 수정
 export const updateQuestionAnswer = (questionAnswerSid, email, dto) => axios({
-  method: 'POST',
+  method: 'PUT',
   url: `${config.boardService}/question/answer/update/${questionAnswerSid}/${email}`,
   headers: {
     'Content-Type': 'application/json; charset=UTF-8',
@@ -137,7 +143,7 @@ export const updateQuestionAnswer = (questionAnswerSid, email, dto) => axios({
 
 // 문의사항 답변 코멘트 수정
 export const updateQuestionAnswerCmt = (questionAnswerCmtSid, email, dto) => axios({
-  method: 'POST',
+  method: 'PUT',
   url: `${config.boardService}/question/cmt/update/${questionAnswerCmtSid}/${email}`,
   headers: {
     'Content-Type': 'application/json; charset=UTF-8',

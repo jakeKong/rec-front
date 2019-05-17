@@ -6,6 +6,7 @@
     "@babel/polyfill": "^7.4.0",
     "@ckeditor/ckeditor5-build-classic": "^12.1.0",
     "@ckeditor/ckeditor5-react": "^1.1.3",
+    "@polymer/iron-icons": "^3.0.1",
     "@vaadin/vaadin": "^13.0.3",
     "@webcomponents/webcomponentsjs": "^2.2.7",
     "axios": "^0.18.0",

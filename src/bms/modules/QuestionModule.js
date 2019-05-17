@@ -85,7 +85,7 @@ export const getQuestionList = createAction(GET_QUESTION_LIST);
 export const deleteQuestion = createAction(DELETE_QUESTION, questionSid => questionSid);
 export const deleteQuestionByList = createAction(DELETE_QUESTION_BY_LIST, ids => ids);
 
-export const getQuestionListByEmail = createAction(GET_QUESTION_LIST_BY_EMAIL, email => email);
+export const getQuestionListByEmail = createAction(GET_QUESTION_LIST_BY_EMAIL, (email, search) => ({email, search}));
 export const getQuestionAnswerList = createAction(GET_QUESTION_ANSWER_LIST, questionSid => questionSid);
 export const getQuestionAnswerCmtList = createAction(GET_QUESTION_ANSWER_CMT_LIST, questionAnswerSid => questionAnswerSid);
 
@@ -147,7 +147,7 @@ function* deleteQuestionByListSaga(action) {
 // getQuestionListByEmail Saga
 function* getQuestionListByEmailSaga(action) {
   try {
-    const response = yield call(api.getQuestionListByEmail, action.payload);
+    const response = yield call(api.getQuestionListByEmail, action.payload.email, action.payload.search);
     yield put({type: GET_QUESTION_LIST_BY_EMAIL_RECEIVED, payload: response});
   } catch (error) {
     yield put({type: GET_QUESTION_LIST_BY_EMAIL_FAILURE, payload: error});
@@ -370,35 +370,31 @@ export default handleActions({
   // getQuestionAnswerList Handler
   [GET_QUESTION_ANSWER_LIST]: (state, action) => {
     console.log('GET_QUESTION_ANSWER_LIST onPending')
-    return {pending: true, error: false};
   },
   [GET_QUESTION_ANSWER_LIST_RECEIVED]: (state, action) => {
     console.log('GET_QUESTION_ANSWER_LIST_RECEIVED onReceived')
     const {data: content} = action.payload;
-    return {pending: false, error: false, success: true, questionAnswerList: fromJS(content)};
+    return {questionAnswerList: fromJS(content)};
   },
   [GET_QUESTION_ANSWER_LIST_FAILURE]: (state, action) => {
     const {error} = action.payload;
     console.log('GET_QUESTION_ANSWER_LIST_FAILURE onFailure')
     console.log('ERROR: ' + error)
-    return {error: true};
   },
 
   // getQuestionAnswerCmtList Handler
   [GET_QUESTION_ANSWER_CMT_LIST]: (state, action) => {
     console.log('GET_QUESTION_ANSWER_CMT_LIST onPending')
-    return {pending: true, error: false};
   },
   [GET_QUESTION_ANSWER_CMT_LIST_RECEIVED]: (state, action) => {
     console.log('GET_QUESTION_ANSWER_CMT_LIST_RECEIVED onReceived')
     const {data: content} = action.payload;
-    return {pending: false, error: false, success: true, questionAnswerCmtList: fromJS(content)};
+    return {questionAnswerCmtList: fromJS(content)};
   },
   [GET_QUESTION_ANSWER_CMT_LIST_FAILURE]: (state, action) => {
     const {error} = action.payload;
     console.log('GET_QUESTION_ANSWER_CMT_LIST_FAILURE onFailure')
     console.log('ERROR: ' + error)
-    return {error: true};
   },
 
   // addQuestion Handler

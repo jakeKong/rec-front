@@ -3,7 +3,7 @@ import config from '../../config';
 
 // 공지사항 전체 목록 조회
 export const getNoticeList = () => axios({
-  method: 'POST',
+  method: 'GET',
   url: `${config.boardService}/notice/list`,
   headers: {
     'Content-Type': 'application/json; charset=UTF-8',

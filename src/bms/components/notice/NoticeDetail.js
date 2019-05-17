@@ -28,25 +28,33 @@ class NoticeDetail extends Component {
       detailToListCallback();
     })
 
-    const { registerCallback } = this.props;
-    const btnUpdate = document.querySelector('#btnUpdate');
-    btnUpdate.textContent = "수정";
-    btnUpdate.addEventListener('click', function() {
-      registerCallback(notice);
-      detailToListCallback();
-    })
+    const { role } = this.props;
+    if (role === 'ROLE_ADMIN' || role === 'ROLE_SYSADMIN') {
 
-    const { deleteCallback } = this.props;
-    const btnDelete = document.querySelector('#btnDelete');
-    btnDelete.textContent = "삭제";
-    btnDelete.addEventListener('click', function() {
-      const check = window.confirm('공지사항을 삭제 하시겠습니까?');
-      if (check === true) {
-        deleteCallback(notice.noticeSid);
+      const divSub = document.querySelector('#divSub');
+
+      const { registerCallback } = this.props;
+      const btnUpdate = document.createElement('vaadin-button');
+      btnUpdate.textContent = "수정";
+      btnUpdate.addEventListener('click', function() {
+        registerCallback(notice);
         detailToListCallback();
-      }
-    })
+      })
 
+      const { deleteCallback } = this.props;
+      const btnDelete = document.createElement('vaadin-button');
+      btnDelete.setAttribute('style', 'color: var(--lumo-error-text-color)');
+      btnDelete.textContent = "삭제";
+      btnDelete.addEventListener('click', function() {
+        const check = window.confirm('공지사항을 삭제 하시겠습니까?');
+        if (check === true) {
+          deleteCallback(notice.noticeSid);
+          detailToListCallback();
+        }
+      })
+      divSub.appendChild(btnUpdate);
+      divSub.appendChild(btnDelete);
+    }
   }
 
   render() {
@@ -62,10 +70,8 @@ class NoticeDetail extends Component {
         <div className="div-board-txt">
           <vaadin-details id="dlsTxt" />
         </div>
-        <div>
+        <div id="divSub" className="div-sub-main">
           <vaadin-button id="btnGoList" />
-          <vaadin-button id="btnUpdate" />
-          <vaadin-button id="btnDelete" theme="error" />
         </div>
       </Fragment>
     );
