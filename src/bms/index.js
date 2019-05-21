@@ -1,7 +1,7 @@
 // BMS - api
 export { getNoticeList, /*getNotice,*/ addNotice, updateNotice, deleteNotice, deleteNoticeList } from './api/noticeAxios';
 export { getQuestionList, deleteQuestion, deleteQuestionByList,
-         getQuestionListByEmail, getQuestionAnswerList, getQuestionAnswerCmtList,
+         getQuestionListByEmail, getQuestionAnswerList, /*getQuestionAnswerCmtList,*/
          addQuestion, addQuestionAnswer, addQuestionAnswerCmt,
          updateQuestion, updateQuestionAnswer, updateQuestionAnswerCmt,
          deleteQuestionByEmail, deleteQuestionAnswerByEmail, deleteQuestionAnswerCmtByEmail } from './api/questionAxios';
@@ -15,6 +15,7 @@ export { default as QuestionDetail } from './components/question/QuestionDetail'
 export { default as QuestionGrid } from './components/question/QuestionGrid';
 export { default as QuestionRegister } from './components/question/QuestionRegister';
 export { default as QuestionSearch } from './components/question/QuestionSearch';
+export { default as QuestionComment } from './components/question/QuestionComment';
 
 // BMS - container
 export { default as NoticeContainer } from './containers/NoticeContainer';

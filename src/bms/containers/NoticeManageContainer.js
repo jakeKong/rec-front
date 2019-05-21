@@ -44,7 +44,6 @@ class NoticeManageContainer extends Component {
     const btnSelectDelete = document.querySelector('#btnSelectDelete');
     btnSelectDelete.innerHTML = '선택삭제';
     btnSelectDelete.addEventListener('click', function() {
-      console.log(selectList)
       if (selectList.length > 0) {
         const check = window.confirm('선택한 항목을 삭제 하시겠습니까?');
         if (check === true) {

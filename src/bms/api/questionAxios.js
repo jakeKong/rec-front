@@ -2,13 +2,19 @@ import axios from 'axios';
 import config from '../../config';
 
 // 문의사항 전체 목록 조회 (관리용)
-export const getQuestionList = () => axios({
-  method: 'GET',
+export const getQuestionList = (search) => axios({
+  method: 'POST',
   url: `${config.boardService}/question/list`,
   headers: {
     'Content-Type': 'application/json; charset=UTF-8',
     'Accept': 'application/json'
-  }
+  },
+  data: JSON.stringify({
+    'fromDt': search.fromDt,
+    'toDt': search.toDt,
+    'questionTitle': search.questionTitle,
+    'questionWriter': search.questionWriter
+  })
 });
 
 // 문의사항 삭제 (관리용)
@@ -59,6 +65,7 @@ export const getQuestionAnswerList = (questionSid) => axios({
 });
 
 // 문의사항 단일항목에 대한 답변 목록 조회
+/*
 export const getQuestionAnswerCmtList = (questionAnswerSid) => axios({
   method: 'GET',
   url: `${config.boardService}/question/cmt/list/${questionAnswerSid}`,
@@ -67,6 +74,7 @@ export const getQuestionAnswerCmtList = (questionAnswerSid) => axios({
     'Accept': 'application/json'
   }
 });
+*/
 
 // 문의사항 등록
 export const addQuestion = (email, dto) => axios({
