@@ -7,7 +7,6 @@ import '@vaadin/vaadin-grid/vaadin-grid-selection-column';
 class QuestionGrid extends Component {
 
   componentDidMount() {
-    console.log(questionList);
     const { questionList } = this.props;
     if (!questionList || questionList === undefined || questionList.isEmpty()) {
       return

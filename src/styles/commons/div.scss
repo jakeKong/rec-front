@@ -118,6 +118,40 @@
   text-align: left;
 }
 
+.div-register-popup-board {
+  width: 573px;
+  height: 100%;
+  padding: 1em;
+  // text-align: center;
+  .default-column {
+    padding: 1em;
+  }
+  .email-column {
+    padding: 1em;
+  }
+  .address-column {
+    padding: 1em;
+  }
+  .list-box-column {
+    padding: 1em;
+    text-align: center;
+    .list-box-button{
+      width: 100px;
+      padding: 5px;
+      display: inline-block;
+      text-align: center;
+    }
+  }
+}
+
+.div-register-popup-bottom {
+  width: 573px;
+  height: 100%;
+  padding: 1em;
+  text-align: center;
+  justify-content: center;
+}
+
 .div-width-40 {
   width: 40%;
   height: 100%;

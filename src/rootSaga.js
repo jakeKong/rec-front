@@ -8,6 +8,9 @@ fork 완료: Saga는 오직 다음의 사건에만 종료됩니다.
 */
 import { fork } from 'redux-saga/effects';
 
+// SCM
+import user, { userSaga } from './scm/modules/UserModule';
+
 // OMS
 import orderHistory, { orderHistorySaga } from './oms/modules/OrderHistoryModule';
 import reportMakeHistory, { reportMakeHistorySaga } from './oms/modules/ReportMakeHistoryModule';
@@ -21,6 +24,8 @@ import question, { questionSaga } from './bms/modules/QuestionModule';
 
 // rootSaga 설정
 export function* rootSaga() {
+  // SCM
+  yield fork(userSaga);
   // OMS
   yield fork(orderHistorySaga);
   yield fork(reportMakeHistorySaga);
@@ -34,6 +39,8 @@ export function* rootSaga() {
 
 // 통합 reducer
 export default combineReducers({
+  // SCM
+  user,
   // OMS
   orderHistory, reportMakeHistory, changePointHistory, purchaseHistory, product,
   // BMS

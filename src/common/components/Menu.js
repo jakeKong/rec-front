@@ -11,8 +11,12 @@ class Menu extends Component {
 
   componentDidMount() {
 
-    const OperationMenuItems = [
+    const SystemMenuItems = [
       {value: '/#/', textContent: '홈'},
+      {value: '/#/scm/user/manage/list', textContent: '사용자 관리'},
+    ];
+
+    const OperationMenuItems = [
       {value: '/#/oms/order/history/list', textContent: '(관리)주문내역 조회'},
       {value: '/#/oms/order/history/list/email', textContent: '주문내역 조회'},
       {value: '/#/oms/reportmake/history/list', textContent: '보고서 생성이력 조회'},
@@ -28,6 +32,37 @@ class Menu extends Component {
     ];
 
     // 임시 select 설정
+    const slSystemMenu = document.querySelector('#slSystemMenu')
+    // default Select set
+    slSystemMenu.renderer = function(root) {
+      if (root.firstChild) {
+        return;
+      }
+      const listBox = document.createElement('vaadin-list-box');
+      const select = document.createElement('vaadin-item');
+
+      select.textContent = '시스템관리';
+      select.setAttribute('value', '');
+      listBox.appendChild(select);
+
+      const divider = document.createElement('hr');
+      listBox.appendChild(divider);
+
+      SystemMenuItems.forEach(function(row){
+        const item = document.createElement('vaadin-item');
+        item.textContent = row.textContent;
+        if (row.value) {
+            item.setAttribute('value', row.value);
+        }
+        listBox.appendChild(item);
+      });
+      root.appendChild(listBox);
+    }
+    
+    slSystemMenu.addEventListener('value-changed', function(e) {
+      window.location.href = slSystemMenu.value;
+    })
+
     const slOperationMenu = document.querySelector('#slOperationMenu')
     // default Select set
     slOperationMenu.renderer = function(root) {
@@ -94,6 +129,7 @@ class Menu extends Component {
   render() {
     return (
       <Fragment>
+        <vaadin-select id="slSystemMenu"/>
         <vaadin-select id="slOperationMenu"/>
         <vaadin-select id="slBoardMenu"/>
       </Fragment>

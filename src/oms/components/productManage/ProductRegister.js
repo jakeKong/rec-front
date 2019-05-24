@@ -74,13 +74,13 @@ class ProductRegister extends Component {
     tfNm.value = nextProps.productDto.productNm;
     dto.productNm = tfNm.value;
 
-    const tnfProductPoint = document.querySelector('#tnfPoint')
+    const tnfProductPoint = document.querySelector('#tfPoint')
     tnfProductPoint.value = nextProps.productDto.productPoint;
     dto.productPoint = tnfProductPoint.value;
 
-    const tnfCashRatio = document.querySelector('#tnfCashRatio')
-    tnfCashRatio.value = nextProps.productDto.cashRatio;
-    dto.cashRatio = tnfCashRatio.value;
+    const tfCashRatio = document.querySelector('#tfCashRatio')
+    tfCashRatio.value = nextProps.productDto.cashRatio;
+    dto.cashRatio = tfCashRatio.value;
 
   }
 
@@ -92,7 +92,7 @@ class ProductRegister extends Component {
       tfProductCd.value = null;
       tfProductNm.value = null;
       tnfProductPoint.value = null;
-      tnfCashRatio.value = null;
+      tfCashRatio.value = null;
       dto.productSid = null;
       dto.productCd = null;
       dto.productNm = null;
@@ -127,7 +127,7 @@ class ProductRegister extends Component {
       dto.productNm = tfProductNm.value;
     });
     // 상품 포인트 텍스트필드 (숫자 체크 필요)
-    const tnfProductPoint = document.querySelector('#tnfPoint');
+    const tnfProductPoint = document.querySelector('#tfPoint');
     tnfProductPoint.maxlength = '5';
     tnfProductPoint.placeholder = '상품 포인트를 입력해주세요.';
     tnfProductPoint.addEventListener('input', function() {
@@ -135,10 +135,10 @@ class ProductRegister extends Component {
     });
 
     // 현금 비율 텍스트필드 (BigDecimal 3.2 체크 필요)
-    const tnfCashRatio = document.querySelector('#tnfCashRatio');
-    tnfCashRatio.placeholder = '현금 비율을 입력해주세요.';
-    tnfCashRatio.addEventListener('input', function() {
-      dto.cashRatio = tnfCashRatio.value;
+    const tfCashRatio = document.querySelector('#tfCashRatio');
+    tfCashRatio.placeholder = '현금 비율을 입력해주세요.';
+    tfCashRatio.addEventListener('input', function() {
+      dto.cashRatio = tfCashRatio.value;
     });
 
     const { addCallback, updateCallback } = this.props;
@@ -185,20 +185,28 @@ class ProductRegister extends Component {
     return (
       <Fragment>
         <vaadin-dialog-overlay id="doRegister">
-          <vaadin-vertical-layout theme="spacing">
-            <label id="lbCd"/>
-            <vaadin-text-field id="tfCd" required prevent-invalid-input pattern="([a-zA-Zㄱ-ㅎ가-힣0-9]+?)"/>
-            <label id="lbNm"/>
-            <vaadin-text-field id="tfNm" required prevent-invalid-input pattern="^([a-zA-Zㄱ-ㅎ가-힣0-9\s]+$)"/>
-            <label id="lbPoint"/>
-            <vaadin-text-field id="tnfPoint" required prevent-invalid-input pattern="[0-9]*"/>
-            <label id="lbCashRatio"/>
-            <vaadin-text-field id="tnfCashRatio" required prevent-invalid-input pattern="^(\d{1,1}([.]\d{0,2})?)?$"/>
-            <vaadin-horizontal-layout theme="spacing">
-              <vaadin-button id="btnOk"/>
-              <vaadin-button id="btnCancle" theme="error"/>
-            </vaadin-horizontal-layout>
-          </vaadin-vertical-layout>
+          <div className="div-register-popup-board">
+            <div className="default-column">
+              <label id="lbCd"/>
+              <vaadin-text-field id="tfCd" required prevent-invalid-input pattern="([a-zA-Zㄱ-ㅎ가-힣0-9]+?)"/>
+            </div>
+            <div className="default-column">
+              <label id="lbNm"/>
+              <vaadin-text-field id="tfNm" required prevent-invalid-input pattern="^([a-zA-Zㄱ-ㅎ가-힣0-9\s]+$)"/>
+            </div>
+            <div className="default-column">
+              <label id="lbPoint"/>
+              <vaadin-text-field id="tfPoint" required prevent-invalid-input pattern="[0-9]*"/>
+            </div>
+            <div className="default-column">
+              <label id="lbCashRatio"/>
+              <vaadin-text-field id="tfCashRatio" required prevent-invalid-input pattern="^(\d{1,1}([.]\d{0,2})?)?$"/>
+            </div>
+          </div>
+          <div className="div-register-popup-bottom">
+            <vaadin-button id="btnOk"/>
+            <vaadin-button id="btnCancle" theme="error"/>
+          </div>
         </vaadin-dialog-overlay>
       </Fragment>
     );

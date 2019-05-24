@@ -2,6 +2,7 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
 import { MainPage, NotFoundPage } from './common';
+import { UserManagePage } from './scm';
 import { OrderHistoryPage, OrderHistoryByEmailPage, ReportMakeHistoryPage, ChangePointHistoryPage, ProductManagePage } from './oms';
 import { NoticePage, NoticeManagePage, QuestionPage, QuestionManagePage } from './bms';
 
@@ -10,6 +11,8 @@ const App = () => {
     <div className="index">
       <Switch>
         <Route exact path="/" component={MainPage} />
+
+        <Route exact path="/scm/user/manage/list" component={ UserManagePage }/>
 
         <Route exact path="/oms/order/history/list" component={ OrderHistoryPage }/>
         <Route exact path="/oms/order/history/list/email" component={ OrderHistoryByEmailPage }/>
