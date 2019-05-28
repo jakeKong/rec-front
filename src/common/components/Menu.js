@@ -14,6 +14,8 @@ class Menu extends Component {
     const SystemMenuItems = [
       {value: '/#/', textContent: '홈'},
       {value: '/#/scm/user/manage/list', textContent: '사용자 관리'},
+      {value: '/#/refund/requests', textContent: '환불신청'},
+      {value: '/#/payment/product', textContent: '상품구매'},
     ];
 
     const OperationMenuItems = [

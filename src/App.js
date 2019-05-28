@@ -5,6 +5,7 @@ import { MainPage, NotFoundPage } from './common';
 import { UserManagePage } from './scm';
 import { OrderHistoryPage, OrderHistoryByEmailPage, ReportMakeHistoryPage, ChangePointHistoryPage, ProductManagePage } from './oms';
 import { NoticePage, NoticeManagePage, QuestionPage, QuestionManagePage } from './bms';
+import { PaymentPage, RefundPage } from './payment';
 
 const App = () => {
   return (
@@ -24,6 +25,9 @@ const App = () => {
         <Route exact path="/bms/notice/manage/list" component={ NoticeManagePage }/>
         <Route exact path="/bms/question/list" component={ QuestionPage }/>
         <Route exact path="/bms/question/manage/list" component={ QuestionManagePage }/>
+
+        <Route exact path="/payment/product" component={ PaymentPage }/>
+        <Route exact path="/refund/requests" component={ RefundPage }/>
         <Route component={NotFoundPage}/>
       </Switch>
     </div>

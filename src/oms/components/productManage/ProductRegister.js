@@ -20,7 +20,8 @@ class ProductRegister extends Component {
         productCd: null,
         productNm: null,
         productPoint: null,
-        cashRatio: null
+        pointCash: null
+        // cashRatio: null
       },
       clicked: {
         type: Boolean,
@@ -78,9 +79,15 @@ class ProductRegister extends Component {
     tnfProductPoint.value = nextProps.productDto.productPoint;
     dto.productPoint = tnfProductPoint.value;
 
+    const tfPointCash = document.querySelector('#tfPointCash')
+    tfPointCash.value = nextProps.productDto.pointCash;
+    dto.pointCash = tfPointCash.value;
+
+    /*
     const tfCashRatio = document.querySelector('#tfCashRatio')
     tfCashRatio.value = nextProps.productDto.cashRatio;
     dto.cashRatio = tfCashRatio.value;
+    */
 
   }
 
@@ -92,12 +99,14 @@ class ProductRegister extends Component {
       tfProductCd.value = null;
       tfProductNm.value = null;
       tnfProductPoint.value = null;
-      tfCashRatio.value = null;
+      // tfCashRatio.value = null;
+      tfPointCash.value = null;
       dto.productSid = null;
       dto.productCd = null;
       dto.productNm = null;
       dto.productPoint = null;
-      dto.cashRatio = null;
+      dto.pointCash = null;
+      // dto.cashRatio = null;
     }
 
     document.querySelector('#doRegister').opened = false;
@@ -109,7 +118,8 @@ class ProductRegister extends Component {
     document.querySelector('#lbCd').innerHTML = "상품 코드";
     document.querySelector('#lbNm').innerHTML = "상품 명";
     document.querySelector('#lbPoint').innerHTML = "상품 포인트";
-    document.querySelector('#lbCashRatio').innerHTML = "현금 비율";
+    document.querySelector('#lbPointCash').innerHTML = "포인트 가격";
+    // document.querySelector('#lbCashRatio').innerHTML = "현금 비율";
       
     // 상품 코드 텍스트필드
     const tfProductCd = document.querySelector('#tfCd');
@@ -134,12 +144,20 @@ class ProductRegister extends Component {
       dto.productPoint = tnfProductPoint.value;
     });
 
+    const tfPointCash = document.querySelector('#tfPointCash');
+    tfPointCash.placeholder = '포인트 가격을 입력해주세요.';
+    tfPointCash.addEventListener('input', function() {
+      dto.pointCash = tfPointCash.value;
+    });
+
     // 현금 비율 텍스트필드 (BigDecimal 3.2 체크 필요)
+    /*
     const tfCashRatio = document.querySelector('#tfCashRatio');
     tfCashRatio.placeholder = '현금 비율을 입력해주세요.';
     tfCashRatio.addEventListener('input', function() {
       dto.cashRatio = tfCashRatio.value;
     });
+    */
 
     const { addCallback, updateCallback } = this.props;
     const btnOk = document.querySelector('#btnOk');
@@ -157,10 +175,16 @@ class ProductRegister extends Component {
         window.alert('입력되지 않은 값이 있습니다. 입력 후 다시 시도해주세요.');
         return;
       }
+      if (dto.pointCash === null || dto.pointCash === undefined || dto.pointCash === "") {
+        window.alert('입력되지 않은 값이 있습니다. 입력 후 다시 시도해주세요.');
+        return;
+      }
+      /*
       if (dto.cashRatio === null || dto.cashRatio === undefined || dto.cashRatio === "") {
         window.alert('입력되지 않은 값이 있습니다. 입력 후 다시 시도해주세요.');
         return;
       }
+      */
       if (dto.productSid === null || dto.productSid === undefined) {
         addCallback(dto);
       } else {
@@ -199,8 +223,10 @@ class ProductRegister extends Component {
               <vaadin-text-field id="tfPoint" required prevent-invalid-input pattern="[0-9]*"/>
             </div>
             <div className="default-column">
-              <label id="lbCashRatio"/>
-              <vaadin-text-field id="tfCashRatio" required prevent-invalid-input pattern="^(\d{1,1}([.]\d{0,2})?)?$"/>
+              {/* <label id="lbCashRatio"/> */}
+              {/* <vaadin-text-field id="tfCashRatio" required prevent-invalid-input pattern="^(\d{1,1}([.]\d{0,2})?)?$"/> */}
+              <label id="lbPointCash"/>
+              <vaadin-text-field id="tfPointCash" required prevent-invalid-input pattern="[0-9]*"/>
             </div>
           </div>
           <div className="div-register-popup-bottom">

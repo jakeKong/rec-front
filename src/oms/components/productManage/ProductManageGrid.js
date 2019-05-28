@@ -53,7 +53,8 @@ class ProductManageGrid extends Component {
         productCd: e.get("productCd"), 
         productNm: e.get("productNm"),
         productPoint: e.get("productPoint"),
-        cashRatio: e.get("cashRatio"),
+        pointCash: e.get("pointCash"),
+        // cashRatio: e.get("cashRatio"),
       })
     })
     
@@ -94,7 +95,8 @@ class ProductManageGrid extends Component {
           <vaadin-grid-column path="productCd" header="상품 코드" text-align="center" flex-grow="2" />
           <vaadin-grid-column path="productNm" header="상품 명" text-align="center" flex-grow="4" />
           <vaadin-grid-column path="productPoint" header="상품 포인트" text-align="center" flex-grow="2" />
-          <vaadin-grid-column path="cashRatio" header="현금 비율" text-align="center" flex-grow="1" />
+          <vaadin-grid-column path="pointCash" header="포인트 가격" text-align="center" flex-grow="1" />
+          {/* <vaadin-grid-column path="cashRatio" header="현금 비율" text-align="center" flex-grow="1" /> */}
           <vaadin-grid-column id="grdDelete" text-align="center" flex-grow="1" />
         </vaadin-grid>
       </Fragment>
