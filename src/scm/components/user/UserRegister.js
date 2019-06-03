@@ -9,6 +9,8 @@ import '@vaadin/vaadin-text-field/vaadin-number-field';
 import '@vaadin/vaadin-date-picker'
 import '@vaadin/vaadin-list-box'
 
+import '@vaadin/vaadin-icons'
+
 import { roleCodeItems } from '../../items';
 
 class UserRegister extends Component {
@@ -386,8 +388,12 @@ class UserRegister extends Component {
             <div className="list-box-column">
               <vaadin-list-box id="lsbBeforeAssignedRoles"/>
               <div className="list-box-button">
-                <vaadin-button id="btnGoToBefore"/>
-                <vaadin-button id="btnGoToAfter"/>
+                <vaadin-button id="btnGoToBefore">
+                  <iron-icon icon="vaadin:angle-double-left" />
+                </vaadin-button>
+                <vaadin-button id="btnGoToAfter">
+                  <iron-icon icon="vaadin:angle-double-right" />
+                </vaadin-button>
               </div>
               <vaadin-list-box id="lsbAfterAssignedRoles"/>
             </div>

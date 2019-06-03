@@ -11,6 +11,9 @@ import { fork } from 'redux-saga/effects';
 // SCM
 import user, { userSaga } from './scm/modules/UserModule';
 
+// PAYMENT
+import payment, { paymentSaga } from './payment/modules/PaymentModule';
+
 // OMS
 import orderHistory, { orderHistorySaga } from './oms/modules/OrderHistoryModule';
 import reportMakeHistory, { reportMakeHistorySaga } from './oms/modules/ReportMakeHistoryModule';
@@ -26,6 +29,8 @@ import question, { questionSaga } from './bms/modules/QuestionModule';
 export function* rootSaga() {
   // SCM
   yield fork(userSaga);
+  // PAYMENT
+  yield fork(paymentSaga);
   // OMS
   yield fork(orderHistorySaga);
   yield fork(reportMakeHistorySaga);
@@ -41,6 +46,8 @@ export function* rootSaga() {
 export default combineReducers({
   // SCM
   user,
+  // PAYMENT
+  payment,
   // OMS
   orderHistory, reportMakeHistory, changePointHistory, purchaseHistory, product,
   // BMS

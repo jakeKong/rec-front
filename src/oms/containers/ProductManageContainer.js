@@ -23,7 +23,8 @@ class ProductManageContainer extends Component {
         productCd: null,
         productNm: null,
         productPoint: null,
-        cashRatio: null
+        pointCash: null
+        // cashRatio: null
       },
       popupOpened: false
     };
@@ -60,7 +61,8 @@ class ProductManageContainer extends Component {
       productCd: null,
       productNm: null,
       productPoint: null,
-      cashRatio: null
+      pointCash: null
+      // cashRatio: null
     }});
   }
 
@@ -76,7 +78,8 @@ class ProductManageContainer extends Component {
       productCd: null,
       productNm: null,
       productPoint: null,
-      cashRatio: null
+      pointCash: null
+      // cashRatio: null
     }});
   }
 
@@ -116,7 +119,8 @@ class ProductManageContainer extends Component {
       productCd: null,
       productNm: null,
       productPoint: null,
-      cashRatio: null
+      pointCash: null
+      // cashRatio: null
     }});
   }
 

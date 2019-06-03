@@ -28,7 +28,8 @@ export const addProduct = (dto) => axios({
     'productCd': dto.productCd,
     'productNm': dto.productNm,
     'productPoint': dto.productPoint,
-    'cashRatio': dto.cashRatio,
+    'pointCash': dto.pointCash,
+    // 'cashRatio': dto.cashRatio,
   })
 });
 
@@ -44,7 +45,8 @@ export const updateProduct = (dto) => axios({
     'productCd': dto.productCd,
     'productNm': dto.productNm,
     'productPoint': dto.productPoint,
-    'cashRatio': dto.cashRatio,
+    'pointCash': dto.pointCash,
+    // 'cashRatio': dto.cashRatio,
   })
 });
 

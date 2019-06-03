@@ -168,6 +168,24 @@
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.05);
 }
 
+.div-layout-card {
+  display: inline-block;
+  width: 600px;
+  padding: 1em;
+  margin: 1em;
+  // margin: 1em 10em 1em 10em;
+  border: 1px solid #d5d5d5;
+  text-align: center;
+  .div-layout-card-column {
+    display: flex;
+    margin: 1em;
+  }
+}
+
+.div-center {
+  text-align: center;
+}
+
 .div-inline {
   margin: 1em;
   display: inline;

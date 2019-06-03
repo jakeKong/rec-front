@@ -2,7 +2,8 @@ import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as productManageActions from "../../oms/modules/ProductManageModule";
-import { PaymentProductListGrid } from "../index";
+import * as paymentActions from "../modules/PaymentModule";
+import { PaymentProductListGrid, PaymentComplete } from "../index";
 
 import '@vaadin/vaadin-ordered-layout';
 import '@vaadin/vaadin-notification';
@@ -124,27 +125,96 @@ class PaymentContainer extends Component {
     }
   }
 
+  paymentApprovalRequest = async (paymentId) => {
+    const { PaymentModule } = this.props;
+    try {
+      await PaymentModule.paymentApprovalRequest(paymentId)
+    } catch (e) {
+      console.log("error log : " + e);
+    }
+  }
+
+  // --- response값 임시 설정 (결제승인 결과값 가져오기)
+  getSamplePaymentRequest = async (totalPay, totalPoint) => {
+    const { PaymentModule } = this.props;
+    try {
+      await PaymentModule.getSamplePaymentRequest(totalPay, totalPoint)
+    } catch (e) {
+      console.log("error log : " + e);
+    }
+  }
+
   // 네이버페이 결제 창 호출
   openNaverPay = async () => {
     const { totalPay, totalPoint } = this.state;
+    if (totalPay < 1000) {
+      const nfNotAllowPayment = document.createElement('vaadin-notification');
+      nfNotAllowPayment.renderer = function(root) {
+        root.textContent = '선택한 금액이 1000원 이상이어야 결제가 가능합니다.'
+      } 
+      document.body.appendChild(nfNotAllowPayment);
+      nfNotAllowPayment.position = 'middle';
+      nfNotAllowPayment.duration = 2000;
+      nfNotAllowPayment.opened = true;
+      return;
+    }
 
+    // --- response값 임시 설정 (결제승인 결과값 가져오기)
+    const getSamplePaymentRequest = this.getSamplePaymentRequest;
+
+    // 결제 요청 시 사용하는 함수
+    // const paymentApprovalRequest = this.paymentApprovalRequest;
     const oPay = window.Naver.Pay.create({
-      "mode" : "production", // development or production
-      // "mode" : "development", // development chrome 미적용 문제 - 2019-05-28
+      // "mode" : "production", // developer or production
+      "mode" : "developer", // developer or production
       "payType" : "normal", // normal or recurrent
       "openType": "layer",
-      "clientId": "u86j4ripEt8LRfPGzQ8" // clientId
+      "clientId": "u86j4ripEt8LRfPGzQ8", // clientId
+      "onAuthorize" : function(oData) {
+        /*
+        layer 타입을 사용했을 때 페이지 전환 없이 구현이 가능하도록 지원되며, 그 외의 경우는 returnUrl 로 참조 정보와 함께 redirect 됩니다.
+        oData 객체에는 결제 인증 결과와 전달한 returnUrl 정보가 함께 전달되며,
+        이 정보는 이후 승인 요청 처리를 위한 정보 (resultCode, resultMessage, returnUrl, paymentId, reserveId 등) 입니다.
+        전달되는 값은 https://developer.pay.naver.com/docs/v2/api#payments-payments_window 의 성공 & 실패 응답 값을 참조해주세요.
+        */
+        if(oData.resultCode === "Success") {
+          // 네이버페이 결제 승인 요청 처리
+          if (oData.paymentId !== undefined) {
+            // 결제 요청 이벤트
+            // paymentApprovalRequest(oData.paymentId);
+
+            // --- response값 임시 설정 (결제승인 결과값 가져오기)
+            getSamplePaymentRequest(totalPay, totalPoint);
+          }
+        } else {
+          // 필요 시 oData.resultMessage 에 따라 적절한 사용자 안내 처리
+          /* TEST CODE */
+          const nfNPayFailure = document.createElement('vaadin-notification');
+          nfNPayFailure.renderer = function(root) {
+            root.textContent = '결제 실패.'
+          } 
+          document.body.appendChild(nfNPayFailure);
+          nfNPayFailure.position = 'middle';
+          nfNPayFailure.duration = 2000;
+          nfNPayFailure.opened = true;
+
+          window.history.replaceState(null, null, window.location.href);
+          window.onpopstate = function () { };
+        }
+      }
     });
 
+    // 결제창 오픈
     oPay.open({
       "merchantUserKey": "partner-userkey",
-      "merchantPayKey": "partnder-orderkey",
+      "merchantPayKey": "partner-orderkey",
       "productName": totalPoint+'포인트',
       "totalPayAmount": totalPay,
       "taxScopeAmount": (totalPay*0.9),
       "taxExScopeAmount": (totalPay*0.1),
       "productCount": 1,
       "returnUrl": "http://localhost:3000/#/payment/product",
+      // "returnUrl": "https://localhost:3000/#/payment/product",
       "productItems": [{
         "categoryType": "ETC",
         "categoryId" : "ETC",
@@ -152,15 +222,16 @@ class PaymentContainer extends Component {
         "name" : "test",
         "payReferrer" : "ETC",
         "count" : 1
-      }, {
-        "categoryType": "ETC",
-        "categoryId" : "ETC",
-        "uid" : "4567",
-        "name" : "test2",
-        "payReferrer" : "ETC",
-        "count" : 2
       }]
     });
+
+    // 네이버페이 결제 창 노출 시 뒤로가기 비활성화
+    if (oPay) {
+      window.history.pushState(null, null, window.location.href);
+      window.onpopstate = function () {
+        window.history.go(1);
+      };
+    }
   }
 
   // 마운트 이전 권한 체크
@@ -172,10 +243,9 @@ class PaymentContainer extends Component {
   componentDidMount() {
     const { search } = this.state;
     const { productList } = this.props;
-    if (!productList || productList === undefined || productList.isEmpty()) {
+    if (!productList || productList === undefined || productList === null) {
       this.getProductList(search);
     }
-
     document.querySelector('#lbSelectPayName').innerHTML = "선택금액 : ";
     document.querySelector('#lbSelectPay').innerHTML = "0";
     document.querySelector('#lbSelectPaySubName').innerHTML = "원 (VAT 별도)";
@@ -193,6 +263,7 @@ class PaymentContainer extends Component {
     document.querySelector('#lbTotalPaySubName').innerHTML = "원 (부가세 10% 포함)";
 
     // console.log(window.naver.NaverPayButton)
+    // SDK 추가 사용 필요
     // window.naver.NaverPayButton.apply({
     //   BUTTON_KEY: "네이버에서 전달받은 버튼생성키",
     //   TYPE: "naver_btn_chk", //버튼 스타일
@@ -210,19 +281,21 @@ class PaymentContainer extends Component {
       // 네이버페이 결제 창 호출
       openNaverPay();
     });
-
   }
 
   render() {
     const { productList, pending, error, success } = this.props;
+    const { paymentRequest, paymentPending, paymentError, paymentSuccess } = this.props;
+
     return (
       <Fragment>
+        {!paymentRequest ? 
         <div>
           <div className="div-main">
             { pending && "Loading..." }
             { error && <h1>Server Error!</h1> }
             { success && <PaymentProductListGrid productList={ productList } productDtoCallback={ this.productDtoCallback } selectCallback={ this.selectCallback } deselectCallback={ this.deselectCallback } />}
-            <div className="div-select-total-payment">
+            <div className="div-select-total-payment" hidden={!productList}>
               <div className="div-inline">
                 <label id="lbSelectPayName"/>
                 <label id="lbSelectPay"/>
@@ -251,6 +324,15 @@ class PaymentContainer extends Component {
             <button id="naverPayBtn" hidden/>
           </div>
         </div>
+        :
+        <div>
+          <div className="div-main">
+            { paymentPending && "Loading..." }
+            { paymentError && <h1>Server Error!</h1> }
+            { paymentSuccess && paymentRequest ? <PaymentComplete paymentRequest={paymentRequest} /> : null }
+          </div>
+        </div>
+        }
       </Fragment>
     );
   }
@@ -262,9 +344,15 @@ export default connect(
     pending: state.product.pending,
     error: state.product.error,
     success: state.product.success,
-    complete: state.product.complete
+    complete: state.product.complete,
+
+    paymentRequest: state.payment.paymentRequest,
+    paymentPending: state.payment.pending,
+    paymentError: state.payment.error,
+    paymentSuccess: state.payment.success,
   }),
   dispatch => ({
-    ProductManageModule: bindActionCreators(productManageActions, dispatch)
+    ProductManageModule: bindActionCreators(productManageActions, dispatch),
+    PaymentModule: bindActionCreators(paymentActions, dispatch)
   })
 )(PaymentContainer);

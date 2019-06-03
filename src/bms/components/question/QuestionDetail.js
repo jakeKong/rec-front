@@ -3,7 +3,6 @@ import React, { Component, Fragment } from 'react';
 import '@vaadin/vaadin-ordered-layout';
 import '@vaadin/vaadin-button';
 import '@vaadin/vaadin-text-field/vaadin-text-area';
-import '@polymer/iron-icons';
 
 import { QuestionComment } from "../../index";
 

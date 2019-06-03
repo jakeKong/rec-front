@@ -5,6 +5,7 @@ const config = {
     sysyemService: "/web/rec/api/scm",
     orderService: "/web/rec/api/oms",
     boardService: "/web/rec/api/bms",
+    naverpay: "https://dev.apis.naver.com"
 };
 
 export default config;

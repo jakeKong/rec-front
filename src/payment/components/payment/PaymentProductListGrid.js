@@ -4,37 +4,6 @@ import '@vaadin/vaadin-grid';
 import '@vaadin/vaadin-dialog';
 
 class PaymentProductListGrid extends Component {
-  constructor(props) {
-    super(props);
-    this.state ={
-      noCloseOnOutsideClick: {
-        type: Boolean,
-        value: false
-      },
-      noCloseOnEsc: {
-        type: Boolean,
-        value: false
-      },
-    }
-  }
-
-  /**
-   * Close the dialog if `noCloseOnOutsideClick` isn't set to true
-   */
-  _handleOutsideClick(e) {
-    if (this.state.noCloseOnOutsideClick) {
-      e.preventDefault();
-    }
-  }
-
-  /**
-   * Close the dialog if `noCloseOnEsc` isn't set to true
-   */
-  _handleEscPress(e) {
-    if (this.state.noCloseOnEsc) {
-      e.preventDefault();
-    }
-  }
 
   componentDidMount() {
     const { productList, productDtoCallback } = this.props;
