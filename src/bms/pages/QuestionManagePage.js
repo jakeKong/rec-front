@@ -4,7 +4,7 @@ import { QuestionManageContainer } from '../index'
 
 const QuestionManagePage = () => {
   return (
-    <div className="index">
+    <div>
       <PageTemplate>
         <div className="page-description">문의사항</div>
         <QuestionManageContainer />

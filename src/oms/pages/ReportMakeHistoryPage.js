@@ -4,7 +4,7 @@ import { ReportMakeHistoryContainer } from '../index';
 
 const ReportMakeHistoryPage = () => {
   return (
-    <div className="index">
+    <div>
       <PageTemplate>
         <div className="page-description">운영관리 > 보고서 생성이력 조회</div>
         <ReportMakeHistoryContainer />

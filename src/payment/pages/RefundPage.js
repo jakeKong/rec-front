@@ -4,7 +4,7 @@ import { RefundContainer } from '../index'
 
 const RefundPage = () => {
   return (
-    <div className="index">
+    <div>
       <PageTemplate>
         <div className="page-description">환불신청</div>
         <RefundContainer />

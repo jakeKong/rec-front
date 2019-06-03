@@ -4,7 +4,7 @@ import { PaymentContainer } from '../index'
 
 const PaymentPage = () => {
   return (
-    <div className="index">
+    <div>
       <PageTemplate>
         <div className="page-description">상품구매</div>
         <PaymentContainer />

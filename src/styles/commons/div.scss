@@ -134,20 +134,28 @@
   padding: 1em;
   // text-align: center;
   .default-column {
+    display: flex;
     padding: 1em;
+    align-items: center;
   }
   .email-column {
+    display: flex;
     padding: 1em;
+    align-items: center;
   }
   .address-column {
+    display: flex;
     padding: 1em;
+    align-items: center;
   }
   .list-box-column {
+    display: flex;
     padding: 1em;
     text-align: center;
     .list-box-button{
       width: 100px;
-      padding: 5px;
+      margin-top: 3em;
+      vertical-align: middle;
       display: inline-block;
       text-align: center;
     }
@@ -209,4 +217,9 @@
   border: 1px solid #d5d5d5;
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.05);
   justify-content: center;
+}
+
+.div-flex-80-left {
+  flex: 80;
+  text-align: left;
 }

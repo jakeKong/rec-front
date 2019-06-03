@@ -4,7 +4,7 @@ import { PaymentHistoryContainer } from '../index'
 
 const PaymentHistoryPage = () => {
   return (
-    <div className="index">
+    <div>
       <PageTemplate>
         <div className="page-description">결제내역 조회</div>
         <PaymentHistoryContainer />

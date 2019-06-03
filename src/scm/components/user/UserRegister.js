@@ -145,7 +145,18 @@ class UserRegister extends Component {
   componentDidMount() {
     // search parameter default setting
     const { dto, clicked } = this.state;
+    
+    // 변수 초기화 함수
     const resetDto = () => {
+      // tfEmailName.required = false;
+      // tfEmailDomain.required = false;
+      // tfEmailCom.required = false;
+      // tfNm.required = false;
+      // tfTellStation.required = false;
+      // tfTellByNumber.required = false;
+      // tfTellNumberByNumber.required = false;
+      // tfAddress.required = false;
+      // tfAddressNo.required = false;
       tfEmailName.value = null;
       tfEmailDomain.value = null;
       tfEmailCom.value = null;
@@ -177,56 +188,65 @@ class UserRegister extends Component {
     document.querySelector('#doRegister').addEventListener('vaadin-overlay-escape-press', this._handleEscPress.bind(this));
 
     document.querySelector('#lbEmail').innerHTML = "이메일";
-    document.querySelector('#lbEmailCommercial').innerHTML = "@";
-    document.querySelector('#lbEmailPeriod').innerHTML = ".";
+    document.querySelector('#lbEmailCommercial').innerHTML = " @ ";
+    document.querySelector('#lbEmailPeriod').innerHTML = " . ";
     
     document.querySelector('#lbNm').innerHTML = "이름";
 
     document.querySelector('#lbTellNo').innerHTML = "전화번호";
-    document.querySelector('#lbTellNoHyphen').innerHTML = "-";
-    document.querySelector('#lbTellNoHyphenTo').innerHTML = "-";
+    document.querySelector('#lbTellNoHyphen').innerHTML = " - ";
+    document.querySelector('#lbTellNoHyphenTo').innerHTML = " - ";
 
     document.querySelector('#lbAddress').innerHTML = "주소";
-    document.querySelector('#lbAddressNo').innerHTML = "우편번호";
+    document.querySelector('#lbAddressNo').innerHTML = "&nbsp&nbsp우편번호";
     document.querySelector('#lbBirthDt').innerHTML = "생년월일";
 
+    // 이메일 입력필드
     const tfEmailName = document.querySelector('#tfEmailName');
-    tfEmailName.className = 'vaadin-text-field-email-name';
+    tfEmailName.className = 'vaadin-text-field-width-200';
     // tfEmailName.placeholder = '이메일을 입력해주세요.';
     const tfEmailDomain = document.querySelector('#tfEmailDomain');
-    tfEmailDomain.className = 'vaadin-text-field-email-domain';
+    tfEmailDomain.className = 'vaadin-text-field-width-100';
     const tfEmailCom = document.querySelector('#tfEmailCom');
-    tfEmailCom.className = 'vaadin-text-field-email-com';
+    tfEmailCom.className = 'vaadin-text-field-width-70';
 
+    // 이름 입력필드
     const tfNm = document.querySelector('#tfNm');
-    tfNm.className = 'vaadin-text-field-name';
+    tfNm.className = 'vaadin-text-field-width-200-flex-80';
     tfNm.placeholder = '이름을 입력해주세요';
     tfNm.addEventListener('input', function() {
       dto.name = tfNm.value;
     })
 
+    // 전화번호 입력필드
     const tfTellStation = document.querySelector('#tfTellStation');
-    tfTellStation.className = 'vaadin-text-field-tell-station'
+    tfTellStation.className = 'vaadin-text-field-width-100'
     const tfTellByNumber = document.querySelector('#tfTellByNumber');
-    tfTellByNumber.className = 'vaadin-text-field-tell-number';
+    tfTellByNumber.className = 'vaadin-text-field-width-100';
     const tfTellNumberByNumber = document.querySelector('#tfTellNumberByNumber');
-    tfTellNumberByNumber.className = 'vaadin-text-field-tell-number';
+    tfTellNumberByNumber.className = 'vaadin-text-field-width-100';
 
+    // 주소 입력필드 (비활성)
     const tfAddress = document.querySelector('#tfAddress');
-    tfAddress.className = 'vaadin-text-field-address';
+    tfAddress.className = 'vaadin-text-field-width-100-flex-30';
     tfAddress.disabled = true;
     const tfAddressNo = document.querySelector('#tfAddressNo');
-    tfAddressNo.className = 'vaadin-text-field-address-number';
+    tfAddressNo.className = 'vaadin-text-field-width-100-flex-30';
     tfAddressNo.disabled = true;
 
+    // 생년월일 입력필드
     const dpBirthDt = document.querySelector('#dpBirthDt');
+    dpBirthDt.className = "vaadin-date-picker-width-150-flex-80";
     dpBirthDt.addEventListener('value-changed', function() {
       dto.birthDt = dpBirthDt.value;
     })
 
+    // 권한 선택필드
     let beforeSelectItem = '';
     const lsbBeforeAssignedRoles = document.querySelector('#lsbBeforeAssignedRoles');
     lsbBeforeAssignedRoles.className = 'vaadin-list-box-before';
+    // items.js에 등록한 RoleCode 전체 목록 추가
+    // 권한 선택 왼쪽필드 (선택안함 상태)
     roleCodeItems.forEach(e => {
       const roleCodeItem = document.createElement('vaadin-item')
       roleCodeItem.textContent = e.textContent;
@@ -244,12 +264,16 @@ class UserRegister extends Component {
     const lsbAfterAssignedRoles = document.querySelector('#lsbAfterAssignedRoles');
     lsbAfterAssignedRoles.className = 'vaadin-list-box-after'
     let afterSelectItem = '';
-    const btnGoToBefore = document.querySelector('#btnGoToBefore');
-    btnGoToBefore.className = 'vaadin-button-before';
-    btnGoToBefore.addEventListener('click', function() {
+
+    // 선택한 권한을 오른쪽 필드 목록(선택 상태)에 추가하는 이벤트
+    const btnGoToAfter = document.querySelector('#btnGoToAfter');
+    btnGoToAfter.className = 'vaadin-button-before';
+    btnGoToAfter.addEventListener('click', function() {
+      // 클릭 시 선택된 권한이 있는지 체크
       if (beforeSelectItem === '' || beforeSelectItem === null || beforeSelectItem === undefined) {
         return;
       } else {
+        // 컬럼 선택 시 값 저장 이벤트
         let selectedItem = {value: beforeSelectItem.value, textContent: beforeSelectItem.textContent}
         const roleCodeItem = document.createElement('vaadin-item')
         roleCodeItem.textContent = beforeSelectItem.textContent;
@@ -261,6 +285,8 @@ class UserRegister extends Component {
             afterSelectItem = '';
           }
         })
+        // 선택한 권한에 대해 추가버튼을 클릭하였을때 오른쪽필드 목록에 이미 선택상태로 등록된 권한이 있을 경우 
+        // 등록된 권한의 목록에서 선택한 권한이 존재하는지 여부를 판별하여 존재할 경우 추가하지 않고 존재하지 않을경우 권한 목록에 추가
         if (lsbAfterAssignedRoles.childElementCount > 0) {
           for (let index=0; index<lsbAfterAssignedRoles.childElementCount; index++) {
             const itemToFind = dto.assignedRoles.find(function(item) {
@@ -271,15 +297,18 @@ class UserRegister extends Component {
               dto.assignedRoles.push(beforeSelectItem.value)
             }
           }
+          // 오른쪽 필드 목록에 값이 존재하지 않을 경우 선택한 권한을 목록에 추가하고 DTO에 추가
         } else {
           lsbAfterAssignedRoles.appendChild(roleCodeItem);
           dto.assignedRoles.push(beforeSelectItem.value)
         }
       }
     })
-    const btnGoToAfter = document.querySelector('#btnGoToAfter');
-    btnGoToAfter.className = 'vaadin-button-after';
-    btnGoToAfter.addEventListener('click', function() {
+
+    // 권한 선택 오른쪽필드에서 선택한 권한을 클릭 시 선택안함 상태로 변경하고 선택된 필드목록에서 해당 권한을 제거하는 이벤트
+    const btnGoToBefore = document.querySelector('#btnGoToBefore');
+    btnGoToBefore.className = 'vaadin-button-after';
+    btnGoToBefore.addEventListener('click', function() {
       if (afterSelectItem === '' || afterSelectItem === null || afterSelectItem === undefined) {
         return;
       } else {
@@ -356,43 +385,47 @@ class UserRegister extends Component {
         <vaadin-dialog-overlay id="doRegister">
           <div className="div-register-popup-board">
             <div className="email-column">
-              <label id="lbEmail"/>
-              <vaadin-text-field id="tfEmailName" required prevent-invalid-input pattern="([a-zA-Zㄱ-ㅎ가-힣0-9]+?)"/>
-              <label id="lbEmailCommercial"/>
-              <vaadin-text-field id="tfEmailDomain" required prevent-invalid-input pattern="([a-zA-Zㄱ-ㅎ가-힣0-9]+?)"/>
-              <label id="lbEmailPeriod"/>
-              <vaadin-text-field id="tfEmailCom" required prevent-invalid-input pattern="([a-zA-Zㄱ-ㅎ가-힣0-9]+?)"/>
+              <label id="lbEmail" className="label-flex-20-left"/>
+              <div className="div-flex-80-left">
+                <vaadin-text-field id="tfEmailName" required prevent-invalid-input pattern="([a-zA-Zㄱ-ㅎ가-힣0-9]+?)"/>
+                <label id="lbEmailCommercial"/>
+                <vaadin-text-field id="tfEmailDomain" required prevent-invalid-input pattern="([a-zA-Zㄱ-ㅎ가-힣0-9]+?)"/>
+                <label id="lbEmailPeriod"/>
+                <vaadin-text-field id="tfEmailCom" required prevent-invalid-input pattern="([a-zA-Zㄱ-ㅎ가-힣0-9]+?)"/>
+              </div>
             </div>
             <div className="default-column">
-              <label id="lbNm"/>
+              <label id="lbNm" className="label-flex-20-left"/>
               <vaadin-text-field id="tfNm" required prevent-invalid-input pattern="^([a-zA-Zㄱ-ㅎ가-힣0-9\s]+$)"/>
             </div>
             <div className="default-column">
-              <label id="lbTellNo"/>
-              <vaadin-text-field id="tfTellStation" required prevent-invalid-input pattern="^(\d{0,3}?)?$"/>
-              <label id="lbTellNoHyphen"/>
-              <vaadin-text-field id="tfTellByNumber" required prevent-invalid-input pattern="^(\d{0,4}?)?$"/>
-              <label id="lbTellNoHyphenTo"/>
-              <vaadin-text-field id="tfTellNumberByNumber" required prevent-invalid-input pattern="^(\d{0,4}?)?$"/>
+              <label id="lbTellNo" className="label-flex-20-left"/>
+              <div className="div-flex-80-left">
+                <vaadin-text-field id="tfTellStation" required prevent-invalid-input pattern="^(\d{0,3}?)?$"/>
+                <label id="lbTellNoHyphen"/>
+                <vaadin-text-field id="tfTellByNumber" required prevent-invalid-input pattern="^(\d{0,4}?)?$"/>
+                <label id="lbTellNoHyphenTo"/>
+                <vaadin-text-field id="tfTellNumberByNumber" required prevent-invalid-input pattern="^(\d{0,4}?)?$"/>
+              </div>
             </div>
             <div className="address-column">
-              <label id="lbAddress"/>
+              <label id="lbAddress" className="label-flex-20-left"/>
               <vaadin-text-field id="tfAddress" required prevent-invalid-input pattern="([a-zA-Zㄱ-ㅎ가-힣0-9]+?)"/>
-              <label id="lbAddressNo"/>
+              <label id="lbAddressNo" className="label-flex-20-left"/>
               <vaadin-text-field id="tfAddressNo" required prevent-invalid-input pattern="^(\d{0,7}?)?$"/>
             </div>
             <div className="default-column">
-              <label id="lbBirthDt"/>
+              <label id="lbBirthDt" className="label-flex-20-left"/>
               <vaadin-date-picker id="dpBirthDt"/>
             </div>
             <div className="list-box-column">
               <vaadin-list-box id="lsbBeforeAssignedRoles"/>
               <div className="list-box-button">
-                <vaadin-button id="btnGoToBefore">
-                  <iron-icon icon="vaadin:angle-double-left" />
-                </vaadin-button>
                 <vaadin-button id="btnGoToAfter">
                   <iron-icon icon="vaadin:angle-double-right" />
+                </vaadin-button>
+                <vaadin-button id="btnGoToBefore">
+                  <iron-icon icon="vaadin:angle-double-left" />
                 </vaadin-button>
               </div>
               <vaadin-list-box id="lsbAfterAssignedRoles"/>

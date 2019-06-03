@@ -2,7 +2,7 @@ import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as userActions from "../modules/UserModule";
-import { UserGrid, UserSearch, UserRegister, UserUpdate } from "../index";
+import { UserGrid, UserSearch, UserRegister, /*UserUpdate*/ } from "../index";
 
 import '@vaadin/vaadin-ordered-layout';
 import '@vaadin/vaadin-button';

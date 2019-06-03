@@ -12,7 +12,7 @@ import '@vaadin/vaadin-list-box'
 import '@vaadin/vaadin-item'
 
 import { reportTypeItems } from '../../items';
-import { weekBeforeDate, currentDate } from '../../../common/items';
+import { monthBeforeDate, currentDate } from '../../../common/items';
 
 class ReportMakeHistorySearch extends Component {
 
@@ -77,7 +77,7 @@ class ReportMakeHistorySearch extends Component {
     // Start date-picker set
     const dpStart = document.querySelector('#dpStart')
     // default before Week date set
-    dpStart.value = weekBeforeDate;
+    dpStart.value = monthBeforeDate;
     search.fromDt = dpStart.value;
     dpStart.addEventListener('value-changed', function() {
       search.fromDt = dpStart.value;

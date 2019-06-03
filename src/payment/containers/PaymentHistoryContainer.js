@@ -24,7 +24,7 @@ class PaymentHistoryContainer extends Component {
   searchCallback = async (dataSearchChild) => {
     this.setState({search: dataSearchChild});
 
-    const { search } = this.state;
+    // const { search } = this.state;
     // this.getPaymentHistoryList(search);
 
     // --- response값 임시 설정 (결제내역 결과값 가져오기)

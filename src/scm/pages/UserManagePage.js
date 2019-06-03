@@ -4,7 +4,7 @@ import { UserManageContainer } from '../index';
 
 const UserPage = () => {
   return (
-    <div className="index">
+    <div>
       <PageTemplate>
         <div className="page-description">사용자 관리</div>
         <UserManageContainer />

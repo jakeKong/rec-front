@@ -17,11 +17,10 @@ class PaymentHistoryGrid extends Component {
     }
   
     let dateFormat = require('dateformat');
-    console.log(new Date("20190531163956"));
-    console.log(parseInt("20190531163956"));
-    console.log(new Date(parseInt("20190531163956")));
+
     paymentHistoryList.list.forEach(e=> {
-      e.tradeConfirmYmdt = dateFormat(new Date(parseInt(e.tradeConfirmYmdt)), 'yyyy년mm월dd일 HH:MM:ss');
+      let dateStringValue = e.tradeConfirmYmdt.substring(0,4)+'-'+e.tradeConfirmYmdt.substring(4,6)+'-'+e.tradeConfirmYmdt.substring(6,8)+'T'+e.tradeConfirmYmdt.substring(8,10)+':'+e.tradeConfirmYmdt.substring(10,12)+':'+e.tradeConfirmYmdt.substring(12,14);
+      e.tradeConfirmYmdt = dateFormat(new Date(dateStringValue), 'yyyy년mm월dd일 HH:MM:ss');
     })
 
     // Grid Items Setting

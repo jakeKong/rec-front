@@ -14,7 +14,7 @@ import '@vaadin/vaadin-select'
 import '@vaadin/vaadin-list-box'
 import '@vaadin/vaadin-item'
 
-import { weekBeforeDate, currentDate } from '../../../common/items';
+import { monthBeforeDate, currentDate } from '../../../common/items';
 
 class QuestionSearch extends Component {
 
@@ -43,7 +43,7 @@ class QuestionSearch extends Component {
     // Start date-picker set
     const dpStart = document.querySelector('#dpStart')
     // default before Week date set
-    dpStart.value = weekBeforeDate;
+    dpStart.value = monthBeforeDate;
     search.fromDt = dpStart.value;
     dpStart.addEventListener('value-changed', function() {
       search.fromDt = dpStart.value;

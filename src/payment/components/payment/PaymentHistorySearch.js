@@ -12,7 +12,7 @@ import '@vaadin/vaadin-list-box'
 import '@vaadin/vaadin-item'
 
 import { approvalTypeItems } from '../../items';
-import { weekBeforeDate, currentDate } from '../../../common/items';
+import { monthBeforeDate, currentDate } from '../../../common/items';
 
 class PaymentHistorySearch extends Component {
 
@@ -75,7 +75,8 @@ class PaymentHistorySearch extends Component {
     // Start date-picker set
     const dpStart = document.querySelector('#dpStart')
     // default before Week date set
-    dpStart.value = weekBeforeDate;
+    dpStart.value = monthBeforeDate;
+    console.log(monthBeforeDate)
     search.startTime = dpStart.value;
     dpStart.addEventListener('value-changed', function() {
       search.startTime = dpStart.value;

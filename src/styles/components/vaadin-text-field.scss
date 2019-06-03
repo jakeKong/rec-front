@@ -10,37 +10,26 @@ vaadin-number-field {
   font-size: 24px;
 }
 
-
-.vaadin-text-field-email-name {
-  width: 200px;
-}
-
-.vaadin-text-field-email-domain {
-  width: 100px;
-}
-
-.vaadin-text-field-email-com {
+.vaadin-text-field-width-70 {
   width: 70px;
 }
 
-.vaadin-text-field-name {
+.vaadin-text-field-width-100 {
+  width: 100px;
+}
+
+.vaadin-text-field-width-200 {
   width: 200px;
 }
 
-.vaadin-text-field-tell-station {
+.vaadin-text-field-width-100-flex-30 {
   width: 100px;
+  flex: 30;
 }
 
-.vaadin-text-field-tell-number {
-  width: 100px;
-}
-
-.vaadin-text-field-address {
-  width: 100px;
-}
-
-.vaadin-text-field-address-number {
-  width: 100px;
+.vaadin-text-field-width-200-flex-80 {
+  width: 200px;
+  flex: 80;
 }
 
 .vaadin-text-area-answer {

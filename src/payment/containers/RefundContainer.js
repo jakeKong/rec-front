@@ -4,6 +4,7 @@ import { bindActionCreators } from "redux";
 import * as changePointHistoryActions from "../../oms/modules/ChangePointHistoryModule";
 import * as purchaseHistoryActions from "../../oms/modules/PurchaseHistoryModule";
 import { ChangePointHistoryGrid, ChangePointHistorySearch, PurchaseHistoryGrid } from "../../oms/index";
+// import { PaymentHistoryGrid, PaymentHistorySearch } from "../index";
 
 import '@vaadin/vaadin-ordered-layout';
 import '@vaadin/vaadin-split-layout';
