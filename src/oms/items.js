@@ -18,7 +18,7 @@ export const reportTypeItems = [
   {value: 'MARKET_PRICE_ANALYSIS', textContent: '시세분석'},
 ];
 
-// changPointHistory
+// changPointHistory //2019-06-03 수정 요청 
 export const changeTypeItems = [
   {value: 'PURCHASE', textContent: '구매'},
   {value: 'SUBSTRACT', textContent: '차감'}

@@ -6,11 +6,12 @@ import '@vaadin/vaadin-dialog';
 class PaymentProductListGrid extends Component {
 
   componentDidMount() {
-    const { productList, productDtoCallback } = this.props;
+    const { productList } = this.props;
     if (!productList || productList === undefined || productList.isEmpty()) {
       return
     }
 
+    /* 2019-06-04 : 다중선택 미사용으로 인한 비활성화
     let inverted = false;
     const grdSelect = document.querySelector('#grdSelect');
       grdSelect.hidden = false;
@@ -39,6 +40,7 @@ class PaymentProductListGrid extends Component {
       checkbox.__item = rowData.item;
       checkbox.checked = inverted !== rowData.selected;
     };
+    */
   
     let list =[];
     productList.forEach(e => {
@@ -57,8 +59,16 @@ class PaymentProductListGrid extends Component {
     const grid = document.querySelector('vaadin-grid');
     grid.items = list;
 
-    grid.addEventListener('dblclick', function(event) {
-      productDtoCallback(grid.getEventContext(event).item)
+    // 단일 선택값 전달 이벤트 <PRE> 2019-06-04 : (다중선택 미사용으로 인한 기능 추가)
+    const { selectCallback, deselectCallback } = this.props;
+    grid.addEventListener('active-item-changed', function(event) {
+      const item = event.detail.value;
+      grid.selectedItems = item ? [item] : [];
+      if (grid.selectedItems === undefined) {
+        deselectCallback(grid.selectedItems[0]);
+      } else {
+        selectCallback(grid.selectedItems[0]);  
+      }
     });
 
   }

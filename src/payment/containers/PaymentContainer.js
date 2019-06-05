@@ -24,7 +24,7 @@ class PaymentContainer extends Component {
         productCd: null,
         productNm: null,
         productPoint: null,
-        cashRatio: null
+        pointCash: null
       },
       selectList: [],
       totalPay: 0,
@@ -32,7 +32,28 @@ class PaymentContainer extends Component {
     };
   }
 
-  // 그리드의 체크박스 선택 시 선택한 컬럼의 값을 선택목록에 저장
+  // 그리드의 선택 시 선택한 컬럼의 값을 선택목록에 저장
+  selectCallback = async (selectDto) => {
+    this.setState({productDto: selectDto});
+    const { productDto } = this.state;
+    const lbTotalPayCommit = document.querySelector('#lbTotalPayCommit');
+    const naverPayBtn = document.querySelector('#naverPayBtn');
+    lbTotalPayCommit.hidden = false;
+    
+    if (productDto === undefined) {
+      naverPayBtn.hidden = true;
+      document.querySelector('#lbSelectPay').innerHTML = "0";
+      document.querySelector('#lbSelectPoint').innerHTML = "0";
+      lbTotalPayCommit.innerHTML ="선택된 상품이 없습니다. 상품을 선택해주세요."
+    } else {
+      naverPayBtn.hidden = false;
+      document.querySelector('#lbSelectPay').innerHTML = productDto.pointCash;
+      document.querySelector('#lbSelectPoint').innerHTML = productDto.productPoint;
+      lbTotalPayCommit.innerHTML ="※ 충전되는 포인트는 <strong>"+productDto.productPoint+"P</strong>이며 결제 시 부가세 10%를 포함한 <strong>"+productDto.pointCash+"원</strong>이 결제 됩니다."
+    }
+  }
+
+  /* 2019-06-04 : 다중선택 미사용으로 인한 비활성화
   selectCallback = async (selectDto) => {
     const { selectList } = this.state;
     selectList.push(selectDto.pointCash, selectDto.productPoint, selectDto.productSid)
@@ -59,8 +80,10 @@ class PaymentContainer extends Component {
       lbTotalPayCommit.innerHTML ="※ 충전되는 포인트는 <strong>"+totalPointValue+"P</strong>이며 결제 시 부가세 10%를 포함한 <strong>"+totalPayValue+"원</strong>이 결제 됩니다."
     }
   }
+  */
 
-  // 그리드의 체크박스 선택 취소 했을때 선택목록에 저장되어있는 값 중 선택취소한 컬럼의 값을 찾아 목록에서 제거
+  // 그리드의 선택 취소 했을때 선택목록에 저장되어있는 값 중 선택취소한 컬럼의 값을 찾아 목록에서 제거
+  /* 2019-06-04 : 다중선택 미사용으로 인한 비활성화
   deselectCallback = async (selectDto) => {
     const { selectList } = this.state;
 
@@ -105,16 +128,14 @@ class PaymentContainer extends Component {
       }
     } else {
       document.querySelector('#lbSelectPay').innerHTML = "0";
+      document.querySelector('#lbSelectPoint').innerHTML = "0";
       document.querySelector('#lbChargePoint').innerHTML = "0";
       document.querySelector('#lbTotalPay').innerHTML = "0";
       lbTotalPayCommit.hidden = true;
       naverPayBtn.hidden = true;
     }
-  }  
-
-  productDtoCallback = async (productDtoChild) => {
-    this.setState({productDto : productDtoChild});
   }
+  */
 
   getProductList = async (search) => {
     const { ProductManageModule } = this.props;
@@ -146,6 +167,7 @@ class PaymentContainer extends Component {
 
   // 네이버페이 결제 창 호출
   openNaverPay = async () => {
+    /* 2019-06-04 : 다중선택 미사용으로 인한 비활성화
     const { totalPay, totalPoint } = this.state;
     if (totalPay < 1000) {
       const nfNotAllowPayment = document.createElement('vaadin-notification');
@@ -158,6 +180,30 @@ class PaymentContainer extends Component {
       nfNotAllowPayment.opened = true;
       return;
     }
+    */
+   const { productDto } = this.state;
+   if (productDto.pointCash < 1000) {
+     const nfNotAllowPayment = document.createElement('vaadin-notification');
+     nfNotAllowPayment.renderer = function(root) {
+       root.textContent = '선택한 금액이 1000원 이상이어야 결제가 가능합니다.'
+     } 
+     document.body.appendChild(nfNotAllowPayment);
+     nfNotAllowPayment.position = 'middle';
+     nfNotAllowPayment.duration = 2000;
+     nfNotAllowPayment.opened = true;
+     return;
+   }
+   if (productDto.pointCash === undefined) {
+    const nfNotAllowPayment = document.createElement('vaadin-notification');
+    nfNotAllowPayment.renderer = function(root) {
+      root.textContent = '선택한 상품이 없습니다. 상품을 선택해주세요'
+    } 
+    document.body.appendChild(nfNotAllowPayment);
+    nfNotAllowPayment.position = 'middle';
+    nfNotAllowPayment.duration = 2000;
+    nfNotAllowPayment.opened = true;
+    return;
+   }
 
     // --- response값 임시 설정 (결제승인 결과값 가져오기)
     const getSamplePaymentRequest = this.getSamplePaymentRequest;
@@ -184,7 +230,10 @@ class PaymentContainer extends Component {
             // paymentApprovalRequest(oData.paymentId);
 
             // --- response값 임시 설정 (결제승인 결과값 가져오기)
+            /* 2019-06-04 : 다중선택 미사용으로 인한 비활성화
             getSamplePaymentRequest(totalPay, totalPoint);
+            */
+           getSamplePaymentRequest(productDto.pointCash, productDto.productPoint);
           }
         } else {
           // 필요 시 oData.resultMessage 에 따라 적절한 사용자 안내 처리
@@ -208,10 +257,16 @@ class PaymentContainer extends Component {
     oPay.open({
       "merchantUserKey": "partner-userkey",
       "merchantPayKey": "partner-orderkey",
+      /* 2019-06-04 : 다중선택 미사용으로 인한 비활성화
       "productName": totalPoint+'포인트',
       "totalPayAmount": totalPay,
       "taxScopeAmount": (totalPay*0.9),
       "taxExScopeAmount": (totalPay*0.1),
+      */
+      "productName": productDto.productPoint+'포인트',
+      "totalPayAmount": productDto.pointCash,
+      "taxScopeAmount": (productDto.pointCash*0.9),
+      "taxExScopeAmount": (productDto.pointCash*0.1),
       "productCount": 1,
       "returnUrl": "http://localhost:3000/#/payment/product",
       // "returnUrl": "https://localhost:3000/#/payment/product",
@@ -254,6 +309,7 @@ class PaymentContainer extends Component {
     document.querySelector('#lbSelectPoint').innerHTML = "0";
     document.querySelector('#lbSelectPointSubName').innerHTML = "P";
 
+    /* 2019-06-04 : 다중선택 미사용으로 인한 비활성화
     document.querySelector('#lbChargePointName').innerHTML = "충전 포인트 : ";
     document.querySelector('#lbChargePoint').innerHTML = "0";
     document.querySelector('#lbChargePointSubName').innerHTML = "P";
@@ -261,6 +317,7 @@ class PaymentContainer extends Component {
     document.querySelector('#lbTotalPayName').innerHTML = "총 구매금액 : ";
     document.querySelector('#lbTotalPay').innerHTML = "0";
     document.querySelector('#lbTotalPaySubName').innerHTML = "원 (부가세 10% 포함)";
+    */
 
     // console.log(window.naver.NaverPayButton)
     // SDK 추가 사용 필요
@@ -294,7 +351,7 @@ class PaymentContainer extends Component {
           <div className="div-main">
             { pending && "Loading..." }
             { error && <h1>Server Error!</h1> }
-            { success && <PaymentProductListGrid productList={ productList } productDtoCallback={ this.productDtoCallback } selectCallback={ this.selectCallback } deselectCallback={ this.deselectCallback } />}
+            { success && <PaymentProductListGrid productList={ productList } selectCallback={ this.selectCallback } deselectCallback={ this.deselectCallback } />}
             <div className="div-select-total-payment" hidden={!productList}>
               <div className="div-inline">
                 <label id="lbSelectPayName"/>
@@ -306,6 +363,7 @@ class PaymentContainer extends Component {
                 <label id="lbSelectPoint"/>
                 <label id="lbSelectPointSubName"/>
               </div>
+              {/* // 2019-06-04 : 다중선택 미사용으로 인한 비활성화
               <div className="div-inline">
                 <label id="lbChargePointName"/>
                 <label id="lbChargePoint"/>
@@ -315,7 +373,7 @@ class PaymentContainer extends Component {
                 <label id="lbTotalPayName"/>
                 <label id="lbTotalPay"/>
                 <label id="lbTotalPaySubName"/>
-              </div>
+              </div> */}
             </div>
             <label id="lbTotalPayCommit" hidden />
           </div>

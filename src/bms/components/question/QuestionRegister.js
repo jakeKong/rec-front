@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 
 import '@vaadin/vaadin-button';
 import '@vaadin/vaadin-text-field';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+// import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 class QuestionRegister extends Component {
 
@@ -45,23 +45,23 @@ class QuestionRegister extends Component {
 
     let textValue;
     /** CKEditor5 구현 */
-    const editor = document.querySelector('#editor');
-    const div = document.createElement('div')
-    ClassicEditor.create(div, {
-      // editor config setting
-      language:'ko',
-      placeholder: '내용을 입력하세요.',
-    }).then( editor => {
-      // 전달받은 문의사항 값이 존재할 경우 전달받은 문의사항 값을 에디터값으로 설정
-      if (questionDto !== null && questionDto !== undefined && questionDto.questionSid !== null) {
-        editor.setData(questionDto.questionTxt);
-      }
-      textValue = editor;
-    })
-    .catch( err => {
-        console.error( err.stack );
-    } );
-    editor.appendChild(div)
+    // const editor = document.querySelector('#editor');
+    // const div = document.createElement('div')
+    // ClassicEditor.create(div, {
+    //   // editor config setting
+    //   language:'ko',
+    //   placeholder: '내용을 입력하세요.',
+    // }).then( editor => {
+    //   // 전달받은 문의사항 값이 존재할 경우 전달받은 문의사항 값을 에디터값으로 설정
+    //   if (questionDto !== null && questionDto !== undefined && questionDto.questionSid !== null) {
+    //     editor.setData(questionDto.questionTxt);
+    //   }
+    //   textValue = editor;
+    // })
+    // .catch( err => {
+    //     console.error( err.stack );
+    // } );
+    // editor.appendChild(div)
 
     const { addCallback, updateCallback } = this.props;
     // 문의사항 등록 버튼 이벤트

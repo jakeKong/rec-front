@@ -2,7 +2,12 @@ import React, { Component, Fragment } from 'react';
 
 import '@vaadin/vaadin-button';
 import '@vaadin/vaadin-text-field';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+
+import { EditorState, convertToRaw, ContentState } from 'draft-js';
+import { Editor } from 'react-draft-wysiwyg';
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import draftToHtml from 'draftjs-to-html';
+import htmlToDraft from 'html-to-draftjs';
 
 class NoticeRegister extends Component {
 
@@ -13,7 +18,8 @@ class NoticeRegister extends Component {
         noticeTitle: null,
         noticeTxt: null,
         reportingDt: null
-      }
+      },
+      editorState: EditorState.createEmpty(),
     }
   }
 
@@ -44,24 +50,27 @@ class NoticeRegister extends Component {
     });
 
     let textValue;
+    // 2019-06-05 13:28:00 issue! = 파일 업로드 드래그로는 가능한데 클릭하여 로컬파일 선택창이 안열림
+    const draftEditor = document.getElementsByClassName('rdw-editor-wrapper')[0];
+    console.log(draftEditor);
     /** CKEditor5 구현 */
-    const editor = document.querySelector('#editor');
-    const div = document.createElement('div')
-    ClassicEditor.create(div, {
-      // editor config setting
-      language:'ko',
-      placeholder: '내용을 입력하세요.',
-    }).then( editor => {
-      // 전달받은 공지사항 값이 존재할 경우 전달받은 공지사항 값을 에디터값으로 설정
-      if (noticeDto !== null && noticeDto !== undefined && noticeDto.noticeSid !== null) {
-        editor.setData(noticeDto.noticeTxt);
-      }
-      textValue = editor;
-    })
-    .catch( err => {
-        console.error( err.stack );
-    } );
-    editor.appendChild(div)
+    // const editor = document.querySelector('#editor');
+    // const div = document.createElement('div')
+    // ClassicEditor.create(div, {
+    //   // editor config setting
+    //   language:'ko',
+    //   placeholder: '내용을 입력하세요.',
+    // }).then( editor => {
+    //   // 전달받은 공지사항 값이 존재할 경우 전달받은 공지사항 값을 에디터값으로 설정
+    //   if (noticeDto !== null && noticeDto !== undefined && noticeDto.noticeSid !== null) {
+    //     editor.setData(noticeDto.noticeTxt);
+    //   }
+    //   textValue = editor;
+    // })
+    // .catch( err => {
+    //     console.error( err.stack );
+    // } );
+    // editor.appendChild(div)
 
     const { addCallback, updateCallback } = this.props;
     // 공지사항 등록 버튼 이벤트
@@ -127,11 +136,56 @@ class NoticeRegister extends Component {
     })
   }
 
+  onEditorStateChange = (inputEditorState) => {
+    this.setState({
+      editorState: draftToHtml(convertToRaw(inputEditorState.getCurrentContent()))
+    });
+    console.log(draftToHtml(convertToRaw(inputEditorState.getCurrentContent())));
+    const { editorState } = this.state;
+    console.log(editorState);
+  };
+
+  uploadImageCallBack(file) {
+    return new Promise(
+      (resolve, reject) => {
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', 'https://api.imgur.com/3/image');
+        xhr.setRequestHeader('Authorization', 'Client-ID 8d26ccd12712fca');
+        const data = new FormData();
+        data.append('image', file);
+        xhr.send(data);
+        xhr.addEventListener('load', () => {
+          const response = JSON.parse(xhr.responseText);
+          resolve(response);
+        });
+        xhr.addEventListener('error', () => {
+          const error = JSON.parse(xhr.responseText);
+          reject(error);
+        });
+      }
+    );
+  }
+
   render() {
+    const { editorState } = this.state;
+
     return (
       <Fragment>
         <vaadin-text-field id="tfTitle"/>
-        <div id="editor"/>
+        <Editor
+          inputEditorState={editorState}
+          toolbarClassName="toolbar-class"
+          wrapperClassName="wrapper-class"
+          editorClassName="toolbar-class"
+          onEditorStateChange={this.onEditorStateChange}
+          toolbar={{
+            link: { showOpenOptionOnHover: true },
+            image: { 
+              uploadCallback: this.uploadImageCallBack, 
+              alt: { present: true, mandatory: true } 
+            },
+          }}
+        />
         <div>
           <vaadin-button id="btnRegister"  />
           <vaadin-button id="btnCancle" theme="error" />
