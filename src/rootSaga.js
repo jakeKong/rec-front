@@ -20,6 +20,9 @@ import notice, { noticeSaga } from './bms/modules/NoticeModule';
 
 // MPA
 import bldRgst, { brRecapTitleInfoSaga } from './mpa/modules/BrRecapTitleInfoModule';
+import possession, { possessionSaga } from './mpa/modules/PossessionModule';
+import landCharacteristics, { landCharacteristicsSaga } from './mpa/modules/LandCharacteristicsModule';
+import landUse, { landUseSaga } from './mpa/modules/LandUseModule';
 
 // rootSaga 설정
 export function* rootSaga() {
@@ -33,6 +36,9 @@ export function* rootSaga() {
   yield fork(noticeSaga);
   // MPA
   yield fork(brRecapTitleInfoSaga);
+  yield fork(possessionSaga);
+  yield fork(landCharacteristicsSaga);
+  yield fork(landUseSaga);
 }
 
 // 통합 reducer
@@ -42,5 +48,5 @@ export default combineReducers({
   // BMS
   notice,
   // MPA
-  bldRgst
+  bldRgst, possession, landCharacteristics, landUse
 });
