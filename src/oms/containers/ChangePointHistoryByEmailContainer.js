@@ -4,7 +4,7 @@ import { bindActionCreators } from "redux";
 import * as changePointHistoryActions from "../modules/ChangePointHistoryModule";
 import { ChangePointHistoryGrid, ChangePointHistorySearch } from "../index";
 
-class ChangePointHistoryContainer extends Component {
+class ChangePointHistoryByEmailContainer extends Component {
 
   // state set을 위한 초기 생성자
   constructor(props) {
@@ -30,7 +30,8 @@ class ChangePointHistoryContainer extends Component {
     this.setState({search: dataSearchChild});
 
     const { search } = this.state;
-    this.getChangePointHistoryList(search);
+    const { email } = this.props;
+    this.getChangePointHistoryListByEmail(email, search);
     // state.search 값 초기화
     this.setState({search: {
       userNm: null,
@@ -49,33 +50,37 @@ class ChangePointHistoryContainer extends Component {
 
   // 마운트 직후 한번 (rendering 이전, 마운트 이후의 작업)
   componentDidMount() {
-    const { search } = this.state;
-    const { changePointHistoryList } = this.props;
-    if (!changePointHistoryList || changePointHistoryList === undefined || changePointHistoryList.isEmpty()) {
-        this.getChangePointHistoryList(search);
+    const { email } = this.props;
+    if (email || email !== null || email !== undefined) {
+        const { search } = this.state;
+        const { changePointHistoryList } = this.props;
+        if (!changePointHistoryList || changePointHistoryList === undefined || changePointHistoryList.isEmpty()) {
+            this.getChangePointHistoryListByEmail(email, search);
+        }
     }
+
   }
 
-  getChangePointHistoryList = async (search) => {
+  getChangePointHistoryListByEmail = async (email, search) => {
     const { ChangePointHistoryModule } = this.props;
     try {
-      await ChangePointHistoryModule.getChangePointHistoryList(search)
+      await ChangePointHistoryModule.getChangePointHistoryListByEmail(email, search)
     } catch (e) {
       console.log("error log : " + e);
     }
   }
 
   render() {
-    const { changePointHistoryList, pending, error, success, role } = this.props;
+    const { changePointHistoryList, pending, error, success } = this.props;
     return (
       <Fragment>
         <div className="div-search">
-          <ChangePointHistorySearch searchCallback={ this.searchCallback } role={ role } />
+          <ChangePointHistorySearch searchCallback={ this.searchCallback } />
         </div>
         <div className="div-main">
           { pending && "Loading..." }
           { error && <h1>Server Error!</h1> }
-          { success && <ChangePointHistoryGrid changePointHistoryList={ changePointHistoryList } role={ role } /> }
+          { success && <ChangePointHistoryGrid changePointHistoryList={ changePointHistoryList } /> }
         </div>
       </Fragment>
     );
@@ -90,10 +95,9 @@ export default connect(
     success: state.changePointHistory.success,
 
     // 임시 값 (삭제 후 pageTemplate등 상위 컴포넌트에서 email정보를 받아와 props로 사용해야 함)
-    // email: 'yieon@test.com',
-    role: 'ROLE_ADMIN'
+    email: 'yieon@test.com'
   }),
   dispatch => ({
     ChangePointHistoryModule: bindActionCreators(changePointHistoryActions, dispatch),
   })
-)(ChangePointHistoryContainer);
+)(ChangePointHistoryByEmailContainer);

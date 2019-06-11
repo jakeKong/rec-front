@@ -53,6 +53,11 @@ class NoticeRegister extends Component {
     // 2019-06-05 13:28:00 issue! = 파일 업로드 드래그로는 가능한데 클릭하여 로컬파일 선택창이 안열림
     const draftEditor = document.getElementsByClassName('rdw-editor-wrapper')[0];
     console.log(draftEditor);
+
+    // 2019-06-05 14:30:00 input값 확인 필요(input이 정상적으로 작동하지 않는 문제(원인 찾아보삼))
+    const input = document.getElementsByClassName('rdw-image-modal-upload-option-input')[0]
+    input.type = "file";
+
     /** CKEditor5 구현 */
     // const editor = document.querySelector('#editor');
     // const div = document.createElement('div')

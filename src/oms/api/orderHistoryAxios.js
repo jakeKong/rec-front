@@ -10,8 +10,8 @@ export const getOrderHistoryList = (search) => axios({
     'Accept': 'application/json'
   },
   data: JSON.stringify({
-    'email': search.email,
-    'pnu': search.pnu,
+    // 'email': search.email,
+    'ordererNm': search.ordererNm,
     'odrNo': search.odrNo,
     'fromDt': search.fromDt,
     'toDt': search.toDt,
@@ -28,8 +28,7 @@ export const getOrderHistoryListByEmail = (email, search) => axios({
     'Accept': 'application/json'
   },
   data: JSON.stringify({
-    'email': null,
-    'pnu': search.pnu,
+    // 'email': null,
     'odrNo': search.odrNo,
     'fromDt': search.fromDt,
     'toDt': search.toDt,

@@ -24,7 +24,7 @@ class OrderHistorySearch extends Component {
         this.state ={
             search: {
                 email: null,
-                pnu: null,
+                ordererNm: null,
                 odrNo: null,
                 fromDt: null,
                 toDt: null,
@@ -38,7 +38,7 @@ class OrderHistorySearch extends Component {
   componentDidMount() {
     // search parameter default setting
     const { search } = this.state;
-    const { email } = this.props;
+    const { role } = this.props;
 
     // search label set
     document.querySelector('#lbStatus').innerHTML = '상태';
@@ -149,16 +149,16 @@ class OrderHistorySearch extends Component {
     // Search combo-box set
     const cbSearch = document.querySelector('#cbSearch')
     // ByAll || byEmail Check
-    if (email != null) {
-      cbSearch.items = ['주문번호', '지번'];    
+    if (role != 'ROLE_ADMIN') {
+      cbSearch.items = ['주문번호'];    
     } else {
-      cbSearch.items = ['주문번호', '지번', '주문자'];
+      cbSearch.items = ['주문번호', '주문자'];
     }
     cbSearch.value = '주문번호';
     cbSearch.addEventListener('value-changed', function() {
       search.odrNo = null;
-      search.pnu = null;
-      search.email = null;
+      search.ordererNm = null;
+      // search.email = null;
       tfSearch.value = null;
     })
 
@@ -170,11 +170,8 @@ class OrderHistorySearch extends Component {
       if (cbSearch.value === '주문번호') {
         search.odrNo = tfSearch.value;
       }
-      if (cbSearch.value === '지번') {
-        search.pnu = tfSearch.value;
-      }
       if (cbSearch.value === '주문자') {
-        search.email = tfSearch.value;
+        search.ordererNm = tfSearch.value;
       }
     })
 
@@ -194,13 +191,13 @@ class OrderHistorySearch extends Component {
           {/* <vaadin-combo-box id="cbStatus"/> */}
           <vaadin-select id="slStatus" />
 
+        <label className="label-center" id="lbRealEstateType" />
+          <vaadin-select id="slRealEstateType" />
+
         <label className="label-center" id="lbDate" />
           <vaadin-date-picker id="dpStart" />
             <label className="label-center" id="lbPunct" />
           <vaadin-date-picker id="dpEnd" />
-
-        <label className="label-center" id="lbRealEstateType" />
-          <vaadin-select id="slRealEstateType" />
 
         <vaadin-combo-box id="cbSearch"/>
           <vaadin-text-field id="tfSearch">

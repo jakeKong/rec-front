@@ -3,6 +3,8 @@ import React, { Component, Fragment } from 'react';
 import '@vaadin/vaadin-grid';
 import '@vaadin/vaadin-dialog';
 
+import { comma } from '../../../common/utils';
+
 class PaymentProductListGrid extends Component {
 
   componentDidMount() {
@@ -49,8 +51,8 @@ class PaymentProductListGrid extends Component {
         productSid: e.get("productSid"),
         productCd: e.get("productCd"), 
         productNm: e.get("productNm"),
-        productPoint: e.get("productPoint"),
-        pointCash: e.get("pointCash"),
+        productPoint: comma(e.get("productPoint")),
+        pointCash: comma(e.get("pointCash")),
         // cashRatio: e.get("cashRatio"),
       })
     })

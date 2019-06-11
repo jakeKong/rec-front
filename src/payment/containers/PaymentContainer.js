@@ -5,6 +5,8 @@ import * as productManageActions from "../../oms/modules/ProductManageModule";
 import * as paymentActions from "../modules/PaymentModule";
 import { PaymentProductListGrid, PaymentComplete } from "../index";
 
+import { comma } from '../../common/utils';
+
 import '@vaadin/vaadin-ordered-layout';
 import '@vaadin/vaadin-notification';
 
@@ -185,7 +187,7 @@ class PaymentContainer extends Component {
    if (productDto.pointCash < 1000) {
      const nfNotAllowPayment = document.createElement('vaadin-notification');
      nfNotAllowPayment.renderer = function(root) {
-       root.textContent = '선택한 금액이 1000원 이상이어야 결제가 가능합니다.'
+       root.textContent = '선택한 금액이 1,000원 이상이어야 결제가 가능합니다.'
      } 
      document.body.appendChild(nfNotAllowPayment);
      nfNotAllowPayment.position = 'middle';

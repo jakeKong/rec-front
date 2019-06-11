@@ -1,7 +1,7 @@
 // OMS - api
 export { getOrderHistoryList, getOrderHistoryListByEmail } from './api/orderHistoryAxios';
 export { getReportMakeHistoryList } from './api/reportMakeHistoryAxios';
-export { getChangePointHistoryList } from './api/changePoingHistoryAxios';
+export { getChangePointHistoryList, getChangePointHistoryListByEmail } from './api/changePoingHistoryAxios';
 export { getPurchaseHistoryList } from './api/purchaseHistoryAxios';
 export { getProductList, addProduct, updateProduct, deleteProduct } from './api/productManageAxios';
 
@@ -22,6 +22,7 @@ export { default as OrderHistoryContainer } from './containers/OrderHistoryConta
 export { default as OrderHistoryByEmailContainer } from './containers/OrderHistoryByEmailContainer';
 export { default as ReportMakeHistoryContainer } from './containers/ReportMakeHistoryContainer';
 export { default as ChangePointHistoryContainer } from './containers/ChangePointHistoryContainer';
+export { default as ChangePointHistoryByEmailContainer } from './containers/ChangePointHistoryByEmailContainer';
 export { default as ProductManageContainer } from './containers/ProductManageContainer';
 
 // OMS - page
@@ -29,5 +30,6 @@ export { default as OrderHistoryPage } from './pages/OrderHistoryPage';
 export { default as OrderHistoryByEmailPage } from './pages/OrderHistoryByEmailPage';
 export { default as ReportMakeHistoryPage } from './pages/ReportMakeHistoryPage';
 export { default as ChangePointHistoryPage } from './pages/ChangePointHistoryPage';
+export { default as ChangePointHistoryByEmailPage } from './pages/ChangePointHistoryByEmailPage';
 export { default as ProductManagePage } from './pages/ProductManagePage';
 

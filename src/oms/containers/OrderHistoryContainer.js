@@ -14,7 +14,7 @@ class OrderHistoryContainer extends Component {
     this.state = {
       search: {
         email: null,
-        pnu: null,
+        ordererNm: null,
         odrNo: null,
         fromDt: null,
         toDt: null,
@@ -37,7 +37,7 @@ class OrderHistoryContainer extends Component {
     // state.search 값 초기화
     this.setState({search: {
       email: null,
-      pnu: null,
+      ordererNm: null,
       odrNo: null,
       fromDt: null,
       toDt: null,
@@ -54,6 +54,11 @@ class OrderHistoryContainer extends Component {
   // 마운트 직후 한번 (rendering 이전 마운트 이후의 작업)
   componentDidMount() {
     // 초기 GRID 세팅 필요
+    const { orderHistoryList } = this.props;
+    if (!orderHistoryList || orderHistoryList === undefined || orderHistoryList.isEmpty()) {
+      const { search } = this.state;
+      this.getOrderHistoryList(search);
+    }
   }
 
   getOrderHistoryList = async (search) => {
@@ -66,16 +71,16 @@ class OrderHistoryContainer extends Component {
   }
 
   render() {
-    const { orderHistoryList, pending, error, success } = this.props;
+    const { orderHistoryList, pending, error, success, role } = this.props;
     return (
       <Fragment>
         <div className="div-search">
-          <OrderHistorySearch searchCallback={ this.searchCallback } />
+          <OrderHistorySearch searchCallback={ this.searchCallback } role={ role } />
         </div>
         <div className="div-main">
           { pending && "Loading..." }
           { error && <h1>Server Error!</h1> }
-          { success && <OrderHistoryGrid orderHistoryList={ orderHistoryList } />}
+          { success && <OrderHistoryGrid orderHistoryList={ orderHistoryList } role={ role } />}
         </div>
       </Fragment>
     );
@@ -87,7 +92,10 @@ export default connect(
     orderHistoryList: state.orderHistory.orderHistoryList,
     pending: state.orderHistory.pending,
     error: state.orderHistory.error,
-    success: state.orderHistory.success
+    success: state.orderHistory.success,
+
+    // 임시 권한 설정
+    role: 'ROLE_ADMIN'
   }),
   dispatch => ({
     OrderHistoryModule: bindActionCreators(orderHistoryActions, dispatch)

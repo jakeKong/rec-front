@@ -20,6 +20,7 @@
     "immutable": "^4.0.0-rc.12",
     "node-sass": "^4.11.0",
     "raw-loader": "^2.0.0",
+    "rc-menu": "^7.4.23",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-draft-wysiwyg": "^1.13.2",

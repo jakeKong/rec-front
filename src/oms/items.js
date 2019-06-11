@@ -20,6 +20,10 @@ export const reportTypeItems = [
 
 // changPointHistory //2019-06-03 수정 요청 
 export const changeTypeItems = [
-  {value: 'PURCHASE', textContent: '구매'},
-  {value: 'SUBSTRACT', textContent: '차감'}
+  {value: 'PAYMENT_ADD', textContent: '결제'},
+  {value: 'PAYMENT_SUB', textContent: '결제취소'},
+  {value: 'PURCHASE_ADD', textContent: '구매'},
+  {value: 'PURCHASE_SUB', textContent: '구매취소'},
+  {value: 'EVENT_ADD', textContent: '이벤트지급'},
+  {value: 'EVENT_SUB', textContent: '이벤트지급취소'}
 ];

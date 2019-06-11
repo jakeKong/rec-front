@@ -194,8 +194,28 @@
   }
 }
 
+.div-mypage {
+  display: inline-flex;
+  width: 200px;
+  text-align: right;
+  justify-content: right;
+  align-items: right;
+  // height: 100px;
+}
+
+.div-header-sub-menu {
+  flex: 85;
+  text-align: right;
+  justify-content: right;
+  align-items: right;
+}
+
 .div-center {
   text-align: center;
+}
+
+.div-flex {
+  display: flex;
 }
 
 .div-inline {

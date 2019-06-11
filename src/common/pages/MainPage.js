@@ -1,6 +1,7 @@
 import React from 'react';
 import { PageTemplate } from '../../common';
 // import { MainContainer } from '../../containers'
+
 const MainPage = () => {
   return (
     <div className="index">
