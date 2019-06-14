@@ -3,7 +3,7 @@ import { Switch, Route } from 'react-router-dom';
 
 import { MainPage, NotFoundPage } from './common';
 import { UserManagePage } from './scm';
-import { OrderHistoryPage, OrderHistoryByEmailPage, ReportMakeHistoryPage, ChangePointHistoryPage, ChangePointHistoryByEmailPage, ProductManagePage } from './oms';
+import { OrderHistoryPage, OrderHistoryByEmailPage, /*ReportMakeHistoryPage,*/ ChangePointHistoryPage, ChangePointHistoryByEmailPage, ProductManagePage } from './oms';
 import { NoticePage, NoticeManagePage, QuestionPage, QuestionManagePage } from './bms';
 import { PaymentPage, PaymentHistoryPage } from './payment';
 
@@ -23,7 +23,7 @@ const App = () => {
         {/* 보고서 생성이력 조회(관리자) */}
         {/* <Route exact path="/oms/reportmake/history" component={ ReportMakeHistoryPage }/> */}
         {/* 포인트 변동내역 조회(고객) */}
-        <Route exact path="/oms/changepoint/history/email" component={ ChangePointHistoryPage }/>
+        <Route exact path="/oms/changepoint/history/email" component={ ChangePointHistoryByEmailPage }/>
         {/* 포인트 변동내역 관리(관리자) */}
         <Route exact path="/oms/changepoint/history" component={ ChangePointHistoryPage }/>
 

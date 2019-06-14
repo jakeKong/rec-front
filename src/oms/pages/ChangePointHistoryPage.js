@@ -6,7 +6,7 @@ const ChangePointHistoryPage = () => {
   return (
     <div>
       <PageTemplate>
-        <div className="page-description">마이페이지 > 포인트 변동내역 조회</div>
+        <div className="page-description">운영관리 > 포인트 변동내역 조회(관리)</div>
         <ChangePointHistoryContainer />
       </PageTemplate>
     </div>

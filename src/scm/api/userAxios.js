@@ -47,9 +47,9 @@ export const addUser = (userDto) => axios({
 });
 
 // 사용자 수정
-export const updateUser = (email, userDto) => axios({
+export const updateUser = (userDto) => axios({
   method: 'PUT',
-  url: `${config.sysyemService}/user/${email}/update`,
+  url: `${config.sysyemService}/user/${userDto.email}/update`,
   headers: {
     'Content-Type': 'application/json; charset=UTF-8',
     'Accept': 'application/json'

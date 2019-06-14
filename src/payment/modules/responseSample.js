@@ -1,35 +1,44 @@
 export const paymentRequest = {
-  "paymentId": "20190530NP1043587746",
-  "detail": {
-    "productName": "상품명",
-    "merchantId": "loginId",
-    "merchantName": "가맹점명",
-    "cardNo": "465887**********",
-    "admissionYmdt": "20190530151722",
-    "payHistId": "20190530NP1043587781",
-    "primaryPayAmount": 1000,
-    "npointPayAmount": 0,
-    // "totalPayAmount": 1000,
-    "totalPayAmount": '',
-    "primaryPayMeans": "CARD",
-    "merchantPayKey": "order-key",
-    "merchantUserKey": "jenie",
-    "cardCorpCode": "C0",
+  "code" : "Success",
+  "message": "detail message(optional)",
+  "body": {
     "paymentId": "20190530NP1043587746",
-    "admissionTypeCode": "01",
-    "settleExpectAmount": 971,
-    "payCommissionAmount": 29,
-    "admissionState": "SUCCESS",
-    "tradeConfirmYmdt": "20190530152510",
-    "cardAuthNo": "17545616",
-    "cardInstCount": 0,
-    "bankCorpCode": "",
-    "bankAccountNo": "",
-    "settleExpected": false,
-    "extraDeduction": false,
-    "useCfmYmdt" : "20180703"
+    "detail": {
+      "productName": "상품명",
+      "merchantId": "loginId",
+      "merchantName": "가맹점명",
+      "cardNo": "465887**********",
+      "admissionYmdt": "20190530151722",
+      "payHistId": "20190530NP1043587781",
+      "primaryPayAmount": 1000,
+      "npointPayAmount": 0,
+      // "totalPayAmount": 1000,
+      "totalPayAmount": '',
+      "primaryPayMeans": "CARD",
+      "merchantPayKey": "order-key",
+      "merchantUserKey": "jenie",
+      "cardCorpCode": "C0",
+      "paymentId": "20190530NP1043587746",
+      "admissionTypeCode": "01",
+      "settleExpectAmount": 971,
+      "payCommissionAmount": 29,
+      "admissionState": "SUCCESS",
+      "tradeConfirmYmdt": "20190530152510",
+      "cardAuthNo": "17545616",
+      "cardInstCount": 0,
+      "bankCorpCode": "",
+      "bankAccountNo": "",
+      "settleExpected": false,
+      "extraDeduction": false,
+      "useCfmYmdt" : "20180703"
+    }
   },
   "totalPoint": ''
+}
+
+export const paymentRequestFailSample = {
+  "code" : "Failure",
+  "message": "Failure message(optional)",
 }
 
 export const paymentHistory = {

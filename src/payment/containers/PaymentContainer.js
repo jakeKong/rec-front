@@ -2,13 +2,14 @@ import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as productManageActions from "../../oms/modules/ProductManageModule";
+import * as changePointHistoryActions from "../../oms/modules/ChangePointHistoryModule";
 import * as paymentActions from "../modules/PaymentModule";
 import { PaymentProductListGrid, PaymentComplete } from "../index";
 
-import { comma } from '../../common/utils';
-
 import '@vaadin/vaadin-ordered-layout';
 import '@vaadin/vaadin-notification';
+
+import { removeComma } from '../../common/utils';
 
 class PaymentContainer extends Component {
 
@@ -167,6 +168,24 @@ class PaymentContainer extends Component {
     }
   }
 
+  addOrderHistory = async (email, dto) => {
+    const { OrderHistoryModule } = this.props;
+    try {
+      await OrderHistoryModule.addOrderHistory(email, dto)
+    } catch (e) {
+      console.log("error log : " + e);
+    }
+  }
+
+  addChangePointHistory = async (email, dto) => {
+    const { ChangePointHistoryModule } = this.props;
+    try {
+      await ChangePointHistoryModule.addChangePointHistory(email, dto)
+    } catch (e) {
+      console.log("error log : " + e);
+    }
+  }
+
   // 네이버페이 결제 창 호출
   openNaverPay = async () => {
     /* 2019-06-04 : 다중선택 미사용으로 인한 비활성화
@@ -208,16 +227,18 @@ class PaymentContainer extends Component {
    }
 
     // --- response값 임시 설정 (결제승인 결과값 가져오기)
-    const getSamplePaymentRequest = this.getSamplePaymentRequest;
+    // const getSamplePaymentRequest = this.getSamplePaymentRequest;
 
     // 결제 요청 시 사용하는 함수
-    // const paymentApprovalRequest = this.paymentApprovalRequest;
+    const paymentApprovalRequest = this.paymentApprovalRequest;
+
     const oPay = window.Naver.Pay.create({
       // "mode" : "production", // developer or production
       "mode" : "developer", // developer or production
       "payType" : "normal", // normal or recurrent
       "openType": "layer",
       "clientId": "u86j4ripEt8LRfPGzQ8", // clientId
+      // "clientId": "dQPaTGkl7UD9gyUVttF3", // clientId
       "onAuthorize" : function(oData) {
         /*
         layer 타입을 사용했을 때 페이지 전환 없이 구현이 가능하도록 지원되며, 그 외의 경우는 returnUrl 로 참조 정보와 함께 redirect 됩니다.
@@ -229,13 +250,13 @@ class PaymentContainer extends Component {
           // 네이버페이 결제 승인 요청 처리
           if (oData.paymentId !== undefined) {
             // 결제 요청 이벤트
-            // paymentApprovalRequest(oData.paymentId);
+            paymentApprovalRequest(oData.paymentId);
 
             // --- response값 임시 설정 (결제승인 결과값 가져오기)
             /* 2019-06-04 : 다중선택 미사용으로 인한 비활성화
             getSamplePaymentRequest(totalPay, totalPoint);
             */
-           getSamplePaymentRequest(productDto.pointCash, productDto.productPoint);
+          //  getSamplePaymentRequest(productDto.pointCash, productDto.productPoint);
           }
         } else {
           // 필요 시 oData.resultMessage 에 따라 적절한 사용자 안내 처리
@@ -266,9 +287,9 @@ class PaymentContainer extends Component {
       "taxExScopeAmount": (totalPay*0.1),
       */
       "productName": productDto.productPoint+'포인트',
-      "totalPayAmount": productDto.pointCash,
-      "taxScopeAmount": (productDto.pointCash*0.9),
-      "taxExScopeAmount": (productDto.pointCash*0.1),
+      "totalPayAmount": removeComma(productDto.pointCash),
+      "taxScopeAmount": (removeComma(productDto.pointCash)*0.9),
+      "taxExScopeAmount": (removeComma(productDto.pointCash)*0.1),
       "productCount": 1,
       "returnUrl": "http://localhost:3000/#/payment/product",
       // "returnUrl": "https://localhost:3000/#/payment/product",
@@ -343,12 +364,63 @@ class PaymentContainer extends Component {
   }
 
   render() {
+    const { productDto } = this.state;
     const { productList, pending, error, success } = this.props;
     const { paymentRequest, paymentPending, paymentError, paymentSuccess } = this.props;
+    const { email } = this.props;
+    
+    const getSamplePaymentRequest = this.getSamplePaymentRequest;
+    let successPay = false;
+    if (paymentRequest !== null && paymentRequest !== undefined) {
+      // console.log(paymentRequest._root.entries[0][1]);
+      if (paymentRequest.code !== 'Success') {
+        if (paymentRequest.code === 'Fail') {
+          // PG, 은행 및 기타 오류 발생 시 오류 상세 원인이 message 필드로 전달됩니다 
+          // 결제 실패 사유를 인지할 수 있도록 Alert 등을 통한 안내가 필요합니다
+          window.confirm('결제에 실패하였습니다. \n확인 후 다시 시도해주세요.\n' + paymentRequest.message);
+          // alert 사용 필요
+        } else if (paymentRequest.code === 'InvalidMerchant') {
+          // 유효하지 않은 가맹점인 경우
+          window.confirm('유효하지 않은 가맹점입니다. \n확인 후 다시 시도해주세요.\n' + paymentRequest.message);
+        } else if (paymentRequest.code === 'TimeExpired') {
+          //	결제 승인 가능 시간 초과 시 (10분 초과시)
+          window.confirm('결제시간이 초과되었습니다. \n다시 시도해주세요.\n' + paymentRequest.message);
+        } else if (paymentRequest.code === 'AlreadyOnGoing') {
+          // 해당 결제번호로 결제가 이미 진행 중일 때
+          window.confirm('해당 상품에 대한 결제가 진행중입니다. \n확인 후 다시 시도해주세요.\n' + paymentRequest.message);
+        } else if (paymentRequest.code === 'AlreadyComplete') {
+          // 해당 결제번호로 이미 결제가 완료되었을 때
+          window.confirm('이미 결제처리가 완료되었습니다. \n확인 후 다시 시도해주세요.\n' + paymentRequest.message);
+        } else if (paymentRequest.code === 'OwnerAuthFail') {
+          // 본인 카드 인증 오류 시
+          window.confirm('카드 인증이 실패하였습니다. \n확인 후 다시 시도해주세요.\n' + paymentRequest.message);
+        } else {
+          // 알수없는 오류 (샘플값 가져오기)
+          const check = window.confirm('결제요청에 실패하였습니다. \n샘플 테스트를 진행하시겠습니까?\n' + paymentRequest.message);
+          if (check === true) {
+            getSamplePaymentRequest(removeComma(productDto.pointCash), removeComma(productDto.productPoint));
+          }
+        }
+      } else {
+        successPay = true;
+        console.log(paymentRequest.body.detail)
+        // 포인트 변동내역에 추가 
+        let dto = {
+          changeDt: new Date(),
+          paymentCash: paymentRequest.body.detail.totalPayAmount,
+          changeType: 'PAYMENT_ADD',
+          changePoint: removeComma(productDto.productPoint),
+          // 계정별 현재 잔여포인트에서 차감해야함
+          currentBalPoint: 97500+removeComma(productDto.productPoint),
+          paymentNo: 'P'+paymentRequest.body.detail.tradeConfirmYmdt
+        }
+        this.addChangePointHistory(email, dto);
+      }
+    }
 
     return (
       <Fragment>
-        {!paymentRequest ? 
+        {successPay === false ? 
         <div>
           <div className="div-main">
             { pending && "Loading..." }
@@ -410,9 +482,12 @@ export default connect(
     paymentPending: state.payment.pending,
     paymentError: state.payment.error,
     paymentSuccess: state.payment.success,
+
+    email: 'user@test.com'
   }),
   dispatch => ({
     ProductManageModule: bindActionCreators(productManageActions, dispatch),
+    ChangePointHistoryModule: bindActionCreators(changePointHistoryActions, dispatch),
     PaymentModule: bindActionCreators(paymentActions, dispatch)
   })
 )(PaymentContainer);

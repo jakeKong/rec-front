@@ -1,16 +1,16 @@
 import React from 'react';
 import { PageTemplate } from '../../common';
-import { ChangePointHistoryContainer } from '../index';
+import { ChangePointHistoryByEmailContainer } from '../index';
 
-const ChangePointHistoryPage = () => {
+const ChangePointHistoryByEmailPage = () => {
   return (
     <div>
       <PageTemplate>
         <div className="page-description">마이페이지 > 포인트 변동내역 조회</div>
-        <ChangePointHistoryContainer />
+        <ChangePointHistoryByEmailContainer />
       </PageTemplate>
     </div>
   );
 };
 
-export default ChangePointHistoryPage;
+export default ChangePointHistoryByEmailPage;

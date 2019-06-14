@@ -7,9 +7,14 @@ export function comma(num) {
  
   str = num.substring(0, point); 
   while (point < len) { 
-      if (str != "") str += ","; 
+      if (str !== "") str += ","; 
       str += num.substring(point, point + 3); 
       point += 3; 
   } 
   return str;
+}
+
+export function removeComma(num)	{
+		let result = parseInt(num.replace(/,/g,""));
+		return result;
 }

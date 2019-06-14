@@ -44,7 +44,7 @@ class UserGrid extends Component {
       checkbox.__item = rowData.item;
       checkbox.checked = inverted !== rowData.selected;
     };
-    
+
     let dateFormat = require('dateformat');
     let list =[];
     // 그리드 컬럼 인덱스를 위한 변수

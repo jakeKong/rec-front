@@ -38,7 +38,7 @@ const DELETE_USERS_FAILURE = 'user/DELETE_USERS_FAILURE';
 export const getUserList = createAction(GET_USER_LIST, search => search);
 export const getUser = createAction(GET_USER_LIST, email => email);
 export const addUser = createAction(ADD_USER, (userDto, search) => ({userDto, search}));
-export const updateUser = createAction(UPDATE_USER, (email, userDto, search) => ({email, userDto, search}));
+export const updateUser = createAction(UPDATE_USER, (userDto, search) => ({userDto, search}));
 export const deleteUser = createAction(DELETE_USER, (email, search) => ({email, search}));
 export const deleteUsers = createAction(DELETE_USERS, (emails, search) => ({emails, search}));
 
@@ -96,7 +96,7 @@ function* addUserSaga(action) {
 // updateUser Saga
 function* updateUserSaga(action) {
   try {
-    const response = yield call(api.updateUser, action.payload.email, action.payload.userDto);
+    const response = yield call(api.updateUser, action.payload.userDto);
     yield put({type: UPDATE_USER_RECEIVED, payload: response})
     // 수정완료 이후 목록 갱신 호출
     yield call(getUserListSaga, action);

@@ -166,9 +166,8 @@ class UserManageContainer extends Component {
   // 사용자 수정 요청
   updateCallback = async (userChild) => {
     this.setState({user: userChild})
-    const { email } = this.props;
     const { user, search } = this.state;
-    this.updateUser(email, user, search);
+    this.updateUser(user, search);
     this.resetUser();
   }
 
@@ -190,10 +189,10 @@ class UserManageContainer extends Component {
   }
 
   // 사용자 수정 API 호출 이벤트
-  updateUser = async (email, user, search) => {
+  updateUser = async (user, search) => {
     const { UserModule } = this.props;
     try {
-      await UserModule.updateUser(email, user, search)
+      await UserModule.updateUser(user, search)
     } catch (e) {
       console.log("error log : " + e);
     }
@@ -222,6 +221,19 @@ class UserManageContainer extends Component {
     this.setState({selectList});
   }
 
+  popupAddAndUpdateCheckOpenEvent(user, popupOpened) {
+    if (user !== null && user !== undefined) {
+      if (user.email !== null && user.email !== undefined) {
+        console.log(user.email)
+        return <UserRegister updateCallback={ this.updateCallback } user={ user } popupOpened={ popupOpened } popupClose={ this.popupClose } />
+      } else {
+        console.log(user.email)
+        console.log(popupOpened)
+        return <UserRegister addCallback={ this.addCallback } popupOpened={ popupOpened } popupClose={ this.popupClose } />;
+      }
+    }
+  }
+
   render() {
     const { user, popupOpened } = this.state;
     const { userList, pending, error, success, role } = this.props;
@@ -240,7 +252,16 @@ class UserManageContainer extends Component {
             <vaadin-button id="btnSelectDelete" theme="error" />
             <vaadin-button id="btnRegister" />
           </div>
-          <UserRegister addCallback={ this.addCallback } updateCallback={ this.updateCallback } user={ user } popupOpened={ popupOpened } popupClose={ this.popupClose } />
+          {/* { user.email !== null && user.email !== undefined ? 
+          <UserRegister updateCallback={ this.updateCallback } user={ user } popupOpened={ popupOpened } popupClose={ this.popupClose } /> 
+          : <UserRegister addCallback={ this.addCallback } popupOpened={ popupOpened } popupClose={ this.popupClose } /> } */}
+          
+          { user && popupOpened === true &&
+            <script>
+              {this.popupAddAndUpdateCheckOpenEvent(user, popupOpened)};
+            </script>
+          }
+          {/* {user.email !== null && <UserRegister updateCallback={ this.updateCallback } user={ user } popupOpened={ popupOpened } popupClose={ this.popupClose } /> } */}
         </div>
       </Fragment>
     );

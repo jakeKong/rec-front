@@ -66,7 +66,7 @@ function* getPaymentHistoryListSaga(action) {
 function* getSamplePaymentRequestSaga(action) {
   // 샘플값 가져오기
   const response = sample.paymentRequest;
-  response.detail.totalPayAmount = action.payload.totalPay;
+  response.body.detail.totalPayAmount = action.payload.totalPay;
   response.totalPoint = action.payload.totalPoint;
   yield put({type: GET_SAMPLE_PAYMENT_REQUEST_RECEIVED, payload: response});
 }
@@ -105,7 +105,7 @@ export default handleActions({
     const {error} = action.payload;
     console.log('PAYMENT_APPROVAL_REQUEST_FAILURE onFailure')
     console.log('ERROR: ' + error)
-    return {error: true};
+    return {error: true, paymentRequest: sample.paymentRequestFailSample};
   },
   // 결제내역
   [GET_PAYMENT_HISTORY_LIST]: (state, action) => {

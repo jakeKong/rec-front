@@ -38,6 +38,24 @@ export const getOrderHistoryListByEmail = (email, search) => axios({
 });
 
 // 주문내역 추가
+export const addOrderHistory = (email, dto) => axios({
+  method: 'POST',
+  url: `${config.orderService}/order/history/add/${email}`,
+  headers: {
+    'Content-Type': 'application/json; charset=UTF-8',
+    'Accept': 'application/json'
+  },
+  data: JSON.stringify({
+    'odrNo': dto.odrNo,
+    'odrDt': dto.odrDt,
+    'marketPrice': dto.marketPrice,
+    'variationPoint': dto.variationPoint,
+    'realEstateType': dto.realEstateType,
+    'downloadEndDt': dto.downloadEndDt,
+    'downloadCnt': dto.downloadCnt,
+    'status': dto.status
+  })
+});
 // export const addOrderHistory = (email, productSid, orderDto) => axios.post(`${config.orderService}/order/history/add/${email}/${productSid}`, {orderDto});
 // 주문내역 수정
 // export const updateOrderHistory = (odrSid, email, productSid, orderDto) => axios.put(`${config.orderService}/order/history/update/${odrSid}/${email}/${productSid}`, {orderDto});

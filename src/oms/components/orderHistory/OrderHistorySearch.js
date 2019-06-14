@@ -149,7 +149,7 @@ class OrderHistorySearch extends Component {
     // Search combo-box set
     const cbSearch = document.querySelector('#cbSearch')
     // ByAll || byEmail Check
-    if (role != 'ROLE_ADMIN') {
+    if (role !== 'ROLE_ADMIN') {
       cbSearch.items = ['주문번호'];    
     } else {
       cbSearch.items = ['주문번호', '주문자'];
