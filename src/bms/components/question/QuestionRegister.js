@@ -1,8 +1,17 @@
 import React, { Component, Fragment } from 'react';
 
+import Editor from 'tui-editor';
+import 'tui-color-picker/dist/tui-color-picker.min';
+import 'tui-editor/dist/tui-editor-extColorSyntax';
+import 'codemirror/lib/codemirror.css';
+import 'tui-editor/dist/tui-editor.css';
+import 'tui-editor/dist/tui-editor-contents.css';
+import 'highlight.js/styles/github.css';
+import 'tui-color-picker/dist/tui-color-picker.min.css';
+import '../../../styles/ToastEditor.scss';
+
 import '@vaadin/vaadin-button';
 import '@vaadin/vaadin-text-field';
-// import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 class QuestionRegister extends Component {
 
@@ -43,35 +52,51 @@ class QuestionRegister extends Component {
       question.questionTitle = tfTitle.value
     });
 
-    let textValue;
-    /** CKEditor5 구현 */
-    // const editor = document.querySelector('#editor');
-    // const div = document.createElement('div')
-    // ClassicEditor.create(div, {
-    //   // editor config setting
-    //   language:'ko',
-    //   placeholder: '내용을 입력하세요.',
-    // }).then( editor => {
-    //   // 전달받은 문의사항 값이 존재할 경우 전달받은 문의사항 값을 에디터값으로 설정
-    //   if (questionDto !== null && questionDto !== undefined && questionDto.questionSid !== null) {
-    //     editor.setData(questionDto.questionTxt);
-    //   }
-    //   textValue = editor;
-    // })
-    // .catch( err => {
-    //     console.error( err.stack );
-    // } );
-    // editor.appendChild(div)
+    // define youtube extension
+    Editor.defineExtension('youtube', function() {
+      // runs while markdown-it transforms code block to HTML
+      Editor.codeBlockManager.setReplacer('youtube', function(youtubeId) {
+        let wrapperId = 'yt' + Math.random().toString(36).substr(2, 10);
+        setTimeout(renderYoutube.bind(null, wrapperId, youtubeId), 0);
+
+        return '<div id="' + wrapperId + '"></div>';
+      })
+      function renderYoutube(wrapperId, youtubeId) {
+        var el = document.querySelector('#' + wrapperId);
+        el.innerHTML = '<iframe width="420" height="315" src="https://www.youtube.com/embed/' + youtubeId + '"></iframe>';
+      }
+    })
+
+    const toastEditor = new Editor({
+      el: document.querySelector('#editSection'),
+      language: 'ko_KR',
+      previewStyle: 'vertical',
+      height: 'auto',
+      initialEditType: 'wysiwyg', // 'markdown',
+      exts: ['colorSyntax', 'chart', 'uml', 'table', 'youtube'],
+    });
+
+    toastEditor.on('change', function() {
+      question.questionTxt = toastEditor.getValue();
+    })
+
+    if (questionDto !== null && questionDto !== undefined && questionDto.questionSid !== null) {
+      toastEditor.setValue(questionDto.questionTxt);
+      tfTitle.value = questionDto.questionTitle;
+
+      question.questionTxt = questionDto.questionTxt
+      question.questionTitle = questionDto.questionTitle;
+    } else {
+      tfTitle.value = "";
+      question.questionTxt = null;
+      question.questionTitle = null;
+    }
 
     const { addCallback, updateCallback } = this.props;
     // 문의사항 등록 버튼 이벤트
     const btnRegister = document.querySelector('#btnRegister');
     btnRegister.textContent = "확인"
     btnRegister.addEventListener('click', function() {
-      // 문의사항 제목에 텍스트필드에 저장된 값 할당
-      question.questionTitle = tfTitle.value;
-      // 문의사항 내용에 CKEditor에 입력된 값 할당
-      question.questionTxt = textValue.getData();
       question.questionLevel = 1;
       const check = window.confirm('문의사항을 등록 하시겠습니까?');
       if (check === true) {
@@ -130,7 +155,9 @@ class QuestionRegister extends Component {
     return (
       <Fragment>
         <vaadin-text-field id="tfTitle"/>
-        <div id="editor"/>
+        <div id="toastEditor">
+          <div id="editSection" />
+        </div>
         <div>
           <vaadin-button id="btnRegister"  />
           <vaadin-button id="btnCancle" theme="error" />

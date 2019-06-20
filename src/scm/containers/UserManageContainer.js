@@ -224,11 +224,8 @@ class UserManageContainer extends Component {
   popupAddAndUpdateCheckOpenEvent(user, popupOpened) {
     if (user !== null && user !== undefined) {
       if (user.email !== null && user.email !== undefined) {
-        console.log(user.email)
         return <UserRegister updateCallback={ this.updateCallback } user={ user } popupOpened={ popupOpened } popupClose={ this.popupClose } />
       } else {
-        console.log(user.email)
-        console.log(popupOpened)
         return <UserRegister addCallback={ this.addCallback } popupOpened={ popupOpened } popupClose={ this.popupClose } />;
       }
     }

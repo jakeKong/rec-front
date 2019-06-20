@@ -1,13 +1,44 @@
 import React, { Component, Fragment } from 'react';
 
+import Editor from 'tui-editor';
+import 'tui-color-picker/dist/tui-color-picker.min';
+import 'tui-editor/dist/tui-editor-extColorSyntax';
+import 'codemirror/lib/codemirror.css';
+import 'tui-editor/dist/tui-editor.css';
+import 'tui-editor/dist/tui-editor-contents.css';
+import 'highlight.js/styles/github.css';
+import 'tui-color-picker/dist/tui-color-picker.min.css';
+import '../../../styles/ToastEditor.scss';
+
 import '@vaadin/vaadin-button';
 import '@vaadin/vaadin-text-field';
 
-import { EditorState, convertToRaw, ContentState } from 'draft-js';
-import { Editor } from 'react-draft-wysiwyg';
-import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-import draftToHtml from 'draftjs-to-html';
-import htmlToDraft from 'html-to-draftjs';
+// import axios from 'axios';
+
+/*
+const addImage = (blob) => axios({
+  method: 'POST',
+  // url: `http://localhost:3001/image/`,
+  url: `http://localhost:8003/bms/image/`,
+  headers: {
+    'Content-Type': 'multipart/form-data; boundary=${data._boundary',
+    // 'Content-Type': undefined
+    // 'Content-Type': 'application/json; charset=UTF-8',
+    // 'Accept': 'application/json'
+  },
+  responseType: 'blob',
+  data: blob
+  // data: JSON.stringify(base64data)
+  // data: JSON.stringify({
+  //   'lastModified': blob.lastModified,
+  //   'lastModifiedDate': blob.lastModifiedDate,
+  //   'name': blob.name,
+  //   'size': blob.size,
+  //   'type': blob.type,
+  //   'webkitRelativePath': blob.webkitRelativePath
+  // })
+});
+*/
 
 class NoticeRegister extends Component {
 
@@ -19,7 +50,6 @@ class NoticeRegister extends Component {
         noticeTxt: null,
         reportingDt: null
       },
-      editorState: EditorState.createEmpty(),
     }
   }
 
@@ -34,58 +64,134 @@ class NoticeRegister extends Component {
       notice.reportingDt = null;
     }
 
+    // define youtube extension
+    Editor.defineExtension('youtube', function() {
+      // runs while markdown-it transforms code block to HTML
+      Editor.codeBlockManager.setReplacer('youtube', function(youtubeId) {
+        let wrapperId = 'yt' + Math.random().toString(36).substr(2, 10);
+        setTimeout(renderYoutube.bind(null, wrapperId, youtubeId), 0);
+
+        return '<div id="' + wrapperId + '"></div>';
+      })
+      function renderYoutube(wrapperId, youtubeId) {
+        var el = document.querySelector('#' + wrapperId);
+        el.innerHTML = '<iframe width="420" height="315" src="https://www.youtube.com/embed/' + youtubeId + '"></iframe>';
+      }
+    })
+
+    const toastEditor = new Editor({
+      el: document.querySelector('#editSection'),
+      language: 'ko_KR',
+      previewStyle: 'vertical',
+      height: 'auto',
+      initialEditType: 'wysiwyg', // 'markdown',
+      exts: ['colorSyntax', 'chart', 'uml', 'table', 'youtube'],
+      // toolbarItems: [
+      //   'heading',
+      //   'bold',
+      //   'italic',
+      //   'strike',
+      //   'divider',
+      //   'hr',
+      //   'quote',
+      //   'divider',
+      //   'ul',
+      //   'ol',
+      //   'task',
+      //   'indent',
+      //   'outdent',
+      //   'divider',
+      //   'table',
+      //   'image',
+      //   'link',
+      //   'divider',
+      //   'code',
+      //   'codeblock',
+      //   'divider',
+      //   {
+      //     type: 'button',
+      //     options: {
+      //       el: <div class="our-button-class">test<i class="fas fa-briefcase-medical">yrdydr</i></div>,
+      //       name: 'test2',
+      //       className: '',
+      //       command: 'Bold', // you can use "Bold"
+      //       tooltip: 'Bold'
+      //     }
+      //   }
+      // ]
+      // hooks: {
+      //   addImageBlobHook: function(blob, callback) {
+      //     var formData = new FormData();
+      //     formData.append('blob', blob);
+      //     addImage(formData);
+      //     // 60초 대기
+      //     window.setTimeout(60000);
+      //     callback(`http://localhost:3001/image/${formData.get('blob').name}`)
+      //     return false;
+
+      //     /* base64 변환
+      //     var reader = new FileReader();
+      //     reader.readAsDataURL(blob);
+      //     reader.onloadend = function() {
+      //       let base64data = reader.result;
+      //     }
+      //     */
+      //   }
+      // },
+    });
+
+    toastEditor.on('change', function() {
+      notice.noticeTxt = toastEditor.getValue();
+    })
+
+    // const toolbar = toastEditor.getUI().getToolbar();
+    // toastEditor.eventManager.addEventType('Event1');
+    // toastEditor.eventManager.listen('Event1', function() {
+    //   window.alert('test');
+    // });
+
+    // toolbar.addButton({
+    //   name: 'customize',
+    //   className: 'fab fa-accessible-icon',
+    //   event: 'Event1',
+    //   tooltip: 'Apple!!!',
+    //   el: <div class="our-button-class"><i class="fab fa-apple"></i></div>
+    // }, 18);
+
     // 공지사항 제목 수정 및 등록에 사용되는 텍스트필드
     const tfTitle = document.querySelector('#tfTitle');
     tfTitle.className = "vaadin-text-field-title"
     tfTitle.placeholder = '제목을 입력하세요.';
-    // 전달받은 공지사항 값 여부 판별 후 텍스트필드 값 할당
-    if (noticeDto !== null && noticeDto !== undefined && noticeDto.noticeSid !== null) {
-      tfTitle.value = noticeDto.noticeTitle;
-    } else {
-      tfTitle.value = "";
-    }
     // 텍스트 입력 시 공지사항 제목 값 할당
     tfTitle.addEventListener('input', function() { 
       notice.noticeTitle = tfTitle.value
     });
 
-    let textValue;
-    // 2019-06-05 13:28:00 issue! = 파일 업로드 드래그로는 가능한데 클릭하여 로컬파일 선택창이 안열림
-    const draftEditor = document.getElementsByClassName('rdw-editor-wrapper')[0];
-    console.log(draftEditor);
+    if (noticeDto !== null && noticeDto !== undefined && noticeDto.noticeSid !== null) {
+      toastEditor.setValue(noticeDto.noticeTxt);
+      tfTitle.value = noticeDto.noticeTitle;
 
-    // 2019-06-05 14:30:00 input값 확인 필요(input이 정상적으로 작동하지 않는 문제(원인 찾아보삼))
-    const input = document.getElementsByClassName('rdw-image-modal-upload-option-input')[0]
-    input.type = "file";
-
-    /** CKEditor5 구현 */
-    // const editor = document.querySelector('#editor');
-    // const div = document.createElement('div')
-    // ClassicEditor.create(div, {
-    //   // editor config setting
-    //   language:'ko',
-    //   placeholder: '내용을 입력하세요.',
-    // }).then( editor => {
-    //   // 전달받은 공지사항 값이 존재할 경우 전달받은 공지사항 값을 에디터값으로 설정
-    //   if (noticeDto !== null && noticeDto !== undefined && noticeDto.noticeSid !== null) {
-    //     editor.setData(noticeDto.noticeTxt);
-    //   }
-    //   textValue = editor;
-    // })
-    // .catch( err => {
-    //     console.error( err.stack );
-    // } );
-    // editor.appendChild(div)
+      notice.noticeTxt = noticeDto.noticeTxt
+      notice.noticeTitle = noticeDto.noticeTitle;
+    } else {
+      tfTitle.value = "";
+      notice.noticeTxt = null;
+      notice.noticeTitle = null;
+    }
 
     const { addCallback, updateCallback } = this.props;
     // 공지사항 등록 버튼 이벤트
     const btnRegister = document.querySelector('#btnRegister');
-    btnRegister.textContent = "확인"
+    btnRegister.textContent = "등록"
+    // const getEditorState = this.getEditorState;
     btnRegister.addEventListener('click', function() {
       // 공지사항 제목에 텍스트필드에 저장된 값 할당
-      notice.noticeTitle = tfTitle.value;
+      // notice.noticeTitle = tfTitle.value;
       // 공지사항 내용에 CKEditor에 입력된 값 할당
-      notice.noticeTxt = textValue.getData();
+      // notice.noticeTxt = textValue;
+      // notice.noticeTxt = textValue.getData();
+      // notice.noticeTxt = getEditorState();
+      // console.log(getEditorState());
       const check = window.confirm('공지사항을 등록 하시겠습니까?');
       if (check === true) {
         // 알림팝업 확인버튼을 클릭한 시점의 DATE값을 공지사항 작성일자에 할당
@@ -103,8 +209,6 @@ class NoticeRegister extends Component {
           noticeReset();
         // 입력된 값이 없고 전달받은 공지사항 값이 없을 경우 알림 이벤트
         } else {
-          console.log(notice)
-          console.log(noticeDto)
           const nfRegisterFailure = document.createElement('vaadin-notification');
           nfRegisterFailure.renderer = function(root) {
             const container = document.createElement('div');
@@ -139,58 +243,16 @@ class NoticeRegister extends Component {
       }
       noticeReset();
     })
-  }
 
-  onEditorStateChange = (inputEditorState) => {
-    this.setState({
-      editorState: draftToHtml(convertToRaw(inputEditorState.getCurrentContent()))
-    });
-    console.log(draftToHtml(convertToRaw(inputEditorState.getCurrentContent())));
-    const { editorState } = this.state;
-    console.log(editorState);
-  };
-
-  uploadImageCallBack(file) {
-    return new Promise(
-      (resolve, reject) => {
-        const xhr = new XMLHttpRequest();
-        xhr.open('POST', 'https://api.imgur.com/3/image');
-        xhr.setRequestHeader('Authorization', 'Client-ID 8d26ccd12712fca');
-        const data = new FormData();
-        data.append('image', file);
-        xhr.send(data);
-        xhr.addEventListener('load', () => {
-          const response = JSON.parse(xhr.responseText);
-          resolve(response);
-        });
-        xhr.addEventListener('error', () => {
-          const error = JSON.parse(xhr.responseText);
-          reject(error);
-        });
-      }
-    );
   }
 
   render() {
-    const { editorState } = this.state;
-
     return (
       <Fragment>
         <vaadin-text-field id="tfTitle"/>
-        <Editor
-          inputEditorState={editorState}
-          toolbarClassName="toolbar-class"
-          wrapperClassName="wrapper-class"
-          editorClassName="toolbar-class"
-          onEditorStateChange={this.onEditorStateChange}
-          toolbar={{
-            link: { showOpenOptionOnHover: true },
-            image: { 
-              uploadCallback: this.uploadImageCallBack, 
-              alt: { present: true, mandatory: true } 
-            },
-          }}
-        />
+        <div id="toastEditor">
+          <div id="editSection" />
+        </div>
         <div>
           <vaadin-button id="btnRegister"  />
           <vaadin-button id="btnCancle" theme="error" />
@@ -199,4 +261,5 @@ class NoticeRegister extends Component {
     );
   }
 }
+
 export default NoticeRegister;

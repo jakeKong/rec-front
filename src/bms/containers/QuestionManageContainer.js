@@ -166,7 +166,7 @@ class QuestionManageContainer extends Component {
             { pending && "Loading..." }
             { error && <h1>Server Error!</h1> }
             { !detailStatus && success && questionList && <QuestionGrid questionList={ questionList } detailCallback={ this.detailCallback } role={ role } selectCallback={ this.selectCallback } deselectCallback={ this.deselectCallback }/>}
-            { detailStatus && <QuestionDetail question={ question } email={ email } detailToListCallback={ this.detailToListCallback } registerCallback={ this.registerCallback } /> }
+            { detailStatus && <QuestionDetail question={ question } email={ email } role={ role } detailToListCallback={ this.detailToListCallback } registerCallback={ this.registerCallback } /> }
           </div>
           <div className="div-sub-main" hidden={detailStatus}>
             <vaadin-button id="btnSelectDelete" theme="error" />

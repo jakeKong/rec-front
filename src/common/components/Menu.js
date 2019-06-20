@@ -1,15 +1,9 @@
 import React, { Component, Fragment } from 'react';
 
-import '@vaadin/vaadin-context-menu';
-import '@vaadin/vaadin-list-box';
-import '@vaadin/vaadin-item';
-
-import '@vaadin/vaadin-combo-box';
-import '@vaadin/vaadin-select';
-
 // rc-menu
 import Menu, { SubMenu, Item as MenuItem } from 'rc-menu';
-import 'rc-menu/assets/index.css';
+// import 'rc-menu/assets/index.css';
+import '../../styles/custom-rc-menu.scss';
 
 class RCMenu extends Component {
 
@@ -62,7 +56,7 @@ class RCMenu extends Component {
 
 export default RCMenu;
 
-{/* <Menu onClick={this.handleClick} selectedKeys={['/#/']}>
+/* <Menu onClick={this.handleClick} selectedKeys={['/#/']}>
 <SubMenu title={ <span className="submenu-title-wrapper">offset sub menu 2</span> } key="4">
     <MenuItem key="4-1">inner inner</MenuItem>
     <Divider/>
@@ -85,4 +79,4 @@ export default RCMenu;
       </SubMenu>
     </SubMenu>
   </SubMenu>
-</Menu> */}
+</Menu> */

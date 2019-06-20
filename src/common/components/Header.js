@@ -9,33 +9,68 @@ class Header extends Component {
   constructor(props) {
     super(props);
     this.state ={
-
+      loginSession: false
     }
   }
 
+  sessionTest = (trueable) => {
+    this.setState({loginSession : !trueable});
+  }
+
   componentDidMount() {
+    const test = document.querySelector('#test');
+    let trueable = true;
+    const sessionTest = this.sessionTest;
+    test.addEventListener('click', function() {
+      trueable = !trueable;
+      sessionTest(trueable);
+    });
+    //
     document.querySelector('#name').innerHTML = '홍길동';
     document.querySelector('#nameTo').innerHTML = '님';
     document.querySelector('#MyPage').innerHTML = '마이페이지';
+
+    const logout = document.querySelector('#logout');
+    logout.innerHTML = '로그아웃';
+    logout.addEventListener('click', function() {
+      console.log('로그아웃')
+    })
+    const login = document.querySelector('#login');
+    login.innerHTML = '로그인'
+    login.addEventListener('click', function() {
+      console.log('로그인')
+    })
+    const register = document.querySelector('#register');
+    register.innerHTML = '회원가입'
+    register.addEventListener('click', function() {
+      console.log('회원가입')
+    })
   }
 
   render() {
     // 임시 로그인 세션 설정
-    let loginSession = true;
+    const { loginSession } = this.state;
     return (
       <div className="header">
         <div className="div-flex">
-          <img src={srd_logo} />
-          
-          { loginSession ? <div className="div-header-sub-menu">
-            <label id="name" className="label-color-focus"/>
-            <label id="nameTo"/>
-            <button id="log_in_out">로그아웃</button>
-            <label id="MyPage" className="label-focus"/>
-          </div> :
+          <img src={srd_logo} alt=""/>
+          <button id="test" style={{marginLeft: 500, height: 40}}> 로그인세션상태테스트 </button>
+          { loginSession ? 
           <div className="div-header-sub-menu">
-            <button>로그인</button>
-            <button>회원가입</button>
+            <label id="name" className="label-color-focus" hidden={!loginSession}/>
+            <label id="nameTo" hidden={!loginSession}/>
+            <button id="logout" hidden={!loginSession}/>
+            <label id="MyPage" className="label-focus" hidden={!loginSession}/>
+            <button id="login" hidden={loginSession}/>
+            <button id="register" hidden={loginSession}/>
+          </div> : 
+          <div className="div-header-sub-menu">
+            <label id="name" className="label-color-focus" hidden={!loginSession}/>
+            <label id="nameTo" hidden={!loginSession}/>
+            <button id="logout" hidden={!loginSession}/>
+            <label id="MyPage" className="label-focus" hidden={!loginSession}/>
+            <button id="login" hidden={loginSession}/>
+            <button id="register" hidden={loginSession}/>
           </div>
           }
         </div>

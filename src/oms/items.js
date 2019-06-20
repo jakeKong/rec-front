@@ -14,9 +14,11 @@ export const realEstateTypeItems = [
 ];
 
 /// reportMakeHistory
+/*
 export const reportTypeItems = [
   {value: 'MARKET_PRICE_ANALYSIS', textContent: '시세분석'},
 ];
+*/
 
 // changPointHistory //2019-06-03 수정 요청 
 export const changeTypeItems = [

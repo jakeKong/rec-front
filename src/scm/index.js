@@ -5,7 +5,7 @@ export { getUserList, getUser, addUser, updateUser, deleteUser, deleteUsers } fr
 export { default as UserSearch } from './components/user/UserSearch';
 export { default as UserGrid } from './components/user/UserGrid';
 export { default as UserRegister } from './components/user/UserRegister';
-export { default as UserUpdate } from './components/user/UserUpdate';
+// export { default as UserUpdate } from './components/user/UserUpdate';
 
 // SCM - container
 export { default as UserManageContainer } from './containers/UserManageContainer';

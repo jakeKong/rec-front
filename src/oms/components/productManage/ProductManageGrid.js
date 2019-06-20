@@ -62,11 +62,6 @@ class ProductManageGrid extends Component {
     const grid = document.querySelector('vaadin-grid');
     grid.items = list;
 
-    grid.addEventListener('active-item-changed', function(event) {
-      const item = event.detail.value;
-      grid.selectedItems = item ? [item] : [];
-    });
-    
     grid.addEventListener('dblclick', function(event) {
       productDtoCallback(grid.getEventContext(event).item)
     });

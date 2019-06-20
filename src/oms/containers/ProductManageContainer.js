@@ -190,6 +190,16 @@ class ProductManageContainer extends Component {
     })
   }
 
+  popupAddAndUpdateCheckOpenEvent(productDto, popupOpened) {
+    if (productDto !== null && productDto !== undefined) {
+      if (productDto.productSid !== null && productDto.productSid !== undefined) {
+        return <ProductRegister updateCallback={ this.updateCallback } productDto={ productDto } popupOpened={ popupOpened } popupClose={ this.popupClose }/>
+      } else {
+        return <ProductRegister addCallback={ this.addCallback } popupOpened={ popupOpened } popupClose={ this.popupClose }/>
+      }
+    }
+  }
+
   render() {
     const { productDto, popupOpened } = this.state;
     const { productList, pending, error, success } = this.props;
@@ -206,7 +216,12 @@ class ProductManageContainer extends Component {
         <div className="div-sub-main">
           <vaadin-button id="btnRegister"/>
         </div>
-        <ProductRegister id="popup" addCallback={ this.addCallback } updateCallback={ this.updateCallback } productDto={ productDto } popupOpened={ popupOpened } popupClose={ this.popupClose }/>
+        {/* <ProductRegister addCallback={ this.addCallback } updateCallback={ this.updateCallback } productDto={ productDto } popupOpened={ popupOpened } popupClose={ this.popupClose }/> */}
+        { productDto && popupOpened === true &&
+            <script>
+              {this.popupAddAndUpdateCheckOpenEvent(productDto, popupOpened)};
+            </script>
+          }
       </Fragment>
     );
   }

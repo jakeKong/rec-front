@@ -2,9 +2,14 @@ import React, { Component, Fragment } from 'react';
 
 import '@vaadin/vaadin-ordered-layout';
 import '@vaadin/vaadin-button';
-import '@vaadin/vaadin-text-field/vaadin-text-area';
 
 import { QuestionComment } from "../../index";
+
+// deps for viewer.
+require('tui-editor/dist/tui-editor-contents.css'); // editor content
+require('highlight.js/styles/github.css'); // code block highlight
+
+const Viewer = require('tui-editor/dist/tui-editor-Viewer');
 
 // 문의사항 상세조회 컴포넌트
 class QuestionDetail extends Component {
@@ -21,22 +26,32 @@ class QuestionDetail extends Component {
     document.querySelector('#lbReportingDt').innerHTML = '작성일 : '+question.reportingDt+'&nbsp&nbsp';
     document.querySelector('#lbQuestionWriter').innerHTML = '작성자 : '+question.questionWriter;
 
-    const dlsTxt = document.querySelector('#dlsTxt')
-    dlsTxt.innerHTML = question.questionTxt;
-    
+    this.toastEditor = new Viewer({
+      el: document.querySelector('#viewerSection'),
+      height: 'auto',
+      initialValue: question.questionTxt
+    });
+
     const btnGoList = document.querySelector('#btnGoList');
     btnGoList.textContent = "돌아가기";
     btnGoList.addEventListener('click', function() {
       detailToListCallback();
     })
 
-    const { registerCallback } = this.props;
     const btnUpdate = document.querySelector('#btnUpdate');
-    btnUpdate.textContent = "수정";
-    btnUpdate.addEventListener('click', function() {
-      registerCallback(question);
-      detailToListCallback();
-    })
+    const { role } = this.props;
+    console.log(role)
+    if (role === 'ROLE_ADMIN' || role === 'ROLE_SYSADMIN') {
+      btnUpdate.hidden = true;
+    } else {
+      btnUpdate.hidden = false;
+      const { registerCallback } = this.props;
+      btnUpdate.textContent = "수정";
+      btnUpdate.addEventListener('click', function() {
+        registerCallback(question);
+        detailToListCallback();
+      })
+    }
 
     const { deleteCallback } = this.props;
     const btnDelete = document.querySelector('#btnDelete');
@@ -65,7 +80,9 @@ class QuestionDetail extends Component {
           </div>
           <div className="div-board-txt">
             <div className="div-board-txt-details">
-            <vaadin-details id="dlsTxt" />
+            <div id="toastEditor">
+              <div id="viewerSection" />
+            </div>
             </div>
             {/* <QuestionComment question={question} questionAnswerList={questionAnswerList} addAnswerCallback={addAnswerCallback} deleteAnswerCallback={deleteAnswerCallback}/> */}
             <QuestionComment question={question} email={email} />

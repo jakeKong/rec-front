@@ -16,9 +16,9 @@ import payment, { paymentSaga } from './payment/modules/PaymentModule';
 
 // OMS
 import orderHistory, { orderHistorySaga } from './oms/modules/OrderHistoryModule';
-import reportMakeHistory, { reportMakeHistorySaga } from './oms/modules/ReportMakeHistoryModule';
+// import reportMakeHistory, { reportMakeHistorySaga } from './oms/modules/ReportMakeHistoryModule';
 import changePointHistory, { changePointHistorySaga } from './oms/modules/ChangePointHistoryModule';
-import purchaseHistory, { purchaseHistorySaga } from './oms/modules/PurchaseHistoryModule';
+// import purchaseHistory, { purchaseHistorySaga } from './oms/modules/PurchaseHistoryModule';
 import product, { productSaga } from './oms/modules/ProductManageModule';
 
 // BMS
@@ -33,9 +33,9 @@ export function* rootSaga() {
   yield fork(paymentSaga);
   // OMS
   yield fork(orderHistorySaga);
-  yield fork(reportMakeHistorySaga);
+  // yield fork(reportMakeHistorySaga);
   yield fork(changePointHistorySaga);
-  yield fork(purchaseHistorySaga);
+  // yield fork(purchaseHistorySaga);
   yield fork(productSaga);
   // BMS
   yield fork(noticeSaga);
@@ -49,7 +49,7 @@ export default combineReducers({
   // PAYMENT
   payment,
   // OMS
-  orderHistory, reportMakeHistory, changePointHistory, purchaseHistory, product,
+  orderHistory, /* reportMakeHistory, */ changePointHistory, /* purchaseHistory, */ product,
   // BMS
   notice, question
 });

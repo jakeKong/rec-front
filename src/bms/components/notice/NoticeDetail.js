@@ -3,6 +3,12 @@ import React, { Component, Fragment } from 'react';
 import '@vaadin/vaadin-ordered-layout';
 import '@vaadin/vaadin-button';
 
+// deps for viewer.
+require('tui-editor/dist/tui-editor-contents.css'); // editor content
+require('highlight.js/styles/github.css'); // code block highlight
+
+const Viewer = require('tui-editor/dist/tui-editor-Viewer');
+
 // 공지사항 상세조회 컴포넌트
 class NoticeDetail extends Component {
 
@@ -18,9 +24,15 @@ class NoticeDetail extends Component {
     document.querySelector('#lbReportingDt').innerHTML = '작성일 : '+notice.reportingDt+'&nbsp&nbsp';
     document.querySelector('#lbNoticeWriter').innerHTML = '작성자 : '+notice.noticeWriter;
 
-    const dlsTxt = document.querySelector('#dlsTxt')
-    dlsTxt.className = 'details-board-txt';
-    dlsTxt.innerHTML = notice.noticeTxt;
+    this.toastEditor = new Viewer({
+      el: document.querySelector('#viewerSection'),
+      height: 'auto',
+      initialValue: notice.noticeTxt
+    });
+
+    // const dlsTxt = document.querySelector('#dlsTxt')
+    // dlsTxt.className = 'details-board-txt';
+    // dlsTxt.innerHTML = notice.noticeTxt;
     
     const btnGoList = document.querySelector('#btnGoList');
     btnGoList.textContent = "돌아가기";
@@ -67,8 +79,11 @@ class NoticeDetail extends Component {
           <label id="lbReportingDt" />
           <label id="lbNoticeWriter" />
         </div>
-        <div className="div-board-txt">
+        {/* <div className="div-board-txt">
           <vaadin-details id="dlsTxt" />
+        </div> */}
+        <div id="toastEditor">
+          <div id="viewerSection" />
         </div>
         <div id="divSub" className="div-sub-main">
           <vaadin-button id="btnGoList" />

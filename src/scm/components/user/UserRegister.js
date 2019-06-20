@@ -411,7 +411,6 @@ class UserRegister extends Component {
         }
         // 임시 설정
         dto.createdUser = '관리자';
-        console.log(dto.assignedRoles);
         if (user === undefined) {
           addCallback(dto);
         } else {
