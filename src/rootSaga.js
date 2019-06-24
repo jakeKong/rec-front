@@ -11,6 +11,9 @@ import { fork } from 'redux-saga/effects';
 // COMMON
 import main, { mainSaga } from './common/modules/MainModule';
 
+// COMMON
+import blog, { blogSaga } from './blog/modules/BlogTyleNewsModule';
+
 // SCM
 import user, { userSaga } from './scm/modules/UserModule';
 
@@ -32,6 +35,8 @@ import question, { questionSaga } from './bms/modules/QuestionModule';
 export function* rootSaga() {
   // COMMON
   yield fork(mainSaga);
+  // BLOG
+  yield fork(blogSaga);
   // SCM
   yield fork(userSaga);
   // PAYMENT
@@ -51,6 +56,8 @@ export function* rootSaga() {
 export default combineReducers({
   // COMMON
   main,
+  // BLOG
+  blog,
   // SCM
   user,
   // PAYMENT

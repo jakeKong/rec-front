@@ -402,6 +402,66 @@
   }
 }
 
+.div-blog-wrapper {
+  width: 90%;
+  max-width: 1100px;
+  min-width: 760px;
+  margin: 50px auto;
+  .div-blog-columns {
+    -webkit-column-count: 2;
+    -webkit-column-gap: 10px;
+    -moz-column-count: 2;
+    -moz-column-gap: 10px;
+    column-count: 2;
+    column-gap: 10px;
+  }
+  .div-blog-card {
+    display: inline-block;
+    width: 200px;
+    background: #fff;
+    border: 2px solid #aaa;
+    border-bottom: 3px solid #bbb;
+    padding: 15px;
+    padding-bottom: 15px;
+    margin: 15px;
+    text-align: center;
+  }
+  .div-blog-card img {
+    width: 100%;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 15px;
+    margin-bottom: 5px;
+  }
+  .div-blog-card-title {
+    padding-right: 1em;
+    padding-left: 1em;
+    border: 2px solid #aaa;
+    border-bottom: 0.5px solid #bbb;
+    text-align: center;
+  }
+  .div-blog-card-title p {
+    font-family: "맑은 고딕", 돋움;
+    font-size: 20px;
+    font-weight: 500;
+    color: #0000EE;
+    cursor: pointer;
+    padding: 1px;
+  }
+  .div-blog-card-sub-title {
+    padding-right: 1em;
+    padding-left: 1em;
+    border: 2px solid #aaa;
+    text-align: center;
+  }
+  .div-blog-card-sub-title p {
+    font-family: "맑은 고딕", 돋움;
+    font-size: 14px;
+    color: darkgray;
+    margin: 0;
+    padding: 1px;
+  }
+}
+
 .div-register-popup-bottom {
   width: 573px;
   height: 100%;

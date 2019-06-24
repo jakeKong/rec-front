@@ -1,7 +1,7 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-
 import { MainPage, NotFoundPage, LoginPage, RegisterPage } from './common';
+import { BlogTyleNewsPage, BlogTyleNewsManagePage } from './blog';
 import { UserManagePage } from './scm';
 import { OrderHistoryPage, OrderHistoryByEmailPage, /*ReportMakeHistoryPage,*/ ChangePointHistoryPage, ChangePointHistoryByEmailPage, ProductManagePage } from './oms';
 import { NoticePage, NoticeManagePage, QuestionPage, QuestionManagePage } from './bms';
@@ -18,6 +18,11 @@ const App = () => {
         <Route exact path="/login" component={LoginPage} />
         {/* 회원가입 */}
         <Route exact path="/register" component={RegisterPage} />
+
+        {/* 블로그 */}
+        <Route exact path="/blog/tyle" component={BlogTyleNewsPage} />
+        {/* 블로그 관리 */}
+        <Route exact path="/blog/tyle/manage" component={BlogTyleNewsManagePage} />
 
         {/* 사용자 관리 */}
         <Route exact path="/scm/user/manage" component={ UserManagePage }/>
