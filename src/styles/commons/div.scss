@@ -50,6 +50,235 @@
   text-align: center;
 }
 
+.div-register {
+  padding: 1em;
+  margin: 1em;
+  border-spacing: 0;
+  text-align: center;
+  .div-register-title {
+    display: flex;
+    padding: 1em;
+    .div-register-title-focus-on {
+      height: 70px;
+      border: 1px solid #d5d5d5;
+      background: #d5d5d5;
+      flex: 25;
+      margin-left: 0.5em;
+      margin-right: 0.5em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .div-register-title-focus-off {
+      height: 70px;
+      border: 1px solid #d5d5d5;
+      flex: 25;
+      margin-left: 0.5em;
+      margin-right: 0.5em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .label-register-title {
+      font-size: 20px;
+      font-weight: 500;
+    }
+  }
+  .div-register-agree {
+    border: 1px solid #d5d5d5;
+    .div-register-agree-box {
+      display: block;
+      border: 1px solid #d5d5d5;
+      text-align: left;
+      .label-register-agree-sub-title {
+        font-size: 16px;
+      }
+      .vaadin-text-area-register-agree {
+        display: contents;
+        min-height: 200px;
+        max-height: 200px;
+      }
+      .div-register-agree-box-check {
+        text-align: right;
+      }
+    }
+    .div-register-agree-total {
+      display: block;
+      text-align: right;
+      align-items: right;
+      justify-content: right;
+      .label-register-agree-total {
+        width: 100%;
+        font-size: 16px;
+        text-align: right;
+      }
+    }
+    .vaadin-button-register-agree-common {
+      width: 200px;
+      height: 80px;
+      border: 1px solid #d5d5d5;
+      flex: 49;
+      margin-right: 1em;
+    }
+    .vaadin-button-register-agree-naver {
+      width: 200px;
+      height: 80px;
+      border: 1px solid #d5d5d5;
+      flex: 49;
+      margin-right: 1em;
+    }
+  }
+  .div-register-auth {
+
+  }
+  .div-register-input {
+    width: 573px;
+    display: block;
+    height: 100%;
+    padding: 1em;
+    // text-align: center;
+  }
+  .div-register-complete {
+    padding: 1em;
+    display: block;
+    .p-register-complete-title {
+      font-size: 24px;
+    }
+    .p-register-complete-sub-title {
+      font-size: 18px;
+    }
+    .div-register-complete-field {
+      border: 1px solid #d5d5d5;
+      padding: 1em;
+      display: flex;
+      margin-left: 15em;
+      margin-right: 15em;
+      .div-register-complete-field-title {
+        flex: 35;
+        padding: 1em;
+        display: inline-block;
+        text-align: right;
+        // margin-right: 5em;
+      }
+      .div-register-complete-field-value {
+        flex: 65;
+        padding: 1em;
+        display: inline-block;
+        // text-align: left;
+      }
+    }
+    .div-register-complete-button {
+      padding: 1em;
+    }
+  }
+  .vaadin-button-register-complete {
+    width: 150px;
+    height: 70px;
+    border: 1px solid #d5d5d5;
+  }
+}
+
+.div-login {
+  padding: 1em 10em 1em 10em;
+  // margin-left: 5em;
+  // margin-right: 5em;
+  // margin: 10em;
+  .div-login-card {
+    padding: 5em;
+    // margin: 5em;
+    width: 800px;
+    // margin: 1em 10em 1em 10em;
+    border: 1px solid #d5d5d5;
+    // text-align: center;
+    .label-login-title {
+      text-align: left;
+      font-size: 30px;
+    }
+    .div-login-field {
+      display: flex;
+      text-align: center;
+      vertical-align: middle;
+      align-items: center;
+      .div-login-input-field {
+        flex: 60;
+        text-align: center;
+        vertical-align: middle;
+        align-items: center;
+        .div-login-form-id {
+          // text-align: center;
+          display: flex;
+          // padding: 1em;
+          align-items: center;
+          .label-login-id {
+            flex: 30;
+            margin-right: 1em;
+            text-align: left;
+          }
+          .vaadin-text-field-id {
+            flex: 70;
+          }
+        }
+        .div-login-form-pw {
+          display: flex;
+          // padding: 1em;
+          align-items: center;
+          .label-login-pw {
+            flex: 30;
+            margin-right: 1em;
+            text-align: left;
+          }
+          .vaadin-text-field-pw {
+            flex: 70;
+          }
+        }
+      }
+      .div-login-button-field {
+        flex: 40;
+        display: flex;
+        padding: 1em;
+        .vaadin-button-login {
+          width: 100%;
+          height: 80px;
+          border: 1px solid #d5d5d5;
+          flex: 49;
+          margin-right: 1em;
+        }
+        .vaadin-button-login-naver {
+          width: 100%;
+          height: 80px;
+          border: 1px solid #d5d5d5;
+          flex: 49;
+        }
+      }
+    }
+    .div-sub-field {
+      padding-left: 10em;
+      .label-register {
+        font-size: 14px;
+        cursor: pointer;
+        color: #0000EE;
+      }
+      .label-findby-idpw {
+        font-size: 14px;
+        cursor: pointer;
+        color: #0000EE;
+      }
+    }
+  }
+
+}
+
+.div-home-grid {
+  padding: 1;
+  margin-left: 5em;
+  margin-right: 5em;
+}
+
+.div-home-search {
+  padding: 1;
+  text-align: center;
+}
+
 .div-board {
   width: 1073px;
   height: 100%;
@@ -144,32 +373,32 @@
   height: 100%;
   padding: 1em;
   // text-align: center;
-  .default-column {
-    display: flex;
-    padding: 1em;
-    align-items: center;
-  }
-  .email-column {
-    display: flex;
-    padding: 1em;
-    align-items: center;
-  }
-  .address-column {
-    display: flex;
-    padding: 1em;
-    align-items: center;
-  }
-  .list-box-column {
-    display: flex;
-    padding: 1em;
+}
+.default-column {
+  display: flex;
+  padding: 1em;
+  align-items: center;
+}
+.email-column {
+  display: flex;
+  padding: 1em;
+  align-items: center;
+}
+.address-column {
+  display: flex;
+  padding: 1em;
+  align-items: center;
+}
+.list-box-column {
+  display: flex;
+  padding: 1em;
+  text-align: center;
+  .list-box-button{
+    width: 100px;
+    margin-top: 3em;
+    vertical-align: middle;
+    display: inline-block;
     text-align: center;
-    .list-box-button{
-      width: 100px;
-      margin-top: 3em;
-      vertical-align: middle;
-      display: inline-block;
-      text-align: center;
-    }
   }
 }
 

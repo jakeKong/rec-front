@@ -38,12 +38,12 @@ class Header extends Component {
     const login = document.querySelector('#login');
     login.innerHTML = '로그인'
     login.addEventListener('click', function() {
-      console.log('로그인')
+      window.location.href = '/#/login';
     })
     const register = document.querySelector('#register');
     register.innerHTML = '회원가입'
     register.addEventListener('click', function() {
-      console.log('회원가입')
+      window.location.href = '/#/register';
     })
   }
 

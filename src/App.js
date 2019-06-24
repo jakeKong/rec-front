@@ -1,7 +1,7 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
-import { MainPage, NotFoundPage } from './common';
+import { MainPage, NotFoundPage, LoginPage, RegisterPage } from './common';
 import { UserManagePage } from './scm';
 import { OrderHistoryPage, OrderHistoryByEmailPage, /*ReportMakeHistoryPage,*/ ChangePointHistoryPage, ChangePointHistoryByEmailPage, ProductManagePage } from './oms';
 import { NoticePage, NoticeManagePage, QuestionPage, QuestionManagePage } from './bms';
@@ -11,7 +11,13 @@ const App = () => {
   return (
     <div className="index">
       <Switch>
+        {/* 홈 */}
         <Route exact path="/" component={MainPage} />
+
+        {/* 로그인 */}
+        <Route exact path="/login" component={LoginPage} />
+        {/* 회원가입 */}
+        <Route exact path="/register" component={RegisterPage} />
 
         {/* 사용자 관리 */}
         <Route exact path="/scm/user/manage" component={ UserManagePage }/>

@@ -1,13 +1,13 @@
 import React from 'react';
 import { PageTemplate } from '../../common';
-// import { MainContainer } from '../../containers'
+import { MainContainer } from '../index';
 
 const MainPage = () => {
   return (
-    <div className="index">
+    <div>
       <PageTemplate>
         <div className="page-description">홈</div>
-        {/* <MainContainer /> */}
+        <MainContainer />
       </PageTemplate>
     </div>
   );

@@ -401,6 +401,14 @@ class UserRegister extends Component {
           window.alert('입력되지 않은 항목이 있습니다. 입력 후 다시 시도해주세요.');
           return;
         }
+        // if (dto.address === null || dto.address === undefined || dto.address === '') {
+        //   window.alert('입력되지 않은 항목이 있습니다. 입력 후 다시 시도해주세요.');
+        //   return;
+        // }
+        // if (dto.addressNo === null || dto.addressNo === undefined || dto.addressNo === '') {
+        //   window.alert('입력되지 않은 항목이 있습니다. 입력 후 다시 시도해주세요.');
+        //   return;
+        // }
         if (dto.birthDt === null || dto.birthDt === undefined || dto.birthDt === '') {
           window.alert('입력되지 않은 항목이 있습니다. 입력 후 다시 시도해주세요.');
           return;

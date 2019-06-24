@@ -8,6 +8,9 @@ fork 완료: Saga는 오직 다음의 사건에만 종료됩니다.
 */
 import { fork } from 'redux-saga/effects';
 
+// COMMON
+import main, { mainSaga } from './common/modules/MainModule';
+
 // SCM
 import user, { userSaga } from './scm/modules/UserModule';
 
@@ -27,6 +30,8 @@ import question, { questionSaga } from './bms/modules/QuestionModule';
 
 // rootSaga 설정
 export function* rootSaga() {
+  // COMMON
+  yield fork(mainSaga);
   // SCM
   yield fork(userSaga);
   // PAYMENT
@@ -44,6 +49,8 @@ export function* rootSaga() {
 
 // 통합 reducer
 export default combineReducers({
+  // COMMON
+  main,
   // SCM
   user,
   // PAYMENT
