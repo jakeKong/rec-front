@@ -2,4 +2,5 @@ deploy-to-dev-server:
     only:
     - master
     script:
-    - cp -frv . /tmp/www/front 
+    - echo ll
+    - cp -frv ./* /tmp/www/front 
