@@ -5,4 +5,8 @@ deploy-to-dev-server:
     - echo ll
     - cp -frv ./* /tmp/www/front 
     - cd /tmp/www/front 
+    - npm cache clean --force
+    - rm -rf node_modules
+    - rm package-lock.json
     - npm install
+    - npm run build
