@@ -1,0 +1,5 @@
+deploy-to-dev-server:
+    only:
+    - master
+    script:
+    - xcopy . /home/jake/www/front /h /k /y /e /r /d
