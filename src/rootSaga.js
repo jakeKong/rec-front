@@ -8,15 +8,28 @@ fork 완료: Saga는 오직 다음의 사건에만 종료됩니다.
 */
 import { fork } from 'redux-saga/effects';
 
+// COMMON
+import main, { mainSaga } from './common/modules/MainModule';
+
+// COMMON
+import blog, { blogSaga } from './blog/modules/BlogTyleNewsModule';
+
+// SCM
+import user, { userSaga } from './scm/modules/UserModule';
+
+// PAYMENT
+import payment, { paymentSaga } from './payment/modules/PaymentModule';
+
 // OMS
 import orderHistory, { orderHistorySaga } from './oms/modules/OrderHistoryModule';
-import reportMakeHistory, { reportMakeHistorySaga } from './oms/modules/ReportMakeHistoryModule';
+// import reportMakeHistory, { reportMakeHistorySaga } from './oms/modules/ReportMakeHistoryModule';
 import changePointHistory, { changePointHistorySaga } from './oms/modules/ChangePointHistoryModule';
-import purchaseHistory, { purchaseHistorySaga } from './oms/modules/PurchaseHistoryModule';
+// import purchaseHistory, { purchaseHistorySaga } from './oms/modules/PurchaseHistoryModule';
 import product, { productSaga } from './oms/modules/ProductManageModule';
 
 // BMS
 import notice, { noticeSaga } from './bms/modules/NoticeModule';
+import question, { questionSaga } from './bms/modules/QuestionModule';
 
 // MPA
 import bldRgst, { brRecapTitleInfoSaga } from './mpa/modules/BrRecapTitleInfoModule';
@@ -26,11 +39,19 @@ import landUse, { landUseSaga } from './mpa/modules/LandUseModule';
 
 // rootSaga 설정
 export function* rootSaga() {
+  // COMMON
+  yield fork(mainSaga);
+  // BLOG
+  yield fork(blogSaga);
+  // SCM
+  yield fork(userSaga);
+  // PAYMENT
+  yield fork(paymentSaga);
   // OMS
   yield fork(orderHistorySaga);
-  yield fork(reportMakeHistorySaga);
+  // yield fork(reportMakeHistorySaga);
   yield fork(changePointHistorySaga);
-  yield fork(purchaseHistorySaga);
+  // yield fork(purchaseHistorySaga);
   yield fork(productSaga);
   // BMS
   yield fork(noticeSaga);
@@ -39,14 +60,25 @@ export function* rootSaga() {
   yield fork(possessionSaga);
   yield fork(landCharacteristicsSaga);
   yield fork(landUseSaga);
+
+  yield fork(questionSaga);
 }
 
 // 통합 reducer
 export default combineReducers({
+  // COMMON
+  main,
+  // BLOG
+  blog,
+  // SCM
+  user,
+  // PAYMENT
+  payment,
   // OMS
-  orderHistory, reportMakeHistory, changePointHistory, purchaseHistory, product,
-  // BMS
-  notice,
+  orderHistory, /* reportMakeHistory, */ changePointHistory, /* purchaseHistory, */ product,
   // MPA
-  bldRgst, possession, landCharacteristics, landUse
+  bldRgst, possession, landCharacteristics, landUse,
+  // BMS
+  notice,question
+
 });

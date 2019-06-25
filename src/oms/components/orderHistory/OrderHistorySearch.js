@@ -14,6 +14,9 @@ import '@vaadin/vaadin-select'
 import '@vaadin/vaadin-list-box'
 import '@vaadin/vaadin-item'
 
+import { statusItems, realEstateTypeItems } from '../../items';
+import { monthBeforeDate, currentDate } from '../../../common/items';
+
 class OrderHistorySearch extends Component {
 
     constructor(props) {
@@ -21,7 +24,7 @@ class OrderHistorySearch extends Component {
         this.state ={
             search: {
                 email: null,
-                pnu: null,
+                ordererNm: null,
                 odrNo: null,
                 fromDt: null,
                 toDt: null,
@@ -32,200 +35,178 @@ class OrderHistorySearch extends Component {
         // this.setSearchState = this.setSearchState.bind(this);
     }
 
-    componentDidMount() {
-        // search parameter default setting
-        const { search } = this.state;
-        const { email } = this.props;
+  componentDidMount() {
+    // search parameter default setting
+    const { search } = this.state;
+    const { role } = this.props;
 
-        // date set --> Common DateUtil로 변경 필요
-        let date = new Date(), 
-        weekBeforeDate = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + (date.getDate() - 7),
-        currentDate = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
+    // search label set
+    document.querySelector('#lbStatus').innerHTML = '상태';
+    document.querySelector('#lbDate').innerHTML = '기간';
+    document.querySelector('#lbPunct').innerHTML = '~';
+    document.querySelector('#lbRealEstateType').innerHTML = '부동산 유형';
+    
+    /*
+    // combo-box set
+    const cbStatus = document.querySelector('#cbStatus')
+    cbStatus.items = [{},'전체','구매완료','구매취소'];
+    cbStatus.value = '전체';
+    cbStatus.addEventListener('change', function() {
+        param.status = cbStatus.value;
+        console.log('cbStatus.value = ' + cbStatus.value)
+        console.log('param.status = ' + param.status)
+    })
+    */
+    
+    // status Box set
+    const slStatus = document.querySelector('#slStatus')
+    // default status Select set
+    slStatus.value = 'ALL';
+    search.status = slStatus.value;
+    slStatus.renderer = function(root) {
+      if (root.firstChild) {
+        return;
+      }
+      const listBox = document.createElement('vaadin-list-box');
+      const select = document.createElement('vaadin-item');
 
-        // Oms UtilType으로 변경 필요
-        const statusItems = [
-            {value: 'TRADE_COMPLETE', textContent: '구매완료'},
-            {value: 'TRADE_CANCLE', textContent: '구매취소'}
-        ];
+      select.textContent = '전체';
+      select.setAttribute('value', 'ALL');
+      listBox.appendChild(select);
 
-        const realEstateTypeItems = [
-            {value: 'APARTMENT', textContent: '아파트'},
-            {value: 'OFFICETEL', textContent: '오피스텔'},
-            {value: 'DETACHED_HOUSE', textContent: '단독주택'},
-            {value: 'VILLA', textContent: '빌라'},
-            {value: 'SHOPPING_DISTRICT', textContent: '상가'}
-        ];
+      const divider = document.createElement('hr');
+      listBox.appendChild(divider);
 
-        // search label set
-        document.querySelector('#lbStatus').innerHTML = '상태';
-        document.querySelector('#lbDate').innerHTML = '기간';
-        document.querySelector('#lbPunct').innerHTML = '~';
-        document.querySelector('#lbRealEstateType').innerHTML = '부동산 유형';
-        
-        /*
-        // combo-box set
-        const cbStatus = document.querySelector('#cbStatus')
-        cbStatus.items = [{},'전체','구매완료','구매취소'];
-        cbStatus.value = '전체';
-        cbStatus.addEventListener('change', function() {
-            param.status = cbStatus.value;
-            console.log('cbStatus.value = ' + cbStatus.value)
-            console.log('param.status = ' + param.status)
-        })
-        */
-        
-        // status Box set
-        const slStatus = document.querySelector('#slStatus')
-        // default status Select set
-        slStatus.value = 'ALL';
+      statusItems.forEach(function(row){
+        const item = document.createElement('vaadin-item');
+        item.textContent = row.textContent;
+        if (row.value) {
+            item.setAttribute('value', row.value);
+        }
+        listBox.appendChild(item);
+      });
+      root.appendChild(listBox);
+
+    }
+    // 상태 콤보박스의 값 변경 시 SearchParameter에 선택한 값으로 변경
+    slStatus.addEventListener('value-changed', function(e) {
         search.status = slStatus.value;
-        slStatus.renderer = function(root) {
-            if (root.firstChild) {
-                return;
-            }
-            const listBox = document.createElement('vaadin-list-box');
-            const select = document.createElement('vaadin-item');
+    })
 
-            select.textContent = '전체';
-            select.setAttribute('value', 'ALL');
-            listBox.appendChild(select);
+    // Start date-picker set
+    const dpStart = document.querySelector('#dpStart')
+    // default before Week date set
+    dpStart.value = monthBeforeDate;
+    search.fromDt = dpStart.value;
+    dpStart.addEventListener('value-changed', function() {
+      search.fromDt = dpStart.value;
+    })
 
-            const divider = document.createElement('hr');
-            listBox.appendChild(divider);
+    // End date-picker set
+    const dpEnd = document.querySelector('#dpEnd')
+    // default today
+    dpEnd.value = currentDate;
+    search.toDt = dpEnd.value;
+    dpEnd.addEventListener('value-changed', function() {
+      search.toDt = dpEnd.value;
+    })
 
-            statusItems.forEach(function(row){
-                const item = document.createElement('vaadin-item');
-                item.textContent = row.textContent;
-                if (row.value) {
-                    item.setAttribute('value', row.value);
-                }
-                listBox.appendChild(item);
-            });
-            root.appendChild(listBox);
+    // realEstateType Box set
+    const slRealEstateType = document.querySelector('#slRealEstateType')
+    // default realEstateType Select set
+    slRealEstateType.value = 'ALL';
+    search.realEstateType = slRealEstateType.value;
+    slRealEstateType.renderer = function(root) {
+      if (root.firstChild) {
+        return;
+      }
+      const listBox = document.createElement('vaadin-list-box');
+      const select = document.createElement('vaadin-item');
 
+      select.textContent = '전체';
+      select.setAttribute('value', 'ALL');
+      listBox.appendChild(select);
+
+      const divider = document.createElement('hr');
+      listBox.appendChild(divider);
+
+      realEstateTypeItems.forEach(function(row){
+        const item = document.createElement('vaadin-item');
+        item.textContent = row.textContent;
+        if (row.value) {
+          item.setAttribute('value', row.value);
         }
-        // 상태 콤보박스의 값 변경 시 SearchParameter에 선택한 값으로 변경
-        slStatus.addEventListener('value-changed', function(e) {
-            search.status = slStatus.value;
-        })
+        listBox.appendChild(item);
+      });
+      root.appendChild(listBox);
 
-        // Start date-picker set
-        const dpStart = document.querySelector('#dpStart')
-        // default before Week date set
-        dpStart.value = weekBeforeDate;
-        search.fromDt = dpStart.value;
-        dpStart.addEventListener('value-changed', function() {
-            search.fromDt = dpStart.value;
-        })
-
-        // End date-picker set
-        const dpEnd = document.querySelector('#dpEnd')
-        // default today
-        dpEnd.value = currentDate;
-        search.toDt = dpEnd.value;
-        dpEnd.addEventListener('value-changed', function() {
-            search.toDt = dpEnd.value;
-        })
-
-        // realEstateType Box set
-        const slRealEstateType = document.querySelector('#slRealEstateType')
-        // default realEstateType Select set
-        slRealEstateType.value = 'ALL';
+    }
+    // 상태 콤보박스의 값 변경 시 SearchParameter에 선택한 값으로 변경
+    slRealEstateType.addEventListener('value-changed', function(e) {
         search.realEstateType = slRealEstateType.value;
-        slRealEstateType.renderer = function(root) {
-            if (root.firstChild) {
-                return;
-            }
-            const listBox = document.createElement('vaadin-list-box');
-            const select = document.createElement('vaadin-item');
+    })
 
-            select.textContent = '전체';
-            select.setAttribute('value', 'ALL');
-            listBox.appendChild(select);
-
-            const divider = document.createElement('hr');
-            listBox.appendChild(divider);
-
-            realEstateTypeItems.forEach(function(row){
-                const item = document.createElement('vaadin-item');
-                item.textContent = row.textContent;
-                if (row.value) {
-                    item.setAttribute('value', row.value);
-                }
-                listBox.appendChild(item);
-            });
-            root.appendChild(listBox);
-
-        }
-        // 상태 콤보박스의 값 변경 시 SearchParameter에 선택한 값으로 변경
-        slRealEstateType.addEventListener('value-changed', function(e) {
-            search.realEstateType = slRealEstateType.value;
-        })
-
-        // Search combo-box set
-        const cbSearch = document.querySelector('#cbSearch')
-        // ByAll || byEmail Check
-        if (email != null) {
-            cbSearch.items = ['주문번호', '지번'];    
-        } else {
-            cbSearch.items = ['주문번호', '지번', '주문자'];
-        }
-        cbSearch.value = '주문번호';
-        cbSearch.addEventListener('value-changed', function() {
-            search.odrNo = null;
-            search.pnu = null;
-            search.email = null;
-            tfSearch.value = null;
-        })
-
-        // Search text-field set
-        const tfSearch = document.querySelector('#tfSearch')
-        tfSearch.placeholder = '검색어를 입력해주세요.';
-        tfSearch.maxlength = '15';
-        tfSearch.addEventListener('input', function() {
-            if (cbSearch.value === '주문번호') {
-                search.odrNo = tfSearch.value;
-            }
-            if (cbSearch.value === '지번') {
-                search.pnu = tfSearch.value;
-            }
-            if (cbSearch.value === '주문자') {
-                search.email = tfSearch.value;
-            }
-        })
-
-        // Search button set
-        const { searchCallback } = this.props;
-        const btnSearch = document.querySelector('#btnSearch')
-        btnSearch.innerHTML = '조회';
-        btnSearch.addEventListener('click', function() {
-          searchCallback(search);
-        })
+    // Search combo-box set
+    const cbSearch = document.querySelector('#cbSearch')
+    // ByAll || byEmail Check
+    if (role !== 'ROLE_ADMIN') {
+      cbSearch.items = ['주문번호'];    
+    } else {
+      cbSearch.items = ['주문번호', '주문자'];
     }
+    cbSearch.value = '주문번호';
+    cbSearch.addEventListener('value-changed', function() {
+      search.odrNo = null;
+      search.ordererNm = null;
+      // search.email = null;
+      tfSearch.value = null;
+    })
 
-    render() {
-      return (
-        <Fragment>
-          <label className="label-center" id="lbStatus" />
-              {/* <vaadin-combo-box id="cbStatus"/> */}
-              <vaadin-select id="slStatus" />
+    // Search text-field set
+    const tfSearch = document.querySelector('#tfSearch')
+    tfSearch.placeholder = '검색어를 입력해주세요.';
+    tfSearch.maxlength = '15';
+    tfSearch.addEventListener('input', function() {
+      if (cbSearch.value === '주문번호') {
+        search.odrNo = tfSearch.value;
+      }
+      if (cbSearch.value === '주문자') {
+        search.ordererNm = tfSearch.value;
+      }
+    })
 
-          <label className="label-center" id="lbDate" />
-              <vaadin-date-picker id="dpStart" />
-                  <label className="label-center" id="lbPunct" />
-              <vaadin-date-picker id="dpEnd" />
+    // Search button set
+    const { searchCallback } = this.props;
+    const btnSearch = document.querySelector('#btnSearch')
+    btnSearch.innerHTML = '조회';
+    btnSearch.addEventListener('click', function() {
+      searchCallback(search);
+    })
+  }
 
-          <label className="label-center" id="lbRealEstateType" />
-              <vaadin-select id="slRealEstateType" />
+  render() {
+    return (
+      <Fragment>
+        <label className="label-center" id="lbStatus" />
+          {/* <vaadin-combo-box id="cbStatus"/> */}
+          <vaadin-select id="slStatus" />
 
-          <vaadin-combo-box id="cbSearch"/>
-              <vaadin-text-field id="tfSearch">
-                  <iron-icon icon="vaadin:search" slot="prefix" />
-              </vaadin-text-field>
+        <label className="label-center" id="lbRealEstateType" />
+          <vaadin-select id="slRealEstateType" />
 
-          <vaadin-button id="btnSearch" />
-        </Fragment>
-      );
-    }
+        <label className="label-center" id="lbDate" />
+          <vaadin-date-picker id="dpStart" />
+            <label className="label-center" id="lbPunct" />
+          <vaadin-date-picker id="dpEnd" />
+
+        <vaadin-combo-box id="cbSearch"/>
+          <vaadin-text-field id="tfSearch">
+            <iron-icon icon="vaadin:search" slot="prefix" />
+          </vaadin-text-field>
+
+        <vaadin-button id="btnSearch" />
+      </Fragment>
+    );
+  }
 }
 export default OrderHistorySearch ;

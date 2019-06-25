@@ -4,8 +4,10 @@
 @import "./commons/content.scss";
 @import "./commons/pageDescription.scss";
 @import "./commons/label.scss";
+@import "./commons/button.scss";
 @import "./commons/pageTemplate.scss";
 @import "./commons/div.scss";
+@import "./commons/ulLi.scss";
 
 // layouts
 @import "./layouts/vaadin-app-layout.scss";
@@ -22,6 +24,8 @@
 @import "./components/vaadin-select.scss";
 @import "./components/vaadin-grid.scss";
 @import "./components/vaadin-dialog.scss";
+@import "./components/vaadin-details.scss";
+@import "./components/vaadin-list-box.scss";
 
 .index {
   width: 100%;

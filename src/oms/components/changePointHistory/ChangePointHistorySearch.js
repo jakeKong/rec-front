@@ -11,36 +11,29 @@ import '@vaadin/vaadin-select'
 import '@vaadin/vaadin-list-box'
 import '@vaadin/vaadin-item'
 
+import { changeTypeItems } from '../../items';
+import { monthBeforeDate, currentDate } from '../../../common/items';
+
 class ChangePointHistorySearch extends Component {
 
   constructor(props) {
     super(props);
     this.state ={
       search: {
+        userNm: null,
         odrNo: null,
-        purchaseNo: null,
+        paymentNo: null,
         fromDt: null,
         toDt: null,
         changeType: null
       },
-      hide: true,
     }
   }
 
   componentDidMount() {
       // search parameter default setting
     const { search } = this.state;
-
-    // date set --> Common DateUtil로 변경 필요
-    let date = new Date(), 
-    weekBeforeDate = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + (date.getDate() - 7),
-    currentDate = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
-
-    // Oms UtilType으로 변경 필요
-    const changeTypeItems = [
-      {value: 'PURCHASE', textContent: '구매'},
-      {value: 'SUBSTRACT', textContent: '차감'}
-    ];
+    const { role } = this.props;
 
     // search label set
     document.querySelector('#lbChangeType').innerHTML = '변동 유형';
@@ -76,32 +69,89 @@ class ChangePointHistorySearch extends Component {
       });
       root.appendChild(listBox);
     }
+
+    const cbSearch = document.querySelector('#cbSearch');
+
     // 상태 콤보박스의 값 변경 시 SearchParameter에 선택한 값으로 변경
     slChangeType.addEventListener('value-changed', function(e) {
       search.changeType = slChangeType.value;
-      if (slChangeType.value === 'ALL') {
-        document.querySelector('#lbSearch').innerHTML = null;
-        tfSearch.hidden = true;
-      } else if (slChangeType.value === 'PURCHASE') {
-        tfSearch.hidden = false;
-        document.querySelector('#lbSearch').innerHTML = '구매번호';
-        tfSearch.placeholder = '검색어를 입력해주세요.';
-        tfSearch.addEventListener('input', function() {
-          search.purchaseNo = tfSearch.value;
-        })
+      search.odrNo = null;
+      search.paymentNo = null;
+      cbSearch.value = null;
+      // role
+      if (role === 'ROLE_ADMIN') {
+        if (slChangeType.value === 'ALL') {
+          document.querySelector('#lbSearch').innerHTML = null;
+          tfSearch.hidden = true;
+          cbSearch.hidden = true;
+        }
+        else if (slChangeType.value === 'PAYMENT_ADD' || slChangeType.value === 'PAYMENT_SUB') {
+          document.querySelector('#lbSearch').innerHTML = null;
+          tfSearch.hidden = false;
+          cbSearch.items = ['결제번호', '사용자'];
+          cbSearch.value = '결제번호';
+          cbSearch.hidden = false;
+        }
+        else if (slChangeType.value === 'PURCHASE_ADD' || slChangeType.value === 'PURCHASE_SUB') {
+          document.querySelector('#lbSearch').innerHTML = null;
+          tfSearch.hidden = false;
+          cbSearch.items = ['주문번호', '사용자'];
+          cbSearch.value = '주문번호';
+          cbSearch.hidden = false;
+        }
+        else {
+          document.querySelector('#lbSearch').innerHTML = null;
+          tfSearch.hidden = true;
+          cbSearch.hidden = true;
+        }
       } else {
-        tfSearch.hidden = false;
-        document.querySelector('#lbSearch').innerHTML = '주문번호';
-        tfSearch.addEventListener('input', function() {
+        if (slChangeType.value === 'ALL') {
+          document.querySelector('#lbSearch').innerHTML = null;
+          tfSearch.hidden = true;
+        }
+        else if (slChangeType.value === 'PAYMENT_ADD' || slChangeType.value === 'PAYMENT_SUB') {
+          document.querySelector('#lbSearch').innerHTML = '결제번호';
+          tfSearch.hidden = false;
+        }
+        else if (slChangeType.value === 'PURCHASE_ADD' || slChangeType.value === 'PURCHASE_SUB') {
+          document.querySelector('#lbSearch').innerHTML = '주문번호';
+          tfSearch.hidden = false;
+        }
+        else {
+          document.querySelector('#lbSearch').innerHTML = null;
+          tfSearch.hidden = true;
+        }
+      }
+    })
+
+    // Search text-field set
+    const tfSearch = document.querySelector('#tfSearch')
+    tfSearch.maxlength = '15';
+    tfSearch.placeholder = '검색어를 입력해주세요.';
+    tfSearch.addEventListener('input', function() {
+      if (role === 'ROLE_ADMIN') {
+        if (cbSearch.value === '결제번호') {
+          search.paymentNo = tfSearch.value;
+        } else if (cbSearch.value === '주문번호') {
           search.odrNo = tfSearch.value;
-        })
+        } else {
+          search.userNm = tfSearch.value;
+        }
+      } else {
+        if (slChangeType.value === 'PAYMENT_ADD' || slChangeType.value === 'PAYMENT_SUB') {
+          search.paymentNo = tfSearch.value;
+        } else if (slChangeType.value === 'PURCHASE_ADD' || slChangeType.value === 'PURCHASE_SUB') {
+          search.odrNo = tfSearch.value;
+        } else {
+          search.userNm = tfSearch.value;
+        }
       }
     })
 
     // Start date-picker set
     const dpStart = document.querySelector('#dpStart')
     // default before Week date set
-    dpStart.value = weekBeforeDate;
+    dpStart.value = monthBeforeDate;
     search.fromDt = dpStart.value;
     dpStart.addEventListener('value-changed', function() {
       search.fromDt = dpStart.value;
@@ -116,10 +166,6 @@ class ChangePointHistorySearch extends Component {
       search.toDt = dpEnd.value;
     })
 
-    // Search text-field set
-    const tfSearch = document.querySelector('#tfSearch')
-    tfSearch.maxlength = '15';
-
     // Search button set
     const { searchCallback } = this.props;
     const btnSearch = document.querySelector('#btnSearch')
@@ -127,13 +173,12 @@ class ChangePointHistorySearch extends Component {
     btnSearch.addEventListener('click', function() {
       searchCallback(search);
       search.odrNo = null;
-      search.purchaseNo = null;
+      search.paymentNo = null;
       tfSearch.value = null;
     })
   }
 
   render() {
-    const { hide } = this.state;
     return (
       <Fragment>
         <label className="label-center" id="lbChangeType" />
@@ -145,7 +190,8 @@ class ChangePointHistorySearch extends Component {
           <vaadin-date-picker id="dpEnd" />
 
         <label className="label-center" id="lbSearch"/>
-          <vaadin-text-field id="tfSearch" hidden={ hide }>
+        <vaadin-combo-box id="cbSearch" hidden/>
+          <vaadin-text-field id="tfSearch" hidden>
             <iron-icon icon="vaadin:search" slot="prefix" />
           </vaadin-text-field>
 

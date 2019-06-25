@@ -23,7 +23,8 @@ class ProductManageContainer extends Component {
         productCd: null,
         productNm: null,
         productPoint: null,
-        cashRatio: null
+        pointCash: null
+        // cashRatio: null
       },
       popupOpened: false
     };
@@ -60,7 +61,8 @@ class ProductManageContainer extends Component {
       productCd: null,
       productNm: null,
       productPoint: null,
-      cashRatio: null
+      pointCash: null
+      // cashRatio: null
     }});
   }
 
@@ -76,7 +78,8 @@ class ProductManageContainer extends Component {
       productCd: null,
       productNm: null,
       productPoint: null,
-      cashRatio: null
+      pointCash: null
+      // cashRatio: null
     }});
   }
 
@@ -116,7 +119,8 @@ class ProductManageContainer extends Component {
       productCd: null,
       productNm: null,
       productPoint: null,
-      cashRatio: null
+      pointCash: null
+      // cashRatio: null
     }});
   }
 
@@ -186,23 +190,38 @@ class ProductManageContainer extends Component {
     })
   }
 
+  popupAddAndUpdateCheckOpenEvent(productDto, popupOpened) {
+    if (productDto !== null && productDto !== undefined) {
+      if (productDto.productSid !== null && productDto.productSid !== undefined) {
+        return <ProductRegister updateCallback={ this.updateCallback } productDto={ productDto } popupOpened={ popupOpened } popupClose={ this.popupClose }/>
+      } else {
+        return <ProductRegister addCallback={ this.addCallback } popupOpened={ popupOpened } popupClose={ this.popupClose }/>
+      }
+    }
+  }
+
   render() {
     const { productDto, popupOpened } = this.state;
     const { productList, pending, error, success } = this.props;
     return (
       <Fragment>
-        <div className="search-div">
+        <div className="div-search">
           <ProductManageSearch searchCallback={ this.searchCallback } />
         </div>
-        <div className="main-div">
+        <div className="div-main">
           { pending && "Loading..." }
           { error && <h1>Server Error!</h1> }
           { success && <ProductManageGrid productList={ productList } productDtoCallback={ this.productDtoCallback } deleteCallback={ this.deleteCallback } />}
         </div>
-        <div className="sub-main-div">
+        <div className="div-sub-main" hidden={!success}>
           <vaadin-button id="btnRegister"/>
         </div>
-        <ProductRegister id="popup" addCallback={ this.addCallback } updateCallback={ this.updateCallback } productDto={ productDto } popupOpened={ popupOpened } popupClose={ this.popupClose }/>
+        {/* <ProductRegister addCallback={ this.addCallback } updateCallback={ this.updateCallback } productDto={ productDto } popupOpened={ popupOpened } popupClose={ this.popupClose }/> */}
+        { productDto && popupOpened === true &&
+            <script>
+              {this.popupAddAndUpdateCheckOpenEvent(productDto, popupOpened)};
+            </script>
+          }
       </Fragment>
     );
   }

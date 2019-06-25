@@ -13,7 +13,7 @@ class OrderHistoryByEmailContainer extends Component {
     super(props);
     this.state = {
       search: {
-        pnu: null,
+        ordererNm: null,
         odrNo: null,
         fromDt: null,
         toDt: null,
@@ -36,7 +36,7 @@ class OrderHistoryByEmailContainer extends Component {
     this.getOrderHistoryListByEmail(email, search);
     // state.search 값 초기화
     this.setState({search: {
-      pnu: null,
+      ordererNm: null,
       odrNo: null,
       fromDt: null,
       toDt: null,
@@ -77,10 +77,10 @@ class OrderHistoryByEmailContainer extends Component {
     const { email, orderHistoryList, pending, error, success } = this.props;
     return (
       <Fragment>
-        <div className="search-div">
+        <div className="div-search">
           <OrderHistorySearch searchCallback={ this.searchCallback } email={ email } />
         </div>
-        <div className="main-div">
+        <div className="div-main">
           { pending && "Loading..." }
           { error && <h1>Server Error!</h1> }
           { success && <OrderHistoryGrid orderHistoryList={ orderHistoryList } email={ email } />}
@@ -97,7 +97,8 @@ export default connect(
     error: state.orderHistory.error,
     success: state.orderHistory.success,
     // 임시 값 (삭제 후 pageTemplate등 상위 컴포넌트에서 email정보를 받아와 props로 사용해야 함)
-    email: 'yieon@test.com'
+    email: 'yieon@test.com',
+    // role: 'ROLE_ADMIN'
   }),
   dispatch => ({
     OrderHistoryModule: bindActionCreators(orderHistoryActions, dispatch)

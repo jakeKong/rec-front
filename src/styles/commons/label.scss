@@ -4,6 +4,14 @@
   text-align: center;
 }
 
+.label-focus {
+  font-size: 16px;
+  font-weight: 550;
+  margin-bottom: 0;
+  text-align: center;
+  cursor: pointer;
+}
+
 .label-color-focus {
   font-size: 16px;
   font-weight: 500;
@@ -11,4 +19,116 @@
   text-align: center;
   cursor: pointer;
   color: #0000EE;
+}
+
+.label-board-title {
+  font-size: 24px;
+  font-weight: 500;
+  text-align: center;
+}
+
+.label-comment-title {
+  font-size: 12px;
+}
+
+.label-comment-title-count {
+  font-size: 12px;
+  font-weight: 550;
+  text-align: left;
+}
+
+.label-comment-answer-writer {
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.label-comment-answer-dt {
+  font-size: 11px;
+  margin-right: 5px;
+}
+
+.label-comment-answer-txt {
+  font-size: 12px;
+}
+
+.label-comment-cmt-writer {
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.label-comment-cmt-dt {
+  font-size: 11px;
+}
+
+.label-comment-cmt-txt {
+  font-size: 12px;
+}
+
+.label-title {
+  font-size: 20px;
+}
+
+/* LABEL-FLEX 10-100 */
+.label-flex-10 {
+  flex: 10;
+}
+.label-flex-10-left {
+  flex: 10;
+  text-align: left;
+}
+.label-flex-10-center {
+  flex: 10;
+  text-align: center;
+}
+.label-flex-10-right {
+  flex: 10;
+  text-align: right;
+}
+
+.label-flex-20 {
+  flex: 20;
+}
+.label-flex-20-left {
+  flex: 20;
+  text-align: left;
+}
+.label-flex-20-center {
+  flex: 20;
+  text-align: center;
+}
+.label-flex-20-right {
+  flex: 20;
+  text-align: right;
+}
+
+.label-flex-30 {
+  flex: 30;
+}
+.label-flex-30-left {
+  flex: 30;
+  text-align: left;
+}
+.label-flex-30-center {
+  flex: 30;
+  text-align: center;
+}
+.label-flex-30-right {
+  flex: 30;
+  text-align: right;
+}
+
+.label-flex-70 {
+  flex: 70;
+}
+.label-flex-70-left {
+  flex: 70;
+  text-align: left;
+}
+.label-flex-70-center {
+  flex: 70;
+  text-align: center;
+}
+.label-flex-70-right {
+  flex: 70;
+  text-align: right;
 }

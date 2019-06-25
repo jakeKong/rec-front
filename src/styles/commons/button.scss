@@ -1,0 +1,58 @@
+#btnHeadLogin {
+  width: 100px;
+  height: 60px;
+  color: blue;
+  background-color: white;
+  border: 1px solid #d5d5d5;
+}
+
+#btnHeadLogout {
+  width: 100px;
+  height: 60px;
+  color: red;
+  background-color: white;
+  border: 1px solid #d5d5d5;
+}
+
+#btnHeadRegister {
+  width: 100px;
+  height: 60px;
+  color: green;
+  background-color: white;
+  border: 1px solid #d5d5d5;
+}
+.button-cmt-register-onoff {
+  background: none;
+  width: -1px;
+  padding: 0, 0, 0, 1px;
+  margin: 0em;
+  height: -1px;
+  font-size: 11px;
+  cursor: pointer;
+  border: 0;
+}
+
+.button-cmt-update-onoff {
+  background: none;
+  width: -1px;
+  padding: 0, 0, 0, 1px;
+  margin: 0em;
+  height: -1px;
+  font-size: 11px;
+  cursor: pointer;
+  border: 0;
+  float: right;
+}
+
+.button-cmt-delete {
+  background: none;
+  width: -1px;
+  padding: 0em;
+  margin: 0em;
+  height: -1px;
+  font-size: 11px;
+  cursor: pointer;
+  border: 0;
+  color: red;
+  float: right;
+}

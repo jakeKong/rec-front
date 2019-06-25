@@ -1,0 +1,8 @@
+deploy-to-dev-server:
+    only:
+    - master
+    script:
+    - echo ll
+    - cp -frv ./* /tmp/www/front 
+    - cd /tmp/www/front 
+    - npm install
