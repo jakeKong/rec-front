@@ -2,4 +2,4 @@ deploy-to-dev-server:
     only:
     - master
     script:
-    - cp -frv . /home/jake/www/front 
+    - cp -frv . /tmp/www/front 
