@@ -31,6 +31,12 @@ import product, { productSaga } from './oms/modules/ProductManageModule';
 import notice, { noticeSaga } from './bms/modules/NoticeModule';
 import question, { questionSaga } from './bms/modules/QuestionModule';
 
+// MPA
+import bldRgst, { brRecapTitleInfoSaga } from './mpa/modules/BrRecapTitleInfoModule';
+import possession, { possessionSaga } from './mpa/modules/PossessionModule';
+import landCharacteristics, { landCharacteristicsSaga } from './mpa/modules/LandCharacteristicsModule';
+import landUse, { landUseSaga } from './mpa/modules/LandUseModule';
+
 // rootSaga 설정
 export function* rootSaga() {
   // COMMON
@@ -49,6 +55,12 @@ export function* rootSaga() {
   yield fork(productSaga);
   // BMS
   yield fork(noticeSaga);
+  // MPA
+  yield fork(brRecapTitleInfoSaga);
+  yield fork(possessionSaga);
+  yield fork(landCharacteristicsSaga);
+  yield fork(landUseSaga);
+
   yield fork(questionSaga);
 }
 
@@ -64,6 +76,9 @@ export default combineReducers({
   payment,
   // OMS
   orderHistory, /* reportMakeHistory, */ changePointHistory, /* purchaseHistory, */ product,
+  // MPA
+  bldRgst, possession, landCharacteristics, landUse,
   // BMS
-  notice, question
+  notice,question
+
 });

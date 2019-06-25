@@ -1,11 +1,13 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
+
 import { MainPage, NotFoundPage, LoginPage, RegisterPage } from './common';
 import { BlogTyleNewsPage, BlogTyleNewsManagePage } from './blog';
 import { UserManagePage } from './scm';
 import { OrderHistoryPage, OrderHistoryByEmailPage, /*ReportMakeHistoryPage,*/ ChangePointHistoryPage, ChangePointHistoryByEmailPage, ProductManagePage } from './oms';
 import { NoticePage, NoticeManagePage, QuestionPage, QuestionManagePage } from './bms';
 import { PaymentPage, PaymentHistoryPage } from './payment';
+import { BrRecapTitleInfoPage } from './mpa';
 
 const App = () => {
   return (
@@ -50,10 +52,15 @@ const App = () => {
         {/* 문의사항 관리 */}
         <Route exact path="/bms/question/manage" component={ QuestionManagePage }/>
 
+        <Route exact path="/bms/notice/list" component={ NoticePage }/>
+        <Route exact path="/bms/notice/manage/list" component={ NoticeManagePage }/>
+        
+        <Route exact path="/mpa/recaptitle/list" component={ BrRecapTitleInfoPage }/>
         {/* 상품 구매 */}
         <Route exact path="/payment/product" component={ PaymentPage }/>
         {/* 결제 내역 */}
         <Route exact path="/payment/history" component={ PaymentHistoryPage }/>
+
         <Route component={NotFoundPage}/>
       </Switch>
     </div>

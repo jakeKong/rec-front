@@ -38,9 +38,16 @@ class BlogTyleNewsManageContainer extends Component {
 
   popupClose = async (dataClickChild) => {
     this.setState({popupOpened: dataClickChild});
-    // this.setState({blogDto: {
-      // title: null
-    // }});
+    this.setState({blog: {
+      sid: null,
+      img: null,
+      link: null,
+      title: null,
+      subTitle: null,
+      writer: null,
+      writeDt: null,
+      visibility: false
+    }});
   }
 
   popupOpenStateEvent() {
@@ -88,7 +95,6 @@ class BlogTyleNewsManageContainer extends Component {
 
   render() {
     const { blog, popupOpened } = this.state;
-    console.log(blog);
     const { blogTyleNewsList, pending, error, success } = this.props;
     return (
       <Fragment>
@@ -98,7 +104,7 @@ class BlogTyleNewsManageContainer extends Component {
         <div className="div-main">
           {success && <BlogTyleNewsGrid blogTyleNewsList={blogTyleNewsList} blogDtoCallback={this.blogDtoCallback}/> }
         </div>
-        <div className="div-sub-main">
+        <div className="div-sub-main" hidden={!success}>
           <vaadin-button id="btnRegister"/>
         </div>
         { blog && popupOpened === true &&

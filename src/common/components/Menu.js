@@ -14,7 +14,7 @@ class RCMenu extends Component {
   render() {
     return (
       <Fragment>
-        <Menu onClick={this.handleClick} selectedKeys={['/#/']} mode="horizontal" openAnimation="slide-up" style={{ margin: 0 }}>
+        <Menu onClick={this.handleClick} mode="horizontal" openAnimation="slide-up" style={{ margin: 0 }}>
           <MenuItem key="/#/">홈</MenuItem>
           <MenuItem key="/#/bms/notice">공지사항</MenuItem>
           <SubMenu title={ <span className="submenu-title-wrapper">블로그</span> } key="blog">

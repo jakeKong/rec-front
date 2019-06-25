@@ -245,7 +245,7 @@ class UserManageContainer extends Component {
             { error && <h1>Server Error!</h1> }
             { success && <UserGrid userList={ userList } userDtoCallback={ this.userDtoCallback } detailCallback={ this.detailCallback } role={ role } selectCallback={ this.selectCallback } deselectCallback={ this.deselectCallback }  registerCallback={ this.registerCallback } />}
           </div>
-          <div className="div-sub-main">
+          <div className="div-sub-main" hidden={!success}>
             <vaadin-button id="btnSelectDelete" theme="error" />
             <vaadin-button id="btnRegister" />
           </div>

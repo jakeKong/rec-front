@@ -20,4 +20,10 @@ module.exports = function(app) {
       changeOrigin: true
     })
   );
+  app.use(
+    proxy('/web/rec/api/mpa', {
+      target: 'http://localhost:8004',
+      changeOrigin: true
+    })
+  );
 }

@@ -27,7 +27,7 @@ class MainContainer extends Component {
   componentDidMount() {
     // 초기 GRID 세팅
     const { homeList } = this.props;
-    if (!homeList || homeList === undefined || homeList.isEmpty()) {
+    if (!homeList || homeList === undefined) {
       this.getHomeList();
     }
   }

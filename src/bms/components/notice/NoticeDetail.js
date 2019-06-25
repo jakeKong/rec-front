@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 
 import '@vaadin/vaadin-ordered-layout';
 import '@vaadin/vaadin-button';
+import '../../../styles/ToastEditor.scss';
 
 // deps for viewer.
 require('tui-editor/dist/tui-editor-contents.css'); // editor content
