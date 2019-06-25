@@ -230,7 +230,7 @@ class NoticeManageContainer extends Component {
             { detailStatus && <NoticeDetail notice={ notice } detailToListCallback={ this.detailToListCallback } role={ role } registerCallback={ this.registerCallback } deleteCallback={this.deleteCallback } /> }
             { registerStatus ? <NoticeRegister registerToListCallback={ this.registerToListCallback } addCallback={ this.addCallback } noticeDto={ notice } updateCallback={ this.updateCallback } registerToDetailCallback={ this.registerToDetailCallback } /> : null }
           </div>
-          <div className="div-sub-main" hidden={registerStatus || detailStatus}>
+          <div className="div-sub-main" hidden={registerStatus || detailStatus || !success}>
             <vaadin-button id="btnSelectDelete" theme="error" />
             <vaadin-button id="btnRegister" />
           </div>

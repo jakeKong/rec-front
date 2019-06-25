@@ -62,7 +62,7 @@ class RegisterInput extends Component {
     document.querySelector('#lbTellNoHyphenTo').innerHTML = " - ";
 
     document.querySelector('#lbAddress').innerHTML = "주소";
-    document.querySelector('#lbAddressNo').innerHTML = "&nbsp&nbsp우편번호";
+    // document.querySelector('#lbAddressNo').innerHTML = "&nbsp&nbsp우편번호";
     document.querySelector('#lbBirthDt').innerHTML = "생년월일";
 
     // 이메일 입력필드
@@ -114,12 +114,19 @@ class RegisterInput extends Component {
     tfTellNumberByNumber.className = 'vaadin-text-field-width-100';
 
     // 주소 입력필드 (비활성)
-    const tfAddress = document.querySelector('#tfAddress');
-    tfAddress.className = 'vaadin-text-field-width-100-flex-30';
-    tfAddress.disabled = true;
     const tfAddressNo = document.querySelector('#tfAddressNo');
-    tfAddressNo.className = 'vaadin-text-field-width-100-flex-30';
+    tfAddressNo.className = 'vaadin-text-field-width-200';
     tfAddressNo.disabled = true;
+
+    const btnAddressSearch = document.querySelector('#btnAddressSearch');
+    btnAddressSearch.textContent = '주소검색';
+    btnAddressSearch.addEventListener('click', function() {
+      // 도로명주소 오픈 API 호출
+    });
+    
+    const tfAddress = document.querySelector('#tfAddress');
+    tfAddress.className = 'vaadin-text-field-width-full';
+    tfAddress.disabled = true;
 
     const { addCallback } = this.props;
     const btnOk = document.querySelector('#btnOk');
@@ -217,9 +224,14 @@ class RegisterInput extends Component {
           </div>
           <div className="address-column">
             <label id="lbAddress" className="label-flex-20-left"/>
-            <vaadin-text-field id="tfAddress" required prevent-invalid-input pattern="([a-zA-Zㄱ-ㅎ가-힣0-9]+?)"/>
-            <label id="lbAddressNo" className="label-flex-20-left"/>
-            <vaadin-text-field id="tfAddressNo" required prevent-invalid-input pattern="^(\d{0,7}?)?$"/>
+            <div className="div-flex-80-left">
+              <div>
+                <vaadin-text-field id="tfAddressNo" required prevent-invalid-input pattern="^(\d{0,7}?)?$"/>
+                <button id="btnAddressSearch"/>
+              </div>
+              <vaadin-text-field id="tfAddress" required prevent-invalid-input pattern="([a-zA-Zㄱ-ㅎ가-힣0-9]+?)"/>
+            </div>
+            {/* <label id="lbAddressNo" className="label-flex-20-left"/> */}
           </div>
         </div>
         <div className="div-register-popup-bottom">

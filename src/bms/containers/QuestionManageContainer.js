@@ -168,7 +168,7 @@ class QuestionManageContainer extends Component {
             { !detailStatus && success && questionList && <QuestionGrid questionList={ questionList } detailCallback={ this.detailCallback } role={ role } selectCallback={ this.selectCallback } deselectCallback={ this.deselectCallback }/>}
             { detailStatus && <QuestionDetail question={ question } email={ email } role={ role } detailToListCallback={ this.detailToListCallback } registerCallback={ this.registerCallback } /> }
           </div>
-          <div className="div-sub-main" hidden={detailStatus}>
+          <div className="div-sub-main" hidden={detailStatus || !success}>
             <vaadin-button id="btnSelectDelete" theme="error" />
           </div>
         </div>

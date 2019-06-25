@@ -208,7 +208,7 @@ class QuestionContainer extends Component {
             { detailStatus && <QuestionDetail question={ question } email={ email } detailToListCallback={ this.detailToListCallback } registerCallback={ this.registerCallback } deleteCallback={ this.deleteCallback } /> }
             { registerStatus ? <QuestionRegister registerToListCallback={ this.registerToListCallback } addCallback={ this.addCallback } questionDto={ question } updateCallback={ this.updateCallback } registerToDetailCallback={ this.registerToDetailCallback } /> : null }
           </div>
-          <div className="div-sub-main" hidden={registerStatus || detailStatus}>
+          <div className="div-sub-main" hidden={registerStatus || detailStatus || !success}>
             <vaadin-button id="btnRegister" />
           </div>
         </div>

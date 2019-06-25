@@ -90,15 +90,18 @@ class BlogTyleNewsRegister extends Component {
         
       const tfTitle = document.querySelector('#tfTitle');
       tfTitle.maxlength = '10';
+      tfTitle.className = 'vaadin-text-field-width-200-flex-80';
       tfTitle.addEventListener('input', function() {
         dto.title = tfTitle.value;
       });
       const tfSubTitle = document.querySelector('#tfSubTitle');
       tfSubTitle.maxlength = '15';
+      tfSubTitle.className = 'vaadin-text-field-width-200-flex-80';
       tfSubTitle.addEventListener('input', function() {
         dto.subTitle = tfSubTitle.value;
       });
       const tfLink = document.querySelector('#tfLink');
+      tfLink.className = 'vaadin-text-field-width-200-flex-80';
       tfLink.addEventListener('input', function() {
         dto.link = tfLink.value;
       });
@@ -183,19 +186,19 @@ class BlogTyleNewsRegister extends Component {
         <vaadin-dialog-overlay id="doRegister">
           <div className="div-register-popup-board">
             <div className="default-column">
-              <label id="lbTitle"/>
+              <label id="lbTitle" className="label-flex-20-left"/>
               <vaadin-text-field id="tfTitle" required prevent-invalid-input pattern="([a-zA-Zㄱ-ㅎ가-힣0-9]+?)"/>
             </div>
             <div className="default-column">
-              <label id="lbSubTitle"/>
+              <label id="lbSubTitle" className="label-flex-20-left"/>
               <vaadin-text-field id="tfSubTitle" required prevent-invalid-input pattern="([a-zA-Zㄱ-ㅎ가-힣0-9]+?)"/>
             </div>
             <div className="default-column">
-              <label id="lbLink"/>
+              <label id="lbLink" className="label-flex-20-left"/>
               <vaadin-text-field id="tfLink" required prevent-invalid-input pattern="([a-zA-Zㄱ-ㅎ가-힣0-9]+?)"/>
             </div>
             <div className="default-column">
-              <label id="lbImage"/>
+              <label id="lbImage" className="label-flex-20-left"/>
               <img id="img"/>
             </div>
           </div>

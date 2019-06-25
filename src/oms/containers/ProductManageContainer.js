@@ -213,7 +213,7 @@ class ProductManageContainer extends Component {
           { error && <h1>Server Error!</h1> }
           { success && <ProductManageGrid productList={ productList } productDtoCallback={ this.productDtoCallback } deleteCallback={ this.deleteCallback } />}
         </div>
-        <div className="div-sub-main">
+        <div className="div-sub-main" hidden={!success}>
           <vaadin-button id="btnRegister"/>
         </div>
         {/* <ProductRegister addCallback={ this.addCallback } updateCallback={ this.updateCallback } productDto={ productDto } popupOpened={ popupOpened } popupClose={ this.popupClose }/> */}
