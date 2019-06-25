@@ -6,4 +6,3 @@ deploy-to-dev-server:
     - cp -frv ./* /tmp/www/front 
     - cd /tmp/www/front 
     - npm install
-    - npm start
