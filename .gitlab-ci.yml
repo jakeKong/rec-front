@@ -4,3 +4,6 @@ deploy-to-dev-server:
     script:
     - echo ll
     - cp -frv ./* /tmp/www/front 
+    - cd /tmp/www/front 
+    - npm install
+    - npm start
