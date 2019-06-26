@@ -8,20 +8,20 @@ export { default as BrRecapTitleInfoContainer } from './containers/BrRecapTitleI
 export { default as BrRecapTitleInfoPage } from './pages/BrRecapTitleInfoPage';
 
 // API - 토지소유정보속성조회
-export { getpossessionList } from './api/possessionAxios';
+// export { getpossessionList } from './api/possessionAxios';
 // COMPONENTS - 토지소유정보속성조회
-export { default as possessionGrid } from './components/PossessionGrid';
+// export { default as possessionGrid } from './components/PossessionGrid';
 // CONTAINERS - 토지소유정보속성조회
-export { default as possessionContainer } from './containers/possessionContainer';
+// export { default as possessionContainer } from './containers/possessionContainer';
 // PAGES - 토지소유정보속성조회
-export { default as possessionPage } from './pages/possessionPage';
+// export { default as possessionPage } from './pages/possessionPage';
 
 
 // API - 토지특성정보서비스
-export { getLandCharateristicsList } from './api/landCharateristicsAxios';
+// export { getLandCharateristicsList } from './api/landCharateristicsAxios';
 // COMPONENTS - 토지특성정보서비스
-export { default as LandCharateristicsGrid } from './components/LandCharateristicsGrid';
+// export { default as LandCharateristicsGrid } from './components/LandCharateristicsGrid';
 // CONTAINERS - 토지특성정보서비스
-export { default as LandCharateristicsContainer } from './containers/LandCharateristicsContainer';
+// export { default as LandCharateristicsContainer } from './containers/LandCharateristicsContainer';
 // PAGES - 토지특성정보서비스
-export { default as LandCharateristicsPage } from './pages/LandCharateristicsPage';
+// export { default as LandCharateristicsPage } from './pages/LandCharateristicsPage';
