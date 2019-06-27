@@ -131,6 +131,7 @@ class BlogTyleNewsRegister extends Component {
         }
       }
 
+      // eslint-disable-next-line
       const { addCallback, updateCallback } = this.props;
       const btnOk = document.querySelector('#btnOk');
       btnOk.innerHTML = "확인";
@@ -198,8 +199,8 @@ class BlogTyleNewsRegister extends Component {
               <vaadin-text-field id="tfLink" required prevent-invalid-input pattern="([a-zA-Zㄱ-ㅎ가-힣0-9]+?)"/>
             </div>
             <div className="default-column">
-              <label id="lbImage" className="label-flex-20-left"/>
-              <img id="img"/>
+              <label id="lbImage" className="label-flex-20-left" />
+              <img id="img" alt=""/>
             </div>
           </div>
           <div className="div-register-popup-bottom">

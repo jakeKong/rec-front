@@ -95,6 +95,7 @@ class BlogTyleNewsManageContainer extends Component {
 
   render() {
     const { blog, popupOpened } = this.state;
+    // eslint-disable-next-line
     const { blogTyleNewsList, pending, error, success } = this.props;
     return (
       <Fragment>

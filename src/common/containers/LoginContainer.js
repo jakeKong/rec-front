@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
+// eslint-disable-next-line
 import { bindActionCreators } from "redux";
 // import * as loginActions from "../modules/LoginModule";
 import { Login } from "../index";

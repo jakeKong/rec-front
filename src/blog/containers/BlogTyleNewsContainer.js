@@ -32,6 +32,7 @@ class BlogTyleNewsContainer extends Component {
   }
 
   render() {
+    // eslint-disable-next-line
     const { blogTyleNewsList, pending, error, success } = this.props;
     return (
       <Fragment>
