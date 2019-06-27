@@ -50,10 +50,10 @@ class ChangePointHistoryContainer extends Component {
   // 마운트 직후 한번 (rendering 이전, 마운트 이후의 작업)
   componentDidMount() {
     const { search } = this.state;
-    const { changePointHistoryList } = this.props;
-    if (!changePointHistoryList || changePointHistoryList === undefined || changePointHistoryList.isEmpty()) {
+    // const { changePointHistoryList } = this.props;
+    // if (!changePointHistoryList || changePointHistoryList === undefined || changePointHistoryList.isEmpty()) {
         this.getChangePointHistoryList(search);
-    }
+    // }
   }
 
   getChangePointHistoryList = async (search) => {

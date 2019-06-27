@@ -92,10 +92,13 @@
   }
   .div-register-agree {
     border: 1px solid #d5d5d5;
+    margin-right: 1em;
+    margin-left: 1em;
     .div-register-agree-box {
       display: block;
       border: 1px solid #d5d5d5;
       text-align: left;
+      padding: 1em;
       .label-register-agree-sub-title {
         font-size: 16px;
       }
@@ -109,29 +112,36 @@
       }
     }
     .div-register-agree-total {
+      padding: 1em;
       display: block;
-      text-align: right;
-      align-items: right;
-      justify-content: right;
+      text-align: center;
+      align-items: center;
+      justify-content: center;
       .label-register-agree-total {
+        display: block;
         width: 100%;
         font-size: 16px;
-        text-align: right;
+        text-align: center;
+        margin-bottom: 1em;
       }
     }
-    .vaadin-button-register-agree-common {
-      width: 200px;
-      height: 80px;
-      border: 1px solid #d5d5d5;
-      flex: 49;
-      margin-right: 1em;
-    }
-    .vaadin-button-register-agree-naver {
-      width: 200px;
-      height: 80px;
-      border: 1px solid #d5d5d5;
-      flex: 49;
-      margin-right: 1em;
+    .div-register-agree-button {
+      padding-top: 3em;
+      padding-bottom: 5em;
+      .vaadin-button-register-agree-common {
+        width: 170px;
+        height: 70px;
+        border: 1px solid #d5d5d5;
+        flex: 49;
+        margin-right: 1em;
+      }
+      .vaadin-button-register-agree-naver {
+        width: 170px;
+        height: 70px;
+        border: 1px solid #d5d5d5;
+        flex: 49;
+        margin-right: 1em;
+      }
     }
   }
   .div-register-auth {

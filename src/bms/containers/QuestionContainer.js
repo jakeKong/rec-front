@@ -38,10 +38,10 @@ class QuestionContainer extends Component {
 
   componentDidMount() {
     const { search } = this.state;
-    const { questionList, email } = this.props;
-    if (!questionList || questionList === undefined || questionList.isEmpty()) {
+    const { /* questionList,*/ email } = this.props;
+    // if (!questionList || questionList === undefined || questionList.isEmpty()) {
       this.getQuestionListByEmail(email, search);
-    }
+    // }
 
     const registerStatusChangeEvent = this.registerStatusChangeEvent;
     const btnRegister = document.querySelector('#btnRegister');

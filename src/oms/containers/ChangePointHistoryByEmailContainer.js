@@ -53,10 +53,10 @@ class ChangePointHistoryByEmailContainer extends Component {
     const { email } = this.props;
     if (email || email !== null || email !== undefined) {
         const { search } = this.state;
-        const { changePointHistoryList } = this.props;
-        if (!changePointHistoryList || changePointHistoryList === undefined || changePointHistoryList.isEmpty()) {
+        // const { changePointHistoryList } = this.props;
+        // if (!changePointHistoryList || changePointHistoryList === undefined || changePointHistoryList.isEmpty()) {
             this.getChangePointHistoryListByEmail(email, search);
-        }
+        // }
     }
 
   }

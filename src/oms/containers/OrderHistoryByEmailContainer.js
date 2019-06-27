@@ -56,11 +56,11 @@ class OrderHistoryByEmailContainer extends Component {
     // 전달받은 email값이 존재 할 경우 최초 마운트시 grid의 목록조회 API를 요청한다.
     const { email } = this.props;
     if (email || email !== null || email !== undefined) {
-      const { orderHistoryList } = this.props;
-      if (!orderHistoryList || orderHistoryList === undefined || orderHistoryList.isEmpty()) {
+      // const { orderHistoryList } = this.props;
+      // if (!orderHistoryList || orderHistoryList === undefined || orderHistoryList.isEmpty()) {
         const { search } = this.state;
         this.getOrderHistoryListByEmail(email, search);
-      }
+      // }
     }
   }
 
