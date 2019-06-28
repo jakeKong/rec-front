@@ -33,6 +33,7 @@ import question, { questionSaga } from './bms/modules/QuestionModule';
 
 // MPA
 import bldRgst, { brRecapTitleInfoSaga } from './mpa/modules/BrRecapTitleInfoModule';
+import landInfo, { landInfoViewSaga } from './mpa/modules/LandInfoViewModule';
 //import possession, { possessionSaga } from './mpa/modules/PossessionModule';
 //import landCharacteristics, { landCharacteristicsSaga } from './mpa/modules/LandCharacteristicsModule';
 //import landUse, { landUseSaga } from './mpa/modules/LandUseModule';
@@ -57,6 +58,7 @@ export function* rootSaga() {
   yield fork(noticeSaga);
   // MPA
   yield fork(brRecapTitleInfoSaga);
+  yield fork(landInfoViewSaga);
   //yield fork(possessionSaga);
   //yield fork(landCharacteristicsSaga);
   //yield fork(landUseSaga);
@@ -77,7 +79,7 @@ export default combineReducers({
   // OMS
   orderHistory, /* reportMakeHistory, */ changePointHistory, /* purchaseHistory, */ product,
   // MPA
-  bldRgst, /*landCharacteristics, landUse, //possession,*/
+  bldRgst, landInfo, /*landCharacteristics, landUse, //possession,*/
   // BMS
   notice,question
 

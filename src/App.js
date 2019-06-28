@@ -7,7 +7,7 @@ import { UserManagePage } from './scm';
 import { OrderHistoryPage, OrderHistoryByEmailPage, /*ReportMakeHistoryPage,*/ ChangePointHistoryPage, ChangePointHistoryByEmailPage, ProductManagePage } from './oms';
 import { NoticePage, NoticeManagePage, QuestionPage, QuestionManagePage } from './bms';
 import { PaymentPage, PaymentHistoryPage } from './payment';
-import { BrRecapTitleInfoPage } from './mpa';
+import { BrRecapTitleInfoPage, LandInfoViewPage } from './mpa';
 
 const App = () => {
   return (
@@ -25,6 +25,9 @@ const App = () => {
         <Route exact path="/blog/tyle" component={BlogTyleNewsPage} />
         {/* 블로그 관리 */}
         <Route exact path="/blog/tyle/manage" component={BlogTyleNewsManagePage} />
+
+        {/* 주택정보 조회 */}
+        <Route exact path="/mpa" component={LandInfoViewPage} />
 
         {/* 사용자 관리 */}
         <Route exact path="/scm/user/manage" component={ UserManagePage }/>

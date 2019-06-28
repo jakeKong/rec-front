@@ -7,6 +7,16 @@ export { default as BrRecapTitleInfoContainer } from './containers/BrRecapTitleI
 // PAGES - 건축물대장정보 총괄표제부
 export { default as BrRecapTitleInfoPage } from './pages/BrRecapTitleInfoPage';
 
+
+// API - 건축물대장정보 총괄표제부
+export { getLandInfoView } from './api/analysisAxios';
+// COMPONENTS - 건축물대장정보 총괄표제부
+export { default as LandInfoView } from './components/LandInfoView';
+// CONTAINERS - 건축물대장정보 총괄표제부
+export { default as LandInfoViewContainer } from './containers/LandInfoViewContainer';
+// PAGES - 건축물대장정보 총괄표제부
+export { default as LandInfoViewPage } from './pages/LandInfoViewPage';
+
 // API - 토지소유정보속성조회
 // export { getpossessionList } from './api/possessionAxios';
 // COMPONENTS - 토지소유정보속성조회
