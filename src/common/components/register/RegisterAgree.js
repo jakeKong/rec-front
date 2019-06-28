@@ -24,7 +24,8 @@ class RegisterAgree extends Component {
     // 이용약관 동의
     document.querySelector('#lbTermsOfService').innerHTML = '이용약관';
     const taTermsOfService = document.querySelector('#taTermsOfService');
-    taTermsOfService.value = '이용약관 내용 ---- 테스트'
+    taTermsOfService.value = '이용약관 내용 ---- 테스트\nsadf\ndsfan\nsadfnasdf\nasdfnasdf\nasdfn\nandfasd\nnas\nfn\ns\nfn\ns\nfn\ns\nf'
+    // taTermsOfService.value = termsOfServiceFile;
     taTermsOfService.className = 'vaadin-text-area-register-agree';
     document.querySelector('#lbTermsOfServiceAgree').innerHTML = '이용악관을 확인하였으며 동의합니다. <span style="color:blue">(필수)</span> ';
     const cbxTermsOfServiceAgree = document.querySelector('#cbxTermsOfServiceAgree');
@@ -87,8 +88,6 @@ class RegisterAgree extends Component {
   }
 
   render() {
-    console.log(this.state.isTermsOfService)
-    console.log(this.state.isPersonalInformationCollectionAgreement)
     return (
       <Fragment>
         <div className="div-register-agree">
@@ -96,7 +95,7 @@ class RegisterAgree extends Component {
             <label id="lbTermsOfService" className="label-register-agree-sub-title"/>
             <vaadin-text-area id="taTermsOfService" readonly/>
             <div className="div-register-agree-box-check">
-              <label id="lbTermsOfServiceAgree"/>
+              <label id="lbTermsOfServiceAgree" className="label-register-agree-column"/>
               <vaadin-checkbox id="cbxTermsOfServiceAgree" value="cbxTermsOfServiceAgree"/>
             </div>
           </div>
@@ -105,7 +104,7 @@ class RegisterAgree extends Component {
             <label id="lbPersonalInformationCollectionAgreement" className="label-register-agree-sub-title"/>
             <vaadin-text-area id="taPersonalInformationCollectionAgreement" readonly/>
             <div className="div-register-agree-box-check">
-              <label id="lbPersonalInformationCollectionAgreementAgree"/>
+              <label id="lbPersonalInformationCollectionAgreementAgree" className="label-register-agree-column"/>
               <vaadin-checkbox id="cbxPersonalInformationCollectionAgreement" value="cbxPersonalInformationCollectionAgreement"/>
             </div>
           </div>

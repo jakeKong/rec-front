@@ -1,6 +1,8 @@
 
 vaadin-button {
   width: 100px;
+  margin-right: 0.5em;
+  margin-left: 0.5em;
 }
 
 .vaadin-button-after {
@@ -17,4 +19,16 @@ vaadin-button {
   font-size: 16px;
   margin: 1em;
   padding: 0;
+}
+
+.vaadin-button-grid-page-prev {
+  width: 70px;
+}
+.vaadin-button-grid-page-next {
+  width: 70px;
+}
+.vaadin-button-grid-page-number {
+  width: 50px;
+  background: white;
+  margin: 0;
 }

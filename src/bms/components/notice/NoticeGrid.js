@@ -129,6 +129,7 @@ class NoticeGrid extends Component {
           return index + 1;
         });
         const prevBtn = window.document.createElement('vaadin-button');
+        prevBtn.className = 'vaadin-button-grid-page-prev';
         prevBtn.textContent = '<';
         prevBtn.addEventListener('click', function() {
           const selectedPage = parseInt(pagesControl.querySelector('[selected]').textContent);
@@ -139,6 +140,7 @@ class NoticeGrid extends Component {
         pages.forEach(function(pageNumber) {
           const pageBtn = window.document.createElement('vaadin-button');
           pageBtn.textContent = pageNumber;
+          pageBtn.className = 'vaadin-button-grid-page-number';
           pageBtn.addEventListener('click', function(e) {
             updateItemsFromPage(parseInt(e.target.textContent));
           });
@@ -150,6 +152,7 @@ class NoticeGrid extends Component {
 
         const nextBtn = window.document.createElement('vaadin-button');
         nextBtn.textContent = '>';
+        nextBtn.className = 'vaadin-button-grid-page-next';
         nextBtn.addEventListener('click', function() {
           const selectedPage = parseInt(pagesControl.querySelector('[selected]').textContent);
           updateItemsFromPage(selectedPage + 1);
@@ -182,6 +185,7 @@ class NoticeGrid extends Component {
       var start = (page - 1) * grid.pageSize;
       var end = page * grid.pageSize;
       grid.items = list.slice(start, end);
+
     }
   }
 
@@ -189,7 +193,7 @@ class NoticeGrid extends Component {
     return (
       <Fragment>
         <div>
-          <vaadin-grid theme="column-borders" height-by-rows column-reordering-allowed>
+          <vaadin-grid theme="no-border" height-by-rows multi-sort>
             <vaadin-grid-column auto-select hidden id="grdSelect" flex-grow="0.1" width="50px" />
             <vaadin-grid-sort-column path="index" header="번호" text-align="end" flex-grow="0.2" />
             <vaadin-grid-column id="grdNoticeTitle" header="제목" text-align="center" flex-grow="6.2" />

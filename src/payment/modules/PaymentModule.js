@@ -1,5 +1,5 @@
 import { createAction, handleActions } from 'redux-actions';
-import { Map, List, fromJS } from 'immutable';
+import { Map, List, /*fromJS*/ } from 'immutable';
 import { call, put, takeEvery } from 'redux-saga/effects';
 
 import * as api from '../index';
@@ -56,6 +56,8 @@ function* paymentApprovalRequestSaga(action) {
 function* getPaymentHistoryListSaga(action) {
   try {
     const response = yield call(api.getPaymentHistoryList, action.payload);
+    // 60초 대기
+    window.setTimeout(60000)
     yield put({type: GET_PAYMENT_HISTORY_LIST_RECEIVED, payload: response});
   } catch (error) {
     yield put({type: GET_PAYMENT_HISTORY_LIST_FAILURE, payload: error});
@@ -98,8 +100,8 @@ export default handleActions({
   },
   [PAYMENT_APPROVAL_REQUEST_RECEIVED]: (state, action) => {
     console.log('PAYMENT_APPROVAL_REQUEST_RECEIVED onReceived')
-    const {data: content} = action.payload;
-    return {pending: false, error: false, success: true, paymentRequest: fromJS(content)};
+    const {body: content} = action.payload;
+    return {pending: false, error: false, success: true, paymentRequest: content};
   },
   [PAYMENT_APPROVAL_REQUEST_FAILURE]: (state, action) => {
     const {error} = action.payload;
@@ -114,14 +116,14 @@ export default handleActions({
   },
   [GET_PAYMENT_HISTORY_LIST_RECEIVED]: (state, action) => {
     console.log('GET_PAYMENT_HISTORY_LIST_RECEIVED onReceived')
-    const {data: content} = action.payload;
-    return {pending: false, error: false, success: true, paymentHistoryList: fromJS(content)};
+    const {body: content} = action.payload;
+    return {pending: false, error: false, success: true, paymentHistoryList: content};
   },
   [GET_PAYMENT_HISTORY_LIST_FAILURE]: (state, action) => {
     const {error} = action.payload;
     console.log('GET_PAYMENT_HISTORY_LIST_FAILURE onFailure')
     console.log('ERROR: ' + error)
-    return {error: true};
+    return {error: true, paymentHistoryList: sample.paymentHistoryFailSample};
   },
   // --- response값 임시 설정 (결제승인 결과값 가져오기)
   [GET_SAMPLE_PAYMENT_REQUEST_RECEIVED]: (state, action) => {

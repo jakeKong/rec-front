@@ -15,17 +15,29 @@ class PaymentHistoryGrid extends Component {
     if (!paymentHistoryList || paymentHistoryList === undefined || paymentHistoryList === null) {
       return
     }
+    console.log(paymentHistoryList);
   
     let dateFormat = require('dateformat');
 
-    paymentHistoryList.list.forEach(e=> {
+    let list = [];
+    paymentHistoryList.body.list.forEach(e => {
       let dateStringValue = e.tradeConfirmYmdt.substring(0,4)+'-'+e.tradeConfirmYmdt.substring(4,6)+'-'+e.tradeConfirmYmdt.substring(6,8)+'T'+e.tradeConfirmYmdt.substring(8,10)+':'+e.tradeConfirmYmdt.substring(10,12)+':'+e.tradeConfirmYmdt.substring(12,14);
-      e.tradeConfirmYmdt = dateFormat(new Date(dateStringValue), 'yyyy년mm월dd일 HH:MM:ss');
+      list.push({
+        paymentId: e.paymentId,
+        productName: e.productName,
+        totalPayAmount: e.totalPayAmount,
+        tradeConfirmYmdt: dateFormat(new Date(dateStringValue), 'yyyy년mm월dd일 HH:MM:ss'),
+        primaryPayMeans: e.primaryPayMeans
+      })
     })
+    // paymentHistoryList.list.forEach(e=> {
+    //   let dateStringValue = e.tradeConfirmYmdt.substring(0,4)+'-'+e.tradeConfirmYmdt.substring(4,6)+'-'+e.tradeConfirmYmdt.substring(6,8)+'T'+e.tradeConfirmYmdt.substring(8,10)+':'+e.tradeConfirmYmdt.substring(10,12)+':'+e.tradeConfirmYmdt.substring(12,14);
+    //   e.tradeConfirmYmdt = dateFormat(new Date(dateStringValue), 'yyyy년mm월dd일 HH:MM:ss');
+    // })
 
     // Grid Items Setting
     const grid = document.querySelector('vaadin-grid');
-    grid.items = paymentHistoryList.list;
+    grid.items = list;
 
   }
 

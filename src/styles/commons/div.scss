@@ -24,8 +24,8 @@
   height: 80px;
   margin: 0;
   padding-top: 1em;
-  padding-right: 5em;
-  padding-left: 5em;
+  // padding-right: 5em;
+  // padding-left: 5em;
   text-align: center;
 }
 
@@ -91,12 +91,12 @@
     }
   }
   .div-register-agree {
-    border: 1px solid #d5d5d5;
+    // border: 1px solid #d5d5d5;
     margin-right: 1em;
     margin-left: 1em;
     .div-register-agree-box {
       display: block;
-      border: 1px solid #d5d5d5;
+      // border: 1px solid #d5d5d5;
       text-align: left;
       padding: 1em;
       .label-register-agree-sub-title {
@@ -109,6 +109,9 @@
       }
       .div-register-agree-box-check {
         text-align: right;
+        .label-register-agree-column {
+          margin-right: 1em;
+        }
       }
     }
     .div-register-agree-total {
@@ -145,7 +148,7 @@
     }
   }
   .div-register-auth {
-
+    padding: 1em;
   }
   .div-register-input {
     // width: 573px;
@@ -420,9 +423,10 @@
 
 .div-blog-wrapper {
   width: 90%;
-  max-width: 1100px;
+  max-width: 1920px;
   min-width: 760px;
   margin: 50px auto;
+  text-align: center;
   .div-blog-columns {
     -webkit-column-count: 2;
     -webkit-column-gap: 10px;
