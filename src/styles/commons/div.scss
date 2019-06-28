@@ -570,3 +570,31 @@
 .div-flex-80 {
   flex: 80;
 }
+
+.div-land-info-wrapper {
+  width: 90%;
+  max-width: 1100px;
+  min-width: 760px;
+  margin: 50px auto;
+  .div-land-info-search {
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  .div-land-info-left-content {
+    padding: 20px;
+    margin-bottom: 20px;
+    float: left;
+    border: 1px solid #bcbcbc;
+  }
+  .div-land-info-right-content {
+    padding: 20px;
+    margin-bottom: 20px;
+    float: right;
+    border: 1px solid #bcbcbc;
+  }
+  .div-land-info-footer {
+    clear: both;
+    padding: 20px;
+    border: 1px solid #bcbcbc;
+  }
+}
