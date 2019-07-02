@@ -41,6 +41,7 @@ class QuestionRegister extends Component {
     const tfTitle = document.querySelector('#tfTitle');
     tfTitle.className = "vaadin-text-field-title"
     tfTitle.placeholder = '제목을 입력하세요.';
+    tfTitle.maxlength = '15';
     // 전달받은 문의사항 값 여부 판별 후 텍스트필드 값 할당
     if (questionDto !== null && questionDto !== undefined && questionDto.questionSid !== null) {
       tfTitle.value = questionDto.questionTitle;

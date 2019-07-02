@@ -3,4 +3,19 @@
   // height: 125px;
   // padding: 1em;
   margin: 0;
+  background: #4fd80b;
+  .header-logo {
+    width: 110px;
+    height: 55px;
+    margin-top: 10px;
+    margin-left: 10px;
+    background: rgba(255,255,255,0.5);
+    float: left;
+    line-height: 80px;
+    text-align: center;
+    // background: url(logo1_1.png);
+    background-size: cover;
+    background-position: 50% 50%;
+    cursor: pointer;
+  }
 }

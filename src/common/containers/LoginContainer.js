@@ -34,11 +34,9 @@ class LoginContainer extends Component {
   render() {
     // const { pending, error, success } = this.props;
     return (
-      <Fragment>
-        <div className="div-login">
-          <Login />
-        </div>
-      </Fragment>
+      <div className="div-login">
+        <Login />
+      </div>
     );
   }
 }

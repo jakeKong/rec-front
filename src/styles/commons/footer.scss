@@ -1,8 +1,7 @@
 .footer {
-  height: 200px;
-  
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
+  position: relative;
+  border-top: #ddd solid 2px;
+  background: #fff;
+  width: 100%;
+  box-sizing: border-box;
 }

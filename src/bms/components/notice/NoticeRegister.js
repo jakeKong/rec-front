@@ -162,6 +162,7 @@ class NoticeRegister extends Component {
     const tfTitle = document.querySelector('#tfTitle');
     tfTitle.className = "vaadin-text-field-title"
     tfTitle.placeholder = '제목을 입력하세요.';
+    tfTitle.maxlength = '15';
     // 텍스트 입력 시 공지사항 제목 값 할당
     tfTitle.addEventListener('input', function() { 
       notice.noticeTitle = tfTitle.value
