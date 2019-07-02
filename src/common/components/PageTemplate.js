@@ -7,11 +7,11 @@ import Footer from './Footer'
 // react의 Fragment로 감싸야만 Vaadin Component를 사용 할 수 있다.
 const PageTemplate = ({ children }) => (
   <Fragment>
-    <div className="page-template">
+    {/* <div className="page-template"> */}
       <Header />
       {children}
       <Footer />
-    </div>
+    {/* </div> */}
   </Fragment>
 );
 

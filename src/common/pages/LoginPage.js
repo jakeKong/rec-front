@@ -4,12 +4,12 @@ import { LoginContainer } from '../index';
 
 const LoginPage = () => {
   return (
-    <div>
+    // <div>
       <PageTemplate>
-        <div className="page-description">로그인</div>
+        {/* <div className="page-description">로그인</div> */}
         <LoginContainer />
       </PageTemplate>
-    </div>
+    // </div>
   );
 };
 

@@ -4,12 +4,12 @@ import { PaymentContainer } from '../index'
 
 const PaymentPage = () => {
   return (
-    <div>
+    // <div>
       <PageTemplate>
-        <div className="page-description">상품구매</div>
+        {/* <div className="page-description">상품구매</div> */}
         <PaymentContainer />
       </PageTemplate>
-    </div>
+    // </div>
   );
 };
 

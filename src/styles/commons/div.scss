@@ -527,6 +527,7 @@
   padding-right: 1em;
   padding-left: 1em;
   padding-top: 1em;
+  height: 80px;
 }
 
 .div-center {
@@ -601,4 +602,100 @@
 
 #viewerSection {
   min-height: 300px;
+}
+
+
+// MAIN PAGE_LAYOUT
+
+.cont {
+  height: calc(100% - 280px - 80px);
+  min-height: 500px;
+  margin: 0 auto;
+  position: relative;
+}
+.width-full {
+  width: 1028px;
+  margin: 0 auto;
+}
+
+.cont .illust_main {
+  width: 100%;
+  height: 280px;
+  background: #e1e1e1;
+  background-size: 72%;
+  background-repeat: no-repeat;
+  background-position: 50% 72%;
+  box-sizing: border-box;
+}
+
+.wrap-content {
+  background: #fff;
+  box-sizing: border-box;
+  position: relative;
+  margin-top: 6px;
+  height: calc(100% - 280px - 80px - 20px);
+}
+
+.wrap-search {
+  position: absolute;
+  width: 100%;
+  height: 120px;
+  top: 30%;
+}
+
+.searchbox {
+  width: 100%;
+  text-align: center;
+}
+
+.searchbox input[type=text] {
+  width: 400px;
+  display: inline-block;
+  // height: 48px;
+  height: 42px;
+  border: 3px solid #4fd80b;
+  outline: none;
+  padding-left: 12px;
+  font-size: 16px;
+  color: #222;
+  font-weight: bold;
+}
+
+.searchbox button {
+  width: 100px;
+  height: 48px;
+  display: inline-block;
+  vertical-align: bottom;
+  border: none;
+  background: #4fd80b;
+  color: #fff;
+  font-size: 16px;
+  letter-spacing: 1px;
+  margin-left: -6px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.box-summary {
+  margin-top: 24px;
+  text-align: center;
+}
+
+.box-summary .summary {
+  font-size: 28px;
+  font-weight: bold;
+  display: inline-block;
+  margin: 0 24px;
+  color: #666;
+  cursor: pointer;
+}
+
+.box-summary .num {
+  color: #47c10a;
+  font-size: 40px;
+}
+
+body, input, textarea, select, button, table {
+  font-family: 돋움, Dotum, sans-serif;
+  font-size: 100%;
 }

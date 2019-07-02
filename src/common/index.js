@@ -8,6 +8,7 @@ export { default as PageTemplate } from './components/PageTemplate';
 
 export { default as MainGrid } from './components/main/MainGrid';
 export { default as MainSearch } from './components/main/MainSearch';
+export { default as MainComponent } from './components/main/MainComponent';
 export { default as Login } from './components/login/Login';
 export { default as RegisterAgree } from './components/register/RegisterAgree';
 export { default as RegisterAuth } from './components/register/RegisterAuth';

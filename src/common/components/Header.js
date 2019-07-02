@@ -51,10 +51,12 @@ class Header extends Component {
     const { loginSession } = this.state;
     return (
       <div className="header">
-        <div className="div-flex-header">
+        <div className="width-full">
           <img src={srd_logo} alt="" className="header-logo"/>
-          <button id="test" style={{marginLeft: 500, height: 40}}> 로그인세션상태테스트 </button>
           <Menu />
+        </div>
+        <div className="div-flex-header">
+          <button id="test" style={{height: 40}}> 세션테스트 </button>
           { loginSession ? 
           <ul className="ul-header-sub-menu">
             <li id="liName" className="li-header-name" hidden={!loginSession}/>

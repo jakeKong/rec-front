@@ -4,12 +4,12 @@ import { ProductManageContainer } from '../index';
 
 const ProductManagePage = () => {
   return (
-    <div>
+    // <div>
       <PageTemplate>
-        <div className="page-description">운영관리 > 상품관리</div>
+        {/* <div className="page-description">운영관리 > 상품관리</div> */}
         <ProductManageContainer />
       </PageTemplate>
-    </div>
+    // </div>
   );
 };
 
