@@ -54,6 +54,7 @@ class Header extends Component {
         <div className="div-flex-header">
           <img src={srd_logo} alt="" className="header-logo"/>
           <button id="test" style={{marginLeft: 500, height: 40}}> 로그인세션상태테스트 </button>
+          <Menu />
           { loginSession ? 
           <ul className="ul-header-sub-menu">
             <li id="liName" className="li-header-name" hidden={!loginSession}/>
@@ -71,7 +72,6 @@ class Header extends Component {
           </ul>
           }
         </div>
-        <Menu />
       </div>
     );
   }
