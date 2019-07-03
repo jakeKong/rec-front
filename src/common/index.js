@@ -1,4 +1,5 @@
 // COMMON - api
+export { uploadFile } from './api/FileLoadAxios';
 
 // COMMON - component
 export { default as Footer } from './components/Footer';

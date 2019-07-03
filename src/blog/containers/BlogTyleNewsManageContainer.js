@@ -20,21 +20,34 @@ class BlogTyleNewsManageContainer extends Component {
         writeDt: null,
         visibility: false
       },
+      search: {
+        tylenewsTitle: null,
+        tylenewsSubtitle: null,
+        tylenewsWriter: null,
+        fromDt: null,
+        toDt: null,
+        tylenewsVisibility: null
+      },
       popupOpened: false
     }
     this.popupOpenStateEvent = this.popupOpenStateEvent.bind(this);
   }
 
-  // searchCallback = async (dataSearchChild) => {
-  //   this.setState({search: dataSearchChild});
+  searchCallback = async (dataSearchChild) => {
+    this.setState({search: dataSearchChild});
 
-  //   const { search } = this.state;
-  //   this.getBlogTyleNewsList(search);
-  //   // state.search 값 초기화
-  //   this.setState({search: {
-
-  //   }});
-  // }
+    const { search } = this.state;
+    this.getBlogTylenewsListBySpec(search);
+    // state.search 값 초기화
+    this.setState({search: {
+      tylenewsTitle: null,
+      tylenewsSubtitle: null,
+      tylenewsWriter: null,
+      fromDt: null,
+      toDt: null,
+      tylenewsVisibility: null
+    }});
+  }
 
   popupClose = async (dataClickChild) => {
     this.setState({popupOpened: dataClickChild});
@@ -54,13 +67,26 @@ class BlogTyleNewsManageContainer extends Component {
     this.setState({popupOpened: true});
   }
 
-  getBlogTyleNewsList = async () => {
+  getBlogTylenewsListBySpec = async (search) => {
     const { BlogTyleNewsModule } = this.props;
     try {
-      await BlogTyleNewsModule.getBlogTyleNewsList();
+      await BlogTyleNewsModule.getBlogTylenewsListBySpec(search);
     } catch (e) {
       console.log("error log : " + e);
     }
+  }
+
+  updateBlogTylenewsVisibility = async (tylenewsSid, tylenewsVisibility) => {
+    const { BlogTyleNewsModule } = this.props;
+    try {
+      await BlogTyleNewsModule.updateBlogTylenewsVisibility(tylenewsSid, tylenewsVisibility);
+    } catch (e) {
+      console.log("error log : " + e);
+    }
+  }
+
+  updateVisibilityCallback = async (tylenewsSid, tylenewsVisibility) => {
+    this.updateBlogTylenewsVisibility(tylenewsSid, tylenewsVisibility);
   }
 
   blogDtoCallback = async (blogDtoChild) => {
@@ -72,7 +98,8 @@ class BlogTyleNewsManageContainer extends Component {
   componentDidMount() {
     const { blogTyleNewsList } = this.props;
     if (blogTyleNewsList === null || blogTyleNewsList === undefined) {
-      this.getBlogTyleNewsList();
+      const {search} = this.state;
+      this.getBlogTylenewsListBySpec(search);
     }
 
     const popupOpenStateEvent = this.popupOpenStateEvent;
@@ -100,10 +127,12 @@ class BlogTyleNewsManageContainer extends Component {
     return (
       <Fragment>
         <div className="div-search">
-          <BlogTyleNewsSearch />
+          <BlogTyleNewsSearch searchCallback={this.searchCallback} />
         </div>
         <div className="div-main">
-          {success && <BlogTyleNewsGrid blogTyleNewsList={blogTyleNewsList} blogDtoCallback={this.blogDtoCallback}/> }
+          { pending && "Loading..." }
+          { error && <h1>Server Error!</h1> }
+          {success && <BlogTyleNewsGrid blogTyleNewsList={blogTyleNewsList} blogDtoCallback={this.blogDtoCallback} updateVisibilityCallback={this.updateVisibilityCallback}/> }
         </div>
         <div className="div-sub-main" hidden={!success}>
           <vaadin-button id="btnRegister"/>
