@@ -6,7 +6,7 @@ const LandUsePage = () => {
   return (
     <div className="index">
       <PageTemplate>
-        <div className="page-description">건축물대장 총괄표제부</div>
+        <div className="page-description">부동산 정보 조회</div>
         <LandUseContainer />
       </PageTemplate>
     </div>
