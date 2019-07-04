@@ -11,9 +11,9 @@ class possessionContainer extends Component {
   // state set을 위한 초기 생성자
   constructor(props) {
     super(props);
-    this.state = {
+    this.state = { 
       search: {
-        pnu: '1111011000100010001',
+        pnu: '1111010100100040007',
         startDt: null,
         endDt: null,
         numOfRows: '1000'
@@ -36,7 +36,7 @@ class possessionContainer extends Component {
     // state.search 값 초기화
     this.setState({
       search: {
-        pnu: '1111011000100010001',
+        pnu: '1111010100100040007',
         startDt: null,
         endDt: null,
         numOfRows: '1000'

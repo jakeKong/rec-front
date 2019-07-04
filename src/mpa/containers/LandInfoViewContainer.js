@@ -4,8 +4,6 @@ import { bindActionCreators } from "redux";
 import LandInfoViewModule, * as landInfoViewActions from "../modules/LandInfoViewModule";
 import { LandInfoView } from "../index";
 
-import '@vaadin/vaadin-ordered-layout';
-
 class LandInfoViewContainer extends Component {
 
   // state set을 위한 초기 생성자
@@ -13,12 +11,12 @@ class LandInfoViewContainer extends Component {
     super(props);
     this.state = {
       search: {
-        sigunguCd: '11410',
-        bjdongCd: '11900',
-        platGbCd: '0',
-        bun: '0012',
-        ji: '0000',
-        pnu: '1111010100100010000'
+        sigunguCd: '11110',
+        bjdongCd: '10100',
+        platGbCd: '1',
+        bun: '0004',
+        ji: '0007',
+        pnu: '1111010100100040007'
       },
     };
     
@@ -58,27 +56,31 @@ class LandInfoViewContainer extends Component {
   }
 
 // 마운트 이전 권한 체크
-  onentWillMount() {
-  // 관리자 권한 체크 필요
-  }
 
+  // componentDidMount() {
+  //   const { search } = this.state;
+  //   const { landInfo } = this.props;
+  //     if(!landInfo || landInfo === undefined || landInfo.isEmpty()) {
+  //       this.getLandInfo(search);
+  //     }
+  // }
 // 마운트 직후 한번 (rendering 이전, 마운트 이후의 작업)
   onentDidMount() {
   const { search } = this.state;
-  const { landInfo } = this.props;
-        if(!landInfo || landInfo === undefined || landInfo.isEmpty()) {
-          this.getLandInfo(search);
-        }
+  const { landInfoData } = this.props;
+    if(!landInfoData || landInfoData === undefined || landInfoData.isEmpty()) {
+      this.getLandInfo(search);
+    }
   }
   
   render() {
-    const { pending, error, success } = this.props;
+    const { pending, error, success, landInfoData } = this.props;
     return (
       <Fragment>
         <div className="main-div">
           {pending && "Loading..."}
           {error && <h1>Server Error!</h1>}
-          {success && <LandInfoView />}
+          {success && <LandInfoView landInfoData={landInfoData}/>}
         </div>
       </Fragment>
     );
@@ -87,7 +89,7 @@ class LandInfoViewContainer extends Component {
 
 export default connect(
   state => ({
-    brRecapTitleInfoList: state.landInfo.landInfoData,
+    landInfoData: state.landInfo.landInfoData,
     pending: state.landInfo.pending,
     error: state.landInfo.error,
     success: state.landInfo.success,
