@@ -10,7 +10,7 @@ import { fork } from 'redux-saga/effects';
 
 // COMMON
 import main, { mainSaga } from './common/modules/MainModule';
-import files, { fileSaga } from './common/modules/FileLoadModule';
+/* import files, { fileSaga } from './common/modules/FileLoadModule'; */
 
 // COMMON
 import blog, { blogSaga } from './blog/modules/BlogTyleNewsModule';
@@ -43,7 +43,7 @@ import landInfo, { landInfoViewSaga } from './mpa/modules/LandInfoViewModule';
 export function* rootSaga() {
   // COMMON
   yield fork(mainSaga);
-  yield fork(fileSaga);
+  /* yield fork(fileSaga); */
   // BLOG
   yield fork(blogSaga);
   // SCM
@@ -71,7 +71,7 @@ export function* rootSaga() {
 // 통합 reducer
 export default combineReducers({
   // COMMON
-  main, files,
+  main, /* files, */
   // BLOG
   blog,
   // SCM

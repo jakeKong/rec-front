@@ -94,6 +94,35 @@ class BlogTyleNewsManageContainer extends Component {
     this.popupOpenStateEvent();
   }
 
+  addBlogTylenews = async (blog) => {
+    const { BlogTyleNewsModule } = this.props;
+    try {
+      await BlogTyleNewsModule.addBlogTylenews(blog);
+    } catch (e) {
+      console.log("error log : " + e);
+    }
+  }
+
+  updateBlogTylenews = async (tylenewsSid, blog) => {
+    const { BlogTyleNewsModule } = this.props;
+    try {
+      await BlogTyleNewsModule.updateBlogTylenews(tylenewsSid, blog);
+    } catch (e) {
+      console.log("error log : " + e);
+    }
+  }
+
+  addCallback = async(dto) => {
+    console.log(dto)
+    this.setState({ blog : dto });
+    this.addBlogTylenews(this.state.blog)
+  }
+
+  updateCallback = async(tylenewsSid, dto) => {
+    this.setState({ blog : dto });
+    this.updateBlogTylenews(tylenewsSid, this.state.blog)
+  }
+
   // 마운트 직후 한번 (rendering 이전 마운트 이후의 작업)
   componentDidMount() {
     const { blogTyleNewsList } = this.props;
@@ -132,7 +161,7 @@ class BlogTyleNewsManageContainer extends Component {
         <div className="div-main">
           { pending && "Loading..." }
           { error && <h1>Server Error!</h1> }
-          {success && <BlogTyleNewsGrid blogTyleNewsList={blogTyleNewsList} blogDtoCallback={this.blogDtoCallback} updateVisibilityCallback={this.updateVisibilityCallback}/> }
+          { success && <BlogTyleNewsGrid blogTyleNewsList={blogTyleNewsList} blogDtoCallback={this.blogDtoCallback} updateVisibilityCallback={this.updateVisibilityCallback}/> }
         </div>
         <div className="div-sub-main" hidden={!success}>
           <vaadin-button id="btnRegister"/>

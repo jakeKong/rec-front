@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import * as FileLoadActions from "../../common/modules/FileLoadModule";
+
+import axios from 'axios';
+import config from '../../config';
 
 // layout
 import '@vaadin/vaadin-ordered-layout';
@@ -41,7 +41,7 @@ class BlogTyleNewsRegister extends Component {
         value: false
       },
     }
-    this.uploadFile = this.uploadFile.bind(this);
+    // this.uploadFile = this.uploadFile.bind(this);
   }
 
   /**
@@ -62,14 +62,14 @@ class BlogTyleNewsRegister extends Component {
     }
   }
 
-  uploadFile = async (file) => {
-    const { FileLoadModule } = this.props;
-    try {
-      await FileLoadModule.uploadFile(file);
-    } catch (e) {
-      console.log("error log : " + e);
-    }
-  }
+  // uploadFile = async (file) => {
+  //   const { FileLoadModule } = this.props;
+  //   try {
+  //     await FileLoadModule.uploadFile(file);
+  //   } catch (e) {
+  //     console.log("error log : " + e);
+  //   }
+  // }
 
   componentDidMount() {
     // search parameter default setting
@@ -78,6 +78,23 @@ class BlogTyleNewsRegister extends Component {
     if (popupOpened  === undefined) {
       return;
     } else {
+
+      const uploadFile = (file) => axios({
+        method: 'POST',
+        url: `${config.fileService}/files/uploadFile`,
+        headers: {
+          // 'Content-Type': 'application/json; charset=UTF-8',
+          'Content-Type': 'multipart/form-data; charset=UTF-8',
+          'Accept': 'application/json'
+        },
+        // file
+        responseType: 'file',
+        // data: JSON.stringify(file)
+        data: file
+      }).then(response => {
+        dto.img = response.data.fileDownloadUri;
+        console.log('image upload complete!')
+      });
 
       const resetDto = () => {
         tfTitle.value = null;
@@ -88,6 +105,7 @@ class BlogTyleNewsRegister extends Component {
         dto.subTitle = null;
         dto.link = null;
         dto.img = null;
+        form = null;
       }
 
       document.querySelector('#doRegister').opened = false;
@@ -119,6 +137,14 @@ class BlogTyleNewsRegister extends Component {
         dto.link = tfLink.value;
       });
 
+      // const uploadFile = this.uploadFile;
+      const ipImg = document.querySelector('#ipImg');
+      let form = null;
+      ipImg.addEventListener('input', function(e) {
+        form = new FormData();
+        form.append('file', e.target.files[0])
+      })
+
       if (blog === undefined) {
         tfTitle.placeholder = '상품 코드를 입력해주세요.';
         tfSubTitle.placeholder = '상품 명을 입력해주세요.';
@@ -139,27 +165,22 @@ class BlogTyleNewsRegister extends Component {
           dto.link = blog.link;
           tfLink.value = blog.link;
         }
-        if (blog.image !== null) {
-          dto.image = blog.image;
+        if (blog.img !== null) {
+          dto.img = blog.img;
+          // uploadFile.innerHTML = blog.img;
+          // uploadFile.hidden = true;
         }
+        // if (blog.writeDt !== null) {
+        //   dto.writeDt = blog.writeDt;
+        // }
       }
-
-      const uploadFile = this.uploadFile;
-      const ipImg = document.querySelector('#ipImg');
-      ipImg.addEventListener('input', function(e) {
-        let form = new FormData();
-        // form.append('file', e.target.files[0])
-        form.append('file', e.target.files[0])
-        console.log(e.target.files[0])
-        console.log(form)
-        uploadFile(form)
-      })
 
       // eslint-disable-next-line
       const { addCallback, updateCallback } = this.props;
       const btnOk = document.querySelector('#btnOk');
       btnOk.innerHTML = "확인";
       btnOk.addEventListener('click', function() {
+
         if (dto.title === null || dto.title === undefined || dto.title === "") {
           window.alert('입력되지 않은 값이 있습니다. 입력 후 다시 시도해주세요.');
           return;
@@ -172,20 +193,36 @@ class BlogTyleNewsRegister extends Component {
           window.alert('입력되지 않은 값이 있습니다. 입력 후 다시 시도해주세요.');
           return;
         }
-        /*
-        if (dto.cashRatio === null || dto.cashRatio === undefined || dto.cashRatio === "") {
-          window.alert('입력되지 않은 값이 있습니다. 입력 후 다시 시도해주세요.');
-          return;
-        }
-        */
-        if (dto.sid === null || dto.sid === undefined) {
-          // addCallback(dto);
+        if (dto.img === null || dto.img === undefined || dto.img === "") {
+          if (form !== null || form !== undefined) {
+            uploadFile(form)
+          } else {
+            window.alert('입력되지 않은 값이 있습니다. 입력 후 다시 시도해주세요.');
+            return;
+          }
         } else {
-          // updateCallback(dto);
+          if (form !== null || form !== undefined) {
+            uploadFile(form)
+          }
         }
+        // if (dto.writeDt === null || undefined) {
+          dto.writeDt = new Date();
+        // }
+        dto.writer = '관리자';
+        dto.visibility = true;
+        
+        window.setTimeout(function() {
+          if (dto.sid === null || dto.sid === undefined) {
+            addCallback(dto);
+          } else {
+            updateCallback(dto.sid, dto);
+          }
+          resetDto();
+        }, 3000);
+
         popupClose(clicked);
         document.querySelector('#doRegister').opened = false;
-        resetDto();
+        
       });
 
       const { popupClose } = this.props;
@@ -212,15 +249,15 @@ class BlogTyleNewsRegister extends Component {
           <div className="div-register-popup-board">
             <div className="default-column">
               <label id="lbTitle" className="label-flex-20-left"/>
-              <vaadin-text-field id="tfTitle" required prevent-invalid-input pattern="([a-zA-Zㄱ-ㅎ가-힣0-9]+?)"/>
+              <vaadin-text-field id="tfTitle" required prevent-invalid-input pattern="^([a-zA-Zㄱ-ㅎ가-힣0-9\s]+$)"/>
             </div>
             <div className="default-column">
               <label id="lbSubTitle" className="label-flex-20-left"/>
-              <vaadin-text-field id="tfSubTitle" required prevent-invalid-input pattern="([a-zA-Zㄱ-ㅎ가-힣0-9]+?)"/>
+              <vaadin-text-field id="tfSubTitle" required prevent-invalid-input pattern="^([a-zA-Zㄱ-ㅎ가-힣0-9\s]+$)"/>
             </div>
             <div className="default-column">
               <label id="lbLink" className="label-flex-20-left"/>
-              <vaadin-text-field id="tfLink" required prevent-invalid-input pattern="([a-zA-Zㄱ-ㅎ가-힣0-9]+?)"/>
+              <vaadin-text-field id="tfLink" required prevent-invalid-input/>
             </div>
             <div className="default-column">
               <label id="lbImage" className="label-flex-20-left" />
@@ -237,13 +274,16 @@ class BlogTyleNewsRegister extends Component {
     );
   }
 }
-export default connect(
-  state => ({
-    pending: state.files.pending,
-    error: state.files.error,
-    success: state.files.success,
-  }),
-  dispatch => ({
-    FileLoadModule: bindActionCreators(FileLoadActions, dispatch)
-  })
-)(BlogTyleNewsRegister);
+// export default connect(
+//   state => ({
+//     file: state.files.file,
+//     pending: state.files.pending,
+//     error: state.files.error,
+//     success: state.files.success,
+//   }),
+//   dispatch => ({
+//     FileLoadModule: bindActionCreators(FileLoadActions, dispatch)
+//   })
+// )(BlogTyleNewsRegister);
+
+export default BlogTyleNewsRegister;
