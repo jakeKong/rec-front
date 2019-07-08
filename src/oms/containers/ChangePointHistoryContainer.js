@@ -73,7 +73,7 @@ class ChangePointHistoryContainer extends Component {
           <ChangePointHistorySearch searchCallback={ this.searchCallback } role={ role } />
         </div>
         <div className="div-main">
-          { pending && "Loading..." }
+          { pending && <div className="boxLoading"/> }
           { error && <h1>Server Error!</h1> }
           { success && <ChangePointHistoryGrid changePointHistoryList={ changePointHistoryList } role={ role } /> }
         </div>

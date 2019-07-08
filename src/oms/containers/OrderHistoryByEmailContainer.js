@@ -81,7 +81,7 @@ class OrderHistoryByEmailContainer extends Component {
           <OrderHistorySearch searchCallback={ this.searchCallback } email={ email } />
         </div>
         <div className="div-main">
-          { pending && "Loading..." }
+          { pending && <div className="boxLoading"/> }
           { error && <h1>Server Error!</h1> }
           { success && <OrderHistoryGrid orderHistoryList={ orderHistoryList } email={ email } />}
         </div>

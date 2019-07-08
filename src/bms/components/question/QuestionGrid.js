@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from 'react';
 
 import '@vaadin/vaadin-grid';
-import '@vaadin/vaadin-grid/vaadin-grid-sort-column';
 import '@vaadin/vaadin-grid/vaadin-grid-selection-column';
 
 class QuestionGrid extends Component {
@@ -74,7 +73,7 @@ class QuestionGrid extends Component {
     let list =[];
     // 그리드 컬럼 인덱스를 위한 변수
     let i=1;
-    questionList.forEach(e => {
+    questionList.reverse().forEach(e => {
       // push Value type is JSON
       list.push({
         index: i++,
@@ -195,7 +194,7 @@ class QuestionGrid extends Component {
         <div>
           <vaadin-grid theme="no-border" height-by-rows multi-sort>
             <vaadin-grid-column auto-select hidden id="grdSelect" flex-grow="0.1" width="50px" />
-            <vaadin-grid-sort-column path="index" header="번호" text-align="end" flex-grow="0.2" />
+            <vaadin-grid-column path="index" header="번호" text-align="center" flex-grow="0.2" width="50px"/>
             <vaadin-grid-column id="grdQuestionTitle" header="제목" text-align="center" flex-grow="6.2" />
             <vaadin-grid-column path="questionWriter" header="작성자" text-align="center" flex-grow="1" />
             <vaadin-grid-column path="reportingDt" header="작성일자" text-align="center" flex-grow="2.5" />

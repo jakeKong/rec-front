@@ -37,7 +37,9 @@ class BlogTyleNewsContainer extends Component {
     return (
       <Fragment>
         <div className="div-blog-tylenews">
-          {success && <BlogTyleNews blogTyleNewsList={blogTyleNewsList}/> }
+          { pending && <div className="boxLoading"/> }
+          { error && <h1>Server Error!</h1> }
+          { success && <BlogTyleNews blogTyleNewsList={blogTyleNewsList}/> }
         </div>
       </Fragment>
     );

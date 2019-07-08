@@ -21,7 +21,7 @@ class BlogTyleNewsGrid extends Component {
     let dateFormat = require('dateformat');
     let list = [];
     let i=1;
-    blogTyleNewsList.forEach(e => {
+    blogTyleNewsList.reverse().forEach(e => {
       list.push({
         index: i++,
         sid: e.get('tylenewsSid'),
@@ -98,12 +98,12 @@ class BlogTyleNewsGrid extends Component {
       <Fragment>
         <div className="div-home-grid">
           <vaadin-grid theme="row-stripes" height-by-rows column-reordering-allowed>
-            <vaadin-grid-sort-column path="index" header="번호" text-align="center" flex-grow="0.1" />
-            <vaadin-grid-column path="title" header="제목" text-align="center" flex-grow="4.9" />
-            <vaadin-grid-column path="subTitle" header="분류" text-align="center" flex-grow="1" />
-            <vaadin-grid-column path="writer" header="작성자" text-align="center" flex-grow="1" />
-            <vaadin-grid-column path="writeDt" header="작성일자" text-align="center" flex-grow="3" />
-            <vaadin-grid-column path="visibility" id="grdVisibility" header="공개/비공개" text-align="center" flex-grow="1" />
+            <vaadin-grid-sort-column path="index" header="번호" text-align="center" flex-grow="0.1" width="80px"/>
+            <vaadin-grid-column path="title" header="제목" text-align="center" flex-grow="4.9" width="400px"/>
+            <vaadin-grid-column path="subTitle" header="분류" text-align="center" flex-grow="1" width="100px"/>
+            <vaadin-grid-column path="writer" header="작성자" text-align="center" flex-grow="1" width="80px"/>
+            <vaadin-grid-column path="writeDt" header="작성일자" text-align="center" flex-grow="3" width="250px"/>
+            <vaadin-grid-column path="visibility" id="grdVisibility" header="공개/비공개" text-align="center" flex-grow="1" width="100px"/>
           </vaadin-grid>
         </div>
       </Fragment>

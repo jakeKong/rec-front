@@ -78,7 +78,7 @@ class ChangePointHistoryByEmailContainer extends Component {
           <ChangePointHistorySearch searchCallback={ this.searchCallback } />
         </div>
         <div className="div-main">
-          { pending && "Loading..." }
+          { pending && <div className="boxLoading"/> }
           { error && <h1>Server Error!</h1> }
           { success && <ChangePointHistoryGrid changePointHistoryList={ changePointHistoryList } /> }
         </div>

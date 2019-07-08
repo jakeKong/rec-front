@@ -423,7 +423,7 @@ class PaymentContainer extends Component {
         {successPay === false ? 
         <div>
           <div className="div-main">
-            { pending && "Loading..." }
+            { pending && <div className="boxLoading"/> }
             { error && <h1>Server Error!</h1> }
             { success && <PaymentProductListGrid productList={ productList } selectCallback={ this.selectCallback } deselectCallback={ this.deselectCallback } />}
             <div className="div-select-total-payment" hidden={!productList}>
@@ -459,7 +459,7 @@ class PaymentContainer extends Component {
         :
         <div>
           <div className="div-main">
-            { paymentPending && "Loading..." }
+            { paymentPending && <div className="boxLoading"/> }
             { paymentError && <h1>Server Error!</h1> }
             { paymentSuccess && paymentRequest ? <PaymentComplete paymentRequest={paymentRequest} /> : null }
           </div>

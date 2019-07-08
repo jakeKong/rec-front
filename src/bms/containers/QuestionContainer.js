@@ -201,7 +201,7 @@ class QuestionContainer extends Component {
             <QuestionSearch searchCallback={ this.searchCallback } />
           </div>
           <div className="div-main">
-            { pending && "Loading..." }
+            { pending && <div className="boxLoading"/> }
             { error && <h1>Server Error!</h1> }
             { !registerStatus && !detailStatus && success && <QuestionGrid questionList={ questionList } detailCallback={ this.detailCallback } />}
             {/* { detailStatus && questionAnswerList && <QuestionDetail question={ question } questionAnswerList={ questionAnswerList } detailToListCallback={ this.detailToListCallback } registerCallback={ this.registerCallback } deleteCallback={ this.deleteCallback } addAnswerCallback={ this.addAnswerCallback } deleteAnswerCallback={ this.deleteAnswerCallback } /> } */}

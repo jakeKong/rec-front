@@ -85,8 +85,8 @@ class ProductManageGrid extends Component {
   render() {
     return (
       <Fragment>
-        <vaadin-grid theme="column-borders row-stripes" height-by-rows column-reordering-allowed>
-          <vaadin-grid-sort-column path="index" header="번호" text-align="end" flex-grow="1" />
+        <vaadin-grid theme="no-border" height-by-rows column-reordering-allowed>
+          <vaadin-grid-sort-column path="index" header="번호" text-align="center" flex-grow="0.2" width="70px" />
           <vaadin-grid-column path="productCd" header="상품 코드" text-align="center" flex-grow="2" />
           <vaadin-grid-column path="productNm" header="상품 명" text-align="center" flex-grow="4" />
           <vaadin-grid-column path="productPoint" header="상품 포인트" text-align="center" flex-grow="2" />

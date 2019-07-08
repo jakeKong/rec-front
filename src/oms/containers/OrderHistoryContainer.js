@@ -78,7 +78,7 @@ class OrderHistoryContainer extends Component {
           <OrderHistorySearch searchCallback={ this.searchCallback } role={ role } />
         </div>
         <div className="div-main">
-          { pending && "Loading..." }
+          { pending && <div className="boxLoading"/> }
           { error && <h1>Server Error!</h1> }
           { success && <OrderHistoryGrid orderHistoryList={ orderHistoryList } role={ role } />}
         </div>

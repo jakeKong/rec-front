@@ -87,28 +87,28 @@ class ProductManageContainer extends Component {
     const { search } = this.state;
     this.deleteProduct(productSid, search);
 
-    const { complete } = this.props;
-    if ( complete ) {
-      const nfDeleteComplete = document.createElement('vaadin-notification');
-      nfDeleteComplete.renderer = function(root) {
-        root.textContent = '삭제가 정상적으로 완료되었습니다.'
-      }
+    // const { complete } = this.props;
+    // if ( complete ) {
+    //   const nfDeleteComplete = document.createElement('vaadin-notification');
+    //   nfDeleteComplete.renderer = function(root) {
+    //     root.textContent = '삭제가 정상적으로 완료되었습니다.'
+    //   }
       
-      document.body.appendChild(nfDeleteComplete);
-      nfDeleteComplete.position = 'middle';
-      nfDeleteComplete.duration = 3000;
-      nfDeleteComplete.opened = true;
-    } else {
-      const nfDeleteComplete = document.createElement('vaadin-notification');
-      nfDeleteComplete.renderer = function(root) {
-        root.textContent = '삭제 실패. 다시 시도해주세요.'
-      }
+    //   document.body.appendChild(nfDeleteComplete);
+    //   nfDeleteComplete.position = 'middle';
+    //   nfDeleteComplete.duration = 3000;
+    //   nfDeleteComplete.opened = true;
+    // } else {
+    //   const nfDeleteComplete = document.createElement('vaadin-notification');
+    //   nfDeleteComplete.renderer = function(root) {
+    //     root.textContent = '삭제 실패. 다시 시도해주세요.'
+    //   }
       
-      document.body.appendChild(nfDeleteComplete);
-      nfDeleteComplete.position = 'middle';
-      nfDeleteComplete.duration = 3000;
-      nfDeleteComplete.opened = true;
-    }
+    //   document.body.appendChild(nfDeleteComplete);
+    //   nfDeleteComplete.position = 'middle';
+    //   nfDeleteComplete.duration = 3000;
+    //   nfDeleteComplete.opened = true;
+    // }
 
   }
 
@@ -209,7 +209,7 @@ class ProductManageContainer extends Component {
           <ProductManageSearch searchCallback={ this.searchCallback } />
         </div>
         <div className="div-main">
-          { pending && "Loading..." }
+          { pending && <div className="boxLoading"/> }
           { error && <h1>Server Error!</h1> }
           { success && <ProductManageGrid productList={ productList } productDtoCallback={ this.productDtoCallback } deleteCallback={ this.deleteCallback } />}
         </div>

@@ -66,7 +66,7 @@ class NoticeContainer extends Component {
     return (
       <Fragment>
         <div className="div-main">
-          { pending && "Loading..." }
+          { pending && <div className="boxLoading"/> }
           { error && <h1>Server Error!</h1> }
           { !detailStatus && success && <NoticeGrid noticeList={ noticeList } detailCallback={ this.detailCallback } />}
           { detailStatus && <NoticeDetail notice={ notice } detailToListCallback={ this.detailToListCallback } /> }

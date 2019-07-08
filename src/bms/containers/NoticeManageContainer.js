@@ -224,7 +224,7 @@ class NoticeManageContainer extends Component {
       <Fragment>
         <div>
           <div className="div-main">
-            { pending && "Loading..." }
+            { pending && <div className="boxLoading"/> }
             { error && <h1>Server Error!</h1> }
             { !registerStatus && !detailStatus && success && <NoticeGrid noticeList={ noticeList } detailCallback={ this.detailCallback } role={ role } selectCallback={ this.selectCallback } deselectCallback={ this.deselectCallback } /* registerCallback={ this.registerCallback } */ />}
             { detailStatus && <NoticeDetail notice={ notice } detailToListCallback={ this.detailToListCallback } role={ role } registerCallback={ this.registerCallback } deleteCallback={this.deleteCallback } /> }

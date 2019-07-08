@@ -160,10 +160,10 @@ class QuestionManageContainer extends Component {
       <Fragment>
         <div>
           <div className="div-search" hidden={detailStatus}>
-            <QuestionSearch searchCallback={ this.searchCallback } />
+            <QuestionSearch searchCallback={ this.searchCallback } role={role} />
           </div>
           <div className="div-main">
-            { pending && "Loading..." }
+            { pending && <div className="boxLoading"/> }
             { error && <h1>Server Error!</h1> }
             { !detailStatus && success && questionList && <QuestionGrid questionList={ questionList } detailCallback={ this.detailCallback } role={ role } selectCallback={ this.selectCallback } deselectCallback={ this.deselectCallback }/>}
             { detailStatus && <QuestionDetail question={ question } email={ email } role={ role } detailToListCallback={ this.detailToListCallback } registerCallback={ this.registerCallback } /> }

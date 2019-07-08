@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import '@vaadin/vaadin-grid';
-import '@vaadin/vaadin-grid/vaadin-grid-sort-column';
+// import '@vaadin/vaadin-grid/vaadin-grid-sort-column';
 import '@vaadin/vaadin-button';
 // import '@vaadin/vaadin-grid/vaadin-grid-tree-column';
 // import '@vaadin/vaadin-grid/vaadin-grid-filter-column';
@@ -61,7 +61,8 @@ class OrderHistoryGrid extends Component {
     
     // Grid Items Setting
     const grid = document.querySelector('vaadin-grid');
-      grid.items = list;
+    grid.items = list;
+    grid.pageSize = 10;
 
     const {role} = this.props;
 
@@ -72,7 +73,8 @@ class OrderHistoryGrid extends Component {
     }
     document.querySelector('#grdOrdererNm').hidden = hiddenCheck;
     document.querySelector('#grdEmail').hidden = hiddenCheck;
-    document.querySelector('#grdBtnDownload').hidden = !hiddenCheck;
+    document.querySelector('#grdBtnPurchaseCancle').hidden = !hiddenCheck;
+    // document.querySelector('#grdBtnDownload').hidden = !hiddenCheck;
 
     document.querySelector('#grdBtnDownload').renderer = function(root, column, rowData) {
       if (rowData.item.status === '구매취소') {
@@ -96,6 +98,30 @@ class OrderHistoryGrid extends Component {
         }
       }
     }
+
+    document.querySelector('#grdBtnPurchaseCancle').renderer = function(root, column, rowData) {
+      if (rowData.item.status === '구매취소') {
+        root.innerHTML = '-';
+      } else {
+        if (new Date(rowData.item.downloadCheckDt) < new Date()) {
+          root.innerHTML = '<font style="color: black">만료됨</font>';
+        } else {
+          root.innerHTML = '';
+          const btnDownload = document.createElement('vaadin-button');
+          // btnDownload.setAttribute('style', 'color: var(--lumo-contrast-text-color)');
+          btnDownload.setAttribute('style', 'color: var(--lumo-error-text-color)');
+          btnDownload.textContent = '구매취소';
+          btnDownload.addEventListener('click', function() {
+            const check = window.confirm('주문하신 구매상품에 대한 상품구매 취소를 진행하시겠습니까?');
+            if (check === true) {
+              // 다운로드 버튼 클릭 시 동작 이벤트
+            }
+          })
+          root.appendChild(btnDownload);
+        }
+      }
+    }
+    
     // list.forEach(e => {
     //   if (e.downloadEndDt > new Date() === false) {
 
@@ -156,6 +182,81 @@ class OrderHistoryGrid extends Component {
         }
       })
     }
+
+    const pagesControl = document.querySelector('#pages');
+    let pages;
+    updateItemsFromPage(1);
+
+    // 그리드 페이징
+    // pageController
+    function updateItemsFromPage(page) {
+      if (page === undefined) {
+        return;
+      }
+  
+      if (!pages) {
+        pages = Array.apply(null, {length: Math.ceil(list.length / grid.pageSize)}).map(function(item, index) {
+          return index + 1;
+        });
+        const prevBtn = window.document.createElement('vaadin-button');
+        prevBtn.className = 'vaadin-button-grid-page-prev';
+        prevBtn.textContent = '<';
+        prevBtn.addEventListener('click', function() {
+          const selectedPage = parseInt(pagesControl.querySelector('[selected]').textContent);
+          updateItemsFromPage(selectedPage - 1);
+        });
+        pagesControl.appendChild(prevBtn);
+
+        pages.forEach(function(pageNumber) {
+          const pageBtn = window.document.createElement('vaadin-button');
+          pageBtn.textContent = pageNumber;
+          pageBtn.className = 'vaadin-button-grid-page-number';
+          pageBtn.addEventListener('click', function(e) {
+            updateItemsFromPage(parseInt(e.target.textContent));
+          });
+          if (pageNumber === page) {
+            pageBtn.setAttribute('selected', true);
+          }
+          pagesControl.appendChild(pageBtn);
+        });
+
+        const nextBtn = window.document.createElement('vaadin-button');
+        nextBtn.textContent = '>';
+        nextBtn.className = 'vaadin-button-grid-page-next';
+        nextBtn.addEventListener('click', function() {
+          const selectedPage = parseInt(pagesControl.querySelector('[selected]').textContent);
+          updateItemsFromPage(selectedPage + 1);
+        });
+        pagesControl.appendChild(nextBtn);
+      }
+      const buttons = Array.from(pagesControl.children);
+      buttons.forEach(function(btn, index) {
+        if (parseInt(btn.textContent) === page) {
+          btn.setAttribute('selected', true);
+        } else {
+          btn.removeAttribute('selected');
+        }
+        if (index === 0) {
+          if (page === 1) {
+            btn.setAttribute('disabled', '');
+          } else {
+            btn.removeAttribute('disabled');
+          }
+        }
+        if (index === buttons.length - 1) {
+          if (page === pages.length) {
+            btn.setAttribute('disabled', '');
+          } else {
+            btn.removeAttribute('disabled');
+          }
+        }
+      });
+
+      var start = (page - 1) * grid.pageSize;
+      var end = page * grid.pageSize;
+      grid.items = list.slice(start, end);
+
+    }
   }
 
   render() {
@@ -166,19 +267,21 @@ class OrderHistoryGrid extends Component {
         </div>
         <vaadin-grid theme="column-borders row-stripes" height-by-rows column-reordering-allowed>
           {/* <vaadin-grid-sort-column path="odrSid" header="주문 SID" text-align="end" width="10px" flex-grow="1"></vaadin-grid-sort-column> */}
-          <vaadin-grid-sort-column path="index" header="번호" text-align="end" flex-grow="1" width="80px"/>
-          <vaadin-grid-column path="odrNo" header="주문 번호" text-align="center" flex-grow="10" />
-          <vaadin-grid-column path="odrDt" header="주문 일자" text-align="center" flex-grow="15" />
-          <vaadin-grid-column path="marketPrice" header="시세가" text-align="center" flex-grow="10" />
-          <vaadin-grid-column path="realEstateType" header="부동산 유형" text-align="center" flex-grow="10" />
-          <vaadin-grid-column path="variationPoint" header="증감 포인트" text-align="end" flex-grow="3" width="100px" />
-          <vaadin-grid-column path="downloadEndDt" header="다운로드 만료기간" text-align="center" flex-grow="15" />
-          <vaadin-grid-column id="grdBtnDownload" header="다운로드" text-align="center" flex-grow="10" />
-          <vaadin-grid-column path="downloadCnt" header="다운로드 횟수" text-align="center" flex-grow="1" />
-          <vaadin-grid-column path="status" header="상태" text-align="center" flex-grow="5" />
-          <vaadin-grid-column id="grdOrdererNm" path="ordererNm" header="주문자" text-align="center" flex-grow="10" />
-          <vaadin-grid-column id="grdEmail" path="email" header="주문자 아이디" text-align="center" flex-grow="10" />
+          <vaadin-grid-column path="index" header="번호" text-align="center" flex-grow="1" width="70px"/>
+          <vaadin-grid-column path="odrNo" header="주문 번호" text-align="center" flex-grow="10" width="200px" resizable/>
+          <vaadin-grid-column path="odrDt" header="주문 일자" text-align="center" flex-grow="15" width="250px" resizable/>
+          <vaadin-grid-column path="marketPrice" header="시세가" text-align="center" flex-grow="10" width="150px" resizable/>
+          <vaadin-grid-column path="realEstateType" header="부동산 유형" text-align="center" flex-grow="10" width="100px" resizable/>
+          <vaadin-grid-column path="variationPoint" header="증감 포인트" text-align="center" flex-grow="3" width="100px" resizable />
+          <vaadin-grid-column path="downloadEndDt" header="다운로드 만료기간" text-align="center" flex-grow="15" width="250px" resizable/>
+          <vaadin-grid-column id="grdBtnDownload" header="다운로드" text-align="center" flex-grow="10" width="150px" resizable/>
+          <vaadin-grid-column path="downloadCnt" header="다운로드 횟수" text-align="center" flex-grow="1" width="100px" resizable/>
+          <vaadin-grid-column path="status" header="상태" text-align="center" flex-grow="5" width="100px" resizable/>
+          <vaadin-grid-column id="grdBtnPurchaseCancle" header="구매취소" text-align="center" flex-grow="10" width="150px" resizable/>
+          <vaadin-grid-column id="grdOrdererNm" path="ordererNm" header="주문자" text-align="center" flex-grow="10" width="100px" resizable/>
+          <vaadin-grid-column id="grdEmail" path="email" header="주문자 아이디" text-align="center" flex-grow="10" width="150px" resizable/>
         </vaadin-grid>
+        <div id="pages"/>
       </div>
     );
   }

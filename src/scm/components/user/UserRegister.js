@@ -11,6 +11,9 @@ import '@vaadin/vaadin-list-box'
 
 import '@vaadin/vaadin-icons'
 
+import Sugar from 'sugar';
+import 'sugar/locales/ko';
+
 import { roleCodeItems } from '../../items';
 
 class UserRegister extends Component {
@@ -236,6 +239,21 @@ class UserRegister extends Component {
       // 생년월일 입력필드
       const dpBirthDt = document.querySelector('#dpBirthDt');
       dpBirthDt.className = "vaadin-date-picker-width-150-flex-80";
+      dpBirthDt.i18n = {
+        today: '오늘',
+        cancel: '취소',
+        firstDayOfWeek: 1,
+        monthNames:
+          '1월_2월_3월_4월_5월_6월_7월_8월_9월_10월_11월_12월'.split('_'),
+        weekdays: '일요일_월요일_화요일_수요일_목요일_금요일_토요일'.split('_'),
+        weekdaysShort: '일_월_화_수_목_금_토'.split('_'),
+        formatDate: function(date) {
+          return Sugar.Date.format(Sugar.Date.create(date), '{yyyy}년{MM}월{dd}일');
+        },
+        formatTitle: function(monthName, fullYear) {
+          return fullYear + '년 ' + monthName;
+        },
+      }
       dpBirthDt.addEventListener('value-changed', function() {
         dto.birthDt = dpBirthDt.value;
       })

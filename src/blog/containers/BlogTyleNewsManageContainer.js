@@ -159,7 +159,7 @@ class BlogTyleNewsManageContainer extends Component {
           <BlogTyleNewsSearch searchCallback={this.searchCallback} />
         </div>
         <div className="div-main">
-          { pending && "Loading..." }
+          { pending && <div className="boxLoading"/> }
           { error && <h1>Server Error!</h1> }
           { success && <BlogTyleNewsGrid blogTyleNewsList={blogTyleNewsList} blogDtoCallback={this.blogDtoCallback} updateVisibilityCallback={this.updateVisibilityCallback}/> }
         </div>

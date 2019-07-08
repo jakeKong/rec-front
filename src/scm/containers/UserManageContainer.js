@@ -6,6 +6,7 @@ import { UserGrid, UserSearch, UserRegister, /*UserUpdate*/ } from "../index";
 
 import '@vaadin/vaadin-ordered-layout';
 import '@vaadin/vaadin-button';
+import '@vaadin/vaadin-notification';
 
 class UserManageContainer extends Component {
 
@@ -65,6 +66,9 @@ class UserManageContainer extends Component {
         nfNotfoundSelectColumn.position = 'middle';
         nfNotfoundSelectColumn.duration = 2000;
         nfNotfoundSelectColumn.opened = true;
+        window.setTimeout(function() {
+          nfNotfoundSelectColumn.remove();
+        }, 2000)
       }
     });
 
@@ -241,7 +245,7 @@ class UserManageContainer extends Component {
             <UserSearch searchCallback={ this.searchCallback } />
           </div>
           <div className="div-main">
-            { pending && "Loading..." }
+            { pending && <div className="boxLoading"/> }
             { error && <h1>Server Error!</h1> }
             { success && <UserGrid userList={ userList } userDtoCallback={ this.userDtoCallback } detailCallback={ this.detailCallback } role={ role } selectCallback={ this.selectCallback } deselectCallback={ this.deselectCallback }  registerCallback={ this.registerCallback } />}
           </div>

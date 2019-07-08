@@ -109,7 +109,7 @@ class PaymentHistoryContainer extends Component {
             <PaymentHistorySearch searchCallback={ this.searchCallback }/>
           </div>
           <div className="div-main">
-            { pending && "Loading..." }
+            { pending && <div className="boxLoading"/> }
             { error && <h1>Server Error!</h1> }
             { successHistory === true && success && <PaymentHistoryGrid paymentHistoryList={paymentHistoryList} />}
           </div>
