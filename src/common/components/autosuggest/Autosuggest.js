@@ -162,7 +162,7 @@ export default class Autosuggest extends Component {
       const highlightedSuggestion = this.getHighlightedSuggestion();
       const prevHighlightedSuggestion = prevState.highlightedSuggestion;
 
-      if (highlightedSuggestion != prevHighlightedSuggestion) {
+      if (highlightedSuggestion !== prevHighlightedSuggestion) {
         onSuggestionHighlighted({
           suggestion: highlightedSuggestion
         });
@@ -665,7 +665,7 @@ export default class Autosuggest extends Component {
               this.closeSuggestions();
             }
 
-            if (highlightedSuggestion != null) {
+            if (highlightedSuggestion !== null) {
               const newValue = getSuggestionValue(highlightedSuggestion);
 
               this.maybeCallOnChange(event, newValue, 'enter');
