@@ -1,5 +1,6 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import { connect } from "react-redux";
+// eslint-disable-next-line
 import { bindActionCreators } from "redux";
 // import * as loginActions from "../modules/LoginModule";
 import { Login } from "../index";
@@ -33,11 +34,9 @@ class LoginContainer extends Component {
   render() {
     // const { pending, error, success } = this.props;
     return (
-      <Fragment>
-        <div className="div-login">
-          <Login />
-        </div>
-      </Fragment>
+      <div className="div-login">
+        <Login />
+      </div>
     );
   }
 }

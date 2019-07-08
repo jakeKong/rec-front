@@ -26,23 +26,22 @@ class Header extends Component {
       sessionTest(trueable);
     });
     //
-    document.querySelector('#name').innerHTML = '홍길동';
-    document.querySelector('#nameTo').innerHTML = '님';
-    document.querySelector('#MyPage').innerHTML = '마이페이지';
+    document.querySelector('#liName').textContent = '홍길동';
+    document.querySelector('#liMyPage').textContent = '마이페이지';
 
-    const btnHeadLogout = document.querySelector('#btnHeadLogout');
-    btnHeadLogout.innerHTML = '로그아웃';
-    btnHeadLogout.addEventListener('click', function() {
+    const liHeadLogout = document.querySelector('#liHeadLogout');
+    liHeadLogout.textContent = '로그아웃';
+    liHeadLogout.addEventListener('click', function() {
       console.log('로그아웃')
     })
-    const btnHeadLogin = document.querySelector('#btnHeadLogin');
-    btnHeadLogin.innerHTML = '로그인'
-    btnHeadLogin.addEventListener('click', function() {
+    const liHeadLogin = document.querySelector('#liHeadLogin');
+    liHeadLogin.textContent = '로그인'
+    liHeadLogin.addEventListener('click', function() {
       window.location.href = '/#/login';
     })
-    const btnHeadRegister = document.querySelector('#btnHeadRegister');
-    btnHeadRegister.innerHTML = '회원가입'
-    btnHeadRegister.addEventListener('click', function() {
+    const liHeadRegister = document.querySelector('#liHeadRegister');
+    liHeadRegister.textContent = '회원가입'
+    liHeadRegister.addEventListener('click', function() {
       window.location.href = '/#/register';
     })
   }
@@ -52,29 +51,29 @@ class Header extends Component {
     const { loginSession } = this.state;
     return (
       <div className="header">
+        <div className="width-full">
+          <img src={srd_logo} alt="" className="header-logo"/>
+          <Menu />
+        </div>
         <div className="div-flex-header">
-          <img src={srd_logo} alt=""/>
-          <button id="test" style={{marginLeft: 500, height: 40}}> 로그인세션상태테스트 </button>
+          <button id="test" style={{height: 40}}> 세션테스트 </button>
           { loginSession ? 
-          <div className="div-header-sub-menu">
-            <label id="name" className="label-color-focus" hidden={!loginSession}/>
-            <label id="nameTo" hidden={!loginSession}/>
-            <button id="btnHeadLogout" hidden={!loginSession}/>
-            <label id="MyPage" className="label-focus" hidden={!loginSession}/>
-            <button id="btnHeadLogin" hidden={loginSession}/>
-            <button id="btnHeadRegister" hidden={loginSession}/>
-          </div> : 
-          <div className="div-header-sub-menu">
-            <label id="name" className="label-color-focus" hidden={!loginSession}/>
-            <label id="nameTo" hidden={!loginSession}/>
-            <button id="btnHeadLogout" hidden={!loginSession}/>
-            <label id="MyPage" className="label-focus" hidden={!loginSession}/>
-            <button id="btnHeadLogin" hidden={loginSession}/>
-            <button id="btnHeadRegister" hidden={loginSession}/>
-          </div>
+          <ul className="ul-header-sub-menu">
+            <li id="liName" className="li-header-name" hidden={!loginSession}/>
+            <li id="liHeadLogout" className="li-header-logout" hidden={!loginSession}/>
+            <li id="liMyPage" className="li-header-mypage" hidden={!loginSession}/>
+            <li id="liHeadLogin" className="li-header-login" hidden={loginSession}/>
+            <li id="liHeadRegister" className="li-header-register" hidden={loginSession}/>
+          </ul> : 
+          <ul className="ul-header-sub-menu">
+            <li id="liName" className="li-header-name" hidden={!loginSession}/>
+            <li id="liHeadLogout" className="li-header-logout" hidden={!loginSession}/>
+            <li id="liMyPage" className="li-header-mypage" hidden={!loginSession}/>
+            <li id="liHeadLogin" className="li-header-login" hidden={loginSession}/>
+            <li id="liHeadRegister" className="li-header-register" hidden={loginSession}/>
+          </ul>
           }
         </div>
-        <Menu />
       </div>
     );
   }

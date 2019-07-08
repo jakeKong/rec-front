@@ -1,8 +1,8 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as mainActions from "../modules/MainModule";
-import { MainGrid, MainSearch } from "../index";
+import { /* MainGrid, MainSearch, */ MainComponent } from "../index";
 
 class MainContainer extends Component {
 
@@ -33,20 +33,22 @@ class MainContainer extends Component {
   }
 
   render() {
-    const { homeList, pending, error, success } = this.props;
+    // const { homeList, pending, error, success } = this.props;
     return (
-      <Fragment>
-        <div>
-          <div className="div-home-search">
-            <MainSearch />
-          </div>
-          <div className="div-main">
-            { pending && "Loading..." }
-            { error && <h1>Server Error!</h1> }
-            { success && <MainGrid homeList={ homeList } />}
-          </div>
-        </div>
-      </Fragment>
+      <MainComponent/ >
+      // <Fragment>
+
+      //   {/* <div>
+      //     <div className="div-home-search">
+      //       <MainSearch />
+      //     </div>
+      //     <div className="div-main">
+      //       { pending && "Loading..." }
+      //       { error && <h1>Server Error!</h1> }
+      //       { success && <MainGrid homeList={ homeList } />}
+      //     </div>
+      //   </div> */}
+      // </Fragment>
     );
   }
 }

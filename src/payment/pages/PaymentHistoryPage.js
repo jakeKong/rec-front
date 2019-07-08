@@ -4,12 +4,12 @@ import { PaymentHistoryContainer } from '../index'
 
 const PaymentHistoryPage = () => {
   return (
-    <div>
+    // <div>
       <PageTemplate>
-        <div className="page-description">결제내역 조회</div>
+        {/* <div className="page-description">결제내역 조회</div> */}
         <PaymentHistoryContainer />
       </PageTemplate>
-    </div>
+    // </div>
   );
 };
 

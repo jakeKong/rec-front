@@ -4,12 +4,12 @@ import { ChangePointHistoryContainer } from '../index';
 
 const ChangePointHistoryPage = () => {
   return (
-    <div>
+    // <div>
       <PageTemplate>
-        <div className="page-description">운영관리 > 포인트 변동내역 조회(관리)</div>
+        {/* <div className="page-description">운영관리 > 포인트 변동내역 조회(관리)</div> */}
         <ChangePointHistoryContainer />
       </PageTemplate>
-    </div>
+    // </div>
   );
 };
 

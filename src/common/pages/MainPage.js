@@ -4,12 +4,12 @@ import { MainContainer } from '../index';
 
 const MainPage = () => {
   return (
-    <div>
+    // <div>
       <PageTemplate>
-        <div className="page-description">홈</div>
+        {/* <div className="page-description">홈</div> */}
         <MainContainer />
       </PageTemplate>
-    </div>
+    // </div>
   );
 };
 

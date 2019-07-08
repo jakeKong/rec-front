@@ -54,11 +54,11 @@ class OrderHistoryContainer extends Component {
   // 마운트 직후 한번 (rendering 이전 마운트 이후의 작업)
   componentDidMount() {
     // 초기 GRID 세팅 필요
-    const { orderHistoryList } = this.props;
-    if (!orderHistoryList || orderHistoryList === undefined || orderHistoryList.isEmpty()) {
+    // const { orderHistoryList } = this.props;
+    // if (!orderHistoryList || orderHistoryList === undefined || orderHistoryList.isEmpty()) {
       const { search } = this.state;
       this.getOrderHistoryList(search);
-    }
+    // }
   }
 
   getOrderHistoryList = async (search) => {

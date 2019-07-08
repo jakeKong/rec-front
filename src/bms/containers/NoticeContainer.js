@@ -28,10 +28,10 @@ class NoticeContainer extends Component {
   }
 
   componentDidMount() {
-    const { noticeList } = this.props;
-    if (!noticeList || noticeList === undefined || noticeList.isEmpty()) {
+    // const { noticeList } = this.props;
+    // if (!noticeList || noticeList === undefined || noticeList.isEmpty()) {
       this.getNoticeList();
-    }
+    // }
   }
 
   // 공지사항 목록 조회 호출

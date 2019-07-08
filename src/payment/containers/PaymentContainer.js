@@ -412,7 +412,7 @@ class PaymentContainer extends Component {
           changePoint: removeComma(productDto.productPoint),
           // 계정별 현재 잔여포인트에서 차감해야함
           currentBalPoint: 97500+removeComma(productDto.productPoint),
-          paymentNo: 'P'+paymentRequest.body.detail.tradeConfirmYmdt
+          paymentNo: 'P'+paymentRequest.body.detail.tradeConfirmYmdt+new Date().getTime()
         }
         this.addChangePointHistory(email, dto);
       }
@@ -483,7 +483,7 @@ export default connect(
     paymentError: state.payment.error,
     paymentSuccess: state.payment.success,
 
-    email: 'user@test.com'
+    email: 'yieon@test.com'
   }),
   dispatch => ({
     ProductManageModule: bindActionCreators(productManageActions, dispatch),

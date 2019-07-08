@@ -15,82 +15,53 @@ import '@vaadin/vaadin-item'
 
 class BlogTyleNewsSearch extends Component {
 
-    constructor(props) {
-        super(props);
-        this.state ={
-            // search: {
-            //     title: null,
-            //     subTitle: null,
-            //     writer: null,
-            //     fromDt: null,
-            //     toDt: null,
-            //     visibility: null,
-            // }
-        }
+  constructor(props) {
+    super(props);
+    this.state ={
+      search: {
+        tylenewsTitle: null,
+        tylenewsSubtitle: null,
+        tylenewsWriter: null,
+        fromDt: null,
+        toDt: null,
+        tylenewsVisibility: null
+      }
     }
+  }
 
   componentDidMount() {
     // search parameter default setting
-    // const { search } = this.state;
+    const { search } = this.state;
 
-    const visibilityItems = [
-      {value: true, textContent: '공개'},
-      {value: false, textContent: '비공개'}
-    ];
-
-    // search label set
-    document.querySelector('#lbDate').innerHTML = '기간';
-    document.querySelector('#lbPunct').innerHTML = '~';
-    
-    const slVisibility = document.querySelector('#slVisibility')
-    slVisibility.value = 'ALL';
-    // search.visibility = slVisibility.value;
-    slVisibility.renderer = function(root) {
-      if (root.firstChild) {
-        return;
+    const cbVisibility = document.querySelector('#cbVisibility')
+    cbVisibility.value = '전체';
+    cbVisibility.items = ['전체', '공개', '비공개'];
+    cbVisibility.addEventListener('value-changed', function(e) {
+      if (e.detail.value === '전체') {
+        search.tylenewsVisibility = null;
+      } else if (e.detail.value === '공개') {
+        search.tylenewsVisibility = true;
+      } else {
+        search.tylenewsVisibility = false;
       }
-      const listBox = document.createElement('vaadin-list-box');
-      const select = document.createElement('vaadin-item');
-
-      select.textContent = '전체';
-      select.setAttribute('value', 'ALL');
-      listBox.appendChild(select);
-
-      const divider = document.createElement('hr');
-      listBox.appendChild(divider);
-
-      visibilityItems.forEach(function(row){
-        const item = document.createElement('vaadin-item');
-        item.textContent = row.textContent;
-        if (row.value) {
-            item.setAttribute('value', row.value);
-        }
-        listBox.appendChild(item);
-      });
-      root.appendChild(listBox);
-
-    }
-    // 상태 콤보박스의 값 변경 시 SearchParameter에 선택한 값으로 변경
-    slVisibility.addEventListener('value-changed', function(e) {
-        // search.visibility = slVisibility.value;
     })
 
     // Start date-picker set
     const dpStart = document.querySelector('#dpStart')
     // default before Week date set
     dpStart.value = monthBeforeDate;
-    // search.fromDt = dpStart.value;
+    search.fromDt = dpStart.value;
     dpStart.addEventListener('value-changed', function() {
-      // search.fromDt = dpStart.value;
+      search.fromDt = dpStart.value;
     })
 
     // End date-picker set
     const dpEnd = document.querySelector('#dpEnd')
     // default today
     dpEnd.value = currentDate;
-    // search.toDt = dpEnd.value;
+    search.toDt = dpEnd.value;
     dpEnd.addEventListener('value-changed', function() {
-      // search.toDt = dpEnd.value;
+      search.toDt = dpEnd.value;
     })
 
     // Search combo-box set
@@ -99,10 +70,10 @@ class BlogTyleNewsSearch extends Component {
     cbSearch.value = '제목';
     cbSearch.items = ['제목', '분류', '작성자'];
     cbSearch.addEventListener('value-changed', function() {
-      // search.title = null;
-      // search.subTitle = null;
-      // search.writer = null;
-      // tfSearch.value = null;
+      search.tylenewsTitle = null;
+      search.tylenewsSubtitle = null;
+      search.tylenewsWriter = null;
+      tfSearch.value = null;
     })
 
     // Search text-field set
@@ -111,29 +82,29 @@ class BlogTyleNewsSearch extends Component {
     tfSearch.maxlength = '15';
     tfSearch.addEventListener('input', function() {
       if (cbSearch.value === '제목') {
-        // search.title = tfSearch.value;
+        search.tylenewsTitle = tfSearch.value;
       }
       if (cbSearch.value === '분류') {
-        // search.subTitle = tfSearch.value;
+        search.tylenewsSubtitle = tfSearch.value;
       }
       if (cbSearch.value === '작성자') {
-        // search.writer = tfSearch.value;
+        search.tylenewsWriter = tfSearch.value;
       }
     })
 
     // Search button set
-    // const { searchCallback } = this.props;
+    const { searchCallback } = this.props;
     const btnSearch = document.querySelector('#btnSearch')
     btnSearch.innerHTML = '조회';
     btnSearch.addEventListener('click', function() {
-      // searchCallback(search);
+      searchCallback(search);
     })
   }
 
   render() {
     return (
       <Fragment>
-        <vaadin-select id="slVisibility" />
+        <vaadin-combo-box id="cbVisibility" />
 
         <label className="label-center" id="lbDate" />
           <vaadin-date-picker id="dpStart" />

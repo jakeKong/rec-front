@@ -4,12 +4,12 @@ import { NoticeContainer } from '../index'
 
 const NoticePage = () => {
   return (
-    <div>
+    // <div>
       <PageTemplate>
-        <div className="page-description">공지사항</div>
+        {/* <div className="page-description">공지사항</div> */}
         <NoticeContainer />
       </PageTemplate>
-    </div>
+    // </div>
   );
 };
 

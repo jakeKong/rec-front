@@ -1,6 +1,7 @@
 .div-main {
   // width: 90%;
-  height: 100%;
+  // height: 100%;
+  min-height: 560px;
   margin: 0;
   padding-top: 1em;
   padding-right: 5em;
@@ -23,8 +24,8 @@
   height: 80px;
   margin: 0;
   padding-top: 1em;
-  padding-right: 5em;
-  padding-left: 5em;
+  // padding-right: 5em;
+  // padding-left: 5em;
   text-align: center;
 }
 
@@ -91,11 +92,14 @@
   }
 
   .div-register-agree {
-    border: 1px solid #d5d5d5;
+    // border: 1px solid #d5d5d5;
+    margin-right: 1em;
+    margin-left: 1em;
     .div-register-agree-box {
       display: block;
-      border: 1px solid #d5d5d5;
+      // border: 1px solid #d5d5d5;
       text-align: left;
+      padding: 1em;
       .label-register-agree-sub-title {
         font-size: 16px;
       }
@@ -106,36 +110,46 @@
       }
       .div-register-agree-box-check {
         text-align: right;
+        .label-register-agree-column {
+          margin-right: 1em;
+        }
       }
     }
     .div-register-agree-total {
+      padding: 1em;
       display: block;
-      text-align: right;
-      align-items: right;
-      justify-content: right;
+      text-align: center;
+      align-items: center;
+      justify-content: center;
       .label-register-agree-total {
+        display: block;
         width: 100%;
         font-size: 16px;
-        text-align: right;
+        text-align: center;
+        margin-bottom: 1em;
       }
     }
-    .vaadin-button-register-agree-common {
-      width: 200px;
-      height: 80px;
-      border: 1px solid #d5d5d5;
-      flex: 49;
-      margin-right: 1em;
-    }
-    .vaadin-button-register-agree-naver {
-      width: 200px;
-      height: 80px;
-      border: 1px solid #d5d5d5;
-      flex: 49;
-      margin-right: 1em;
+    .div-register-agree-button {
+      padding-top: 3em;
+      padding-bottom: 5em;
+      .vaadin-button-register-agree-common {
+        width: 170px;
+        height: 70px;
+        border: 1px solid #d5d5d5;
+        flex: 49;
+        margin-right: 1em;
+      }
+      .vaadin-button-register-agree-naver {
+        width: 170px;
+        height: 70px;
+        border: 1px solid #d5d5d5;
+        flex: 49;
+        margin-right: 1em;
+      }
     }
   }
   .div-register-auth {
-
+    padding: 1em;
   }
   .div-register-input {
     // width: 573px;
@@ -215,6 +229,7 @@
           display: flex;
           // padding: 1em;
           align-items: center;
+          margin-bottom: 1em;
           .label-login-id {
             flex: 30;
             margin-right: 1em;
@@ -222,6 +237,7 @@
           }
           .vaadin-text-field-id {
             flex: 70;
+            margin:0;
           }
         }
         .div-login-form-pw {
@@ -235,6 +251,7 @@
           }
           .vaadin-text-field-pw {
             flex: 70;
+            margin:0;
           }
         }
       }
@@ -410,9 +427,10 @@
 
 .div-blog-wrapper {
   width: 90%;
-  max-width: 1100px;
+  max-width: 1920px;
   min-width: 760px;
   margin: 50px auto;
+  text-align: center;
   .div-blog-columns {
     -webkit-column-count: 2;
     -webkit-column-gap: 10px;
@@ -505,18 +523,12 @@
   // height: 100px;
 }
 
-.div-header-sub-menu {
-  flex: 85;
-  text-align: right;
-  justify-content: right;
-  align-items: right;
-}
-
 .div-flex-header {
   display: flex;
   padding-right: 1em;
   padding-left: 1em;
   padding-top: 1em;
+  height: 80px;
 }
 
 .div-center {
@@ -560,7 +572,6 @@
 .div-flex-80 {
   flex: 80;
 }
-
 .div-land-info-container-row {
   width: 100%;
   display: flex;
@@ -582,7 +593,10 @@
 
 .div-land-info-li_item {
   padding: 1px 1px 1px 1px;
-  margin: 10px 0px 10px 0px;
+  margin-top: 5px;
+  margin-left: 5px;
+  margin-right: 5px;
+  margin-bottom: 5px;
   width: 100%;
   list-style-type : none;
   min-width: 48%;
@@ -613,7 +627,7 @@
 .cell_header {
   //font-style: italic;
   font-weight: bold;
-  font-size: 1.2em;
+  font-size: 1em;
   line-height: 1em;
   //color: navy;
   font-family: 'Noto Sans KR', sans-serif;
@@ -628,7 +642,7 @@
 .cell_content {
   //font-style: italic;
   font-weight: bold;
-  font-size: 1.2em;
+  font-size: 0.8em;
   line-height: 1em;
   //color: navy;
   font-family: 'Roboto', sans-serif;
@@ -636,6 +650,22 @@
   padding: 3px 1px 3px 8px;
   overflow: hidden;
   text-overflow: ellipsis;
+  border: 1px solid #999999;
+}
+
+
+.cell_content_right {
+  //font-style: italic;
+  font-weight: bold;
+  font-size: 0.8em;
+  line-height: 1em;
+  //color: navy;
+  font-family: 'Roboto', sans-serif;
+  //font-weight: regular;
+  padding: 3px 1px 3px 8px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: right;
   border: 1px solid #999999;
 }
 
@@ -648,4 +678,104 @@
   text-align: center;
   margin-left: 0px;
   margin-bottom: -1px;
+}
+
+#viewerSection {
+  min-height: 300px;
+}
+
+
+// MAIN PAGE_LAYOUT
+
+.cont {
+  height: calc(100% - 280px - 80px);
+  min-height: 500px;
+  margin: 0 auto;
+  position: relative;
+}
+.width-full {
+  width: 1028px;
+  margin: 0 auto;
+}
+
+.cont .illust_main {
+  width: 100%;
+  height: 280px;
+  background: #e1e1e1;
+  background-size: 72%;
+  background-repeat: no-repeat;
+  background-position: 50% 72%;
+  box-sizing: border-box;
+}
+
+.wrap-content {
+  background: #fff;
+  box-sizing: border-box;
+  position: relative;
+  margin-top: 6px;
+  height: calc(100% - 280px - 80px - 20px);
+}
+
+.wrap-search {
+  position: absolute;
+  width: 100%;
+  height: 120px;
+  top: 30%;
+}
+
+.searchbox {
+  width: 100%;
+  text-align: center;
+}
+
+.searchbox input[type=text] {
+  width: 400px;
+  display: inline-block;
+  // height: 48px;
+  height: 42px;
+  border: 3px solid #4fd80b;
+  outline: none;
+  padding-left: 12px;
+  font-size: 16px;
+  color: #222;
+  font-weight: bold;
+}
+
+.searchbox button {
+  width: 100px;
+  height: 48px;
+  display: inline-block;
+  vertical-align: bottom;
+  border: none;
+  background: #4fd80b;
+  color: #fff;
+  font-size: 16px;
+  letter-spacing: 1px;
+  margin-left: -6px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.box-summary {
+  margin-top: 24px;
+  text-align: center;
+}
+
+.box-summary .summary {
+  font-size: 28px;
+  font-weight: bold;
+  display: inline-block;
+  margin: 0 24px;
+  color: #666;
+  cursor: pointer;
+}
+
+.box-summary .num {
+  color: #47c10a;
+  font-size: 40px;
+}
+
+body, input, textarea, select, button, table {
+  font-family: 돋움, Dotum, sans-serif;
+  font-size: 100%;
 }

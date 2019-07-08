@@ -1,5 +1,8 @@
 import React, { Component, Fragment } from 'react';
-import { AddressSearch } from "../index";
+//import { AddressSearchDaum } from "../index";
+import DaumPostcode from 'react-daum-postcode';
+import { AddressSearch } from '../../common';
+
 class LandInfoView extends Component {
   constructor(props) {
     super(props);
@@ -59,15 +62,35 @@ class LandInfoView extends Component {
     //분석결과
     {
       const analysisTradeInfo = landInfoData.get("analysisTradeInfo");
+      const tradList = analysisTradeInfo.get("trade");
       document.querySelector('#td지번주소').innerHTML = analysisTradeInfo.get("지번주소");
+      if(tradList != null && tradList.length > 5) {
+        document.querySelector('#td지번주소_A').innerHTML = tradList.get(0).get("지번주소");
+        document.querySelector('#td지번주소_B').innerHTML = tradList.get(1).get("지번주소");
+        document.querySelector('#td지번주소_C').innerHTML = tradList.get(2).get("지번주소");
+        document.querySelector('#td지번주소_D').innerHTML = tradList.get(3).get("지번주소");
+        document.querySelector('#td지번주소_E').innerHTML = tradList.get(4).get("지번주소");
+        document.querySelector('#td지번주소_F').innerHTML = tradList.get(5).get("지번주소");
+
+        document.querySelector('#td거래가격_A').innerHTML = tradList.get(0).get("거래가격");
+        document.querySelector('#td거래가격_B').innerHTML = tradList.get(1).get("거래가격");
+        document.querySelector('#td거래가격_C').innerHTML = tradList.get(2).get("거래가격");
+        document.querySelector('#td거래가격_D').innerHTML = tradList.get(3).get("거래가격");
+        document.querySelector('#td거래가격_E').innerHTML = tradList.get(4).get("거래가격");
+        document.querySelector('#td거래가격_F').innerHTML = tradList.get(5).get("거래가격");
+      }
     }
     document.querySelector('#imgMap').src = landInfoData.get("analysisTradeInfo").get("mapUrl");//도로접면
   }
 
+  //우편번호 검색이 끝났을 때 사용자가 선택한 정보를 받아올 콜백함수
+  handleAddress = (data) => {
+    console.log(data);  // e.g. '서울 성동구 왕십리로2길 20 (성수동1가)'
+  }
   render() {
       return (
         <div className="div-main">
-          <div><AddressSearch searchCallback={ this.searchCallback } /></div>
+          <div><AddressSearch onComplete={this.handleAddress} /></div>
           <div className="div-land-info-container-row">
             <ul className="div-land-info-item">
               <li className="div-land-info-li_item">
@@ -194,7 +217,7 @@ class LandInfoView extends Component {
             <ul className="div-land-info-item">
               <li className="div-land-info-li_item">
                 <div>
-                  <img id="imgMap" src="http://api.vworld.kr/req/image?service=image&version=2.0&request=getmap&key=808A7C96-6AD4-369B-B03D-EAEBA6AA700E&format=png&basemap=GRAPHIC&center=126.978275264,37.566642192&crs=epsg:4326&zoom=16&size=700,370&&marker=point:126.9760222 37.5682154|label:A|size:16|color:red&marker=point:126.9808716 37.5678752|label:B|size:16|color:red&marker=point:126.9804424 37.5650008|label:C|size:16|color:red&marker=point:126.9770736 37.5668037|label:D|size:16|color:red" />
+                  <img id="imgMap" src="" />
                 </div>
                 
               </li>
@@ -209,33 +232,33 @@ class LandInfoView extends Component {
                     </tr>
                     <tr>
                       <td className="cell_content">A</td>
-                      <td className="cell_content">서울 광진구 능동 135-27</td>
-                      <td className="cell_content">234,000,000,000</td>
+                      <td id="td지번주소_A" className="cell_content"></td>
+                      <td id="td거래가격_A" className="cell_content_right"></td>
                     </tr>
                     <tr>
                       <td className="cell_content">B</td>
-                      <td className="cell_content"></td>
-                      <td className="cell_content"></td>
+                      <td id="td지번주소_B" className="cell_content"></td>
+                      <td id="td거래가격_B" className="cell_content_right"></td>
                     </tr>
                     <tr>
                       <td className="cell_content">C</td>
-                      <td className="cell_content"></td>
-                      <td className="cell_content"></td>
+                      <td id="td지번주소_C" className="cell_content"></td>
+                      <td id="td거래가격_C" className="cell_content_right"></td>
                     </tr>
                     <tr>
                       <td className="cell_content">D</td>
-                      <td className="cell_content"></td>
-                      <td className="cell_content"></td>
+                      <td id="td지번주소_D" className="cell_content"></td>
+                      <td id="td거래가격_D" className="cell_content_right"></td>
                     </tr>
                     <tr>
                       <td className="cell_content">E</td>
-                      <td className="cell_content"></td>
-                      <td className="cell_content"></td>
+                      <td id="td지번주소_E" className="cell_content"></td>
+                      <td id="td거래가격_E" className="cell_content_right"></td>
                     </tr>
                     <tr>
                       <td className="cell_content">F</td>
-                      <td className="cell_content"></td>
-                      <td className="cell_content"></td>
+                      <td id="td지번주소_F" className="cell_content"></td>
+                      <td id="td거래가격_F" className="cell_content_right"></td>
                     </tr>
                     </tbody>
                   </table>

@@ -32,11 +32,11 @@ class NoticeManageContainer extends Component {
   }
 
   componentDidMount() {
-    const { noticeList } = this.props;
+    // const { noticeList } = this.props;
     // 공지사항 목록이 존재하지 않을 경우 목록조회 API서비스 호출
-    if (!noticeList || noticeList === undefined || noticeList.isEmpty()) {
+    // if (!noticeList || noticeList === undefined || noticeList.isEmpty()) {
       this.getNoticeList();
-    }
+    // }
 
     const { selectList } = this.state;
     const deleteNoticeList = this.deleteNoticeList;

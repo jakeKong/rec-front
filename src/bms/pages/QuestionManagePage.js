@@ -4,12 +4,12 @@ import { QuestionManageContainer } from '../index'
 
 const QuestionManagePage = () => {
   return (
-    <div>
+    // <div>
       <PageTemplate>
-        <div className="page-description">문의사항</div>
+        {/* <div className="page-description">문의사항</div> */}
         <QuestionManageContainer />
       </PageTemplate>
-    </div>
+    // </div>
   );
 };
 

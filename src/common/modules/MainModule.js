@@ -1,5 +1,7 @@
 import { createAction, handleActions } from 'redux-actions';
+// eslint-disable-next-line
 import { Map, List, fromJS } from 'immutable';
+// eslint-disable-next-line
 import { call, put, takeEvery } from 'redux-saga/effects';
 
 // import * as api from '../index';

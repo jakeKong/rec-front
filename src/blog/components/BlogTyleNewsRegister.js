@@ -1,4 +1,7 @@
 import React, { Component, Fragment } from 'react';
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import * as FileLoadActions from "../../common/modules/FileLoadModule";
 
 // layout
 import '@vaadin/vaadin-ordered-layout';
@@ -38,6 +41,7 @@ class BlogTyleNewsRegister extends Component {
         value: false
       },
     }
+    this.uploadFile = this.uploadFile.bind(this);
   }
 
   /**
@@ -55,6 +59,15 @@ class BlogTyleNewsRegister extends Component {
   _handleEscPress(e) {
     if (this.state.noCloseOnEsc) {
       e.preventDefault();
+    }
+  }
+
+  uploadFile = async (file) => {
+    const { FileLoadModule } = this.props;
+    try {
+      await FileLoadModule.uploadFile(file);
+    } catch (e) {
+      console.log("error log : " + e);
     }
   }
 
@@ -131,6 +144,18 @@ class BlogTyleNewsRegister extends Component {
         }
       }
 
+      const uploadFile = this.uploadFile;
+      const ipImg = document.querySelector('#ipImg');
+      ipImg.addEventListener('input', function(e) {
+        let form = new FormData();
+        // form.append('file', e.target.files[0])
+        form.append('file', e.target.files[0])
+        console.log(e.target.files[0])
+        console.log(form)
+        uploadFile(form)
+      })
+
+      // eslint-disable-next-line
       const { addCallback, updateCallback } = this.props;
       const btnOk = document.querySelector('#btnOk');
       btnOk.innerHTML = "확인";
@@ -198,8 +223,9 @@ class BlogTyleNewsRegister extends Component {
               <vaadin-text-field id="tfLink" required prevent-invalid-input pattern="([a-zA-Zㄱ-ㅎ가-힣0-9]+?)"/>
             </div>
             <div className="default-column">
-              <label id="lbImage" className="label-flex-20-left"/>
-              <img id="img"/>
+              <label id="lbImage" className="label-flex-20-left" />
+              <img id="img" alt=""/>
+              <input type="file" id="ipImg" />
             </div>
           </div>
           <div className="div-register-popup-bottom">
@@ -211,5 +237,13 @@ class BlogTyleNewsRegister extends Component {
     );
   }
 }
-export default BlogTyleNewsRegister ;
-
+export default connect(
+  state => ({
+    pending: state.files.pending,
+    error: state.files.error,
+    success: state.files.success,
+  }),
+  dispatch => ({
+    FileLoadModule: bindActionCreators(FileLoadActions, dispatch)
+  })
+)(BlogTyleNewsRegister);

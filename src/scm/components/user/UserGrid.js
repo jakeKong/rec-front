@@ -189,14 +189,14 @@ class UserGrid extends Component {
         <div>
           <vaadin-grid theme="column-borders" height-by-rows column-reordering-allowed>
             <vaadin-grid-column auto-select hidden id="grdSelect" flex-grow="0.1" width="50px" />
-            <vaadin-grid-sort-column path="index" header="번호" text-align="end" flex-grow="0.2" />
+            {/* <vaadin-grid-sort-column path="index" header="번호" text-align="end" flex-grow="0.2" /> */}
             <vaadin-grid-column path="email" header="이메일" text-align="center" flex-grow="1" />
             <vaadin-grid-column path="name" header="이름" text-align="center" flex-grow="1" />
             <vaadin-grid-column path="tellNo" header="전화번호" text-align="center" flex-grow="1" />
             <vaadin-grid-column path="address" header="주소" text-align="center" flex-grow="1" />
             <vaadin-grid-column path="addressNo" header="우편번호" text-align="center" flex-grow="1" />
             <vaadin-grid-column path="birthDt" header="생년월일" text-align="center" flex-grow="1" />
-            <vaadin-grid-column path="createdUser" header="생성자" text-align="center" flex-grow="1" />
+            {/* <vaadin-grid-column path="createdUser" header="생성자" text-align="center" flex-grow="1" /> */}
             <vaadin-grid-column path="createdDt" header="가입일자" text-align="center" flex-grow="1" />
             <vaadin-grid-column path="balancePoint" header="잔여 포인트" text-align="center" flex-grow="0.3" />
             <vaadin-grid-column id="grdAssignedRoles" header="권한그룹" text-align="center" flex-grow="1" />

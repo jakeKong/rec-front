@@ -40,8 +40,6 @@ class ChangePointHistoryGrid extends Component {
     const grid = document.querySelector('vaadin-grid');
     grid.items = list;
 
-    document.querySelector('#lbTitle').innerHTML = '포인트 변동내역';
-
     const {role} = this.props;
 
     let hiddenCheck = true;
@@ -105,7 +103,6 @@ class ChangePointHistoryGrid extends Component {
           <div className="div-sub-top-right">
             <vaadin-button id="btnExcel" />
           </div>
-          <label className="label-center" id="lbTitle"/>
           <vaadin-grid theme="column-borders row-stripes" height-by-rows column-reordering-allowed>
             <vaadin-grid-column path="changeDt" header="변동 일자" text-align="center" flex-grow="2" />
             <vaadin-grid-column path="odrPaymentNo" header="결제(주문)번호" text-align="center" flex-grow="2" />

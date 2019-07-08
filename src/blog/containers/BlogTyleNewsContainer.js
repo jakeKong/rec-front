@@ -14,10 +14,10 @@ class BlogTyleNewsContainer extends Component {
     }
   }
 
-  getBlogTyleNewsList = async () => {
+  getBlogTylenewsList = async () => {
     const { BlogTyleNewsModule } = this.props;
     try {
-      await BlogTyleNewsModule.getBlogTyleNewsList();
+      await BlogTyleNewsModule.getBlogTylenewsList();
     } catch (e) {
       console.log("error log : " + e);
     }
@@ -27,11 +27,12 @@ class BlogTyleNewsContainer extends Component {
   componentDidMount() {
     const { blogTyleNewsList } = this.props;
     if (blogTyleNewsList === null || blogTyleNewsList === undefined) {
-      this.getBlogTyleNewsList();
+      this.getBlogTylenewsList();
     }
   }
 
   render() {
+    // eslint-disable-next-line
     const { blogTyleNewsList, pending, error, success } = this.props;
     return (
       <Fragment>

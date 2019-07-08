@@ -26,4 +26,16 @@ module.exports = function(app) {
       changeOrigin: true
     })
   );
+  app.use(
+    proxy('/web/rec/api/blog', {
+      target: 'http://localhost:8005',
+      changeOrigin: true
+    })
+  );
+  app.use(
+    proxy('/web/rec/api/file', {
+      target: 'http://localhost:8006',
+      changeOrigin: true
+    })
+  );
 }

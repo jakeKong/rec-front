@@ -62,5 +62,35 @@ export const blogData = {
       writer: '관리자',
       writeDt: new Date(),
       visibility: false
+    },
+    {
+      sid: 7,
+      img: '/server/image/tta.png',
+      link: 'https://blog.naver.com/',
+      title: 'KDI 부동산 시장 동향 2019년 5월 첫째주',
+      subTitle: '부동산동향',
+      writer: '관리자',
+      writeDt: new Date(),
+      visibility: true
+    },
+    {
+      sid: 8,
+      img: '/server/image/tta.png',
+      link: 'https://blog.naver.com/',
+      title: 'KDI 부동산 시장 동향 2019년 4월 첫째주',
+      subTitle: '부동산동향',
+      writer: '관리자',
+      writeDt: new Date(),
+      visibility: true
+    },
+    {
+      sid: 9,
+      img: '/server/image/tta.png',
+      link: 'https://blog.naver.com/',
+      title: 'KDI 부동산 시장 동향 2019년 3월 첫째주',
+      subTitle: '부동산동향',
+      writer: '관리자',
+      writeDt: new Date(),
+      visibility: true
     },]
   };

@@ -37,10 +37,10 @@ class QuestionManageContainer extends Component {
 
   componentDidMount() {
     const { search } = this.state;
-    const { questionList } = this.props;
-    if (!questionList || questionList === undefined || questionList.isEmpty()) {
+    // const { questionList } = this.props;
+    // if (!questionList || questionList === undefined || questionList.isEmpty()) {
       this.getQuestionList(search);
-    }
+    // }
 
     const { selectList } = this.state;
     const deleteQuestionByList = this.deleteQuestionByList;

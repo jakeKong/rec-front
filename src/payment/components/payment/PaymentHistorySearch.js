@@ -76,7 +76,6 @@ class PaymentHistorySearch extends Component {
     const dpStart = document.querySelector('#dpStart')
     // default before Week date set
     dpStart.value = monthBeforeDate;
-    console.log(monthBeforeDate)
     search.startTime = dpStart.value;
     dpStart.addEventListener('value-changed', function() {
       search.startTime = dpStart.value;

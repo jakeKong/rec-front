@@ -4,12 +4,12 @@ import { OrderHistoryByEmailContainer } from '../index';
 
 const OrderHistoryByEmailPage = () => {
   return (
-    <div>
+    // <div>
       <PageTemplate>
-        <div className="page-description">마이페이지 > 주문내역 조회</div>
+        {/* <div className="page-description">마이페이지 > 주문내역 조회</div> */}
         <OrderHistoryByEmailContainer />
       </PageTemplate>
-    </div>
+    // </div>
   );
 };
 

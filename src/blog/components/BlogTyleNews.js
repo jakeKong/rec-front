@@ -26,19 +26,19 @@ class BlogTyleNews extends Component {
     divBlogColumns.className = 'div-blog-colums';
 
     blogTyleNewsList.reverse().forEach(e => {
-      if (e.get('visibility') === true) {
+      if (e.get('tylenewsVisibility') === true) {
         const divBlogCard = document.createElement('div');
         divBlogCard.className = 'div-blog-card';
   
         const image = document.createElement('img');
         // 블로그 이미지
-        image.src = e.get('img');
+        image.src = e.get('tylenewsImg');
   
         const divBlogCardTitle = document.createElement('div');
         divBlogCardTitle.className = 'div-blog-card-title';
         const pTitle = document.createElement('p');
         // 블로그 타이틀 제목
-        pTitle.innerHTML = e.get('title');
+        pTitle.innerHTML = e.get('tylenewsTitle');
         // 연결된 블로그 링크 호출 이벤트
         pTitle.addEventListener('click', function() {
           window.open(e.get('link'));
@@ -49,7 +49,7 @@ class BlogTyleNews extends Component {
         divBlogCardSubTitle.className = 'div-blog-card-sub-title';
         const pSubTitle = document.createElement('p');
         // 블로그 서브타이틀(분류)
-        pSubTitle.innerHTML = 'SRD/'+e.get('subTitle');
+        pSubTitle.innerHTML = 'SRD/'+e.get('tylenewsSubtitle');
         divBlogCardSubTitle.appendChild(pSubTitle);
   
         divBlogCard.appendChild(image)
