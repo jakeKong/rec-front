@@ -24,15 +24,19 @@ class ChangePointHistoryGrid extends Component {
       });
       // push Value type is JSON
       list.push({
+        changePointSid: e.get("changeSid"),
         email: e.get("email"), 
         changeDt: dateFormat(new Date(e.get("changeDt")), 'yyyy년mm월dd일 HH:MM:ss'),
         // changeType: e.get("changeType"),
         odrPaymentNo: e.get("odrNo") ? e.get("odrNo") : e.get("paymentNo"),
+        odrNo: e.get("odrNo"),
+        paymentNo: e.get("paymentNo"),
         paymentCash: e.get("paymentCash"),
         changeType: changeType,
         changePoint: e.get("changePoint"),
         currentBalPoint: e.get("currentBalPoint"),
-        userNm: e.get("userNm")
+        userNm: e.get("userNm"),
+        activated: e.get("activated")
       })
     })
     
@@ -49,10 +53,39 @@ class ChangePointHistoryGrid extends Component {
     }
     document.querySelector('#grdUserNm').hidden = hiddenCheck;
     document.querySelector('#grdEmail').hidden = hiddenCheck;
+    document.querySelector('#grdBtnPaymentCancle').hidden = hiddenCheck;
 
     const btnExcel = document.querySelector('#btnExcel');
     if (role === 'ROLE_ADMIN') {
       btnExcel.hidden = true;
+
+      const {changePointCancleCallback} = this.props;
+      document.querySelector('#grdBtnPaymentCancle').renderer = function(root, column, rowData) {
+        if (rowData.item.changeType === '결제' || rowData.item.changeType === '결제취소') {
+          if (rowData.item.changeType === '결제취소') {
+            root.innerHTML = '-';
+          } 
+          if (rowData.item.changeType === '결제') {
+            if (rowData.item.activated === true) {
+              root.innerHTML = '';
+              const btnDownload = document.createElement('vaadin-button');
+              // btnDownload.setAttribute('style', 'color: var(--lumo-contrast-text-color)');
+              btnDownload.setAttribute('style', 'color: var(--lumo-error-text-color)');
+              btnDownload.textContent = '결제취소';
+              btnDownload.addEventListener('click', function() {
+                const check = window.confirm('결제하신 포인트상품에 대한 포인트결제 취소를 진행하시겠습니까?');
+                if (check === true) {
+                  // 결제취소 버튼 클릭 시 동작 이벤트
+                  changePointCancleCallback(rowData.item)
+                }
+              })
+              root.appendChild(btnDownload);
+            } else {
+              root.innerHTML = '<font style="color: red">취소됨</font>';
+            }
+          }
+        }
+      }
     } else {
       btnExcel.hidden = false;
       btnExcel.textContent = 'EXCEL';
@@ -187,7 +220,8 @@ class ChangePointHistoryGrid extends Component {
             <vaadin-grid-column path="changePoint" header="변동 포인트" text-align="center" flex-grow="1.5" width="100px" resizable/>
             <vaadin-grid-column path="currentBalPoint" header="남은 포인트" text-align="center" flex-grow="1.5" width="100px" resizable/>
             <vaadin-grid-column id="grdUserNm" path="userNm" header="주문자" text-align="center" flex-grow="1" width="100px" resizable/>
-            <vaadin-grid-column id="grdEmail" path="email" header="주문자 아이디" text-align="center" flex-grow="1" width="150px" resizable/> 
+            <vaadin-grid-column id="grdEmail" path="email" header="주문자 아이디" text-align="center" flex-grow="1" width="150px" resizable/>
+            <vaadin-grid-column id="grdBtnPaymentCancle" header="결제취소" text-align="center" flex-grow="10" width="150px" resizable/>
             {/* <vaadin-grid-column path="purchaseNo" header="구매번호" text-align="center" flex-grow="2" /> */}
           </vaadin-grid>
           <div id="pages"/>

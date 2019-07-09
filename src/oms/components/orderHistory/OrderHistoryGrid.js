@@ -42,20 +42,27 @@ class OrderHistoryGrid extends Component {
       
       // push Value type is JSON
       list.push({
-        // odrSid: e.get("odrSid"), 
+        odrSid: e.get("odrSid"), 
         index: i++,
         email: e.get("email"), 
         odrNo: e.get("odrNo"),
         odrDt: dateFormat(new Date(e.get("odrDt")), 'yyyy년mm월dd일 HH:MM:ss'),
+        odrDtOrigin: e.get("odrDt"),
         marketPrice: comma(e.get("marketPrice")),
+        marketPriceOrigin: e.get("marketPrice"),
         realEstateType: realEstateType,
+        realEstateTypeOrigin: e.get("realEstateType"),
         variationPoint: comma(e.get("variationPoint")),
+        variationPointOrigin: e.get("variationPoint"),
         downloadEndDt: dateFormat(new Date(e.get("downloadEndDt")), 'yyyy년mm월dd일 HH:MM:ss'),
-        // 다운로드 기간 체크를 위한 값
-        downloadCheckDt: e.get("downloadEndDt"),
+        downloadEndDtOrigin: e.get("downloadEndDt"),
         downloadCnt: e.get("downloadCnt"),
         status: status,
-        ordererNm: e.get("ordererNm")
+        statusOrigin: e.get("status"),
+        pnuNo: e.get("pnuNo"),
+        pdfFileNm: e.get("pdfFileNm"),
+        ordererNm: e.get("ordererNm"),
+        activated: e.get("activated")
       })
     })
     
@@ -80,44 +87,54 @@ class OrderHistoryGrid extends Component {
       if (rowData.item.status === '구매취소') {
         root.innerHTML = '-';
       } else {
-        if (new Date(rowData.item.downloadCheckDt) < new Date()) {
-          root.innerHTML = '<font style="color: red">만료됨</font>';
+        if (new Date(rowData.item.downloadEndDtOrigin) < new Date()) {
+          root.innerHTML = '만료됨';
         } else {
-          root.innerHTML = '';
-          const btnDownload = document.createElement('vaadin-button');
-          // btnDownload.setAttribute('style', 'color: var(--lumo-contrast-text-color)');
-          btnDownload.setAttribute('style', 'color: var(--lumo-primary-text-color)');
-          btnDownload.textContent = '다운로드';
-          btnDownload.addEventListener('click', function() {
-            const check = window.confirm('해당 PDF를 다운로드 하시겠습니까?');
-            if (check === true) {
-              // 다운로드 버튼 클릭 시 동작 이벤트
-            }
-          })
-          root.appendChild(btnDownload);
+          if (rowData.item.activated === true) {
+            root.innerHTML = '';
+            const btnDownload = document.createElement('vaadin-button');
+            // btnDownload.setAttribute('style', 'color: var(--lumo-contrast-text-color)');
+            btnDownload.setAttribute('style', 'color: var(--lumo-primary-text-color)');
+            btnDownload.textContent = '다운로드';
+            btnDownload.addEventListener('click', function() {
+              const check = window.confirm('해당 PDF를 다운로드 하시겠습니까?');
+              if (check === true) {
+                // 다운로드 버튼 클릭 시 동작 이벤트
+              }
+            })
+            root.appendChild(btnDownload);
+          } else {
+            root.innerHTML = '<font style="color: red">취소됨</font>';
+          }
         }
       }
     }
 
+    const {orderCancleCallback} = this.props;
     document.querySelector('#grdBtnPurchaseCancle').renderer = function(root, column, rowData) {
       if (rowData.item.status === '구매취소') {
         root.innerHTML = '-';
       } else {
-        if (new Date(rowData.item.downloadCheckDt) < new Date()) {
-          root.innerHTML = '<font style="color: black">만료됨</font>';
+        if (new Date(rowData.item.downloadEndDtOrigin) < new Date()) {
+          root.innerHTML = '만료됨';
         } else {
-          root.innerHTML = '';
-          const btnDownload = document.createElement('vaadin-button');
-          // btnDownload.setAttribute('style', 'color: var(--lumo-contrast-text-color)');
-          btnDownload.setAttribute('style', 'color: var(--lumo-error-text-color)');
-          btnDownload.textContent = '구매취소';
-          btnDownload.addEventListener('click', function() {
-            const check = window.confirm('주문하신 구매상품에 대한 상품구매 취소를 진행하시겠습니까?');
-            if (check === true) {
-              // 다운로드 버튼 클릭 시 동작 이벤트
-            }
-          })
-          root.appendChild(btnDownload);
+          if (rowData.item.activated === true) {
+            root.innerHTML = '';
+            const btnDownload = document.createElement('vaadin-button');
+            // btnDownload.setAttribute('style', 'color: var(--lumo-contrast-text-color)');
+            btnDownload.setAttribute('style', 'color: var(--lumo-error-text-color)');
+            btnDownload.textContent = '구매취소';
+            btnDownload.addEventListener('click', function() {
+              const check = window.confirm('구매하신 상품에 대한 상품구매 취소를 진행하시겠습니까?');
+              if (check === true) {
+                // 구매취소 버튼 클릭 시 동작 이벤트
+                orderCancleCallback(rowData.item)
+              }
+            })
+            root.appendChild(btnDownload);
+          } else {
+            root.innerHTML = '<font style="color: red">취소됨</font>';
+          }
         }
       }
     }

@@ -28,6 +28,7 @@ class BlogTyleNewsManageContainer extends Component {
         toDt: null,
         tylenewsVisibility: null
       },
+      selectList: [],
       popupOpened: false
     }
     this.popupOpenStateEvent = this.popupOpenStateEvent.bind(this);
@@ -112,8 +113,37 @@ class BlogTyleNewsManageContainer extends Component {
     }
   }
 
+  deleteBlogTylenewsByList = async (list) => {
+    const { BlogTyleNewsModule } = this.props;
+    try {
+      await BlogTyleNewsModule.deleteBlogTylenewsByList(list)
+    } catch (e) {
+      console.log("error log : " + e);
+    }
+    const { selectList } = this.state;
+    selectList.splice(0, selectList.length)
+    this.setState({selectList});
+  }
+
+  // 그리드의 체크박스 선택 시 선택한 컬럼의 값을 선택목록에 저장
+  selectCallback = async (selectDto) => {
+    const { selectList } = this.state;
+    selectList.push(selectDto.sid)
+    this.setState({selectList})
+  }
+
+  // 그리드의 체크박스 선택 취소 했을때 선택목록에 저장되어있는 값 중 선택취소한 컬럼의 값을 찾아 목록에서 제거
+  deselectCallback = async (selectDto) => {
+    const { selectList } = this.state;
+    const itemToFind = selectList.find(function(item) {
+      return item === selectDto.sid
+    });
+    const idx = selectList.indexOf(itemToFind);
+    if (idx > -1) selectList.splice(idx, 1)
+    this.setState({selectList})
+  }
+
   addCallback = async(dto) => {
-    console.log(dto)
     this.setState({ blog : dto });
     this.addBlogTylenews(this.state.blog)
   }
@@ -131,6 +161,29 @@ class BlogTyleNewsManageContainer extends Component {
       this.getBlogTylenewsListBySpec(search);
     }
 
+    const { selectList } = this.state;
+    const deleteBlogTylenewsByList = this.deleteBlogTylenewsByList;
+    const btnSelectDelete = document.querySelector('#btnSelectDelete');
+    btnSelectDelete.innerHTML = '선택삭제';
+    btnSelectDelete.addEventListener('click', function() {
+      if (selectList.length > 0) {
+        const check = window.confirm('선택한 항목을 삭제 하시겠습니까?');
+        if (check === true) {
+          deleteBlogTylenewsByList(selectList);
+        }
+      } else {
+        const nfNotfoundSelectColumn = document.createElement('vaadin-notification');
+        nfNotfoundSelectColumn.renderer = function(root) {
+          root.textContent = '선택된 항목이 존재하지 않습니다.'
+        }
+        document.body.appendChild(nfNotfoundSelectColumn);
+        nfNotfoundSelectColumn.position = 'middle';
+        nfNotfoundSelectColumn.duration = 2000;
+        nfNotfoundSelectColumn.opened = true;
+      }
+    });
+
+    
     const popupOpenStateEvent = this.popupOpenStateEvent;
     const btnRegister = document.querySelector('#btnRegister');
     btnRegister.innerHTML = "등록";
@@ -161,9 +214,10 @@ class BlogTyleNewsManageContainer extends Component {
         <div className="div-main">
           { pending && <div className="boxLoading"/> }
           { error && <h1>Server Error!</h1> }
-          { success && <BlogTyleNewsGrid blogTyleNewsList={blogTyleNewsList} blogDtoCallback={this.blogDtoCallback} updateVisibilityCallback={this.updateVisibilityCallback}/> }
+          { success && <BlogTyleNewsGrid blogTyleNewsList={blogTyleNewsList} blogDtoCallback={this.blogDtoCallback} updateVisibilityCallback={this.updateVisibilityCallback} selectCallback={ this.selectCallback } deselectCallback={ this.deselectCallback }/> }
         </div>
         <div className="div-sub-main" hidden={!success}>
+          <vaadin-button id="btnSelectDelete" theme="error" />
           <vaadin-button id="btnRegister"/>
         </div>
         { blog && popupOpened === true &&

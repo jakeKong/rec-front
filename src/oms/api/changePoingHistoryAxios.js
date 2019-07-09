@@ -51,6 +51,18 @@ export const addChangePointHistory = (email, dto) => axios({
     'changePoint': dto.changePoint,
     'currentBalPoint': dto.currentBalPoint,
     'odrNo': dto.odrNo,
-    'paymentNo': dto.paymentNo
+    'paymentNo': dto.paymentNo,
+    'activated': dto.activated
   })
+});
+
+// 포인트 변동내역 활성화 여부 수정
+export const updateChangePointHistoryActivated = (changePointSid, chagePPointActivated) => axios({
+  method: 'PUT',
+  url: `${config.orderService}/changepoint/history/update/activated/${changePointSid}`,
+  headers: {
+    'Content-Type': 'application/json; charset=UTF-8',
+    'Accept': 'application/json'
+  },
+  data: JSON.stringify(chagePPointActivated)
 });

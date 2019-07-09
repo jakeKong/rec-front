@@ -53,8 +53,22 @@ export const addOrderHistory = (email, dto) => axios({
     'realEstateType': dto.realEstateType,
     'downloadEndDt': dto.downloadEndDt,
     'downloadCnt': dto.downloadCnt,
-    'status': dto.status
+    'pnuNo': dto.pnuNo,
+    'pdfFileNm': dto.pdfFileNm,
+    'status': dto.status,
+    'activated': dto.activated
   })
+});
+
+// 주문내역 활성화 여부 수정
+export const updateOrderHistoryActivated = (odrSid, email, orderActivated) => axios({
+  method: 'PUT',
+  url: `${config.orderService}/order/history/update/activated/${odrSid}/${email}`,
+  headers: {
+    'Content-Type': 'application/json; charset=UTF-8',
+    'Accept': 'application/json'
+  },
+  data: JSON.stringify(orderActivated)
 });
 // export const addOrderHistory = (email, productSid, orderDto) => axios.post(`${config.orderService}/order/history/add/${email}/${productSid}`, {orderDto});
 // 주문내역 수정

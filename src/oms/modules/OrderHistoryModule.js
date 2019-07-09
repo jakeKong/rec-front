@@ -19,6 +19,10 @@ const ADD_ORDER_HISTORY = 'orderHistory/ADD_ORDER_HISTORY';
 const ADD_ORDER_HISTORY_RECEIVED = 'orderHistory/ADD_ORDER_HISTORY_RECEIVED';
 const ADD_ORDER_HISTORY_FAILURE = 'orderHistory/ADD_ORDER_HISTORY_FAILURE';
 
+const UPDATE_ORDER_HISTORY_ACTIVATED = 'orderHistory/UPDATE_ORDER_HISTORY_ACTIVATED';
+const UPDATE_ORDER_HISTORY_ACTIVATED_RECEIVED = 'orderHistory/UPDATE_ORDER_HISTORY_ACTIVATED_RECEIVED';
+const UPDATE_ORDER_HISTORY_ACTIVATED_FAILURE = 'orderHistory/UPDATE_ORDER_HISTORY_ACTIVATED_FAILURE';
+
 // updateOrderHistory Action Types
 // const UPDATE_ORDER_HISTORY = 'orderHistory/UPDATE_ORDER_HISTORY';
 
@@ -26,7 +30,8 @@ const ADD_ORDER_HISTORY_FAILURE = 'orderHistory/ADD_ORDER_HISTORY_FAILURE';
 // 외부에서 호출하여 입력받아줄 값 ( ex) this.getOrderHistoryList(search) )
 export const getOrderHistoryList = createAction(GET_ORDER_HISTORY_LIST, search => search);
 export const getOrderHistoryListByEmail = createAction(GET_ORDER_HISTORY_LIST_BY_EMAIL, (email, search) => ({email, search}));
-export const addOrderHistory = createAction(ADD_ORDER_HISTORY, (email, dto) => ({email, dto}));
+export const addOrderHistory = createAction(ADD_ORDER_HISTORY, (email, dto, search) => ({email, dto, search}));
+export const updateOrderHistoryActivated = createAction(UPDATE_ORDER_HISTORY_ACTIVATED, (odrSid, email, orderActivated) => ({odrSid, email, orderActivated}))
 // export const updateOrderHistory = createAction(UPDATE_ORDER_HISTORY, api.updateOrderHistory);
 
 // 초기 state값 설정
@@ -50,6 +55,7 @@ function* getOrderHistoryListSaga(action) {
 
 // getOrderHistoryListByEmail Saga
 function* getOrderHistoryListByEmailSaga(action) {
+  console.log(action)
   try {
     const response = yield call(api.getOrderHistoryListByEmail, action.payload.email, action.payload.search);
     yield put({type: GET_ORDER_HISTORY_LIST_BY_EMAIL_RECEIVED, payload: response});
@@ -63,8 +69,19 @@ function* addOrderHistorySaga(action) {
   try {
     const response = yield call(api.addOrderHistory, action.payload.email, action.payload.dto);
     yield put({type: ADD_ORDER_HISTORY_RECEIVED, payload: response});
+    yield call(getOrderHistoryListByEmailSaga, action);
   } catch (error) {
     yield put({type: ADD_ORDER_HISTORY_FAILURE, payload: error});
+  }
+}
+
+// updateOrderHistoryActivated Saga
+function* updateOrderHistoryActivatedSaga(action) {
+  try {
+    const response = yield call(api.updateOrderHistoryActivated, action.payload.odrSid, action.payload.email, action.payload.orderActivated);
+    yield put({type: UPDATE_ORDER_HISTORY_ACTIVATED_RECEIVED, payload: response});
+  } catch (error) {
+    yield put({type: UPDATE_ORDER_HISTORY_ACTIVATED_FAILURE, payload: error});
   }
 }
 
@@ -73,6 +90,7 @@ export function* orderHistorySaga() {
   yield takeEvery(GET_ORDER_HISTORY_LIST, getOrderHistoryListSaga);
   yield takeEvery(GET_ORDER_HISTORY_LIST_BY_EMAIL, getOrderHistoryListByEmailSaga);
   yield takeLatest(ADD_ORDER_HISTORY, addOrderHistorySaga)
+  yield takeLatest(UPDATE_ORDER_HISTORY_ACTIVATED, updateOrderHistoryActivatedSaga)
 }
 
 // 액션 핸들러 설정
@@ -118,5 +136,15 @@ export default handleActions({
     },
     [ADD_ORDER_HISTORY_FAILURE]: (state, action) => {
       console.log('ADD_ORDER_HISTORY_FAILURE onFailure')
+    },
+    // updateOrderHistoryActivated Handler
+    [UPDATE_ORDER_HISTORY_ACTIVATED]: (state, action) => {
+      console.log('UPDATE_ORDER_HISTORY_ACTIVATED onPending')
+    },
+    [UPDATE_ORDER_HISTORY_ACTIVATED_RECEIVED]: (state, action) => {
+      console.log('UPDATE_ORDER_HISTORY_ACTIVATED_RECEIVED onReceived')
+    },
+    [UPDATE_ORDER_HISTORY_ACTIVATED_FAILURE]: (state, action) => {
+      console.log('UPDATE_ORDER_HISTORY_ACTIVATED_FAILURE onFailure')
     },
 }, initialState);

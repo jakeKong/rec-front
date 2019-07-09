@@ -403,7 +403,6 @@ class PaymentContainer extends Component {
         }
       } else {
         successPay = true;
-        console.log(paymentRequest.body.detail)
         // 포인트 변동내역에 추가 
         let dto = {
           changeDt: new Date(),
@@ -412,7 +411,8 @@ class PaymentContainer extends Component {
           changePoint: removeComma(productDto.productPoint),
           // 계정별 현재 잔여포인트에서 차감해야함
           currentBalPoint: 97500+removeComma(productDto.productPoint),
-          paymentNo: 'P'+paymentRequest.body.detail.tradeConfirmYmdt+new Date().getTime()
+          paymentNo: 'P'+paymentRequest.body.detail.tradeConfirmYmdt+new Date().getTime(),
+          activated: true
         }
         this.addChangePointHistory(email, dto);
       }

@@ -17,11 +17,16 @@ const ADD_CHANGE_POINT_HISTORY = 'changePointHistory/ADD_CHANGE_POINT_HISTORY';
 const ADD_CHANGE_POINT_HISTORY_RECEIVED = 'changePointHistory/ADD_CHANGE_POINT_HISTORY_RECEIVED';
 const ADD_CHANGE_POINT_HISTORY_FAILURE = 'changePointHistory/ADD_CHANGE_POINT_HISTORY_FAILURE';
 
+const UPDATE_CHANGE_POINT_HISTORY_ACTIVATED = 'changePointHistory/UPDATE_CHANGE_POINT_HISTORY_ACTIVATED';
+const UPDATE_CHANGE_POINT_HISTORY_ACTIVATED_RECEIVED = 'changePointHistory/UPDATE_CHANGE_POINT_HISTORY_ACTIVATED_RECEIVED';
+const UPDATE_CHANGE_POINT_HISTORY_ACTIVATED_FAILURE = 'changePointHistory/UPDATE_CHANGE_POINT_HISTORY_ACTIVATED_FAILURE';
+
 // Actions
 // 외부에서 호출하여 입력받아줄 값 ( ex) this.getChangePointHistoryListByEmail(search) )
 export const getChangePointHistoryList = createAction(GET_CHANGE_POINT_HISTORY_LIST, search => search);
 export const getChangePointHistoryListByEmail = createAction(GET_CHANGE_POINT_HISTORY_LIST_BY_EMAIL, (email, search) => ({email, search}));
-export const addChangePointHistory = createAction(ADD_CHANGE_POINT_HISTORY, (email, dto) => ({email, dto}));
+export const addChangePointHistory = createAction(ADD_CHANGE_POINT_HISTORY, (email, dto, search) => ({email, dto, search}));
+export const updateChangePointHistoryActivated = createAction(UPDATE_CHANGE_POINT_HISTORY_ACTIVATED, (changePointSid, changePointActivated) => ({changePointSid, changePointActivated}))
 
 // 초기 state값 설정
 const initialState = Map({
@@ -34,11 +39,20 @@ const initialState = Map({
 
 // getChangePointHistoryListByEmail Saga
 function* getChangePointHistoryListSaga(action) {
-  try {
-    const response = yield call(api.getChangePointHistoryList, action.payload);
-    yield put({type: GET_CHANGE_POINT_HISTORY_LIST_BY_EMAIL_RECEIVED, payload: response});
-  } catch (error) {
-    yield put({type: GET_CHANGE_POINT_HISTORY_LIST_BY_EMAIL_FAILURE, payload: error});
+  if (action.payload.search !== undefined) {
+    try {
+      const response = yield call(api.getChangePointHistoryList, action.payload.search);
+      yield put({type: GET_CHANGE_POINT_HISTORY_LIST_BY_EMAIL_RECEIVED, payload: response});
+    } catch (error) {
+      yield put({type: GET_CHANGE_POINT_HISTORY_LIST_BY_EMAIL_FAILURE, payload: error});
+    }
+  } else {
+    try {
+      const response = yield call(api.getChangePointHistoryList, action.payload);
+      yield put({type: GET_CHANGE_POINT_HISTORY_LIST_BY_EMAIL_RECEIVED, payload: response});
+    } catch (error) {
+      yield put({type: GET_CHANGE_POINT_HISTORY_LIST_BY_EMAIL_FAILURE, payload: error});
+    }
   }
 }
 
@@ -57,8 +71,19 @@ function* addChangePointHistorySaga(action) {
   try {
     const response = yield call(api.addChangePointHistory, action.payload.email, action.payload.dto);
     yield put({type: ADD_CHANGE_POINT_HISTORY_RECEIVED, payload: response});
+    yield call(getChangePointHistoryListSaga, action)
   } catch (error) {
     yield put({type: ADD_CHANGE_POINT_HISTORY_FAILURE, payload: error});
+  }
+}
+
+// updateChangePointHistoryActivated Saga
+function* updateChangePointHistoryActivatedSaga(action) {
+  try {
+    const response = yield call(api.updateChangePointHistoryActivated, action.payload.changePointSid, action.payload.changePointActivated);
+    yield put({type: UPDATE_CHANGE_POINT_HISTORY_ACTIVATED_RECEIVED, payload: response});
+  } catch (error) {
+    yield put({type: UPDATE_CHANGE_POINT_HISTORY_ACTIVATED_FAILURE, payload: error});
   }
 }
 
@@ -67,6 +92,7 @@ export function* changePointHistorySaga() {
   yield takeEvery(GET_CHANGE_POINT_HISTORY_LIST, getChangePointHistoryListSaga);
   yield takeEvery(GET_CHANGE_POINT_HISTORY_LIST_BY_EMAIL, getChangePointHistoryListByEmailSaga);
   yield takeLatest(ADD_CHANGE_POINT_HISTORY, addChangePointHistorySaga);
+  yield takeLatest(UPDATE_CHANGE_POINT_HISTORY_ACTIVATED, updateChangePointHistoryActivatedSaga);
 }
 
 // 액션 핸들러 설정
@@ -112,5 +138,15 @@ export default handleActions({
     },
     [ADD_CHANGE_POINT_HISTORY_FAILURE]: (state, action) => {
       console.log('ADD_CHANGE_POINT_HISTORY_FAILURE onFailure')
+    },
+
+    [UPDATE_CHANGE_POINT_HISTORY_ACTIVATED]: (state, action) => {
+      console.log('UPDATE_CHANGE_POINT_HISTORY_ACTIVATED onPending')
+    },
+    [UPDATE_CHANGE_POINT_HISTORY_ACTIVATED_RECEIVED]: (state, action) => {
+      console.log('UPDATE_CHANGE_POINT_HISTORY_ACTIVATED_RECEIVED onReceived')
+    },
+    [UPDATE_CHANGE_POINT_HISTORY_ACTIVATED_FAILURE]: (state, action) => {
+      console.log('UPDATE_CHANGE_POINT_HISTORY_ACTIVATED_FAILURE onFailure')
     },
 }, initialState);

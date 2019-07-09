@@ -65,6 +65,40 @@ class ChangePointHistoryContainer extends Component {
     }
   }
 
+  changePointCancleCallback = (dto) => {
+    const { search } = this.state;
+    let changePointDto = {
+      'changeDt': new Date(),
+      'paymentCash': dto.paymentCash,
+      'changeType': 'PAYMENT_SUB',
+      'changePoint': dto.changePoint,
+      'currentBalPoint': dto.currentBalPoint,
+      'odrNo': dto.odrNo,
+      'paymentNo': dto.paymentNo,
+      'activated': false
+    }
+    this.updateChangePointHistoryActivated(dto.changePointSid, false);
+    this.addChangePointHistory(dto.email, changePointDto, search)
+  }
+
+  addChangePointHistory = async (email, dto, search) => {
+    const { ChangePointHistoryModule } = this.props;
+    try {
+      await ChangePointHistoryModule.addChangePointHistory(email, dto, search)
+    } catch (e) {
+      console.log("error log : " + e);
+    }
+  }
+
+  updateChangePointHistoryActivated = async (changePointSid, chagePPointActivated) => {
+    const { ChangePointHistoryModule } = this.props;
+    try {
+      await ChangePointHistoryModule.updateChangePointHistoryActivated(changePointSid, chagePPointActivated)
+    } catch (e) {
+      console.log("error log : " + e);
+    }
+  }
+
   render() {
     const { changePointHistoryList, pending, error, success, role } = this.props;
     return (
@@ -75,7 +109,7 @@ class ChangePointHistoryContainer extends Component {
         <div className="div-main">
           { pending && <div className="boxLoading"/> }
           { error && <h1>Server Error!</h1> }
-          { success && <ChangePointHistoryGrid changePointHistoryList={ changePointHistoryList } role={ role } /> }
+          { success && <ChangePointHistoryGrid changePointHistoryList={ changePointHistoryList } role={ role } changePointCancleCallback={this.changePointCancleCallback} /> }
         </div>
       </Fragment>
     );

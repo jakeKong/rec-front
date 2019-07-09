@@ -73,6 +73,44 @@ class OrderHistoryByEmailContainer extends Component {
     }
   }
 
+  orderCancleCallback = (dto) => {
+    const { search } =this.state;
+    const { email } = this.props;
+    let orderDto = {
+      'odrNo': dto.odrNo,
+      'odrDt': new Date(),
+      'marketPrice': dto.marketPriceOrigin,
+      'variationPoint': dto.variationPointOrigin,
+      'realEstateType': dto.realEstateTypeOrigin,
+      'downloadEndDt': dto.downloadEndDtOrigin,
+      'downloadCnt': dto.downloadCnt,
+      'pnuNo': dto.pnuNo,
+      'pdfFileNm': dto.pdfFileNm,
+      'status': 'TRADE_CANCLE',
+      'activated': false
+    };
+    this.updateOrderHistoryActivated(dto.odrSid, email, false)
+    this.addOrderHistory(email, orderDto, search)
+  }
+
+  addOrderHistory = async (email, dto, search) => {
+    const { OrderHistoryModule } = this.props;
+    try {
+      await OrderHistoryModule.addOrderHistory(email, dto, search)
+    } catch (e) {
+      console.log("error log : " + e);
+    }
+  }
+
+  updateOrderHistoryActivated = async (odrSid, email, orderActivated) => {
+    const { OrderHistoryModule } = this.props;
+    try {
+      await OrderHistoryModule.updateOrderHistoryActivated(odrSid, email, orderActivated)
+    } catch (e) {
+      console.log("error log : " + e);
+    }
+  }
+
   render() {
     const { email, orderHistoryList, pending, error, success } = this.props;
     return (
@@ -83,7 +121,7 @@ class OrderHistoryByEmailContainer extends Component {
         <div className="div-main">
           { pending && <div className="boxLoading"/> }
           { error && <h1>Server Error!</h1> }
-          { success && <OrderHistoryGrid orderHistoryList={ orderHistoryList } email={ email } />}
+          { success && <OrderHistoryGrid orderHistoryList={ orderHistoryList } email={ email } orderCancleCallback={this.orderCancleCallback}/>}
         </div>
       </Fragment>
     );
