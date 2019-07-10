@@ -85,3 +85,36 @@ export const deleteUsers = (emails) => axios({
   },
   data: JSON.stringify(emails)
 });
+
+// 사용자 포인트 수정
+export const updateUserByBalancePoint = (email, balancePoint) => axios({
+  method: 'PUT',
+  url: `${config.sysyemService}/user/${email}/update/balancepoint`,
+  headers: {
+    'Content-Type': 'application/json; charset=UTF-8',
+    'Accept': 'application/json'
+  },
+  data: JSON.stringify(balancePoint)
+});
+
+// 사용자 포인트 추가
+export const updateUserByBalancePointIncrease = (email, increasePoint) => axios({
+  method: 'PUT',
+  url: `${config.sysyemService}/user/${email}/update/balancepoint/increase`,
+  headers: {
+    'Content-Type': 'application/json; charset=UTF-8',
+    'Accept': 'application/json'
+  },
+  data: JSON.stringify(increasePoint)
+});
+
+// 사용자 포인트 차감
+export const updateUserByBalancePointDifference = (email, differencePoint) => axios({
+  method: 'PUT',
+  url: `${config.sysyemService}/user/${email}/update/balancepoint/difference`,
+  headers: {
+    'Content-Type': 'application/json; charset=UTF-8',
+    'Accept': 'application/json'
+  },
+  data: JSON.stringify(differencePoint)
+});

@@ -2,6 +2,7 @@ import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as changePointHistoryActions from "../modules/ChangePointHistoryModule";
+import * as userManageActions from "../../scm/modules/UserModule";
 import { ChangePointHistoryGrid, ChangePointHistorySearch } from "../index";
 
 class ChangePointHistoryContainer extends Component {
@@ -79,6 +80,7 @@ class ChangePointHistoryContainer extends Component {
     }
     this.updateChangePointHistoryActivated(dto.changePointSid, false);
     this.addChangePointHistory(dto.email, changePointDto, search)
+    this.updateUserByBalancePointDifference(dto.email, dto.changePoint);
   }
 
   addChangePointHistory = async (email, dto, search) => {
@@ -94,6 +96,15 @@ class ChangePointHistoryContainer extends Component {
     const { ChangePointHistoryModule } = this.props;
     try {
       await ChangePointHistoryModule.updateChangePointHistoryActivated(changePointSid, chagePPointActivated)
+    } catch (e) {
+      console.log("error log : " + e);
+    }
+  }
+
+  updateUserByBalancePointDifference = async (email, differencePoint) => {
+    const { UserManageModule } = this.props;
+    try {
+      await UserManageModule.updateUserByBalancePointDifference(email, differencePoint)
     } catch (e) {
       console.log("error log : " + e);
     }
@@ -129,5 +140,6 @@ export default connect(
   }),
   dispatch => ({
     ChangePointHistoryModule: bindActionCreators(changePointHistoryActions, dispatch),
+    UserManageModule: bindActionCreators(userManageActions, dispatch)
   })
 )(ChangePointHistoryContainer);

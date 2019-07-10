@@ -34,6 +34,21 @@ const DELETE_USERS = 'user/DELETE_USERS';
 const DELETE_USERS_RECEIVED = 'user/DELETE_USERS_RECEIVED';
 const DELETE_USERS_FAILURE = 'user/DELETE_USERS_FAILURE';
 
+// updateUserByBalancePoint Action Types
+const UPDATE_USER_BY_BALANCE_POINT = 'user/UPDATE_USER_BY_BALANCE_POINT';
+const UPDATE_USER_BY_BALANCE_POINT_RECEIVED = 'user/UPDATE_USER_BY_BALANCE_POINT_RECEIVED';
+const UPDATE_USER_BY_BALANCE_POINT_FAILURE = 'user/UPDATE_USER_BY_BALANCE_POINT_FAILURE';
+
+// updateUserByBalancePointIncrease Action Types
+const UPDATE_USER_BY_BALANCE_POINT_INCREASE = 'user/UPDATE_USER_BY_BALANCE_POINT_INCREASE';
+const UPDATE_USER_BY_BALANCE_POINT_INCREASE_RECEIVED = 'user/UPDATE_USER_BY_BALANCE_POINT_INCREASE_RECEIVED';
+const UPDATE_USER_BY_BALANCE_POINT_INCREASE_FAILURE = 'user/UPDATE_USER_BY_BALANCE_POINT_INCREASE_FAILURE';
+
+// updateUserByBalancePointDifference Action Types
+const UPDATE_USER_BY_BALANCE_POINT_DIFFERENCE = 'user/UPDATE_USER_BY_BALANCE_POINT_DIFFERENCE';
+const UPDATE_USER_BY_BALANCE_POINT_DIFFERENCE_RECEIVED = 'user/UPDATE_USER_BY_BALANCE_POINT_DIFFERENCE_RECEIVED';
+const UPDATE_USER_BY_BALANCE_POINT_DIFFERENCE_FAILURE = 'user/UPDATE_USER_BY_BALANCE_POINT_DIFFERENCE_FAILURE';
+
 // Actions
 export const getUserList = createAction(GET_USER_LIST, search => search);
 export const getUser = createAction(GET_USER_LIST, email => email);
@@ -41,6 +56,9 @@ export const addUser = createAction(ADD_USER, (userDto, search) => ({userDto, se
 export const updateUser = createAction(UPDATE_USER, (userDto, search) => ({userDto, search}));
 export const deleteUser = createAction(DELETE_USER, (email, search) => ({email, search}));
 export const deleteUsers = createAction(DELETE_USERS, (emails, search) => ({emails, search}));
+export const updateUserByBalancePoint = createAction(UPDATE_USER_BY_BALANCE_POINT, (email, balancePoint) => ({email, balancePoint}));
+export const updateUserByBalancePointIncrease = createAction(UPDATE_USER_BY_BALANCE_POINT_INCREASE, (email, increasePoint) => ({email, increasePoint}));
+export const updateUserByBalancePointDifference = createAction(UPDATE_USER_BY_BALANCE_POINT_DIFFERENCE, (email, differencePoint) => ({email, differencePoint}));
 
 // 초기 state값 설정
 const initialState = Map({
@@ -129,10 +147,43 @@ function* deleteUsersSaga(action) {
   }
 }
 
+// updateUserByBalancePoint Saga
+function* updateUserByBalancePointSaga(action) {
+  try {
+    const response = yield call(api.updateUserByBalancePoint, action.payload.email, action.payload.balancePoint);
+    yield put({type: UPDATE_USER_BY_BALANCE_POINT_RECEIVED, payload: response})
+  } catch (error) {
+    yield put({type: UPDATE_USER_BY_BALANCE_POINT_FAILURE, payload: error});
+  }
+}
+
+// updateUserByBalancePointIncrease Saga
+function* updateUserByBalancePointIncreaseSaga(action) {
+  try {
+    const response = yield call(api.updateUserByBalancePointIncrease, action.payload.email, action.payload.increasePoint);
+    yield put({type: UPDATE_USER_BY_BALANCE_POINT_INCREASE_RECEIVED, payload: response})
+  } catch (error) {
+    yield put({type: UPDATE_USER_BY_BALANCE_POINT_INCREASE_FAILURE, payload: error});
+  }
+}
+
+// updateUserByBalancePointDifference Saga
+function* updateUserByBalancePointDifferenceSaga(action) {
+  try {
+    const response = yield call(api.updateUserByBalancePointDifference, action.payload.email, action.payload.differencePoint);
+    yield put({type: UPDATE_USER_BY_BALANCE_POINT_DIFFERENCE_RECEIVED, payload: response})
+  } catch (error) {
+    yield put({type: UPDATE_USER_BY_BALANCE_POINT_DIFFERENCE_FAILURE, payload: error});
+  }
+}
+
 // User default root Saga
 export function* userSaga() {
   yield takeLatest(ADD_USER, addUserSaga);
   yield takeLatest(UPDATE_USER, updateUserSaga);
+  yield takeLatest(UPDATE_USER_BY_BALANCE_POINT, updateUserByBalancePointSaga);
+  yield takeLatest(UPDATE_USER_BY_BALANCE_POINT_INCREASE, updateUserByBalancePointIncreaseSaga);
+  yield takeLatest(UPDATE_USER_BY_BALANCE_POINT_DIFFERENCE, updateUserByBalancePointDifferenceSaga);
   yield takeLatest(DELETE_USER, deleteUserSaga);
   yield takeLatest(DELETE_USERS, deleteUsersSaga);
   yield takeEvery(GET_USER_LIST, getUserListSaga);
@@ -182,7 +233,6 @@ export default handleActions({
   [ADD_USER_RECEIVED]: (state, action) => {
     console.log('ADD_USER_RECEIVED onReceived')
     return {complete: true};
-
   },
   [ADD_USER_FAILURE]: (state, action) => {
     console.log('ADD_USER_FAILURE onFailure')
@@ -215,7 +265,6 @@ export default handleActions({
     return {complete: false};
   },  
 
-
   [DELETE_USERS]: (state, action) => {
     console.log('DELETE_USERS onPending')
   },
@@ -227,4 +276,43 @@ export default handleActions({
     console.log('DELETE_USERS_FAILURE onFailure')
     return {complete: false};
   },  
+
+  // updateUserByBalancePoint Handler
+  [UPDATE_USER_BY_BALANCE_POINT]: (state, action) => {
+    console.log('UPDATE_USER_BY_BALANCE_POINT onPending')
+  },
+  [UPDATE_USER_BY_BALANCE_POINT_RECEIVED]: (state, action) => {
+    console.log('UPDATE_USER_BY_BALANCE_POINT_RECEIVED onReceived')
+    // return {complete: true};
+  },
+  [UPDATE_USER_BY_BALANCE_POINT_FAILURE]: (state, action) => {
+    console.log('UPDATE_USER_BY_BALANCE_POINT_FAILURE onFailure')
+    // return {complete: false};
+  },
+
+  // updateUserByBalancePointIncrease Handler
+  [UPDATE_USER_BY_BALANCE_POINT_INCREASE]: (state, action) => {
+    console.log('UPDATE_USER_BY_BALANCE_POINT_INCREASE onPending')
+  },
+  [UPDATE_USER_BY_BALANCE_POINT_INCREASE_RECEIVED]: (state, action) => {
+    console.log('UPDATE_USER_BY_BALANCE_POINT_INCREASE_RECEIVED onReceived')
+    // return {complete: true};
+  },
+  [UPDATE_USER_BY_BALANCE_POINT_INCREASE_FAILURE]: (state, action) => {
+    console.log('UPDATE_USER_BY_BALANCE_POINT_INCREASE_FAILURE onFailure')
+    // return {complete: false};
+  },
+
+  // updateUserByBalancePointDifference Handler
+  [UPDATE_USER_BY_BALANCE_POINT_DIFFERENCE]: (state, action) => {
+    console.log('UPDATE_USER_BY_BALANCE_POINT_DIFFERENCE onPending')
+  },
+  [UPDATE_USER_BY_BALANCE_POINT_DIFFERENCE_RECEIVED]: (state, action) => {
+    console.log('UPDATE_USER_BY_BALANCE_POINT_DIFFERENCE_RECEIVED onReceived')
+    // return {complete: true};
+  },
+  [UPDATE_USER_BY_BALANCE_POINT_DIFFERENCE_FAILURE]: (state, action) => {
+    console.log('UPDATE_USER_BY_BALANCE_POINT_DIFFERENCE_FAILURE onFailure')
+    // return {complete: false};
+  },
 }, initialState);

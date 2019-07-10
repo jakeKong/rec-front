@@ -4,6 +4,7 @@ import { bindActionCreators } from "redux";
 import * as productManageActions from "../../oms/modules/ProductManageModule";
 import * as changePointHistoryActions from "../../oms/modules/ChangePointHistoryModule";
 import * as paymentActions from "../modules/PaymentModule";
+import * as userManageActions from "../../scm/modules/UserModule";
 import { PaymentProductListGrid, PaymentComplete } from "../index";
 
 import '@vaadin/vaadin-ordered-layout';
@@ -312,6 +313,15 @@ class PaymentContainer extends Component {
     }
   }
 
+  updateUserByBalancePointIncrease = async (email, increasePoint) => {
+    const { UserManageModule } = this.props;
+    try {
+      await UserManageModule.updateUserByBalancePointIncrease(email, increasePoint)
+    } catch (e) {
+      console.log("error log : " + e);
+    }
+  }
+
   // 마운트 이전 권한 체크
   componentWillMount() {
     // 관리자 권한 체크 필요
@@ -415,6 +425,8 @@ class PaymentContainer extends Component {
           activated: true
         }
         this.addChangePointHistory(email, dto);
+        // 사용자 포인트 추가 이벤트
+        this.updateUserByBalancePointIncrease(email, removeComma(productDto.productPoint))
       }
     }
 
@@ -488,6 +500,7 @@ export default connect(
   dispatch => ({
     ProductManageModule: bindActionCreators(productManageActions, dispatch),
     ChangePointHistoryModule: bindActionCreators(changePointHistoryActions, dispatch),
-    PaymentModule: bindActionCreators(paymentActions, dispatch)
+    PaymentModule: bindActionCreators(paymentActions, dispatch),
+    UserManageModule: bindActionCreators(userManageActions, dispatch)
   })
 )(PaymentContainer);

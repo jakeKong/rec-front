@@ -2,6 +2,7 @@ import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as orderHistoryActions from "../modules/OrderHistoryModule";
+import * as userManageActions from "../../scm/modules/UserModule";
 import { OrderHistoryGrid, OrderHistorySearch } from "../index";
 
 import '@vaadin/vaadin-ordered-layout';
@@ -89,8 +90,9 @@ class OrderHistoryByEmailContainer extends Component {
       'status': 'TRADE_CANCLE',
       'activated': false
     };
-    this.updateOrderHistoryActivated(dto.odrSid, email, false)
-    this.addOrderHistory(email, orderDto, search)
+    this.updateOrderHistoryActivated(dto.odrSid, email, false);
+    this.addOrderHistory(email, orderDto, search);
+    this.updateUserByBalancePointIncrease(email, dto.variationPoint);
   }
 
   addOrderHistory = async (email, dto, search) => {
@@ -106,6 +108,15 @@ class OrderHistoryByEmailContainer extends Component {
     const { OrderHistoryModule } = this.props;
     try {
       await OrderHistoryModule.updateOrderHistoryActivated(odrSid, email, orderActivated)
+    } catch (e) {
+      console.log("error log : " + e);
+    }
+  }
+
+  updateUserByBalancePointIncrease = async (email, increasePoint) => {
+    const { UserManageModule } = this.props;
+    try {
+      await UserManageModule.updateUserByBalancePointIncrease(email, increasePoint)
     } catch (e) {
       console.log("error log : " + e);
     }
@@ -139,6 +150,7 @@ export default connect(
     // role: 'ROLE_ADMIN'
   }),
   dispatch => ({
-    OrderHistoryModule: bindActionCreators(orderHistoryActions, dispatch)
+    OrderHistoryModule: bindActionCreators(orderHistoryActions, dispatch),
+    UserManageModule: bindActionCreators(userManageActions, dispatch)
   })
 )(OrderHistoryByEmailContainer);
