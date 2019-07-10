@@ -12,7 +12,7 @@ const PageTemplate = ({ children }) => (
       <section className="cont width-full">
         {children}
       </section>
-      {/* <Footer /> */}
+      <Footer />
     {/* </div> */}
   </Fragment>
 );
