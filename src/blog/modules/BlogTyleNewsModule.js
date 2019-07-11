@@ -32,6 +32,10 @@ const DELETE_BLOG_TYLE_NEWS = 'blog/DELETE_BLOG_TYLE_NEWS';
 const DELETE_BLOG_TYLE_NEWS_RECEIVED = 'blog/DELETE_BLOG_TYLE_NEWS_RECEIVED';
 const DELETE_BLOG_TYLE_NEWS_FAILURE = 'blog/DELETE_BLOG_TYLE_NEWS_FAILURE';
 
+const DELETE_BLOG_TYLE_NEWS_BY_LIST = 'blog/DELETE_BLOG_TYLE_NEWS_BY_LIST';
+const DELETE_BLOG_TYLE_NEWS_BY_LIST_RECEIVED = 'blog/DELETE_BLOG_TYLE_NEWS_BY_LIST_RECEIVED';
+const DELETE_BLOG_TYLE_NEWS_BY_LIST_FAILURE = 'blog/DELETE_BLOG_TYLE_NEWS_BY_LIST_FAILURE';
+
 // Actions
 export const getBlogTylenewsList = createAction(GET_BLOG_TYLE_NEWS_LIST);
 export const getBlogTylenewsListBySpec = createAction(GET_BLOG_TYLE_NEWS_LIST_BY_SPEC, search => search);
@@ -39,6 +43,7 @@ export const addBlogTylenews = createAction(ADD_BLOG_TYLE_NEWS, dto => dto);
 export const updateBlogTylenews = createAction(UPDATE_BLOG_TYLE_NEWS, (tylenewsSid, dto) => ({tylenewsSid, dto}));
 export const updateBlogTylenewsVisibility = createAction(UPDATE_BLOG_TYLE_NEWS_VISIBILITY, (tylenewsSid, tylenewsVisibility) => ({tylenewsSid, tylenewsVisibility}));
 export const deleteBlogTylenews = createAction(DELETE_BLOG_TYLE_NEWS, tylenewsSid => tylenewsSid);
+export const deleteBlogTylenewsByList = createAction(DELETE_BLOG_TYLE_NEWS_BY_LIST, selectList => selectList);
 
 // 초기 state값 설정
 const initialState = Map({
@@ -113,6 +118,17 @@ function* deleteBlogTyleNewsSaga(action) {
   }
 }
 
+function* deleteBlogTyleNewsByListSaga(action) {
+  try {
+    const response = yield call(api.deleteBlogTylenewsByList, action.payload);
+    yield put({type: DELETE_BLOG_TYLE_NEWS_BY_LIST_RECEIVED, payload: response});
+    // 목록 갱신
+    yield call(getBlogTyleNewsListSaga);
+  } catch (error) {
+    yield put({type: DELETE_BLOG_TYLE_NEWS_BY_LIST_FAILURE, payload: error});
+  }
+}
+
 // Blog default root Saga
 export function* blogSaga() {
   yield takeEvery(GET_BLOG_TYLE_NEWS_LIST, getBlogTyleNewsListSaga);
@@ -121,6 +137,7 @@ export function* blogSaga() {
   yield takeLatest(UPDATE_BLOG_TYLE_NEWS, updateBlogTyleNewsSaga);
   yield takeLatest(UPDATE_BLOG_TYLE_NEWS_VISIBILITY, updateBlogTyleNewsVisibilitySaga);
   yield takeLatest(DELETE_BLOG_TYLE_NEWS, deleteBlogTyleNewsSaga);
+  yield takeLatest(DELETE_BLOG_TYLE_NEWS_BY_LIST, deleteBlogTyleNewsByListSaga);
 }
 
 // 액션 핸들러 설정
@@ -196,5 +213,15 @@ export default handleActions({
   },
   [DELETE_BLOG_TYLE_NEWS_FAILURE]: (state, action) => {
     console.log('DELETE_BLOG_TYLE_NEWS_FAILURE onFailure')
+  },
+
+  [DELETE_BLOG_TYLE_NEWS_BY_LIST]: (state, action) => {
+    console.log('DELETE_BLOG_TYLE_NEWS_BY_LIST onPending')
+  },
+  [DELETE_BLOG_TYLE_NEWS_BY_LIST_RECEIVED]: (state, action) => {
+    console.log('DELETE_BLOG_TYLE_NEWS_BY_LIST_RECEIVED onReceived')
+  },
+  [DELETE_BLOG_TYLE_NEWS_BY_LIST_FAILURE]: (state, action) => {
+    console.log('DELETE_BLOG_TYLE_NEWS_BY_LIST_FAILURE onFailure')
   },
 }, initialState);

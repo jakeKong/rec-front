@@ -6,7 +6,7 @@ const OrderHistoryPage = () => {
   return (
     // <div>
       <PageTemplate>
-        {/* <div className="page-description">운영관리 > (관리)주문내역 조회</div> */}
+        <div className="page-description">운영관리 > (관리)구매내역 조회</div>
         <OrderHistoryContainer />
       </PageTemplate>
     // </div>

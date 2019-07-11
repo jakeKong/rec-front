@@ -9,10 +9,10 @@ const PageTemplate = ({ children }) => (
   <Fragment>
     {/* <div className="page-template"> */}
       <Header />
-      <section className="cont width-full">
+      <section className="mc width-full align-center page-main">
         {children}
       </section>
-      <Footer />
+      {/* <Footer /> */}
     {/* </div> */}
   </Fragment>
 );

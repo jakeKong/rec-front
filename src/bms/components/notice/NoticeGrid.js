@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from 'react';
 
 import '@vaadin/vaadin-grid';
-import '@vaadin/vaadin-grid/vaadin-grid-sort-column';
 import '@vaadin/vaadin-grid/vaadin-grid-selection-column';
 
 class NoticeGrid extends Component {
@@ -74,14 +73,14 @@ class NoticeGrid extends Component {
     let list =[];
     // 그리드 컬럼 인덱스를 위한 변수
     let i=1;
-    noticeList.forEach(e => {
+    noticeList.reverse().forEach(e => {
       // push Value type is JSON
       list.push({
         index: i++,
         noticeSid: e.get("noticeSid"),
         noticeTitle: e.get("noticeTitle"),
         noticeTxt: e.get("noticeTxt"),
-        noticeWriter: e.get("noticeWriter"),
+        // noticeWriter: e.get("noticeWriter"),
         reportingDt: dateFormat(new Date(e.get("reportingDt")), 'yyyy년mm월dd일 HH:MM:ss')
       })
     })
@@ -90,6 +89,42 @@ class NoticeGrid extends Component {
     const grid = document.querySelector('vaadin-grid');
     grid.items = list;
     grid.pageSize = 15;
+
+    grid.className = "agz-bbs";
+
+    // grid.cellClassNameGenerator = function(column, rowData) {
+    //   let classes = rowData.item.index;
+    //   console.log(column.path);
+    //   if (column.path === 'index') {
+    //     classes += ' cell th w-10';
+    //   }
+    //   return classes;
+    // };
+
+    console.log(grid);
+    const gridColumns = grid.querySelectorAll('vaadin-grid-column');
+    const gridCellContent = grid.querySelectorAll('vaadin-grid-cell');
+    // gridColumns[1].header.className = 'cell th w-10'
+    console.log(gridCellContent)
+    console.log(gridCellContent[1])
+    gridColumns[1].headerRenderer = function(root, column, rowData) {
+      root.innerHTML = '번호'
+      // root.className = "cell th w-10"
+    }
+    // gridColumns[1].renderer = function(root, column, rowData) {
+      // root.innerHTML = rowData.item.index;
+    //   column.path = 'index';
+    //   root.className = "cell tc w-10"
+    // }
+
+    // gridColumns[3].headerRenderer = function(root, column, rowData) {
+    //   root.innerHTML = '작성일자'
+    //   root.className = "cell th w-30"
+    // }
+    // gridColumns[3].renderer = function(root, column, rowData) {
+    //   root.innerHTML = rowData.item.reportingDt;
+    //   root.className = "cell tc w-30"
+    // }
 
     // 더블클릭한 컬럼 정보를 전달하여 수정 이벤트 요청
     /*
@@ -101,7 +136,13 @@ class NoticeGrid extends Component {
 
     // 제목 컬럼 선택시 상세정보조회 이벤트 요청
     const { detailCallback } = this.props;
+    document.querySelector('#grdNoticeTitle').headerRenderer = function(root, column, rowData) {
+      root.innerHTML = '제목'
+      root.className = "cell th w-60"
+    }
     document.querySelector('#grdNoticeTitle').renderer = function(root, column, rowData) {
+      column.path = "noticeTitle"
+      root.className = 'cell tc w-60'
       root.innerHTML = '';
       const title = document.createElement('label')
       title.textContent = rowData.item.noticeTitle;
@@ -129,7 +170,7 @@ class NoticeGrid extends Component {
           return index + 1;
         });
         const prevBtn = window.document.createElement('vaadin-button');
-        prevBtn.className = 'vaadin-button-grid-page-prev';
+        prevBtn.className = 'btn prev';
         prevBtn.textContent = '<';
         prevBtn.addEventListener('click', function() {
           const selectedPage = parseInt(pagesControl.querySelector('[selected]').textContent);
@@ -140,7 +181,7 @@ class NoticeGrid extends Component {
         pages.forEach(function(pageNumber) {
           const pageBtn = window.document.createElement('vaadin-button');
           pageBtn.textContent = pageNumber;
-          pageBtn.className = 'vaadin-button-grid-page-number';
+          pageBtn.className = 'btn number';
           pageBtn.addEventListener('click', function(e) {
             updateItemsFromPage(parseInt(e.target.textContent));
           });
@@ -152,7 +193,7 @@ class NoticeGrid extends Component {
 
         const nextBtn = window.document.createElement('vaadin-button');
         nextBtn.textContent = '>';
-        nextBtn.className = 'vaadin-button-grid-page-next';
+        nextBtn.className = 'btn next';
         nextBtn.addEventListener('click', function() {
           const selectedPage = parseInt(pagesControl.querySelector('[selected]').textContent);
           updateItemsFromPage(selectedPage + 1);
@@ -195,12 +236,12 @@ class NoticeGrid extends Component {
         <div>
           <vaadin-grid theme="no-border" height-by-rows multi-sort>
             <vaadin-grid-column auto-select hidden id="grdSelect" flex-grow="0.1" width="50px" />
-            <vaadin-grid-sort-column path="index" header="번호" text-align="end" flex-grow="0.2" />
+            <vaadin-grid-column path="index" header="번호" text-align="center" flex-grow="0.2" width="50px"/>
             <vaadin-grid-column id="grdNoticeTitle" header="제목" text-align="center" flex-grow="6.2" />
-            <vaadin-grid-column path="noticeWriter" header="작성자" text-align="center" flex-grow="1" />
+            {/* <vaadin-grid-column path="noticeWriter" header="작성자" text-align="center" flex-grow="1" /> */}
             <vaadin-grid-column path="reportingDt" header="작성일자" text-align="center" flex-grow="2.5" />
           </vaadin-grid>
-          <div id="pages"/>
+          <div id="pages" className="pagination"/>
         </div>
       </Fragment>
     );

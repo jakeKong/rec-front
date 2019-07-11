@@ -38,10 +38,4 @@ module.exports = function(app) {
       changeOrigin: true
     })
   );
-  app.use(
-    proxy('/web/rec/api/file', {
-      target: 'http://localhost:8006',
-      changeOrigin: true
-    })
-  );
 }
