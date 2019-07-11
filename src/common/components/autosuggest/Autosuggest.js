@@ -2,14 +2,15 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import shallowEqualArrays from 'shallow-equal/arrays';
 import Autowhatever from 'react-autowhatever';
-import { defaultTheme, mapToAutowhateverTheme } from './theme';
+import { mapToAutowhateverTheme } from './theme';
+import customTheme from "../../../styles/components/autosuggest.scss";
 
 const alwaysTrue = () => true;
 const defaultShouldRenderSuggestions = value => value.trim().length > 0;
 const defaultRenderSuggestionsContainer = ({ containerProps, children }) => (
   <div {...containerProps}>{children}</div>
 );
-
+//https://github.com/moroshko/react-autosuggest 라이브러리 참조
 export default class Autosuggest extends Component {
   static propTypes = {
     suggestions: PropTypes.array.isRequired,
@@ -91,7 +92,7 @@ export default class Autosuggest extends Component {
     multiSection: false,
     focusInputOnSuggestionClick: true,
     highlightFirstSuggestion: false,
-    theme: defaultTheme,
+    theme: customTheme,
     id: '1'
   };
 

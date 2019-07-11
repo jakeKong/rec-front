@@ -13,7 +13,7 @@ class possessionContainer extends Component {
     super(props);
     this.state = { 
       search: {
-        pnu: '1111010100100040007',
+        pnu: '1121510200102600003',
         startDt: null,
         endDt: null,
         numOfRows: '1000'

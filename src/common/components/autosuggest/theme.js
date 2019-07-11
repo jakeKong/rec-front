@@ -14,7 +14,6 @@ export const defaultTheme = {
   sectionContainerFirst: 'react-autosuggest__section-container--first',
   sectionTitle: 'react-autosuggest__section-title'
 };
-
 export const mapToAutowhateverTheme = theme => {
   let result = {};
 

@@ -1,7 +1,4 @@
 import React, { Component, Fragment } from 'react';
-//import { AddressSearchDaum } from "../index";
-import DaumPostcode from 'react-daum-postcode';
-import { AddressSearch } from '../../common';
 
 class LandInfoView extends Component {
   constructor(props) {
@@ -24,6 +21,8 @@ class LandInfoView extends Component {
     if (!landInfoData || landInfoData === undefined || landInfoData.isEmpty()) {
       return
     }
+    document.querySelector('#tdJibunAddr').innerHTML = landInfoData.get("jibunAddr");
+    document.querySelector('#tdRoadAddr').innerHTML = landInfoData.get("roadAddr");
     //건축물표제부
     {
       document.querySelector('#tdBldNm').innerHTML = landInfoData.get("bldNm");//건물명
@@ -63,7 +62,6 @@ class LandInfoView extends Component {
     {
       const analysisTradeInfo = landInfoData.get("analysisTradeInfo");
       const tradList = analysisTradeInfo.get("trade");
-      document.querySelector('#td지번주소').innerHTML = analysisTradeInfo.get("지번주소");
       if(tradList != null && tradList.length > 5) {
         document.querySelector('#td지번주소_A').innerHTML = tradList.get(0).get("지번주소");
         document.querySelector('#td지번주소_B').innerHTML = tradList.get(1).get("지번주소");
@@ -82,15 +80,9 @@ class LandInfoView extends Component {
     }
     document.querySelector('#imgMap').src = landInfoData.get("analysisTradeInfo").get("mapUrl");//도로접면
   }
-
-  //우편번호 검색이 끝났을 때 사용자가 선택한 정보를 받아올 콜백함수
-  handleAddress = (data) => {
-    console.log(data);  // e.g. '서울 성동구 왕십리로2길 20 (성수동1가)'
-  }
   render() {
       return (
         <div className="div-main">
-          <div><AddressSearch onComplete={this.handleAddress} /></div>
           <div className="div-land-info-container-row">
             <ul className="div-land-info-item">
               <li className="div-land-info-li_item">
@@ -99,11 +91,11 @@ class LandInfoView extends Component {
                   <tbody>
                     <tr>
                       <th className="cell_header">지번주소</th>
-                      <td  id="td지번주소" className="cell_content"></td>
+                      <td  id="tdJibunAddr" className="cell_content"></td>
                     </tr>
                     <tr>
                       <th className="cell_header">도로명주소</th>
-                      <td id="" className="cell_content"></td>
+                      <td id="tdRoadAddr" className="cell_content"></td>
                     </tr>
                     <tr>
                       <th className="cell_header">소유구분</th>
