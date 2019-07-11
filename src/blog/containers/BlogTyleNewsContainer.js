@@ -36,7 +36,7 @@ class BlogTyleNewsContainer extends Component {
     const { blogTyleNewsList, pending, error, success } = this.props;
     return (
       <Fragment>
-        <div className="div-blog-tylenews">
+        <div className="tilenews agz-scroll">
           { pending && <div className="boxLoading"/> }
           { error && <h1>Server Error!</h1> }
           { success && <BlogTyleNews blogTyleNewsList={blogTyleNewsList}/> }

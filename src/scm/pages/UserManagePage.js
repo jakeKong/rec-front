@@ -6,7 +6,7 @@ const UserPage = () => {
   return (
     // <div>
       <PageTemplate>
-        {/* <div className="page-description">사용자 관리</div> */}
+        <div className="page-description">사용자 관리</div>
         <UserManageContainer />
       </PageTemplate>
     // </div>

@@ -91,6 +91,7 @@ class QuestionGrid extends Component {
     grid.items = list;
     grid.pageSize = 15;
 
+    grid.className = "agz-bbs";
     // 더블클릭한 컬럼 정보를 전달하여 수정 이벤트 요청
     /*
     const { registerCallback } = this.props;
@@ -129,7 +130,7 @@ class QuestionGrid extends Component {
           return index + 1;
         });
         const prevBtn = window.document.createElement('vaadin-button');
-        prevBtn.className = 'vaadin-button-grid-page-prev';
+        prevBtn.className = 'btn prev';
         prevBtn.textContent = '<';
         prevBtn.addEventListener('click', function() {
           const selectedPage = parseInt(pagesControl.querySelector('[selected]').textContent);
@@ -140,7 +141,7 @@ class QuestionGrid extends Component {
         pages.forEach(function(pageNumber) {
           const pageBtn = window.document.createElement('vaadin-button');
           pageBtn.textContent = pageNumber;
-          pageBtn.className = 'vaadin-button-grid-page-number';
+          pageBtn.className = 'btn number';
           pageBtn.addEventListener('click', function(e) {
             updateItemsFromPage(parseInt(e.target.textContent));
           });
@@ -152,7 +153,7 @@ class QuestionGrid extends Component {
 
         const nextBtn = window.document.createElement('vaadin-button');
         nextBtn.textContent = '>';
-        nextBtn.className = 'vaadin-button-grid-page-next';
+        nextBtn.className = 'btn next';
         nextBtn.addEventListener('click', function() {
           const selectedPage = parseInt(pagesControl.querySelector('[selected]').textContent);
           updateItemsFromPage(selectedPage + 1);
@@ -199,7 +200,7 @@ class QuestionGrid extends Component {
             <vaadin-grid-column path="questionWriter" header="작성자" text-align="center" flex-grow="1" />
             <vaadin-grid-column path="reportingDt" header="작성일자" text-align="center" flex-grow="2.5" />
           </vaadin-grid>
-          <div id="pages"/>
+          <div id="pages" className="pagination"/>
         </div>
       </Fragment>
     );

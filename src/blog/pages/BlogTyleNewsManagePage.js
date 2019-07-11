@@ -6,7 +6,7 @@ const BlogTyleNewsManagePage = () => {
   return (
     // <div>
       <PageTemplate>
-        {/* <div className="page-description">게시글관리 > 타일뉴스 관리</div> */}
+        <div className="page-description">게시글관리 > 타일뉴스 관리</div>
         <BlogTyleNewsManageContainer />
       </PageTemplate>
     // </div>
