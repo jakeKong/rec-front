@@ -82,123 +82,118 @@ class LandInfoView extends Component {
   }
   render() {
       return (
-        <div className="div-main">
-          <div className="div-land-info-container-row">
-            <ul className="div-land-info-item">
-              <li className="div-land-info-li_item">
-                <div>
-                  <table className="tbd">
-                  <tbody>
-                    <tr>
-                      <th className="cell_header">지번주소</th>
-                      <td  id="tdJibunAddr" className="cell_content"></td>
-                    </tr>
-                    <tr>
-                      <th className="cell_header">도로명주소</th>
-                      <td id="tdRoadAddr" className="cell_content"></td>
-                    </tr>
-                    <tr>
-                      <th className="cell_header">소유구분</th>
-                      <td id="tdPosesnSeCodeNm" className="cell_content"> </td>
-                    </tr>
-                    <tr>
-                      <th className="cell_header">소유권변동일</th>
-                      <td id="tdOwnshipChgDe" className="cell_content"> </td>
-                    </tr>
-                    <tr>
-                      <th className="cell_header">소유권변동원인</th>
-                      <td id="tdOwnshipChgCauseCodeNm" className="cell_content"> </td>
-                    </tr>
-                    <tr>
-                      <th className="cell_header">공유원수</th>
-                      <td id="tdCnrsPsnCo" className="cell_content"> </td>
-                    </tr>
-                    </tbody>
+          <div className="wrap-land-info">
+            <ul className="div-land-info-item left">
+              <li>
+                <table className="tbl-info-01">
+                    <tbody>
+                      <tr>
+                        <th>지번주소</th>
+                        <td  id="tdJibunAddr"></td>
+                      </tr>
+                      <tr>
+                        <th>도로명주소</th>
+                        <td id="tdRoadAddr"></td>
+                      </tr>
+                      <tr>
+                        <th>소유구분</th>
+                        <td id="tdPosesnSeCodeNm"> </td>
+                      </tr>
+                      <tr>
+                        <th>소유권변동일</th>
+                        <td id="tdOwnshipChgDe"> </td>
+                      </tr>
+                      <tr>
+                        <th>소유권변동원인</th>
+                        <td id="tdOwnshipChgCauseCodeNm"> </td>
+                      </tr>
+                      <tr>
+                        <th>공유원수</th>
+                        <td id="tdCnrsPsnCo"> </td>
+                      </tr>
+                      </tbody>
                   </table>
-                </div>
               </li>
-              <li className="div-land-info-li_item">
-                <div>
-                  <table className="tbd">
+              <li>
+                <table className="tbl-info-02">
                   <tbody>
                     <tr>
-                      <th className="cell_header">지목</th>
-                      <th className="cell_header">면적</th>
-                      <th className="cell_header">형상</th>
-                      <th className="cell_header">고저</th>
-                      <th className="cell_header">도로접면</th>
+                      <th>지목</th>
+                      <th>면적</th>
+                      <th>형상</th>
+                      <th>고저</th>
+                      <th>도로접면</th>
                     </tr>
                     <tr>
-                      <td id="tdLndcgrCodeNm" className="cell_content"></td>
-                      <td id="tdLndpclAr" className="cell_content"></td>
-                      <td id="tdTpgrphFrmCodeNm" className="cell_content"></td>
-                      <td id="tdTpgrphHgCode" className="cell_content"></td>
-                      <td id="tdRoadSideCodeNm" className="cell_content"></td>
+                      <td id="tdLndcgrCodeNm"></td>
+                      <td id="tdLndpclAr"></td>
+                      <td id="tdTpgrphFrmCodeNm"></td>
+                      <td id="tdTpgrphHgCode"></td>
+                      <td id="tdRoadSideCodeNm"></td>
                     </tr>
-                    </tbody>
-                  </table>
-                </div>
+                  </tbody>
+                </table>
               </li>
-              <li className="div-land-info-li_item">
+              <li>
                 <div>
-                  <table className="tbd">
+                  <table className="tbl-info-03">
                   <tbody>
                     <tr>
-                      <th className="cell_header">건물명</th>
-                      <td id="tdBldNm" className="cell_content"></td>
+                      <th>건물명</th>
+                      <td id="tdBldNm"></td>
                     </tr>
                     <tr>
-                      <th className="cell_header">주용도명</th>
-                      <td id="tdMainPurpsCdNm" className="cell_content"></td>
+                      <th>주용도명</th>
+                      <td id="tdMainPurpsCdNm"></td>
                     </tr>
                     <tr>
-                      <th className="cell_header">기타용도</th>
-                      <td id="tdEtcPurps" className="cell_content"></td>
+                      <th>기타용도</th>
+                      <td id="tdEtcPurps"></td>
                     </tr>
                     <tr>
-                      <th className="cell_header">구조명</th>
-                      <td id="tdStrctCdNm" className="cell_content"></td>
+                      <th>구조명</th>
+                      <td id="tdStrctCdNm"></td>
                     </tr>
                     <tr>
-                      <th className="cell_header">건축면적</th>
-                      <td id="tdArchArea" className="cell_content"></td>
+                      <th>건축면적</th>
+                      <td id="tdArchArea"></td>
                     </tr>
                     <tr>
-                      <th className="cell_header">높이</th>
-                      <td id="tdHeit" className="cell_content"></td>
+                      <th>높이</th>
+                      <td id="tdHeit"></td>
                     </tr>
                     <tr>
-                      <th className="cell_header">연면적</th>
-                      <td id="tdTotArea" className="cell_content"></td>
+                      <th>연면적</th>
+                      <td id="tdTotArea"></td>
                     </tr>
                     <tr>
-                      <th className="cell_header">호수</th>
-                      <td id="tdHoCnt" className="cell_content"></td>
-                    </tr>
-                    
-                    <tr>
-                      <th className="cell_header">가구수</th>
-                      <td id="tdFmlyCnt" className="cell_content"></td>
+                      <th>호수</th>
+                      <td id="tdHoCnt"></td>
                     </tr>
                     
                     <tr>
-                      <th className="cell_header">세대수</th>
-                      <td id="tdHhldCnt" className="cell_content"></td>
+                      <th>가구수</th>
+                      <td id="tdFmlyCnt"></td>
                     </tr>
                     
                     <tr>
-                      <th className="cell_header">건폐율</th>
-                      <td id="tdBcRat" className="cell_content"></td>
+                      <th>세대수</th>
+                      <td id="tdHhldCnt"></td>
                     </tr>
                     
                     <tr>
-                      <th className="cell_header">용적율</th>
-                      <td id="tdVlRat" className="cell_content"></td>
+                      <th>건폐율</th>
+                      <td id="tdBcRat"></td>
                     </tr>
                     
                     <tr>
-                      <th className="cell_header">사용승인일자</th>
-                      <td id="tdUseAprDay" className="cell_content"></td>
+                      <th>용적율</th>
+                      <td id="tdVlRat"></td>
+                    </tr>
+                    
+                    <tr>
+                      <th>사용승인일자</th>
+                      <td id="tdUseAprDay"></td>
                     </tr>
                     </tbody>
                   </table>
@@ -206,60 +201,53 @@ class LandInfoView extends Component {
               </li>
             </ul>
 
-            <ul className="div-land-info-item">
-              <li className="div-land-info-li_item">
-                <div>
-                  <img id="imgMap" src="" />
-                </div>
-                
+            <ul className="div-land-info-item right">
+              <li>
+                  <img id="imgMap" className="map" />
               </li>
-              <li className="div-land-info-li_item">
-                <div>
-                  <table className="tbd">
+              <li>
+                <table className="tbl-info-04">
                   <tbody>
                     <tr>
-                      <th className="cell_header">기호</th>
-                      <th className="cell_header">지번</th>
-                      <th className="cell_header">매매가격</th>
+                      <th>기호</th>
+                      <th>지번</th>
+                      <th>매매가격</th>
                     </tr>
                     <tr>
-                      <td className="cell_content">A</td>
-                      <td id="td지번주소_A" className="cell_content"></td>
-                      <td id="td거래가격_A" className="cell_content_right"></td>
+                      <td>A</td>
+                      <td id="td지번주소_A"></td>
+                      <td id="td거래가격_A" className="th-right"></td>
                     </tr>
                     <tr>
-                      <td className="cell_content">B</td>
-                      <td id="td지번주소_B" className="cell_content"></td>
-                      <td id="td거래가격_B" className="cell_content_right"></td>
+                      <td>B</td>
+                      <td id="td지번주소_B"></td>
+                      <td id="td거래가격_B" className="th-right"></td>
                     </tr>
                     <tr>
-                      <td className="cell_content">C</td>
-                      <td id="td지번주소_C" className="cell_content"></td>
-                      <td id="td거래가격_C" className="cell_content_right"></td>
+                      <td>C</td>
+                      <td id="td지번주소_C"></td>
+                      <td id="td거래가격_C" className="th-right"></td>
                     </tr>
                     <tr>
-                      <td className="cell_content">D</td>
-                      <td id="td지번주소_D" className="cell_content"></td>
-                      <td id="td거래가격_D" className="cell_content_right"></td>
+                      <td>D</td>
+                      <td id="td지번주소_D"></td>
+                      <td id="td거래가격_D" className="th-right"></td>
                     </tr>
                     <tr>
-                      <td className="cell_content">E</td>
-                      <td id="td지번주소_E" className="cell_content"></td>
-                      <td id="td거래가격_E" className="cell_content_right"></td>
+                      <td>E</td>
+                      <td id="td지번주소_E"></td>
+                      <td id="td거래가격_E" className="th-right"></td>
                     </tr>
                     <tr>
-                      <td className="cell_content">F</td>
-                      <td id="td지번주소_F" className="cell_content"></td>
-                      <td id="td거래가격_F" className="cell_content_right"></td>
+                      <td>F</td>
+                      <td id="td지번주소_F"></td>
+                      <td id="td거래가격_F" className="th-right"></td>
                     </tr>
                     </tbody>
                   </table>
-                </div>
               </li>
             </ul>
           </div>
-          <div>Footer</div>
-        </div>   
       );
   }
 }

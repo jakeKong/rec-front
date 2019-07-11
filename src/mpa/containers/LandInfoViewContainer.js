@@ -83,7 +83,7 @@ class LandInfoViewContainer extends Component {
       <Fragment>
         <div>
           <div className="div-search"><AddressSearch onComplete={this.onComplete} onSearchClick={this.onSearchClick} /></div>
-          <div className="main-div">
+          <div>
             {pending && "Loading..."}
             {error && <h1>Server Error!</h1>}
             {success && <LandInfoView landInfoData={landInfoData}/>}
