@@ -6,7 +6,7 @@ const RegisterPage = () => {
   return (
     // <div>
       <PageTemplate>
-        <div className="page-description">회원가입</div>
+        {/* <div className="page-description">회원가입</div> */}
         <RegisterContainer />
       </PageTemplate>
     // </div>

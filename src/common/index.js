@@ -15,6 +15,9 @@ export { default as RegisterAgree } from './components/register/RegisterAgree';
 export { default as RegisterAuth } from './components/register/RegisterAuth';
 export { default as RegisterInput } from './components/register/RegisterInput';
 export { default as RegisterComplete } from './components/register/RegisterComplete';
+export { default as Autosuggest } from './components/autosuggest/Autosuggest';
+//export { default as AddressSearchDaum } from './components/AddressSearchDaum';
+export { default as AddressSearch } from './components/address/AddressSearch';
 
 // COMMON - container
 export { default as MainContainer } from './containers/MainContainer';
@@ -26,5 +29,3 @@ export { default as MainPage } from './pages/MainPage';
 export { default as NotFoundPage } from './pages/NotFoundPage';
 export { default as LoginPage } from './pages/LoginPage';
 export { default as RegisterPage } from './pages/RegisterPage';
-
-

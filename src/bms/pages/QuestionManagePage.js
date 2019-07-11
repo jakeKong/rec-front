@@ -6,7 +6,7 @@ const QuestionManagePage = () => {
   return (
     // <div>
       <PageTemplate>
-        <div className="page-description">문의사항(관리)</div>
+        {/* <div className="page-description">문의사항</div> */}
         <QuestionManageContainer />
       </PageTemplate>
     // </div>

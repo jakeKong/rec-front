@@ -1,5 +1,5 @@
 // COMMON - api
-export { getBlogTylenewsList, getBlogTylenewsListBySpec, addBlogTylenews, updateBlogTylenews, updateBlogTylenewsVisibility, deleteBlogTylenews, deleteBlogTylenewsByList } from './api/BlogTyleNewsAxios';
+export { getBlogTylenewsList, getBlogTylenewsListBySpec, addBlogTylenews, updateBlogTylenews, updateBlogTylenewsVisibility, deleteBlogTylenews } from './api/BlogTyleNewsAxios';
 
 // COMMON - component
 export { default as BlogTyleNews } from './components/BlogTyleNews';

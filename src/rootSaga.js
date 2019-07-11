@@ -39,6 +39,9 @@ import landInfo, { landInfoViewSaga } from './mpa/modules/LandInfoViewModule';
 //import landCharacteristics, { landCharacteristicsSaga } from './mpa/modules/LandCharacteristicsModule';
 //import landUse, { landUseSaga } from './mpa/modules/LandUseModule';
 
+//common
+import address, { addressSaga } from './bms/modules/QuestionModule';
+
 // rootSaga 설정
 export function* rootSaga() {
   // COMMON

@@ -12,12 +12,11 @@ axios({
         'Accept': 'application/json'
     },
     data: JSON.stringify({
-    'sigunguCd': search.sigunguCd,
-    'bjdongCd': search.bjdongCd,
-    'platGbCd': search.platGbCd,
-    'bun': search.bun,
-    'ji': search.ji,
+    'jibunAddr': search.jibunAddr,
+    'roadAddr': search.roadAddr,
     'pnu': search.pnu,
+    // 'startDate': search.pnu,
+    // 'endDate': search.pnu,
     })
 });
   

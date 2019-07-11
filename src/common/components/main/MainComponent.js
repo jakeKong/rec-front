@@ -15,17 +15,16 @@ class MainComponent extends Component {
   render() {
     return (
       <Fragment>
-        <div className="illust-main">
+        <div className="illust_main">
           삽화가 들어갈자리입니다.
         </div>
-        <div className="wrap-content-main">
-          <div className="div-home-search wrap-searchbox">
+        <div className="wrap-content">
+          <div className="wrap-search">
             <div className="searchbox">
-              <input type="text" placeholder="주소를 입력하세요." className="ipt-addr"/>
-              <button className="btn-search">주소검색</button>
+              <input type="text" placeholder="주소를 입력하세요." />
+              <button>주소검색</button>
             </div>
-          </div>
-          <p className="box-summary">
+            <p className="box-summary">
               <span className="summary">
                 거래정보
                 <span className="num"> 102,864 </span>
@@ -37,6 +36,7 @@ class MainComponent extends Component {
                 건
               </span>
             </p>
+          </div>
         </div>
       </Fragment>
     );

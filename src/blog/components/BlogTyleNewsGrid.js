@@ -18,41 +18,10 @@ class BlogTyleNewsGrid extends Component {
     if (!blogTyleNewsList || blogTyleNewsList === null || blogTyleNewsList === undefined) {
       return;
     }
-
-    let inverted = false;
-    // 선택삭제 사용을 위한 그리트 체크박스
-    const grdSelect = document.querySelector('#grdSelect');
-    const { selectCallback, deselectCallback } = this.props;
-    // 그리드 컬럼 안의 체크박스 이벤트
-    grdSelect.renderer = function(cell, column, rowData) {
-      var checkbox = cell.firstElementChild;
-      if (!checkbox) {
-        checkbox = window.document.createElement('vaadin-checkbox');
-        checkbox.setAttribute('aria-label', 'Select Row');
-        checkbox.addEventListener('change', function(e) {
-          if (e.target.checked === inverted) {
-            grid.deselectItem(checkbox.__item);
-            // 컨테이너로 선택취소된 공지사항 컬럼값 전달
-            deselectCallback(checkbox.__item);
-          } else {
-            grid.selectItem(checkbox.__item);
-            // 컨테이너로 선택된 공지사항 컬럼값 전달
-            selectCallback(checkbox.__item);
-          }
-          // indeterminate = grid.selectedItems.length > 0;
-          grid.render();
-        });
-        cell.appendChild(checkbox);
-      }
-      checkbox.__item = rowData.item;
-      checkbox.checked = inverted !== rowData.selected;
-    };
-    
-
     let dateFormat = require('dateformat');
     let list = [];
     let i=1;
-    blogTyleNewsList.reverse().forEach(e => {
+    blogTyleNewsList.forEach(e => {
       list.push({
         index: i++,
         sid: e.get('tylenewsSid'),
@@ -129,13 +98,12 @@ class BlogTyleNewsGrid extends Component {
       <Fragment>
         <div className="div-home-grid">
           <vaadin-grid theme="row-stripes" height-by-rows column-reordering-allowed>
-            <vaadin-grid-column auto-select id="grdSelect" flex-grow="0.1" width="50px" />
-            <vaadin-grid-sort-column path="index" header="번호" text-align="center" flex-grow="0.1" width="80px"/>
-            <vaadin-grid-column path="title" header="제목" text-align="center" flex-grow="4.9" width="400px"/>
-            <vaadin-grid-column path="subTitle" header="분류" text-align="center" flex-grow="1" width="100px"/>
-            <vaadin-grid-column path="writer" header="작성자" text-align="center" flex-grow="1" width="80px"/>
-            <vaadin-grid-column path="writeDt" header="작성일자" text-align="center" flex-grow="3" width="250px"/>
-            <vaadin-grid-column path="visibility" id="grdVisibility" header="공개/비공개" text-align="center" flex-grow="1" width="100px"/>
+            <vaadin-grid-sort-column path="index" header="번호" text-align="center" flex-grow="0.1" />
+            <vaadin-grid-column path="title" header="제목" text-align="center" flex-grow="4.9" />
+            <vaadin-grid-column path="subTitle" header="분류" text-align="center" flex-grow="1" />
+            <vaadin-grid-column path="writer" header="작성자" text-align="center" flex-grow="1" />
+            <vaadin-grid-column path="writeDt" header="작성일자" text-align="center" flex-grow="3" />
+            <vaadin-grid-column path="visibility" id="grdVisibility" header="공개/비공개" text-align="center" flex-grow="1" />
           </vaadin-grid>
         </div>
       </Fragment>

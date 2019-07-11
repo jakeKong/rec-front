@@ -4,7 +4,6 @@ import { bindActionCreators } from "redux";
 import * as productManageActions from "../../oms/modules/ProductManageModule";
 import * as changePointHistoryActions from "../../oms/modules/ChangePointHistoryModule";
 import * as paymentActions from "../modules/PaymentModule";
-import * as userManageActions from "../../scm/modules/UserModule";
 import { PaymentProductListGrid, PaymentComplete } from "../index";
 
 import '@vaadin/vaadin-ordered-layout';
@@ -313,15 +312,6 @@ class PaymentContainer extends Component {
     }
   }
 
-  updateUserByBalancePointIncrease = async (email, increasePoint) => {
-    const { UserManageModule } = this.props;
-    try {
-      await UserManageModule.updateUserByBalancePointIncrease(email, increasePoint)
-    } catch (e) {
-      console.log("error log : " + e);
-    }
-  }
-
   // 마운트 이전 권한 체크
   componentWillMount() {
     // 관리자 권한 체크 필요
@@ -413,6 +403,7 @@ class PaymentContainer extends Component {
         }
       } else {
         successPay = true;
+        console.log(paymentRequest.body.detail)
         // 포인트 변동내역에 추가 
         let dto = {
           changeDt: new Date(),
@@ -421,12 +412,9 @@ class PaymentContainer extends Component {
           changePoint: removeComma(productDto.productPoint),
           // 계정별 현재 잔여포인트에서 차감해야함
           currentBalPoint: 97500+removeComma(productDto.productPoint),
-          paymentNo: 'P'+paymentRequest.body.detail.tradeConfirmYmdt+new Date().getTime(),
-          activated: true
+          paymentNo: 'P'+paymentRequest.body.detail.tradeConfirmYmdt+new Date().getTime()
         }
         this.addChangePointHistory(email, dto);
-        // 사용자 포인트 추가 이벤트
-        this.updateUserByBalancePointIncrease(email, removeComma(productDto.productPoint))
       }
     }
 
@@ -435,7 +423,7 @@ class PaymentContainer extends Component {
         {successPay === false ? 
         <div>
           <div className="div-main">
-            { pending && <div className="boxLoading"/> }
+            { pending && "Loading..." }
             { error && <h1>Server Error!</h1> }
             { success && <PaymentProductListGrid productList={ productList } selectCallback={ this.selectCallback } deselectCallback={ this.deselectCallback } />}
             <div className="div-select-total-payment" hidden={!productList}>
@@ -471,7 +459,7 @@ class PaymentContainer extends Component {
         :
         <div>
           <div className="div-main">
-            { paymentPending && <div className="boxLoading"/> }
+            { paymentPending && "Loading..." }
             { paymentError && <h1>Server Error!</h1> }
             { paymentSuccess && paymentRequest ? <PaymentComplete paymentRequest={paymentRequest} /> : null }
           </div>
@@ -500,7 +488,6 @@ export default connect(
   dispatch => ({
     ProductManageModule: bindActionCreators(productManageActions, dispatch),
     ChangePointHistoryModule: bindActionCreators(changePointHistoryActions, dispatch),
-    PaymentModule: bindActionCreators(paymentActions, dispatch),
-    UserManageModule: bindActionCreators(userManageActions, dispatch)
+    PaymentModule: bindActionCreators(paymentActions, dispatch)
   })
 )(PaymentContainer);

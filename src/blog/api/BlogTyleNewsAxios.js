@@ -86,14 +86,3 @@ export const deleteBlogTylenews = (tylenewsSid) => axios({
     'Accept': 'application/json'
   }
 });
-
-// 타일뉴스 선택삭제
-export const deleteBlogTylenewsByList = (selectBlogTylenewsSidList) => axios({
-  method: 'DELETE',
-  url: `${config.blogService}/tylenews/delete/list`,
-  headers: {
-    'Content-Type': 'application/json; charset=UTF-8',
-    'Accept': 'application/json'
-  },
-  data: JSON.stringify(selectBlogTylenewsSidList)
-});

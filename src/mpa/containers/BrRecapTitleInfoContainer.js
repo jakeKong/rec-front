@@ -13,11 +13,11 @@ class BrRecapTitleInfoContainer extends Component {
     super(props);
     this.state = {
       search: {
-        sigunguCd: '11410',
-        bjdongCd: '11900',
-        platGbCd: '0',
-        bun: '0012',
-        ji: '0000',
+        sigunguCd: '11110',
+        bjdongCd: '10100',
+        platGbCd: '1',
+        bun: '0004',
+        ji: '0007',
         numOfRows: '1000'
       },
     };

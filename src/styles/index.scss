@@ -27,6 +27,7 @@
 // @import "./components/vaadin-details.scss";
 // @import "./components/vaadin-list-box.scss";
 
+<<<<<<< HEAD
 // agz
 @import "./agz/style.css";
 @import "./agz/reset_v01.css";
@@ -41,6 +42,19 @@
 //   text-decoration: none;
 //   font-family: '맑은 샘물';
 // }
+=======
+.index {
+  width: 100%;
+  height: 100%;
+}
+* {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  text-decoration: none;
+  font-family: '맑은 샘물';
+}
+>>>>>>> 주택정보검색
 
 // html, body {
 //     margin: 0;

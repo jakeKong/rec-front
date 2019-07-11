@@ -6,7 +6,7 @@ const NoticePage = () => {
   return (
     // <div>
       <PageTemplate>
-        <div className="page-description">공지사항</div>
+        {/* <div className="page-description">공지사항</div> */}
         <NoticeContainer />
       </PageTemplate>
     // </div>

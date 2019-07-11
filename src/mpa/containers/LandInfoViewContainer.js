@@ -3,8 +3,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import LandInfoViewModule, * as landInfoViewActions from "../modules/LandInfoViewModule";
 import { LandInfoView } from "../index";
-
-import '@vaadin/vaadin-ordered-layout';
+import { AddressSearch } from '../../common';
 
 class LandInfoViewContainer extends Component {
 
@@ -13,39 +12,39 @@ class LandInfoViewContainer extends Component {
     super(props);
     this.state = {
       search: {
-        sigunguCd: '11410',
-        bjdongCd: '11900',
-        platGbCd: '0',
-        bun: '0012',
-        ji: '0000',
-        pnu: '1111010100100010000'
+        jibunAddr: '서울특별시 광진구 능동 260-3',
+        roadAddr: '서울특별시 광진구 능동로32길 31(능동)',
+        pnu: '1121510200102600003'
       },
     };
     
-    this.getLandInfo(this.state.search);
+    //this.getLandInfo(this.state.search);
   }
-
-  /* callback method
-  -> searchComponent로부터 parameter를 전달받을 경우 현재 컴포넌트의 state.search에 전달받은 parameter값을 세팅하고
-     rerendering을 위한 변경된 값으로의 REST API를 호출한다. 
-       -> 호출 후 state.search값 초기화
-  */
-  searchCallback = async (dataSearchChild) => {
-    this.setState({ search: dataSearchChild });
-
-    const { search } = this.state;
-    this.getLandInfo(search);
+ 
+  //우편번호 검색이 끝났을 때 사용자가 선택한 정보를 받아올 콜백함수
+  onComplete  = async (selectedSuggestion) => {    
+    console.log(selectedSuggestion); 
+    console.log(selectedSuggestion.jibunAddr); 
+    console.log(selectedSuggestion.roadAddr); 
+    //41281 10100 1 0350 0001 014742
+    // console.log(selectedSuggestion.bdMgtSn.substring(0,5));
+    // console.log(selectedSuggestion.bdMgtSn.substring(5,10));
+    // console.log(selectedSuggestion.bdMgtSn.substring(10,11));
+    // console.log(selectedSuggestion.bdMgtSn.substring(11,15));
+    // console.log(selectedSuggestion.bdMgtSn.substring(15,19));
+    // console.log(selectedSuggestion.bdMgtSn.substring(0,19));
+    
     // state.search 값 초기화
     this.setState({
       search: {
-        'sigunguCd': search.sigunguCd,
-        'bjdongCd': search.bjdongCd,
-        'platGbCd': search.platGbCd,
-        'bun': search.bun,
-        'ji': search.ji,
-        'pnu': search.pnu
+        jibunAddr: selectedSuggestion.jibunAddr,
+        roadAddr: selectedSuggestion.roadAddr,
+        pnu: selectedSuggestion.bdMgtSn
       }
     });
+  }
+  onSearchClick = async (selectedSuggestion) => { 
+    this.getLandInfo(this.state.search);
   }
 
   getLandInfo = async (search) => {
@@ -58,27 +57,37 @@ class LandInfoViewContainer extends Component {
   }
 
 // 마운트 이전 권한 체크
-  onentWillMount() {
-  // 관리자 권한 체크 필요
-  }
 
+  // componentDidMount() {
+  //   const { search } = this.state;
+  //   const { landInfo } = this.props;
+  //     if(!landInfo || landInfo === undefined || landInfo.isEmpty()) {
+  //       this.getLandInfo(search);
+  //     }
+  // }
 // 마운트 직후 한번 (rendering 이전, 마운트 이후의 작업)
   onentDidMount() {
   const { search } = this.state;
-  const { landInfo } = this.props;
-        if(!landInfo || landInfo === undefined || landInfo.isEmpty()) {
-          this.getLandInfo(search);
-        }
+  const { landInfoData } = this.props;
+    if(!landInfoData || landInfoData === undefined || landInfoData.isEmpty()) {
+      this.getLandInfo(search);
+    }
   }
+
+  
+
   
   render() {
-    const { pending, error, success } = this.props;
+    const { pending, error, success, landInfoData } = this.props;
     return (
       <Fragment>
-        <div className="main-div">
-          {pending && "Loading..."}
-          {error && <h1>Server Error!</h1>}
-          {success && <LandInfoView />}
+        <div>
+          <div className="div-search"><AddressSearch onComplete={this.onComplete} onSearchClick={this.onSearchClick} /></div>
+          <div className="main-div">
+            {pending && "Loading..."}
+            {error && <h1>Server Error!</h1>}
+            {success && <LandInfoView landInfoData={landInfoData}/>}
+            </div>
         </div>
       </Fragment>
     );
@@ -87,7 +96,7 @@ class LandInfoViewContainer extends Component {
 
 export default connect(
   state => ({
-    brRecapTitleInfoList: state.landInfo.landInfoData,
+    landInfoData: state.landInfo.landInfoData,
     pending: state.landInfo.pending,
     error: state.landInfo.error,
     success: state.landInfo.success,

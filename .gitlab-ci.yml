@@ -2,8 +2,9 @@ deploy-to-dev-server:
     only:
     - master
     script:
-    - echo ll
+    - rm -rf /tmp/www/front/*
     - cp -frv ./* /tmp/www/front 
     - cd /tmp/www/front 
+    - chown -R gitlab-runner:gitlab-runner ./*
     - npm install
     - npm run build
