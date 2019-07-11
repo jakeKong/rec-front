@@ -38,6 +38,7 @@ class PaymentHistoryGrid extends Component {
     // Grid Items Setting
     const grid = document.querySelector('vaadin-grid');
     grid.items = list;
+    grid.className = "agz-bbs";
 
   }
 

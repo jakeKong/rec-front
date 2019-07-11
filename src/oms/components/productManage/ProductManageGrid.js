@@ -62,6 +62,8 @@ class ProductManageGrid extends Component {
     const grid = document.querySelector('vaadin-grid');
     grid.items = list;
 
+    grid.className = "agz-bbs";
+
     grid.addEventListener('dblclick', function(event) {
       productDtoCallback(grid.getEventContext(event).item)
     });

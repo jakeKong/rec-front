@@ -69,6 +69,8 @@ class BlogTyleNewsGrid extends Component {
     const grid = document.querySelector('vaadin-grid');
     grid.items = list;
 
+    grid.className = "agz-bbs";
+
     grid.addEventListener('dblclick', function(event) {
       blogDtoCallback(grid.getEventContext(event).item)
     });
@@ -126,19 +128,15 @@ class BlogTyleNewsGrid extends Component {
 
   render() {
     return (
-      <Fragment>
-        <div className="div-home-grid">
-          <vaadin-grid theme="row-stripes" height-by-rows column-reordering-allowed>
-            <vaadin-grid-column auto-select id="grdSelect" flex-grow="0.1" width="50px" />
-            <vaadin-grid-sort-column path="index" header="번호" text-align="center" flex-grow="0.1" width="80px"/>
-            <vaadin-grid-column path="title" header="제목" text-align="center" flex-grow="4.9" width="400px"/>
-            <vaadin-grid-column path="subTitle" header="분류" text-align="center" flex-grow="1" width="100px"/>
-            <vaadin-grid-column path="writer" header="작성자" text-align="center" flex-grow="1" width="80px"/>
-            <vaadin-grid-column path="writeDt" header="작성일자" text-align="center" flex-grow="3" width="250px"/>
-            <vaadin-grid-column path="visibility" id="grdVisibility" header="공개/비공개" text-align="center" flex-grow="1" width="100px"/>
-          </vaadin-grid>
-        </div>
-      </Fragment>
+      <vaadin-grid theme="row-stripes" height-by-rows column-reordering-allowed>
+        <vaadin-grid-column auto-select id="grdSelect" flex-grow="0.1" width="50px" />
+        <vaadin-grid-sort-column path="index" header="번호" text-align="center" flex-grow="0.1" width="80px"/>
+        <vaadin-grid-column path="title" header="제목" text-align="center" flex-grow="4.9" width="400px"/>
+        <vaadin-grid-column path="subTitle" header="분류" text-align="center" flex-grow="1" width="100px"/>
+        <vaadin-grid-column path="writer" header="작성자" text-align="center" flex-grow="1" width="80px"/>
+        <vaadin-grid-column path="writeDt" header="작성일자" text-align="center" flex-grow="3" width="250px"/>
+        <vaadin-grid-column path="visibility" id="grdVisibility" header="공개/비공개" text-align="center" flex-grow="1" width="100px"/>
+      </vaadin-grid>
     );
   }
 }

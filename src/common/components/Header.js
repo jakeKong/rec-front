@@ -95,7 +95,7 @@ class Header extends Component {
             </div>
             }
         </div>
-        <Menu />
+        <Menu loginSession={loginSession}/>
       </div>
     );
     /* 

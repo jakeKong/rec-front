@@ -74,7 +74,7 @@ class OrderHistoryContainer extends Component {
     const { orderHistoryList, pending, error, success, role } = this.props;
     return (
       <Fragment>
-        <div className="div-search">
+        <div className="wrap-search">
           <OrderHistorySearch searchCallback={ this.searchCallback } role={ role } />
         </div>
         <div className="div-main">

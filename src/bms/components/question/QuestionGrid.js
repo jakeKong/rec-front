@@ -192,16 +192,14 @@ class QuestionGrid extends Component {
   render() {
     return (
       <Fragment>
-        <div>
-          <vaadin-grid theme="no-border" height-by-rows multi-sort>
-            <vaadin-grid-column auto-select hidden id="grdSelect" flex-grow="0.1" width="50px" />
-            <vaadin-grid-column path="index" header="번호" text-align="center" flex-grow="0.2" width="50px"/>
-            <vaadin-grid-column id="grdQuestionTitle" header="제목" text-align="center" flex-grow="6.2" />
-            <vaadin-grid-column path="questionWriter" header="작성자" text-align="center" flex-grow="1" />
-            <vaadin-grid-column path="reportingDt" header="작성일자" text-align="center" flex-grow="2.5" />
-          </vaadin-grid>
-          <div id="pages" className="pagination"/>
-        </div>
+        <vaadin-grid theme="no-border" height-by-rows multi-sort>
+          <vaadin-grid-column auto-select hidden id="grdSelect" flex-grow="0.1" width="50px" />
+          <vaadin-grid-column path="index" header="번호" text-align="center" flex-grow="0.2" width="50px"/>
+          <vaadin-grid-column id="grdQuestionTitle" header="제목" text-align="center" flex-grow="6.2" />
+          <vaadin-grid-column path="questionWriter" header="작성자" text-align="center" flex-grow="1" />
+          <vaadin-grid-column path="reportingDt" header="작성일자" text-align="center" flex-grow="2.5" />
+        </vaadin-grid>
+        <div id="pages" className="pagination"/>
       </Fragment>
     );
   }

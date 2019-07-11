@@ -1,31 +1,31 @@
 // common
 // @import "./commons/header.scss";
-// @import "./commons/footer.scss";
+@import "./commons/footer.scss";
 // @import "./commons/content.scss";
 // @import "./commons/pageDescription.scss";
-// @import "./commons/label.scss";
-// @import "./commons/button.scss";
+@import "./commons/label.scss";
+@import "./commons/button.scss";
 // @import "./commons/pageTemplate.scss";
-// @import "./commons/div.scss";
-// @import "./commons/ulLi.scss";
+@import "./commons/div.scss";
+@import "./commons/ulLi.scss";
 
 // layouts
-// @import "./layouts/vaadin-app-layout.scss";
-// @import "./layouts/vaadin-form-layout.scss";
-// @import "./layouts/vaadin-horizontal-layout.scss";
-// @import "./layouts/vaadin-split-layout.scss";
-// @import "./layouts/vaadin-vertical-layout.scss";
+@import "./layouts/vaadin-app-layout.scss";
+@import "./layouts/vaadin-form-layout.scss";
+@import "./layouts/vaadin-horizontal-layout.scss";
+@import "./layouts/vaadin-split-layout.scss";
+@import "./layouts/vaadin-vertical-layout.scss";
 
 // components
-// @import "./components/vaadin-button.scss";
-// @import "./components/vaadin-combo-box.scss";
-// @import "./components/vaadin-date-picker.scss";
-// @import "./components/vaadin-text-field.scss";
-// @import "./components/vaadin-select.scss";
-// @import "./components/vaadin-grid.scss";
-// @import "./components/vaadin-dialog.scss";
-// @import "./components/vaadin-details.scss";
-// @import "./components/vaadin-list-box.scss";
+@import "./components/vaadin-button.scss";
+@import "./components/vaadin-combo-box.scss";
+@import "./components/vaadin-date-picker.scss";
+@import "./components/vaadin-text-field.scss";
+@import "./components/vaadin-select.scss";
+@import "./components/vaadin-grid.scss";
+@import "./components/vaadin-dialog.scss";
+@import "./components/vaadin-details.scss";
+@import "./components/vaadin-list-box.scss";
 
 // agz
 @import "./agz/style.css";

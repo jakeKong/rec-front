@@ -12,7 +12,7 @@ const PageTemplate = ({ children }) => (
       <section className="mc width-full align-center page-main">
         {children}
       </section>
-      {/* <Footer /> */}
+      <Footer />
     {/* </div> */}
   </Fragment>
 );

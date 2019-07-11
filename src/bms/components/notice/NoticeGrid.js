@@ -101,16 +101,16 @@ class NoticeGrid extends Component {
     //   return classes;
     // };
 
-    console.log(grid);
-    const gridColumns = grid.querySelectorAll('vaadin-grid-column');
-    const gridCellContent = grid.querySelectorAll('vaadin-grid-cell');
+    // console.log(grid);
+    // const gridColumns = grid.querySelectorAll('vaadin-grid-column');
+    // const gridCellContent = grid.querySelectorAll('vaadin-grid-cell');
     // gridColumns[1].header.className = 'cell th w-10'
-    console.log(gridCellContent)
-    console.log(gridCellContent[1])
-    gridColumns[1].headerRenderer = function(root, column, rowData) {
-      root.innerHTML = '번호'
+    // console.log(gridCellContent)
+    // console.log(gridCellContent[1])
+    // gridColumns[1].headerRenderer = function(root, column, rowData) {
+      // root.innerHTML = '번호'
       // root.className = "cell th w-10"
-    }
+    // }
     // gridColumns[1].renderer = function(root, column, rowData) {
       // root.innerHTML = rowData.item.index;
     //   column.path = 'index';
@@ -136,13 +136,13 @@ class NoticeGrid extends Component {
 
     // 제목 컬럼 선택시 상세정보조회 이벤트 요청
     const { detailCallback } = this.props;
-    document.querySelector('#grdNoticeTitle').headerRenderer = function(root, column, rowData) {
-      root.innerHTML = '제목'
-      root.className = "cell th w-60"
-    }
+    // document.querySelector('#grdNoticeTitle').headerRenderer = function(root, column, rowData) {
+    //   root.innerHTML = '제목'
+    //   root.className = "cell th w-60"
+    // }
     document.querySelector('#grdNoticeTitle').renderer = function(root, column, rowData) {
-      column.path = "noticeTitle"
-      root.className = 'cell tc w-60'
+      // column.path = "noticeTitle"
+      // root.className = 'cell tc w-60'
       root.innerHTML = '';
       const title = document.createElement('label')
       title.textContent = rowData.item.noticeTitle;

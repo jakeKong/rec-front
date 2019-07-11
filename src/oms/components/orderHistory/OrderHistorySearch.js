@@ -215,26 +215,34 @@ class OrderHistorySearch extends Component {
     btnSearch.addEventListener('click', function() {
       searchCallback(search);
     })
+
+    // slStatus.className = "select"
+    // slRealEstateType.className = "select"
+    // dpStart.className = "datepickr"
+    // dpEnd.className = "datepickr"
+    // cbSearch.className = ""
+    // tfSearch.className = ""
+    btnSearch.className = "btn"
   }
 
   render() {
     return (
       <Fragment>
-        <label className="label-center" id="lbStatus" />
+        <label className="label" id="lbStatus" />
           {/* <vaadin-combo-box id="cbStatus"/> */}
           <vaadin-select id="slStatus" />
 
-        <label className="label-center" id="lbRealEstateType" />
+        <label className="label" id="lbRealEstateType" />
           <vaadin-select id="slRealEstateType" />
 
-        <label className="label-center" id="lbDate" />
+        <label className="label" id="lbDate" />
           <vaadin-date-picker id="dpStart" />
-            <label className="label-center" id="lbPunct" />
+            <label className="label" id="lbPunct" />
           <vaadin-date-picker id="dpEnd" />
 
         <vaadin-combo-box id="cbSearch"/>
           <vaadin-text-field id="tfSearch">
-            <iron-icon icon="vaadin:search" slot="prefix" />
+            {/* <iron-icon icon="vaadin:search" slot="prefix" /> */}
           </vaadin-text-field>
 
         <vaadin-button id="btnSearch" />

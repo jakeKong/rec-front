@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 
 import '@vaadin/vaadin-grid';
 // import '@vaadin/vaadin-grid/vaadin-grid-sort-column';
@@ -70,7 +70,7 @@ class OrderHistoryGrid extends Component {
     const grid = document.querySelector('vaadin-grid');
     grid.items = list;
     grid.pageSize = 10;
-    grid.className = "agz-bbs w-160";
+    grid.className = "agz-bbs";
 
     const {role} = this.props;
 
@@ -95,7 +95,8 @@ class OrderHistoryGrid extends Component {
             root.innerHTML = '';
             const btnDownload = document.createElement('vaadin-button');
             // btnDownload.setAttribute('style', 'color: var(--lumo-contrast-text-color)');
-            btnDownload.setAttribute('style', 'color: var(--lumo-primary-text-color)');
+            // btnDownload.setAttribute('style', 'color: var(--lumo-primary-text-color)');
+            btnDownload.className = 'btn btn-download';
             btnDownload.textContent = '다운로드';
             btnDownload.addEventListener('click', function() {
               const check = window.confirm('해당 PDF를 다운로드 하시겠습니까?');
@@ -280,7 +281,7 @@ class OrderHistoryGrid extends Component {
 
   render() {
     return (
-      <div>
+      <Fragment>
         <div className="align-right-text">
           <vaadin-button id="btnExcel"/>
         </div>
@@ -301,7 +302,7 @@ class OrderHistoryGrid extends Component {
           <vaadin-grid-column id="grdEmail" path="email" header="주문자 아이디" text-align="center" flex-grow="10" width="150px" resizable/>
         </vaadin-grid>
         <div id="pages" className="pagination"/>
-      </div>
+      </Fragment>
     );
   }
 }

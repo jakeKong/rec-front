@@ -71,6 +71,8 @@ class UserGrid extends Component {
     grid.items = list;
     grid.pageSize = 15;
 
+    grid.className = "agz-bbs";
+
     const pagesControl = document.querySelector('#pages');
     let pages;
     updateItemsFromPage(1);

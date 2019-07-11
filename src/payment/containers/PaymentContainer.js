@@ -365,7 +365,7 @@ class PaymentContainer extends Component {
 
     const openNaverPay = this.openNaverPay;
     const naverPayBtn = document.querySelector('#naverPayBtn');
-    naverPayBtn.textContent = "네이버페이 결제"
+    naverPayBtn.textContent = "Pay 결제하기"
     naverPayBtn.type = "smallWhite"
     naverPayBtn.addEventListener('click', function() {
       // 네이버페이 결제 창 호출
@@ -438,16 +438,16 @@ class PaymentContainer extends Component {
             { pending && <div className="boxLoading"/> }
             { error && <h1>Server Error!</h1> }
             { success && <PaymentProductListGrid productList={ productList } selectCallback={ this.selectCallback } deselectCallback={ this.deselectCallback } />}
-            <div className="div-select-total-payment" hidden={!productList}>
+            <div className="receipt" hidden={!productList}>
               <div className="div-inline">
-                <label id="lbSelectPayName"/>
-                <label id="lbSelectPay"/>
-                <label id="lbSelectPaySubName"/>
+                <label id="lbSelectPayName" className="label"/>
+                <label id="lbSelectPay" className="amount cash"/>
+                <label id="lbSelectPaySubName" className="label-currency"/>
               </div>
               <div className="div-inline">
-                <label id="lbSelectPointName"/>
-                <label id="lbSelectPoint"/>
-                <label id="lbSelectPointSubName"/>
+                <label id="lbSelectPointName" className="label"/>
+                <label id="lbSelectPoint" className="amount point"/>
+                <label id="lbSelectPointSubName" className="label-currency"/>
               </div>
               {/* // 2019-06-04 : 다중선택 미사용으로 인한 비활성화
               <div className="div-inline">
@@ -461,9 +461,9 @@ class PaymentContainer extends Component {
                 <label id="lbTotalPaySubName"/>
               </div> */}
             </div>
-            <label id="lbTotalPayCommit" hidden />
+            <label id="lbTotalPayCommit" className="desc-purchase" hidden />
           </div>
-          <div className="div-sub-main-center">
+          <div className="align-center-text wrap-btn-naverpay">
             <div id="naverPay" />
             <button id="naverPayBtn" hidden/>
           </div>

@@ -45,6 +45,8 @@ class ChangePointHistoryGrid extends Component {
     grid.items = list;
     grid.pageSize = 10;
 
+    grid.className = "agz-bbs";
+
     const {role} = this.props;
 
     let hiddenCheck = true;

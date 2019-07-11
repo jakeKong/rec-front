@@ -402,7 +402,7 @@ html, body {
     margin-bottom: 24px;
 }
 .wrap-search > * {
-    display: inline-block;
+    /* display: inline-block; */
     vertical-align: bottom;
     box-sizing: border-box;
     height: 32px;

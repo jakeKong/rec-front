@@ -45,6 +45,7 @@ class QuestionContainer extends Component {
 
     const registerStatusChangeEvent = this.registerStatusChangeEvent;
     const btnRegister = document.querySelector('#btnRegister');
+    btnRegister.className = "btn";
     btnRegister.innerHTML = '등록';
     btnRegister.addEventListener('click', function() {
       registerStatusChangeEvent();
@@ -197,7 +198,7 @@ class QuestionContainer extends Component {
     return (
       <Fragment>
         <div>
-          <div className="div-search" hidden={registerStatus || detailStatus}>
+          <div className="wrap-search" hidden={registerStatus || detailStatus}>
             <QuestionSearch searchCallback={ this.searchCallback } />
           </div>
           <div className="div-main">
@@ -208,7 +209,7 @@ class QuestionContainer extends Component {
             { detailStatus && <QuestionDetail question={ question } email={ email } detailToListCallback={ this.detailToListCallback } registerCallback={ this.registerCallback } deleteCallback={ this.deleteCallback } /> }
             { registerStatus ? <QuestionRegister registerToListCallback={ this.registerToListCallback } addCallback={ this.addCallback } questionDto={ question } updateCallback={ this.updateCallback } registerToDetailCallback={ this.registerToDetailCallback } /> : null }
           </div>
-          <div className="div-sub-main" hidden={registerStatus || detailStatus || !success}>
+          <div className="wrap-btn-pet" hidden={registerStatus || detailStatus || !success}>
             <vaadin-button id="btnRegister" />
           </div>
         </div>

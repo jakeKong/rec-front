@@ -126,10 +126,10 @@ class OrderHistoryByEmailContainer extends Component {
     const { email, orderHistoryList, pending, error, success } = this.props;
     return (
       <Fragment>
-        <div className="div-search">
+        <div className="wrap-search">
           <OrderHistorySearch searchCallback={ this.searchCallback } email={ email } />
         </div>
-        <div className="div-main">
+        <div className="div-main page-log-purchase">
           { pending && <div className="boxLoading"/> }
           { error && <h1>Server Error!</h1> }
           { success && <OrderHistoryGrid orderHistoryList={ orderHistoryList } email={ email } orderCancleCallback={this.orderCancleCallback}/>}

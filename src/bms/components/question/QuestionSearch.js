@@ -134,19 +134,33 @@ class QuestionSearch extends Component {
     btnSearch.addEventListener('click', function() {
       searchCallback(search);
     })
+
+    // dpStart.className = 'datepickr';
+    // // console.log(dpStart.shadowRoot.querySelector('#input').shadowRoot.querySelector('.vaadin-text-field-container'));
+    // // console.log(dpStart.shadowRoot.querySelector('#input').shadowRoot.querySelector('.vaadin-text-field-container').querySelectorAll('div')[0]);
+    // // dpStart.shadowRoot.querySelector('#input').shadowRoot.querySelector('.vaadin-text-field-container').querySelectorAll('div')[0].className= 'datepickr';
+    // // dpStart.shadowRoot.querySelector('#input').shadowRoot.querySelector('.vaadin-text-field-container').className = 'datepickr';
+    // // dpStart.shadowRoot.querySelector('#input').className = 'datepickr';
+    // dpEnd.className = 'datepickr';
+    // // cbSearch.className = '';
+    // tfSearch.className = 'ipt-txt';
+    // console.log(tfSearch.shadowRoot.querySelector('.vaadin-text-field-container'))
+    // // tfSearch.shadowRoot.querySelector('.vaadin-text-field-container').className = 'ipt-txt';
+    // console.log(tfSearch.shadowRoot.querySelector('.vaadin-text-field-container').querySelectorAll('div')[0])
+    // tfSearch.shadowRoot.querySelector('.vaadin-text-field-container').querySelectorAll('div')[0].className = 'ipt-txt';
+    btnSearch.className = 'btn';
   }
 
   render() {
     return (
       <Fragment>
-
-        <label className="label-center" id="lbDate" />
+        <label className="label" id="lbDate" />
         <vaadin-date-picker id="dpStart" />
-        <label className="label-center" id="lbPunct" />
+        <label className="label" id="lbPunct" />
         <vaadin-date-picker id="dpEnd" />
 
         <vaadin-combo-box id="cbSearch"/>
-        <label className="label-center" id="lbSearch"/>
+        <label className="label" id="lbSearch"/>
         <vaadin-text-field id="tfSearch">
           <iron-icon icon="vaadin:search" slot="prefix" />
         </vaadin-text-field>
