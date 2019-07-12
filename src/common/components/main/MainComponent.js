@@ -15,9 +15,7 @@ class MainComponent extends Component {
   render() {
     return (
       <Fragment>
-        <div className="illust-main">
-          삽화가 들어갈자리입니다.
-        </div>
+        <div className="illust-main" />
         <div className="wrap-content-main">
           <div className="div-home-search wrap-searchbox">
             <div className="searchbox">
