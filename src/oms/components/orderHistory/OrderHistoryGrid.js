@@ -8,6 +8,7 @@ import '@vaadin/vaadin-button';
 // import '@vaadin/vaadin-grid/vaadin-grid-selection-column';
 import { statusItems, realEstateTypeItems } from '../../items';
 import { comma } from '../../../common/utils';
+import config from '../../../config';
 
 /* this line is only needed if you are not adding a script tag reference */
 import * as XLSX from 'xlsx';
@@ -102,7 +103,7 @@ class OrderHistoryGrid extends Component {
               const check = window.confirm('해당 PDF를 다운로드 하시겠습니까?');
               if (check === true) {
                 // 다운로드 버튼 클릭 시 동작 이벤트
-                window.open("http://192.168.0.46:8888/"+rowData.item.pdfFileNm);
+                window.open(config.pdfUrl + rowData.item.pdfFileNm);
               }
             })
             root.appendChild(btnDownload);
