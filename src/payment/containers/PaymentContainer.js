@@ -419,7 +419,7 @@ class PaymentContainer extends Component {
           paymentCash: paymentRequest.body.detail.totalPayAmount,
           changeType: 'PAYMENT_ADD',
           changePoint: removeComma(productDto.productPoint),
-          // 계정별 현재 잔여포인트에서 차감해야함
+          // 계정별 현재 잔여포인트에서 차감해야함 (로그인 기능 구현 이후 작업 필요)
           currentBalPoint: 97500+removeComma(productDto.productPoint),
           paymentNo: 'P'+paymentRequest.body.detail.tradeConfirmYmdt+new Date().getTime(),
           activated: true

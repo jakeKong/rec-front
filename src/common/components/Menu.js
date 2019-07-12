@@ -7,20 +7,11 @@ import '../../styles/custom-rc-menu.scss';
 
 class RCMenu extends Component {
 
-  constructor(props) {
-    super(props);
-
-  }
-
-  // componentDidMount() {
-  // }
-
   handleClick(info) {
     window.location.href = `${info.key}`;
   }
 
   menuSessionCheckActivatedChangeEvent = (session) => {
-    console.log(session);
     if (session === true) {
       return (
         <Fragment>
@@ -131,7 +122,8 @@ class RCMenu extends Component {
 
 export default RCMenu;
 
-/* <Menu onClick={this.handleClick} selectedKeys={['/#/']}>
+/* example
+<Menu onClick={this.handleClick} selectedKeys={['/#/']}>
 <SubMenu title={ <span className="submenu-title-wrapper">offset sub menu 2</span> } key="4">
     <MenuItem key="4-1">inner inner</MenuItem>
     <Divider/>

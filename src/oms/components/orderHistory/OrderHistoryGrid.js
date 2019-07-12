@@ -52,7 +52,7 @@ class OrderHistoryGrid extends Component {
         marketPriceOrigin: e.get("marketPrice"),
         realEstateType: realEstateType,
         realEstateTypeOrigin: e.get("realEstateType"),
-        variationPoint: comma(e.get("variationPoint")),
+        variationPoint: comma(e.get("variationPoint"))+' P',
         variationPointOrigin: e.get("variationPoint"),
         downloadEndDt: dateFormat(new Date(e.get("downloadEndDt")), 'yyyy년mm월dd일 HH:MM:ss'),
         downloadEndDtOrigin: e.get("downloadEndDt"),
@@ -182,7 +182,7 @@ class OrderHistoryGrid extends Component {
               주문일자: dateFormat(new Date(e.get("odrDt")), 'yyyy년mm월dd일 HH:MM:ss'),
               시세가: comma(e.get("marketPrice")),
               부동산유형: realEstateType,
-              변동포인트: comma(e.get("variationPoint")),
+              변동포인트: comma(e.get("variationPoint"))+' P',
               // 다운로드만료기간: e.get("downloadEndDt"),
               // 다운로드횟수: e.get("downloadCnt"),
               상태: status,
@@ -291,11 +291,11 @@ class OrderHistoryGrid extends Component {
           <vaadin-grid-column path="odrNo" header="주문 번호" text-align="center" flex-grow="10" width="200px" resizable/>
           <vaadin-grid-column path="odrDt" header="주문 일자" text-align="center" flex-grow="15" width="250px" resizable/>
           <vaadin-grid-column path="marketPrice" header="시세가" text-align="center" flex-grow="10" width="150px" resizable/>
-          <vaadin-grid-column path="realEstateType" header="부동산 유형" text-align="center" flex-grow="10" width="100px" resizable/>
-          <vaadin-grid-column path="variationPoint" header="증감 포인트" text-align="center" flex-grow="3" width="100px" resizable />
+          <vaadin-grid-column path="realEstateType" header="부동산 유형" text-align="center" flex-grow="10" width="120px" resizable/>
+          <vaadin-grid-column path="variationPoint" header="증감 포인트" text-align="center" flex-grow="3" width="120px" resizable />
           <vaadin-grid-column path="downloadEndDt" header="다운로드 만료기간" text-align="center" flex-grow="15" width="250px" resizable/>
           <vaadin-grid-column id="grdBtnDownload" header="다운로드" text-align="center" flex-grow="10" width="150px" resizable/>
-          <vaadin-grid-column path="downloadCnt" header="다운로드 횟수" text-align="center" flex-grow="1" width="100px" resizable/>
+          <vaadin-grid-column path="downloadCnt" header="다운로드 횟수" text-align="center" flex-grow="1" width="120px" resizable/>
           <vaadin-grid-column path="status" header="상태" text-align="center" flex-grow="5" width="100px" resizable/>
           <vaadin-grid-column id="grdBtnPurchaseCancle" header="구매취소" text-align="center" flex-grow="10" width="150px" resizable/>
           <vaadin-grid-column id="grdOrdererNm" path="ordererNm" header="주문자" text-align="center" flex-grow="10" width="100px" resizable/>

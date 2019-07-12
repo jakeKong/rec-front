@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 
 import '@vaadin/vaadin-grid';
 import '@vaadin/vaadin-grid/vaadin-grid-sort-column';

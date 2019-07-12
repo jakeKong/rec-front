@@ -2,6 +2,8 @@ import React, { Component, Fragment } from 'react';
 
 import '@vaadin/vaadin-icons'
 
+import { comma } from '../../../common/utils';
+
 class PaymentComplete extends Component {
 
   componentDidMount() {
@@ -15,11 +17,11 @@ class PaymentComplete extends Component {
       document.querySelector('#lbPaymentId').innerHTML = "구매번호 : ";
       document.querySelector('#lbPaymentIdResult').innerHTML = paymentRequest.body.detail.paymentId;
       document.querySelector('#lbTotalPayAmount').innerHTML = "총 결제금액 : ";
-      document.querySelector('#lbTotalPayAmountResult').innerHTML = paymentRequest.body.detail.totalPayAmount;
+      document.querySelector('#lbTotalPayAmountResult').innerHTML = comma(paymentRequest.body.detail.totalPayAmount)+' 원';
       document.querySelector('#lbTradeConfirmYmdt').innerHTML = "구매일자 : ";
       document.querySelector('#lbTradeConfirmYmdtResult').innerHTML = paymentRequest.body.detail.tradeConfirmYmdt;
       document.querySelector('#lbPurchasePoint').innerHTML = "구매포인트 : ";
-      document.querySelector('#lbPurchasePointResult').innerHTML = paymentRequest.totalPoint;
+      document.querySelector('#lbPurchasePointResult').innerHTML = comma(paymentRequest.totalPoint)+' P';
 
       const btnGoProduct = document.querySelector('#btnGoProduct');
       btnGoProduct.className = "vaadin-button-large";

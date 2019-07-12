@@ -2,6 +2,8 @@ import React, { Component, Fragment } from 'react';
 
 import '@vaadin/vaadin-grid';
 
+import { comma } from '../../../common/utils';
+
 class PaymentHistoryGrid extends Component {
   constructor(props) {
     super(props);
@@ -25,7 +27,7 @@ class PaymentHistoryGrid extends Component {
       list.push({
         paymentId: e.paymentId,
         productName: e.productName,
-        totalPayAmount: e.totalPayAmount,
+        totalPayAmount: comma(e.totalPayAmount)+' 원',
         tradeConfirmYmdt: dateFormat(new Date(dateStringValue), 'yyyy년mm월dd일 HH:MM:ss'),
         primaryPayMeans: e.primaryPayMeans
       })
@@ -47,11 +49,11 @@ class PaymentHistoryGrid extends Component {
       <Fragment>
         <div>
           <vaadin-grid theme="row-stripes" height-by-rows column-reordering-allowed>
-            <vaadin-grid-column path="paymentId" header="결제번호" text-align="center" flex-grow="4" />
-            <vaadin-grid-column path="productName" header="상품명" text-align="center" flex-grow="1" />
-            <vaadin-grid-column path="totalPayAmount" header="결제금액" text-align="center" flex-grow="1" />
-            <vaadin-grid-column path="tradeConfirmYmdt" header="결제완료일자" text-align="center" flex-grow="2" />
-            <vaadin-grid-column path="primaryPayMeans" header="결제방식" text-align="center" flex-grow="1" />
+            <vaadin-grid-column path="paymentId" header="결제번호" text-align="center" flex-grow="4" width="200px"/>
+            <vaadin-grid-column path="productName" header="상품명" text-align="center" flex-grow="1" width="100px"/>
+            <vaadin-grid-column path="totalPayAmount" header="결제금액" text-align="center" flex-grow="1" width="100px"/>
+            <vaadin-grid-column path="tradeConfirmYmdt" header="결제완료일자" text-align="center" flex-grow="2" width="250px"/>
+            <vaadin-grid-column path="primaryPayMeans" header="결제방식" text-align="center" flex-grow="1" width="100px"/>
           </vaadin-grid>
         </div>
       </Fragment>

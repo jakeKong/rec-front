@@ -88,13 +88,13 @@ class ProductManageGrid extends Component {
     return (
       <Fragment>
         <vaadin-grid theme="no-border" height-by-rows column-reordering-allowed>
-          <vaadin-grid-sort-column path="index" header="번호" text-align="center" flex-grow="0.2" width="70px" />
+          <vaadin-grid-sort-column path="index" header="번호" text-align="center" flex-grow="0.2" width="80px" />
           <vaadin-grid-column path="productCd" header="상품 코드" text-align="center" flex-grow="2" />
           <vaadin-grid-column path="productNm" header="상품 명" text-align="center" flex-grow="4" />
           <vaadin-grid-column path="productPoint" header="상품 포인트" text-align="center" flex-grow="2" />
           <vaadin-grid-column path="pointCash" header="포인트 가격" text-align="center" flex-grow="1" />
           {/* <vaadin-grid-column path="cashRatio" header="현금 비율" text-align="center" flex-grow="1" /> */}
-          <vaadin-grid-column id="grdDelete" text-align="center" flex-grow="1" />
+          <vaadin-grid-column id="grdDelete" text-align="center" flex-grow="1" width="150px" />
         </vaadin-grid>
       </Fragment>
     );
