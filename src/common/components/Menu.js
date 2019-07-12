@@ -32,13 +32,6 @@ class RCMenu extends Component {
             </SubMenu>
             <SubMenu title={ <span className="submenu-title-wrapper">주택정보</span> } key="housing">
               <MenuItem key="/#/mpa">주택정보 조회</MenuItem> 
-              {/* <MenuItem key="/#/mpa/apartment">주택정보 아파트 조회</MenuItem>
-              <MenuItem key="/#/mpa/villa">주택정보 빌라 조회</MenuItem>
-              <MenuItem key="/#/mpa/housing">주택정보 주택 조회</MenuItem>
-              <MenuItem key="/#/mpa/officetels">주택정보 오피스텔 조회</MenuItem>
-              <MenuItem key="/#/mpa/sellAndResidence">주택정보 분양/입주권 조회</MenuItem>
-              <MenuItem key="/#/mpa/commercial">주택정보 상업/업무용 조회</MenuItem>
-              <MenuItem key="/#/mpa/land">주택정보 토지 조회</MenuItem> */}
             </SubMenu>
             <MenuItem key="/#/bms/question">문의사항</MenuItem>
             <SubMenu title={ <span className="submenu-title-wrapper">마이페이지</span> } key="mypage">
@@ -76,6 +69,12 @@ class RCMenu extends Component {
               <MenuItem key="/#/mpa">주택정보 조회</MenuItem> 
             </SubMenu>
             <MenuItem key="/#/bms/question">문의사항</MenuItem>
+            <SubMenu title={ <span className="submenu-title-wrapper">마이페이지</span> } key="mypage">
+              <MenuItem key="/#/payment/product">상품구매</MenuItem>
+              <MenuItem key="/#/oms/order/history/email">주문내역 조회</MenuItem>
+              <MenuItem key="/#/oms/changepoint/history/email">포인트 변동내역 조회</MenuItem>
+              <MenuItem key="/#/payment/history">결제내역 조회</MenuItem>
+            </SubMenu>
           </Menu>
         </Fragment>
       );
