@@ -102,6 +102,7 @@ class OrderHistoryGrid extends Component {
               const check = window.confirm('해당 PDF를 다운로드 하시겠습니까?');
               if (check === true) {
                 // 다운로드 버튼 클릭 시 동작 이벤트
+                window.open("http://192.168.0.46:8888/"+rowData.item.pdfFileNm);
               }
             })
             root.appendChild(btnDownload);
@@ -276,6 +277,21 @@ class OrderHistoryGrid extends Component {
       var end = page * grid.pageSize;
       grid.items = list.slice(start, end);
 
+    }
+
+    // 스타일 적용 이후 우측정렬 미적용으로 인한 컬럼 렌더링 - 2019-07-12 @yieon
+    const column = grid.querySelectorAll('vaadin-grid-column');
+    column[3].renderer = function(root, column, rowData) {
+      root.innerHTML = rowData.item.marketPrice
+      root.style = 'text-align: right'
+    }
+    column[5].renderer = function(root, column, rowData) {
+      root.innerHTML = rowData.item.variationPoint
+      root.style = 'text-align: right'
+    }
+    column[8].renderer = function(root, column, rowData) {
+      root.innerHTML = rowData.item.downloadCnt
+      root.style = 'text-align: right'
     }
   }
 

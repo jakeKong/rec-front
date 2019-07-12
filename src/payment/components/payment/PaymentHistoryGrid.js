@@ -51,7 +51,7 @@ class PaymentHistoryGrid extends Component {
           <vaadin-grid theme="row-stripes" height-by-rows column-reordering-allowed>
             <vaadin-grid-column path="paymentId" header="결제번호" text-align="center" flex-grow="4" width="200px"/>
             <vaadin-grid-column path="productName" header="상품명" text-align="center" flex-grow="1" width="100px"/>
-            <vaadin-grid-column path="totalPayAmount" header="결제금액" text-align="center" flex-grow="1" width="100px"/>
+            <vaadin-grid-column path="totalPayAmount" header="결제금액" text-align="right" flex-grow="1" width="100px"/>
             <vaadin-grid-column path="tradeConfirmYmdt" header="결제완료일자" text-align="center" flex-grow="2" width="250px"/>
             <vaadin-grid-column path="primaryPayMeans" header="결제방식" text-align="center" flex-grow="1" width="100px"/>
           </vaadin-grid>

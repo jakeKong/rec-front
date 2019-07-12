@@ -2,6 +2,8 @@ import React, { Component, Fragment } from 'react';
 
 import '@vaadin/vaadin-grid';
 import '@vaadin/vaadin-dialog';
+import '@vaadin/vaadin-grid';
+import '@vaadin/vaadin-grid/vaadin-grid-column';
 
 import { comma } from '../../../common/utils';
 
@@ -73,21 +75,28 @@ class PaymentProductListGrid extends Component {
       }
     });
 
+    // 스타일 적용 이후 우측정렬 미적용으로 인한 컬럼 렌더링 - 2019-07-12 @yieon
+    const column = grid.querySelectorAll('vaadin-grid-column');
+    column[2].renderer = function(root, column, rowData) {
+      root.innerHTML = rowData.item.productPoint
+      root.style = 'text-align: right'
+    }
+    column[3].renderer = function(root, column, rowData) {
+      root.innerHTML = rowData.item.pointCash
+      root.style = 'text-align: right'
+    }
+
   }
 
   render() {
     return (
-      <Fragment>
-        <div>
-          <vaadin-grid theme="row-stripes" height-by-rows column-reordering-allowed>
-          <vaadin-grid-column auto-select hidden id="grdSelect" flex-grow="0.1" width="50px" />
-            <vaadin-grid-column path="productNm" header="상품 명" text-align="center" flex-grow="4" />
-            <vaadin-grid-column path="productPoint" header="충전 포인트" text-align="center" flex-grow="2" />
-            <vaadin-grid-column path="pointCash" header="포인트 가격" text-align="center" flex-grow="1" />
-            {/* <vaadin-grid-column path="cashRatio" header="현금 비율" text-align="center" flex-grow="1" /> */}
-          </vaadin-grid>
-        </div>
-      </Fragment>
+      <vaadin-grid theme="column-borders row-stripes" height-by-rows column-reordering-allowed>
+        <vaadin-grid-column auto-select hidden id="grdSelect" flex-grow="0.1" width="50px" />
+        <vaadin-grid-column path="productNm" header="상품 명" text-align="center" flex-grow="4" />
+        <vaadin-grid-column path="productPoint" header="충전 포인트" text-align="right" flex-grow="2" />
+        <vaadin-grid-column path="pointCash" header="포인트 가격" text-align="right" flex-grow="1" />
+        {/* <vaadin-grid-column path="cashRatio" header="현금 비율" text-align="center" flex-grow="1" /> */}
+      </vaadin-grid>
     );
   }
 }

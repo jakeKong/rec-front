@@ -5,6 +5,8 @@ import { changeTypeItems } from '../../items';
 
 import * as XLSX from 'xlsx';
 
+import { comma } from '../../../common/utils';
+
 class ChangePointHistoryGrid extends Component {
 
   componentDidMount() {
@@ -31,10 +33,10 @@ class ChangePointHistoryGrid extends Component {
         odrPaymentNo: e.get("odrNo") ? e.get("odrNo") : e.get("paymentNo"),
         odrNo: e.get("odrNo"),
         paymentNo: e.get("paymentNo"),
-        paymentCash: e.get("paymentCash"),
+        paymentCash: e.get("paymentCash") ? comma(e.get("paymentCash"))+' 원' : null,
         changeType: changeType,
-        changePoint: e.get("changePoint"),
-        currentBalPoint: e.get("currentBalPoint"),
+        changePoint: comma(e.get("changePoint"))+' P',
+        currentBalPoint: comma(e.get("currentBalPoint"))+' P',
         userNm: e.get("userNm"),
         activated: e.get("activated")
       })
@@ -205,6 +207,22 @@ class ChangePointHistoryGrid extends Component {
       grid.items = list.slice(start, end);
 
     }
+
+    // 스타일 적용 이후 우측정렬 미적용으로 인한 컬럼 렌더링 - 2019-07-12 @yieon
+    const column = grid.querySelectorAll('vaadin-grid-column');
+    column[2].renderer = function(root, column, rowData) {
+      root.innerHTML = rowData.item.paymentCash
+      root.style = 'text-align: right'
+    }
+    column[4].renderer = function(root, column, rowData) {
+      root.innerHTML = rowData.item.changePoint
+      root.style = 'text-align: right'
+    }
+    column[5].renderer = function(root, column, rowData) {
+      root.innerHTML = rowData.item.currentBalPoint
+      root.style = 'text-align: right'
+    }
+    
   }
 
   render() {

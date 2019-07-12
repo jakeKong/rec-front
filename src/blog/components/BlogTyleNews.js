@@ -42,7 +42,8 @@ class BlogTyleNews extends Component {
         pTitle.innerHTML = e.get('tylenewsTitle');
         // 연결된 블로그 링크 호출 이벤트
         pTitle.addEventListener('click', function() {
-          window.open(e.get('link'));
+          console.log(e.get('tylenewsLink'))
+          window.open(e.get('tylenewsLink'));
         })
         divBlogCardTitle.appendChild(pTitle);
   

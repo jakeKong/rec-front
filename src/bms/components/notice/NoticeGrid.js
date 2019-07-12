@@ -73,7 +73,7 @@ class NoticeGrid extends Component {
     let list =[];
     // 그리드 컬럼 인덱스를 위한 변수
     let i=1;
-    noticeList.reverse().forEach(e => {
+    noticeList.forEach(e => {
       // push Value type is JSON
       list.push({
         index: i++,
@@ -87,7 +87,7 @@ class NoticeGrid extends Component {
     
     // Grid Items Setting
     const grid = document.querySelector('vaadin-grid');
-    grid.items = list;
+    grid.items = list.reverse();
     grid.pageSize = 15;
 
     grid.className = "agz-bbs";

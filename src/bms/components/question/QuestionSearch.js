@@ -147,7 +147,8 @@ class QuestionSearch extends Component {
     // console.log(tfSearch.shadowRoot.querySelector('.vaadin-text-field-container'))
     // // tfSearch.shadowRoot.querySelector('.vaadin-text-field-container').className = 'ipt-txt';
     // console.log(tfSearch.shadowRoot.querySelector('.vaadin-text-field-container').querySelectorAll('div')[0])
-    // tfSearch.shadowRoot.querySelector('.vaadin-text-field-container').querySelectorAll('div')[0].className = 'ipt-txt';
+    
+    // tfSearch.shadowRoot.querySelector('.vaadin-text-field-container').querySelectorAll('div')[0].style = 'width: 160px height: 200px backgrount:';
     btnSearch.className = 'btn';
   }
 
