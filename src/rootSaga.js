@@ -34,7 +34,7 @@ import question, { questionSaga } from './bms/modules/QuestionModule';
 
 // MPA
 import bldRgst, { brRecapTitleInfoSaga } from './mpa/modules/BrRecapTitleInfoModule';
-import landInfo, { landInfoViewSaga } from './mpa/modules/LandInfoViewModule';
+import landInfo, { landInfoViewSaga, makelandInfoViewSaga } from './mpa/modules/LandInfoViewModule';
 //import possession, { possessionSaga } from './mpa/modules/PossessionModule';
 //import landCharacteristics, { landCharacteristicsSaga } from './mpa/modules/LandCharacteristicsModule';
 //import landUse, { landUseSaga } from './mpa/modules/LandUseModule';
@@ -64,6 +64,7 @@ export function* rootSaga() {
   // MPA
   yield fork(brRecapTitleInfoSaga);
   yield fork(landInfoViewSaga);
+  yield fork(makelandInfoViewSaga);
   //yield fork(possessionSaga);
   //yield fork(landCharacteristicsSaga);
   //yield fork(landUseSaga);

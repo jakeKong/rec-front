@@ -12,9 +12,13 @@ const GET_LAND_INFO_LIST = 'marketprice/GET_LAND_INFO_LIST';
 const GET_LAND_INFO_LIST_RECEIVED = 'marketprice/GET_LAND_INFO_LIST_RECEIVED';
 const GET_LAND_INFO_LIST_FAILURE = 'marketprice/GET_LAND_INFO_LIST_FAILURE';
 
+const MAKE_LAND_INFO_LIST = 'marketprice/MAKE_LAND_INFO_LIST';
+const MAKE_LAND_INFO_LIST_RECEIVED = 'marketprice/MAKE_LAND_INFO_LIST_RECEIVED';
+const MAKE_LAND_INFO_LIST_FAILURE = 'marketprice/MAKE_LAND_INFO_LIST_FAILURE';
 // Actions
 // 외부에서 호출하여 입력받아줄 값 ( ex) this.getProductList(search) )
 export const getLandInfo = createAction(GET_LAND_INFO_LIST, search => search);
+export const makeLandInfo = createAction(MAKE_LAND_INFO_LIST, search => search);
 
 // 초기 state값 설정
 const initialState = Map({
@@ -35,12 +39,22 @@ function* getLandInfoViewSaga(action) {
     yield put({type: GET_LAND_INFO_LIST_FAILURE, payload: error});
   }
 }
-
+function* makeLandInfoViewSaga(action) {
+  try {
+    const response = yield call(api.makeLandInfoView, action.payload);
+    yield put({type: MAKE_LAND_INFO_LIST_RECEIVED, payload: response});
+  } catch (error) {
+    yield put({type: MAKE_LAND_INFO_LIST_FAILURE, payload: error});
+  }
+}
 // Product default root Saga
 export function* landInfoViewSaga() {
   yield takeEvery(GET_LAND_INFO_LIST, getLandInfoViewSaga);
 }
-
+// Product default root Saga
+export function* makelandInfoViewSaga() {
+  yield takeEvery(MAKE_LAND_INFO_LIST, makeLandInfoViewSaga);
+}
 // 액션 핸들러 설정
 export default handleActions({
   [GET_LAND_INFO_LIST]: (state, action) => {
@@ -55,6 +69,21 @@ export default handleActions({
   [GET_LAND_INFO_LIST_FAILURE]: (state, action) => {
     const {error} = action.payload;
     console.log('GET_LAND_INFO_LIST_FAILURE onFailure')
+    console.log('ERROR: ' + error)
+    return {error: true};
+  },
+  [MAKE_LAND_INFO_LIST]: (state, action) => {
+    console.log('MAKE_LAND_INFO_LIST onPending')
+    return {pending: true, error: false};
+  },
+  [MAKE_LAND_INFO_LIST_RECEIVED]: (state, action) => {
+    console.log('MAKE_LAND_INFO_LIST_RECEIVED onReceived')
+    const {data: content} = action.payload;
+    return {pending: false, error: false, success: true, makeResult: fromJS(content)};
+  },
+  [MAKE_LAND_INFO_LIST_FAILURE]: (state, action) => {
+    const {error} = action.payload;
+    console.log('MAKE_LAND_INFO_LIST_FAILURE onFailure')
     console.log('ERROR: ' + error)
     return {error: true};
   },

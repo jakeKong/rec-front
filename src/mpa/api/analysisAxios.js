@@ -19,4 +19,19 @@ axios({
     // 'endDate': search.pnu,
     })
 });
+
+export const makeLandInfoView = (search) => 
+axios({
+    method: 'POST',
+    url: `${config.marketPriceService}/analysis/pdf`,
+    headers: {
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Accept': 'application/json'
+    },
+    data: JSON.stringify({
+        'jibunAddr': search.jibunAddr,
+        'roadAddr': search.roadAddr,
+        'pnu': search.pnu,
+    })
+});
   

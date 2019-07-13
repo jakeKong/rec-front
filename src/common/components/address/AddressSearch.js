@@ -17,7 +17,8 @@ const renderSuggestion = suggestion => (
 
 let url = `${config.commonService}juso/list/`;
 let selectedSuggestion = null;
-
+let onComplete;
+let onSearchClick;
 class AddressSearch extends Component {
   constructor() {
     super();
@@ -32,7 +33,7 @@ class AddressSearch extends Component {
     fetch(url + value)
           .then(res => res.json())
           .then((data) => {     
-            console.log(url + value);     
+            // console.log(url + value);     
             //  console.log(data);      
             if(data.length >= 1 && data[0].roadAddr !== null) {              
               // console.log(data);
@@ -52,18 +53,11 @@ class AddressSearch extends Component {
   componentDidMount() {
     const btnSearch = document.querySelector('#btnSearch');
     btnSearch.innerHTML = '정보조회';
-    const {onComplete, onSearchClick} = this.props;
+    onComplete = this.props.onComplete;
+    onSearchClick = this.props.onSearchClick;
 
     btnSearch.addEventListener('click',onSearchClick);
 
-    // btnSearch.addEventListener('click', function() {
-    //   //selectedSuggestion이 null이 아닌 경우에만 반환하도록 한다.
-    //   if(selectedSuggestion !== null || selectedSuggestion !== undefined) {
-        
-    //     // this.props.onComplete(selectedSuggestion);
-    //     onComplete(selectedSuggestion);
-    //   }    
-    // })
   }
   //자동완성 제안 주소 중 하나를 선택한 경우 발생하는 이벤트
   //이벤트 발생 시 현재 선택한 suggestion을 기록
@@ -78,6 +72,7 @@ class AddressSearch extends Component {
    */
   onSuggestionSelected =(event, { suggestion, suggestionValue, suggestionIndex, sectionIndex, method }) => {
     selectedSuggestion = suggestion;
+    onComplete(selectedSuggestion);
   }
   onSuggestionsFetchRequested = ({ value }) => {
     this.getSuggestions(value);

@@ -9,7 +9,7 @@ export { default as BrRecapTitleInfoPage } from './pages/BrRecapTitleInfoPage';
 
 
 // API - 건축물대장정보 총괄표제부
-export { getLandInfoView } from './api/analysisAxios';
+export { getLandInfoView, makeLandInfoView } from './api/analysisAxios';
 // COMPONENTS - 건축물대장정보 총괄표제부
 export { default as LandInfoView } from './components/LandInfoView';
 // CONTAINERS - 건축물대장정보 총괄표제부

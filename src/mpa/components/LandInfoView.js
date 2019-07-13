@@ -61,21 +61,27 @@ class LandInfoView extends Component {
     //분석결과
     {
       const analysisTradeInfo = landInfoData.get("analysisTradeInfo");
+      
+      console.log(analysisTradeInfo);
       const tradList = analysisTradeInfo.get("trade");
-      if(tradList != null && tradList.length > 5) {
-        document.querySelector('#td지번주소_A').innerHTML = tradList.get(0).get("지번주소");
-        document.querySelector('#td지번주소_B').innerHTML = tradList.get(1).get("지번주소");
-        document.querySelector('#td지번주소_C').innerHTML = tradList.get(2).get("지번주소");
-        document.querySelector('#td지번주소_D').innerHTML = tradList.get(3).get("지번주소");
-        document.querySelector('#td지번주소_E').innerHTML = tradList.get(4).get("지번주소");
-        document.querySelector('#td지번주소_F').innerHTML = tradList.get(5).get("지번주소");
+      // console.log(tradList);
+      // console.log(tradList.get(0));
+      // console.log(tradList.get(0).get("지번주소"));
+      // console.log(tradList.get(0).get("거래건축가격"));
+      if(tradList != null && tradList.size > 5) {
+        document.querySelector('#tdAddrA').innerHTML = tradList.get(0).get("지번주소");
+        document.querySelector('#tdAddrB').innerHTML = tradList.get(1).get("지번주소");
+        document.querySelector('#tdAddrC').innerHTML = tradList.get(2).get("지번주소");
+        document.querySelector('#tdAddrD').innerHTML = tradList.get(3).get("지번주소");
+        document.querySelector('#tdAddrE').innerHTML = tradList.get(4).get("지번주소");
+        document.querySelector('#tdAddrF').innerHTML = tradList.get(5).get("지번주소");
 
-        document.querySelector('#td거래가격_A').innerHTML = tradList.get(0).get("거래가격");
-        document.querySelector('#td거래가격_B').innerHTML = tradList.get(1).get("거래가격");
-        document.querySelector('#td거래가격_C').innerHTML = tradList.get(2).get("거래가격");
-        document.querySelector('#td거래가격_D').innerHTML = tradList.get(3).get("거래가격");
-        document.querySelector('#td거래가격_E').innerHTML = tradList.get(4).get("거래가격");
-        document.querySelector('#td거래가격_F').innerHTML = tradList.get(5).get("거래가격");
+        document.querySelector('#tdPriceA').innerHTML = tradList.get(0).get("거래가격");
+        document.querySelector('#tdPriceB').innerHTML = tradList.get(1).get("거래가격");
+        document.querySelector('#tdPriceC').innerHTML = tradList.get(2).get("거래가격");
+        document.querySelector('#tdPriceD').innerHTML = tradList.get(3).get("거래가격");
+        document.querySelector('#tdPriceE').innerHTML = tradList.get(4).get("거래가격");
+        document.querySelector('#tdPriceF').innerHTML = tradList.get(5).get("거래가격");
       }
     }
     document.querySelector('#imgMap').src = landInfoData.get("analysisTradeInfo").get("mapUrl");//도로접면
@@ -215,33 +221,33 @@ class LandInfoView extends Component {
                     </tr>
                     <tr>
                       <td>A</td>
-                      <td id="td지번주소_A"></td>
-                      <td id="td거래가격_A" className="th-right"></td>
+                      <td id="tdAddrA"></td>
+                      <td id="tdPriceA" className="th-right"></td>
                     </tr>
                     <tr>
                       <td>B</td>
-                      <td id="td지번주소_B"></td>
-                      <td id="td거래가격_B" className="th-right"></td>
+                      <td id="tdAddrB"></td>
+                      <td id="tdPriceB" className="th-right"></td>
                     </tr>
                     <tr>
                       <td>C</td>
-                      <td id="td지번주소_C"></td>
-                      <td id="td거래가격_C" className="th-right"></td>
+                      <td id="tdAddrC"></td>
+                      <td id="tdPriceC" className="th-right"></td>
                     </tr>
                     <tr>
                       <td>D</td>
-                      <td id="td지번주소_D"></td>
-                      <td id="td거래가격_D" className="th-right"></td>
+                      <td id="tdAddrD"></td>
+                      <td id="tdPriceD" className="th-right"></td>
                     </tr>
                     <tr>
                       <td>E</td>
-                      <td id="td지번주소_E"></td>
-                      <td id="td거래가격_E" className="th-right"></td>
+                      <td id="tdAddrE"></td>
+                      <td id="tdPriceE" className="th-right"></td>
                     </tr>
                     <tr>
                       <td>F</td>
-                      <td id="td지번주소_F"></td>
-                      <td id="td거래가격_F" className="th-right"></td>
+                      <td id="tdAddrF"></td>
+                      <td id="tdPriceF" className="th-right"></td>
                     </tr>
                     </tbody>
                   </table>
