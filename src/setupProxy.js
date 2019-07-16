@@ -38,4 +38,10 @@ module.exports = function(app) {
       changeOrigin: true
     })
   );
+  app.use(
+    proxy('/web/srd/common', {
+      target: 'http://localhost:8007',
+      changeOrigin: true
+    })
+  );
 }
