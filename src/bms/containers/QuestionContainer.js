@@ -64,9 +64,13 @@ class QuestionContainer extends Component {
     }})
   }
 
-  searchCallback = async (dataSearchChild) => {
-    this.setState({search: dataSearchChild});
-
+  searchCallback = async ( fromDt, toDt, questionTitle, questionWriter) => {
+    this.setState({search: {
+      fromDt: fromDt,
+      toDt: toDt,
+      questionTitle: questionTitle,
+      questionWriter: questionWriter
+    }});
     const { search } = this.state;
     const { email } = this.props;
     this.getQuestionListByEmail(email, search);

@@ -11,29 +11,31 @@ import '@vaadin/vaadin-select'
 import '@vaadin/vaadin-list-box'
 import '@vaadin/vaadin-item'
 
-import {Calendar} from 'primereact/calendar';
+import Sugar from 'sugar';
+import 'sugar/locales/ko';
 
 import { changeTypeItems } from '../../items';
-import { monthBeforeDate, currentDate, calendarLocale } from '../../../common/items';
+import { monthBeforeDate, currentDate } from '../../../common/items';
 
-let dateFormat = require('dateformat');
 class ChangePointHistorySearch extends Component {
 
   constructor(props) {
     super(props);
     this.state ={
-      userNm: null,
-      odrNo: null,
-      paymentNo: null,
-      fromDt: null,
-      toDt: null,
-      changeType: null
+      search: {
+        userNm: null,
+        odrNo: null,
+        paymentNo: null,
+        fromDt: null,
+        toDt: null,
+        changeType: null
+      },
     }
   }
 
   componentDidMount() {
       // search parameter default setting
-    let { userNm,odrNo,paymentNo,fromDt,toDt,changeType } = this.state;
+    const { search } = this.state;
     const { role } = this.props;
 
     // search label set
@@ -45,7 +47,7 @@ class ChangePointHistorySearch extends Component {
     const slChangeType = document.querySelector('#slChangeType')
     // default status Select set
     slChangeType.value = 'ALL';
-    changeType = slChangeType.value;
+    search.changeType = slChangeType.value;
     slChangeType.renderer = function(root) {
       if (root.firstChild) {
         return;
@@ -75,9 +77,9 @@ class ChangePointHistorySearch extends Component {
 
     // 상태 콤보박스의 값 변경 시 SearchParameter에 선택한 값으로 변경
     slChangeType.addEventListener('value-changed', function(e) {
-      changeType = slChangeType.value;
-      odrNo = null;
-      paymentNo = null;
+      search.changeType = slChangeType.value;
+      search.odrNo = null;
+      search.paymentNo = null;
       cbSearch.value = null;
       // role
       if (role === 'ROLE_ADMIN') {
@@ -132,51 +134,79 @@ class ChangePointHistorySearch extends Component {
     tfSearch.addEventListener('input', function() {
       if (role === 'ROLE_ADMIN') {
         if (cbSearch.value === '결제번호') {
-          paymentNo = tfSearch.value;
+          search.paymentNo = tfSearch.value;
         } else if (cbSearch.value === '주문번호') {
-          odrNo = tfSearch.value;
+          search.odrNo = tfSearch.value;
         } else {
-          userNm = tfSearch.value;
+          search.userNm = tfSearch.value;
         }
       } else {
         if (slChangeType.value === 'PAYMENT_ADD' || slChangeType.value === 'PAYMENT_SUB') {
-          paymentNo = tfSearch.value;
+          search.paymentNo = tfSearch.value;
         } else if (slChangeType.value === 'PURCHASE_ADD' || slChangeType.value === 'PURCHASE_SUB') {
-          odrNo = tfSearch.value;
+          search.odrNo = tfSearch.value;
         } else {
-          userNm = tfSearch.value;
+          search.userNm = tfSearch.value;
         }
       }
     })
-     //날짜 선택 필드 세팅
-     {
-      // Start date-picker set
-      const dpStart = document.querySelector('#dpStart')
-      // default before Week date set
-      fromDt = dateFormat(new Date(monthBeforeDate), 'yyyy-mm-dd');
-      this.setState({fromDt: fromDt});
-      dpStart.onChanged = function() {
-        fromDt = dpStart.value;
-      };
 
-      // End date-picker set
-      const dpEnd = document.querySelector('#dpEnd')
-      // default today
-      toDt = dateFormat(new Date(currentDate), 'yyyy-mm-dd');
-      this.setState({toDt: toDt});
-      dpEnd.addEventListener('onChanged', function() {
-        toDt = dpEnd.value;
-      })
+    // Start date-picker set
+    const dpStart = document.querySelector('#dpStart')
+    // default before Week date set
+    dpStart.value = monthBeforeDate;
+    search.fromDt = dpStart.value;
+    dpStart.i18n = {
+      today: '오늘',
+      cancel: '취소',
+      firstDayOfWeek: 1,
+      monthNames:
+        '1월_2월_3월_4월_5월_6월_7월_8월_9월_10월_11월_12월'.split('_'),
+      weekdays: '일요일_월요일_화요일_수요일_목요일_금요일_토요일'.split('_'),
+      weekdaysShort: '일_월_화_수_목_금_토'.split('_'),
+      formatDate: function(date) {
+        return Sugar.Date.format(Sugar.Date.create(date), '{yyyy}년{MM}월{dd}일');
+      },
+      formatTitle: function(monthName, fullYear) {
+        return fullYear + '년 ' + monthName;
+      },
     }
+    dpStart.addEventListener('value-changed', function() {
+      search.fromDt = dpStart.value;
+    })
+
+    // End date-picker set
+    const dpEnd = document.querySelector('#dpEnd')
+    // default today
+    dpEnd.value = currentDate;
+    search.toDt = dpEnd.value;
+    dpEnd.i18n = {
+      today: '오늘',
+      cancel: '취소',
+      firstDayOfWeek: 1,
+      monthNames:
+        '1월_2월_3월_4월_5월_6월_7월_8월_9월_10월_11월_12월'.split('_'),
+      weekdays: '일요일_월요일_화요일_수요일_목요일_금요일_토요일'.split('_'),
+      weekdaysShort: '일_월_화_수_목_금_토'.split('_'),
+      formatDate: function(date) {
+        return Sugar.Date.format(Sugar.Date.create(date), '{yyyy}년{MM}월{dd}일');
+      },
+      formatTitle: function(monthName, fullYear) {
+        return fullYear + '년 ' + monthName;
+      },
+    }
+    dpEnd.addEventListener('value-changed', function() {
+      search.toDt = dpEnd.value;
+    })
 
     // Search button set
     const { searchCallback } = this.props;
     const btnSearch = document.querySelector('#btnSearch')
     btnSearch.innerHTML = '조회';
     btnSearch.addEventListener('click', function() {
-      searchCallback(userNm,odrNo,paymentNo,dateFormat(new Date(fromDt), 'yyyymmdd'), dateFormat(new Date(toDt), 'yyyymmdd'),changeType);
-      odrNo = null;
-      paymentNo = null;
+      searchCallback(search);
+      search.odrNo = null;
+      search.paymentNo = null;
       tfSearch.value = null;
     })
   }
@@ -188,11 +218,9 @@ class ChangePointHistorySearch extends Component {
           <vaadin-select id="slChangeType" />
 
         <label className="label-center" id="lbDate" />
-        <Calendar locale={calendarLocale} id="dpStart" showIcon={true} dateFormat="yy-mm-dd" value={this.state.fromDt} onChange={(e) => this.setState({fromDt: e.value})}/>
-        {/* <vaadin-date-picker id="dpStart" /> */}
-        <label className="label" id="lbPunct" />
-        <Calendar locale={calendarLocale} id="dpEnd" showIcon={true} dateFormat="yy-mm-dd" value={this.state.toDt} onChange={(e) => this.setState({toDt: e.value})}/>
-        {/* <vaadin-date-picker id="dpEnd" /> */}
+          <vaadin-date-picker id="dpStart" />
+            <label className="label-center" id="lbPunct" />
+          <vaadin-date-picker id="dpEnd" />
 
         <label className="label-center" id="lbSearch"/>
         <vaadin-combo-box id="cbSearch" hidden/>

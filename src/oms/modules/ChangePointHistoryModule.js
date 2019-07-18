@@ -23,7 +23,7 @@ const UPDATE_CHANGE_POINT_HISTORY_ACTIVATED_FAILURE = 'changePointHistory/UPDATE
 
 // Actions
 // 외부에서 호출하여 입력받아줄 값 ( ex) this.getChangePointHistoryListByEmail(search) )
-export const getChangePointHistoryList = createAction(GET_CHANGE_POINT_HISTORY_LIST, search => search);
+export const getChangePointHistoryList = createAction(GET_CHANGE_POINT_HISTORY_LIST, (userNm,odrNo,paymentNo,fromDt,toDt,changeType) => ({userNm,odrNo,paymentNo,fromDt,toDt,changeType}));
 export const getChangePointHistoryListByEmail = createAction(GET_CHANGE_POINT_HISTORY_LIST_BY_EMAIL, (email, search) => ({email, search}));
 export const addChangePointHistory = createAction(ADD_CHANGE_POINT_HISTORY, (email, dto, search) => ({email, dto, search}));
 export const updateChangePointHistoryActivated = createAction(UPDATE_CHANGE_POINT_HISTORY_ACTIVATED, (changePointSid, changePointActivated) => ({changePointSid, changePointActivated}))

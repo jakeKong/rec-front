@@ -6,7 +6,7 @@ const OrderHistoryByEmailPage = () => {
   return (
     // <div>
       <PageTemplate>
-        <div className="page-description">마이페이지 > 구매내역</div>
+        <div className="page-description">마이페이지 > 주문내역</div>
         <OrderHistoryByEmailContainer />
       </PageTemplate>
     // </div>

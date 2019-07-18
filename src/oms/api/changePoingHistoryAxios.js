@@ -2,7 +2,7 @@ import axios from 'axios';
 import config from '../../config';
 
 // 포인트 변동내역 조회 (관리자)
-export const getChangePointHistoryList = (search) => axios({
+export const getChangePointHistoryList = (userNm,odrNo,paymentNo,fromDt,toDt,changeType) => axios({
   method: 'POST',
   url: `${config.orderService}/changepoint/history/list/`,
   headers: {
@@ -10,12 +10,12 @@ export const getChangePointHistoryList = (search) => axios({
     'Accept': 'application/json'
   },
   data: JSON.stringify({
-    'userNm': search.userNm,
-    'odrNo': search.odrNo,
-    'paymentNo': search.paymentNo,
-    'fromDt': search.fromDt,
-    'toDt': search.toDt,
-    'changeType': search.changeType
+    'userNm': userNm,
+    'odrNo': odrNo,
+    'paymentNo': paymentNo,
+    'fromDt': fromDt,
+    'toDt': toDt,
+    'changeType': changeType
   })
 });
 

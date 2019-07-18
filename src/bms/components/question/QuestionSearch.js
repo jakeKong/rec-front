@@ -3,39 +3,36 @@ import React, { Component, Fragment } from 'react';
 // layout
 import '@vaadin/vaadin-ordered-layout';
 
-import Sugar from 'sugar';
-import 'sugar/locales/ko';
-
 // component
 import '@vaadin/vaadin-button';
 import '@vaadin/vaadin-combo-box';
 import '@vaadin/vaadin-text-field';
 import '@vaadin/vaadin-icons'
-import '@vaadin/vaadin-date-picker'
 
 import '@vaadin/vaadin-select'
 import '@vaadin/vaadin-list-box'
 import '@vaadin/vaadin-item'
 
-import { monthBeforeDate, currentDate } from '../../../common/items';
+import {Calendar} from 'primereact/calendar';
 
+import { monthBeforeDate, currentDate, calendarLocale } from '../../../common/items';
+
+let dateFormat = require('dateformat');
 class QuestionSearch extends Component {
 
   constructor(props) {
     super(props);
     this.state ={
-        search: {
-          fromDt: null,
-          toDt: null,
-          questionTitle: null,
-          questionWriter: null
-        }
+        fromDt: null,
+        toDt: null,
+        questionTitle: null,
+        questionWriter: null
     }
   }
 
   componentDidMount() {
     // search parameter default setting
-    const { search } = this.state;
+    let { fromDt, toDt, questionTitle, questionWriter} = this.state;
     const { role } = this.props;
 
     // search label set
@@ -44,53 +41,27 @@ class QuestionSearch extends Component {
     const lbSearch = document.querySelector('#lbSearch');
     lbSearch.innerHTML = '제목';
     
-    // Start date-picker set
-    const dpStart = document.querySelector('#dpStart')
-    // default before Week date set
-    dpStart.value = monthBeforeDate;
-    search.fromDt = dpStart.value;
-    dpStart.i18n = {
-      today: '오늘',
-      cancel: '취소',
-      firstDayOfWeek: 1,
-      monthNames:
-        '1월_2월_3월_4월_5월_6월_7월_8월_9월_10월_11월_12월'.split('_'),
-      weekdays: '일요일_월요일_화요일_수요일_목요일_금요일_토요일'.split('_'),
-      weekdaysShort: '일_월_화_수_목_금_토'.split('_'),
-      formatDate: function(date) {
-        return Sugar.Date.format(Sugar.Date.create(date), '{yyyy}년{MM}월{dd}일');
-      },
-      formatTitle: function(monthName, fullYear) {
-        return fullYear + '년 ' + monthName;
-      },
-    }
-    dpStart.addEventListener('value-changed', function() {
-      search.fromDt = dpStart.value;
-    })
+    
+    //날짜 선택 필드 세팅
+    {
+      // Start date-picker set
+      const dpStart = document.querySelector('#dpStart')
+      // default before Week date set
+      fromDt = dateFormat(new Date(monthBeforeDate), 'yyyy-mm-dd');
+      this.setState({fromDt: fromDt});
+      dpStart.onChanged = function() {
+        fromDt = dpStart.value;
+      };
 
-    // End date-picker set
-    const dpEnd = document.querySelector('#dpEnd')
-    // default today
-    dpEnd.value = currentDate;
-    search.toDt = dpEnd.value;
-    dpEnd.i18n = {
-      today: '오늘',
-      cancel: '취소',
-      firstDayOfWeek: 1,
-      monthNames:
-        '1월_2월_3월_4월_5월_6월_7월_8월_9월_10월_11월_12월'.split('_'),
-      weekdays: '일요일_월요일_화요일_수요일_목요일_금요일_토요일'.split('_'),
-      weekdaysShort: '일_월_화_수_목_금_토'.split('_'),
-      formatDate: function(date) {
-        return Sugar.Date.format(Sugar.Date.create(date), '{yyyy}년{MM}월{dd}일');
-      },
-      formatTitle: function(monthName, fullYear) {
-        return fullYear + '년 ' + monthName;
-      },
+      // End date-picker set
+      const dpEnd = document.querySelector('#dpEnd')
+      // default today
+      toDt = dateFormat(new Date(currentDate), 'yyyy-mm-dd');
+      this.setState({toDt: toDt});
+      dpEnd.addEventListener('onChanged', function() {
+        toDt = dpEnd.value;
+      })
     }
-    dpEnd.addEventListener('value-changed', function() {
-      search.toDt = dpEnd.value;
-    })
 
     const cbSearch = document.querySelector('#cbSearch')
 
@@ -101,8 +72,8 @@ class QuestionSearch extends Component {
       cbSearch.items = ['제목', '이름'];    
       cbSearch.value = '제목';
       cbSearch.addEventListener('value-changed', function() {
-        search.questionTitle = null;
-        search.questionWriter = null;
+        questionTitle = null;
+        questionWriter = null;
         tfSearch.value = null;
       })
     } else {
@@ -117,13 +88,13 @@ class QuestionSearch extends Component {
     tfSearch.addEventListener('input', function() {
       if (role) {
         if (cbSearch.value === '제목') {
-          search.questionTitle = tfSearch.value;
+          questionTitle = tfSearch.value;
         }
         if (cbSearch.value === '이름') {
-          search.questionWriter = tfSearch.value;
+          questionWriter = tfSearch.value;
         }
       } else {
-        search.questionTitle = tfSearch.value;
+        questionTitle = tfSearch.value;
       }
     })
 
@@ -132,23 +103,8 @@ class QuestionSearch extends Component {
     const btnSearch = document.querySelector('#btnSearch')
     btnSearch.innerHTML = '조회';
     btnSearch.addEventListener('click', function() {
-      searchCallback(search);
+      searchCallback(dateFormat(new Date(fromDt), 'yyyymmdd'), dateFormat(new Date(toDt), 'yyyymmdd'), questionTitle, questionWriter);
     })
-
-    // dpStart.className = 'datepickr';
-    // // console.log(dpStart.shadowRoot.querySelector('#input').shadowRoot.querySelector('.vaadin-text-field-container'));
-    // // console.log(dpStart.shadowRoot.querySelector('#input').shadowRoot.querySelector('.vaadin-text-field-container').querySelectorAll('div')[0]);
-    // // dpStart.shadowRoot.querySelector('#input').shadowRoot.querySelector('.vaadin-text-field-container').querySelectorAll('div')[0].className= 'datepickr';
-    // // dpStart.shadowRoot.querySelector('#input').shadowRoot.querySelector('.vaadin-text-field-container').className = 'datepickr';
-    // // dpStart.shadowRoot.querySelector('#input').className = 'datepickr';
-    // dpEnd.className = 'datepickr';
-    // // cbSearch.className = '';
-    // tfSearch.className = 'ipt-txt';
-    // console.log(tfSearch.shadowRoot.querySelector('.vaadin-text-field-container'))
-    // // tfSearch.shadowRoot.querySelector('.vaadin-text-field-container').className = 'ipt-txt';
-    // console.log(tfSearch.shadowRoot.querySelector('.vaadin-text-field-container').querySelectorAll('div')[0])
-    
-    // tfSearch.shadowRoot.querySelector('.vaadin-text-field-container').querySelectorAll('div')[0].style = 'width: 160px height: 200px backgrount:';
     btnSearch.className = 'btn';
   }
 
@@ -156,9 +112,11 @@ class QuestionSearch extends Component {
     return (
       <Fragment>
         <label className="label" id="lbDate" />
-        <vaadin-date-picker id="dpStart" />
+        <Calendar locale={calendarLocale} id="dpStart" showIcon={true} dateFormat="yy-mm-dd" value={this.state.fromDt} onChange={(e) => this.setState({fromDt: e.value})}/>
+        {/* <vaadin-date-picker id="dpStart" /> */}
         <label className="label" id="lbPunct" />
-        <vaadin-date-picker id="dpEnd" />
+        <Calendar locale={calendarLocale} id="dpEnd" showIcon={true} dateFormat="yy-mm-dd" value={this.state.toDt} onChange={(e) => this.setState({toDt: e.value})}/>
+        {/* <vaadin-date-picker id="dpEnd" /> */}
 
         <vaadin-combo-box id="cbSearch"/>
         <label className="label" id="lbSearch"/>

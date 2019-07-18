@@ -1,0 +1,26 @@
+
+body .p-datatable table {
+  border-collapse: collapse;
+  width: 100%;
+  table-layout: fixed;
+}
+body .p-datatable .p-datatable-thead > tr > th {
+  padding: 0.571em 0.857em;
+  border-bottom: 1px solid #9e2323;
+  border-top: 1px solid #9e2323;
+  border-left: 1px solid #9e2323;
+  border-right: 0px solid #9e2323;
+  font-weight: 700;
+  color: #ffffff;
+  background-color: #4fd80b;
+  text-align: center;
+}
+body .p-datatable .p-datatable-tbody > tr > td {
+  background: inherit;
+  border-bottom: 1px solid #9e2323;
+  border-top: 1px solid #9e2323;
+  border-left: 1px solid #9e2323;
+  border-right: 1px solid #9e2323;
+  background-color: #b5dda280;
+  padding: 0.429em 0.857em;
+}
