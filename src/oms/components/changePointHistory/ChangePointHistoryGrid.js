@@ -12,13 +12,14 @@ import * as XLSX from 'xlsx';
 
 import { comma } from '../../../common/utils';
 
-let gridData =[];
 class ChangePointHistoryGrid extends Component {
 
   constructor(props) {
     super(props);
     this.state = {gridData: [],hiddenCheck: ''}
+    this.test = this.test.bind(this);
   }
+
   componentDidMount() {
     const { changePointHistoryList } = this.props;
     if (!changePointHistoryList || changePointHistoryList === undefined || changePointHistoryList.isEmpty()) {
@@ -26,7 +27,7 @@ class ChangePointHistoryGrid extends Component {
     }
     
     let dateFormat = require('dateformat');
-    console.log(changePointHistoryList);
+    let list = [];
     changePointHistoryList.forEach(e => {
       let changeType = '';
       changeTypeItems.forEach(function(row){
@@ -35,7 +36,7 @@ class ChangePointHistoryGrid extends Component {
         };
       });
       // push Value type is JSON
-      gridData.push({
+      list.push({
         changePointSid: e.get("changeSid"),
         email: e.get("email"), 
         changeDt: dateFormat(new Date(e.get("changeDt")), 'yyyy년mm월dd일 HH:MM:ss'),
@@ -51,9 +52,7 @@ class ChangePointHistoryGrid extends Component {
         activated: e.get("activated")
       })
     })
-    
-    gridData.reverse();
-    this.setState({gridData: gridData});
+    this.setState({gridData: list.reverse()});
 
     //grid.className = "agz-bbs";
 
@@ -68,11 +67,6 @@ class ChangePointHistoryGrid extends Component {
     const btnExcel = document.querySelector('#btnExcel');
     if (role === 'ROLE_ADMIN') {
       btnExcel.hidden = true;
-
-      const {changePointCancleCallback} = this.props;
-      document.querySelector('#grdBtnPaymentCancle').renderer = function(root, column, rowData) {
-        
-      }
     } else {
       btnExcel.hidden = false;
       btnExcel.textContent = 'EXCEL';
@@ -132,15 +126,33 @@ class ChangePointHistoryGrid extends Component {
     // }
     
   }
+  test(item) {
+    const { changePointCancleCallback } = this.props;
+    changePointCancleCallback(item)
+  }
   cancelTemplate(rowData, column) {
-    console.log(rowData);
+    console.log(React.createRef().current)
+    function onClickButton() {
+      // const { changePointCancleCallback } = this.props;
+      // console.log(ChangePointHistoryGrid.test());
+      // const {test} = this.test;
+      const check = window.confirm('결제하신 포인트상품에 대한 포인트결제 취소를 진행하시겠습니까?');
+      if (check === true) {
+        // 결제취소 버튼 클릭 시 동작 이벤트
+        // changePointCancleCallback(rowData)
+        // test(rowData);
+        
+        // React.createRef().current.test(rowData);
+      }
+    }
+    
     if (rowData.changeType === '결제' || rowData.changeType === '결제취소') {
       if (rowData.changeType === '결제취소') {
         return '-';
       } 
       if (rowData.changeType === '결제') {
         if (rowData.activated === true) {
-          return <button id="btnDownload" icon="pi pi-pencil" className="p-button-warning" onClick={this.onClickButton}>결제취소</button>
+          return <button id="btnDownload" icon="pi pi-pencil" className="p-button-warning" onClick={onClickButton}>결제취소</button>
           // const btnDownload = document.createElement('vaadin-button');
           // btnDownload.setAttribute('style', 'color: var(--lumo-error-text-color)');
           // btnDownload.textContent = '결제취소';
