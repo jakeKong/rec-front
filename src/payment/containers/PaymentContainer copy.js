@@ -7,6 +7,7 @@ import * as paymentActions from "../modules/PaymentModule";
 import * as userManageActions from "../../scm/modules/UserModule";
 import { PaymentProductListGrid, PaymentComplete } from "../index";
 
+import '@vaadin/vaadin-ordered-layout';
 import '@vaadin/vaadin-notification';
 
 import { removeComma } from '../../common/utils';
@@ -29,6 +30,7 @@ class PaymentContainer extends Component {
         productPoint: null,
         pointCash: null
       },
+      selectList: [],
       totalPay: 0,
       totalPoint: 0
     };
@@ -37,22 +39,107 @@ class PaymentContainer extends Component {
   // 그리드의 선택 시 선택한 컬럼의 값을 선택목록에 저장
   selectCallback = async (selectDto) => {
     this.setState({productDto: selectDto});
+    const { productDto } = this.state;
     const lbTotalPayCommit = document.querySelector('#lbTotalPayCommit');
     const naverPayBtn = document.querySelector('#naverPayBtn');
     lbTotalPayCommit.hidden = false;
     
-    if (selectDto === undefined || selectDto === null) {
+    if (productDto === undefined) {
       naverPayBtn.hidden = true;
       document.querySelector('#lbSelectPay').innerHTML = "0";
       document.querySelector('#lbSelectPoint').innerHTML = "0";
       lbTotalPayCommit.innerHTML ="선택된 상품이 없습니다. 상품을 선택해주세요."
     } else {
       naverPayBtn.hidden = false;
-      document.querySelector('#lbSelectPay').innerHTML = selectDto.pointCash;
-      document.querySelector('#lbSelectPoint').innerHTML = selectDto.productPoint;
-      lbTotalPayCommit.innerHTML ="※ 충전되는 포인트는 <strong>"+selectDto.productPoint+"P</strong>이며 결제 시 부가세 10%를 포함한 <strong>"+selectDto.pointCash+"원</strong>이 결제 됩니다."
+      document.querySelector('#lbSelectPay').innerHTML = productDto.pointCash;
+      document.querySelector('#lbSelectPoint').innerHTML = productDto.productPoint;
+      lbTotalPayCommit.innerHTML ="※ 충전되는 포인트는 <strong>"+productDto.productPoint+"P</strong>이며 결제 시 부가세 10%를 포함한 <strong>"+productDto.pointCash+"원</strong>이 결제 됩니다."
     }
   }
+
+  /* 2019-06-04 : 다중선택 미사용으로 인한 비활성화
+  selectCallback = async (selectDto) => {
+    const { selectList } = this.state;
+    selectList.push(selectDto.pointCash, selectDto.productPoint, selectDto.productSid)
+    this.setState({selectList})
+    const lbTotalPayCommit = document.querySelector('#lbTotalPayCommit');
+    const naverPayBtn = document.querySelector('#naverPayBtn');
+    lbTotalPayCommit.hidden = false;
+    naverPayBtn.hidden = false;
+    document.querySelector('#lbSelectPay').innerHTML = selectDto.pointCash;
+    document.querySelector('#lbSelectPoint').innerHTML = selectDto.productPoint;
+    if (selectList.length > 1) {
+      let totalPayValue = 0;
+      let totalPointValue = 0;
+      for (let index=0; index<selectList.length; index+=3) {
+        totalPayValue += selectList[index];
+        document.querySelector('#lbTotalPay').innerHTML = totalPayValue;
+      }
+      for (let index=0; index<selectList.length; index+=3) {
+        totalPointValue += selectList[index+1];
+        document.querySelector('#lbChargePoint').innerHTML = totalPointValue;
+      }
+      this.setState({totalPay: totalPayValue})
+      this.setState({totalPoint: totalPointValue})
+      lbTotalPayCommit.innerHTML ="※ 충전되는 포인트는 <strong>"+totalPointValue+"P</strong>이며 결제 시 부가세 10%를 포함한 <strong>"+totalPayValue+"원</strong>이 결제 됩니다."
+    }
+  }
+  */
+
+  // 그리드의 선택 취소 했을때 선택목록에 저장되어있는 값 중 선택취소한 컬럼의 값을 찾아 목록에서 제거
+  /* 2019-06-04 : 다중선택 미사용으로 인한 비활성화
+  deselectCallback = async (selectDto) => {
+    const { selectList } = this.state;
+
+    const itemToFind = selectList.find(function(item) {
+      return item === selectDto.productSid
+    });
+    const idx = selectList.indexOf(itemToFind);
+    if (idx > -1) selectList.splice(idx, 1)
+
+    const itemToFind2 = selectList.find(function(item) {
+      return item === selectDto.pointCash
+    });
+    const idx2 = selectList.indexOf(itemToFind2);
+    if (idx2 > -1) selectList.splice(idx2, 1)
+
+    const itemToFind3 = selectList.find(function(item) {
+      return item === selectDto.productPoint
+    });
+    const idx3 = selectList.indexOf(itemToFind3);
+    if (idx3 > -1) selectList.splice(idx3, 1)
+
+    this.setState({selectList})
+    const lbTotalPayCommit = document.querySelector('#lbTotalPayCommit');
+    const naverPayBtn = document.querySelector('#naverPayBtn');
+    if (selectList.length !== 0) {
+      document.querySelector('#lbSelectPay').innerHTML = selectList[selectList.length-3];
+      document.querySelector('#lbSelectPoint').innerHTML = selectList[selectList.length-2];
+      if (selectList.length > 1) {
+        let totalPayValue = 0;
+        let totalPointValue = 0;
+        for (let index=0; index<selectList.length; index+=3) {
+          totalPayValue += selectList[index];
+          document.querySelector('#lbTotalPay').innerHTML = totalPayValue;
+        }
+        for (let index=0; index<selectList.length; index+=3) {
+          totalPointValue += selectList[index+1];
+          document.querySelector('#lbChargePoint').innerHTML = totalPointValue;
+        }
+        this.setState({totalPay: totalPayValue})
+        this.setState({totalPoint: totalPointValue})
+        lbTotalPayCommit.innerHTML ="※ 충전되는 포인트는 <strong>"+totalPointValue+"P</strong>이며 결제 시 부가세 10%를 포함한 <strong>"+totalPayValue+"원</strong>이 결제 됩니다."
+      }
+    } else {
+      document.querySelector('#lbSelectPay').innerHTML = "0";
+      document.querySelector('#lbSelectPoint').innerHTML = "0";
+      document.querySelector('#lbChargePoint').innerHTML = "0";
+      document.querySelector('#lbTotalPay').innerHTML = "0";
+      lbTotalPayCommit.hidden = true;
+      naverPayBtn.hidden = true;
+    }
+  }
+  */
 
   getProductList = async (search) => {
     const { ProductManageModule } = this.props;
@@ -102,6 +189,20 @@ class PaymentContainer extends Component {
 
   // 네이버페이 결제 창 호출
   openNaverPay = async () => {
+    /* 2019-06-04 : 다중선택 미사용으로 인한 비활성화
+    const { totalPay, totalPoint } = this.state;
+    if (totalPay < 1000) {
+      const nfNotAllowPayment = document.createElement('vaadin-notification');
+      nfNotAllowPayment.renderer = function(root) {
+        root.textContent = '선택한 금액이 1000원 이상이어야 결제가 가능합니다.'
+      } 
+      document.body.appendChild(nfNotAllowPayment);
+      nfNotAllowPayment.position = 'middle';
+      nfNotAllowPayment.duration = 2000;
+      nfNotAllowPayment.opened = true;
+      return;
+    }
+    */
    const { productDto } = this.state;
    if (productDto.pointCash < 1000) {
      const nfNotAllowPayment = document.createElement('vaadin-notification');
@@ -241,6 +342,16 @@ class PaymentContainer extends Component {
     document.querySelector('#lbSelectPoint').innerHTML = "0";
     document.querySelector('#lbSelectPointSubName').innerHTML = "P";
 
+    /* 2019-06-04 : 다중선택 미사용으로 인한 비활성화
+    document.querySelector('#lbChargePointName').innerHTML = "충전 포인트 : ";
+    document.querySelector('#lbChargePoint').innerHTML = "0";
+    document.querySelector('#lbChargePointSubName').innerHTML = "P";
+
+    document.querySelector('#lbTotalPayName').innerHTML = "총 구매금액 : ";
+    document.querySelector('#lbTotalPay').innerHTML = "0";
+    document.querySelector('#lbTotalPaySubName').innerHTML = "원 (부가세 10% 포함)";
+    */
+
     // console.log(window.naver.NaverPayButton)
     // SDK 추가 사용 필요
     // window.naver.NaverPayButton.apply({
@@ -338,6 +449,17 @@ class PaymentContainer extends Component {
                 <label id="lbSelectPoint" className="amount point"/>
                 <label id="lbSelectPointSubName" className="label-currency"/>
               </div>
+              {/* // 2019-06-04 : 다중선택 미사용으로 인한 비활성화
+              <div className="div-inline">
+                <label id="lbChargePointName"/>
+                <label id="lbChargePoint"/>
+                <label id="lbChargePointSubName"/>
+              </div>
+              <div className="div-inline">
+                <label id="lbTotalPayName"/>
+                <label id="lbTotalPay"/>
+                <label id="lbTotalPaySubName"/>
+              </div> */}
             </div>
             <label id="lbTotalPayCommit" className="desc-purchase" hidden />
           </div>

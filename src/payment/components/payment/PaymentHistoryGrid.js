@@ -23,8 +23,6 @@ class PaymentHistoryGrid extends Component {
     }
     console.log(paymentHistoryList);
   
-
-    let list = [];
     paymentHistoryList.body.list.forEach(e => {
       let dateStringValue = e.tradeConfirmYmdt.substring(0,4)+'-'+e.tradeConfirmYmdt.substring(4,6)+'-'+e.tradeConfirmYmdt.substring(6,8)+'T'+e.tradeConfirmYmdt.substring(8,10)+':'+e.tradeConfirmYmdt.substring(10,12)+':'+e.tradeConfirmYmdt.substring(12,14);
       gridData.push({

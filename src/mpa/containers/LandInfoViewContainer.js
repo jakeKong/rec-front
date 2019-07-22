@@ -4,11 +4,11 @@ import { bindActionCreators } from "redux";
 import LandInfoViewModule, * as landInfoViewActions from "../modules/LandInfoViewModule";
 import { LandInfoView } from "../index";
 import { AddressSearch } from '../../common';
-
 import '@vaadin/vaadin-button';
 
 let enabled = false;
 let searchKey;
+let IMP = null;
 class LandInfoViewContainer extends Component {
 
   // state set을 위한 초기 생성자
@@ -24,6 +24,7 @@ class LandInfoViewContainer extends Component {
     this.makeLandInfo = this.makeLandInfo.bind(this);
     
     this.getLandInfo(this.state.search);
+    IMP = window.IMP;
   }
   isDisabled = () => {
     return enabled;
@@ -61,12 +62,33 @@ class LandInfoViewContainer extends Component {
     }
   }
   makeLandInfo = async (search) => {
-    const { LandInfoViewModule } = this.props;
-    try {
-      await LandInfoViewModule.makeLandInfo(search)
-    } catch (e) {
-      console.log("error log : " + e);
-    }
+    // const { LandInfoViewModule } = this.props;
+    // try {
+    //   await LandInfoViewModule.makeLandInfo(search)
+    // } catch (e) {
+    //   console.log("error log : " + e);
+    // }
+    IMP.init('imp74972676');
+     // IMP.request_pay(param, callback) 호출
+    IMP.request_pay({ // param
+      pg: "kcp.A52CY",
+      pay_method: "card",
+      merchant_uid: "ORD20180131-0000011",
+      name: "노르웨이 회전 의자",
+      amount: 64900,
+      buyer_email: "gildong@gmail.com",
+      buyer_name: "홍길동",
+      buyer_tel: "010-4242-4242",
+      buyer_addr: "서울특별시 강남구 신사동",
+      buyer_postcode: "01181"
+    }, rsp => { // callback
+      console.log(rsp);
+      if (rsp.success) {
+          console.log(rsp.success);
+      } else {
+          console.log('결제 실패');
+      }
+    });
   }
 
 // 마운트 이전 권한 체크
