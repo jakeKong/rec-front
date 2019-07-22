@@ -45,8 +45,8 @@ class LandInfoView extends Component {
       document.querySelector('#tdOwnshipChgCauseCodeNm').innerHTML = landInfoData.get("ownshipChgCauseCodeNm");
       document.querySelector('#tdOwnshipChgDe').innerHTML = landInfoData.get("ownshipChgDe");
       document.querySelector('#tdCnrsPsnCo').innerHTML = landInfoData.get("cnrsPsnCo");
-      const cnrsPsnCo = landInfoData.get("mnnmSlno");//지번
-      const pnu = landInfoData.get("pnu");//pnu
+      // const cnrsPsnCo = landInfoData.get("mnnmSlno");//지번
+      // const pnu = landInfoData.get("pnu");//pnu
     }
     //대지속성 
     {
