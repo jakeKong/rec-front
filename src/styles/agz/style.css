@@ -625,29 +625,33 @@ html, body, #root .index {
 
 /* tile news */
 .tilenews {
-    height:100%;
+    box-sizing: border-box;
+    height: calc(100% - 66px);
 }
 .tilenews .masonry {
     height: 100%;
     padding: 0 14px;
-    column-count: 3;
-    column-gap: 40px;
     padding-top: 54px;
+    padding-bottom: 30px;
 }
 .tilenews .masonry .card {
     display: inline-block;
-    margin: 0 0 40px 0;
-    width: 100%;
+    margin-right: 5%;
+    margin-bottom: 40px;
+    min-height: 330px;
+    width: 30%;
     box-shadow: 0px 8px 10px rgba(0,0,0,0.2);
     overflow: hidden;
     border: 1px solid #eee;
     cursor: pointer;
     transition: 0.3s;
 }
+.tilenews .masonry .card:nth-of-type(3n) {
+    margin-right: 0;
+}
 .tilenews .masonry .card:hover{
     box-shadow: 0px 10px 12px rgba(0,0,0,0.3);
 }
-
 .tilenews .card .image {
     width: 100%;
 }
