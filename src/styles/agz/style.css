@@ -10,6 +10,7 @@
     margin: 0;
 }
 
+
 /* RESET END */
 
 /* FONT 글씨체 */
@@ -67,7 +68,7 @@ body *{
 /* FONT END */
 
 /* Layout 레이아웃 공통 */
-html, body {
+html, body, #root .index {
     width: 100%;
     height: 100%;
     overflow: hidden;
@@ -117,6 +118,7 @@ html, body {
 .mc /*Main Contents*/{
     box-sizing: border-box;
     height: calc(100% - 80px - 80px);
+    min-height: calc(100% - 80px - 80px);
 }
 .div-inline {
     display: inline-block;
@@ -148,8 +150,8 @@ html, body {
 .page-description {
     font-size: 34px;
     font-weight: 300;
-    padding-top: 36px;
-    padding-bottom: 20px;
+    padding-top: 24px;
+    padding-bottom: 8px;
     color: #4fd80b;
 }
 /* Page Common END*/
@@ -343,7 +345,6 @@ html, body {
     font-weight: bold;
     cursor: pointer;
     
-    border-radius: 0 4px 4px 0;
     margin: 0 -4px;
 
     transition: 0.3s;
@@ -382,83 +383,102 @@ html, body {
 }
 /* searchbox END */
 
-/* table bbs */
-body .p-datatable table {
+/* TABLE */
+.p-datatable {
+    margin-top: 20px;
+}
+.p-datatable table {
     border-collapse: collapse;
     width: 100%;
     table-layout: fixed;
-  }
-  body .p-datatable .p-datatable-thead > tr > th {
-    padding: 0.571em 0.857em;
-    border-bottom: 1px solid #9e2323;
-    border-top: 1px solid #9e2323;
-    border-left: 1px solid #9e2323;
-    border-right: 0px solid #9e2323;
-    font-weight: 700;
-    color: #ffffff;
-    background-color: #4fd80b;
-    text-align: center;
-  }
-  body .p-datatable .p-datatable-tbody > tr > td {
-    background: inherit;
-    border-bottom: 1px solid #9e2323;
-    border-top: 1px solid #9e2323;
-    border-left: 1px solid #9e2323;
-    border-right: 1px solid #9e2323;
-    background-color: #b5dda280;
-    padding: 0.429em 0.857em;
-  }
-  
-.agz-bbs {
-    display: inline-block;
-    margin-top: 6px;
-    
-    width: 100%;
-    height: auto;
-}
-.agz-bbs .cell{
-    display: block;
-    float: left;
-}
-.agz-bbs .th {
-    height: 40px;
-    line-height: 40px;
-    margin-bottom: 12px;
-    color: #666;
-    font-size: 14px;
-    
-}
-.agz-bbs .tc {
-    height: 40px;
-    line-height: 40px;
-    text-indent: 10px;
-    border-bottom: 1px solid #e1e1e1;
-    cursor: pointer;
-    
-    font-size: 14px;
-    color: #aaa;
-}
-.agz-bbs .tc .title {
-    color: #222;
-    font-size: 16px;
-    cursor: pointer;
-}
-.agz-bbs .tc[selected=selected]{
-    background: #eee;
 }
 
-.w-0 {width: 0%;}
-.w-3 {width: 3%;}
-.w-5 {width: 5%;}
-.w-7 {width: 7%;}
-.w-8 {width: 8%;}
-.w-10 {width: 10%;}
-.w-20 {width: 20%;}
-.w-30 {width: 20%;}
-.w-40 {width: 20%;}
-.w-50 {width: 20%;}
-.w-60 {width: 60%;}
-.w-160 {width: 160%;}
+.p-datatable thead tr {
+    border-bottom: 1px solid #eee !important;
+}
+.p-datatable thead tr th{
+    height: 24px !important;
+    line-height: 24px !important;
+    margin-bottom: 12px !important;
+    color: #666 !important;
+    font-size: 14px !important;
+    border: none !important;
+    background: transparent !important;
+    font-weight: 500 !important;
+}
+.p-datatable tbody tr {
+    border-bottom: 1px solid #eee !important;
+    cursor: pointer !important;
+    transition: 0.3s;
+}
+.p-datatable tbody tr:nth-of-type(2n-1) {
+    /* 홀수번째 배경색 */
+    background: #f7f7f7 !important;
+}
+.p-datatable tbody tr:hover {
+    /* 마우스 오버 효과 */
+    background: #f4f4f4 !important;
+}
+.p-datatable tbody tr:active {
+    /* 마우스 온클릭 효과 */
+    background: #fff !important;
+}
+.p-datatable tbody tr.p-highlight {
+    /* 선택기능으로 선택된 row */
+    background: #4fd80b !important;
+}
+.p-datatable tbody tr.p-highlight td {
+    color: #fff !important;
+}
+.p-datatable tbody tr td {
+    height: 28px !important;
+    line-height: 28px !important;
+    border-bottom: 1px solid #e1e1e1 !important;
+    font-size: 14px !important;
+    border: none !important;
+    background: transparent !important;
+    color: #aaa !important;
+}
+/* table selector */
+.p-datatable .p-checkbox-box.p-highlight {
+    border-color: #4fd80b !important;
+    background-color: #fff !important;
+    color: #4fd80b !important;
+}
+
+/* table pagination */
+.p-datatable .p-paginator {
+    background-color: transparent !important;
+    border: none !important;
+    margin-top: 12px;
+}
+.p-datatable .p-paginator .p-paginator-page.p-highlight {
+    background-color: #4fd80b !important;
+}
+
+
+/* table footer : 개발자용 정보 표시하는 부분인듯하여 보이지 않게 처리했습니다. */
+.p-datatable .p-datatable-footer {
+    display: none;
+}
+
+/* table width 공지사항 한정 */
+/* TODO 각 페이지마다 셀의 넓이가 다른데 조정을 위해 테이블 wrapper나 페이지에 다른 클래스명을 먹여야 할 것 같습니다. */
+.p-datatable tbody tr td:nth-of-type(1),
+.p-datatable thead tr th:nth-of-type(1) {
+    width: 6% !important;
+    text-align: center;
+}
+.p-datatable tbody tr td:nth-of-type(2),
+.p-datatable thead tr th:nth-of-type(2) {
+    width: 6% !important;
+}
+.p-datatable tbody tr td:nth-of-type(3),
+.p-datatable thead tr th:nth-of-type(3) {
+    width: 70% !important;
+}
+/* TABLE END */
+
     /* Searchbox */
 .wrap-search{
     text-align: center;
