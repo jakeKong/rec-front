@@ -200,17 +200,16 @@ html, body {
 }
 .header .wrap-nav {
     position: absolute;
-    top: 46px;
+    bottom: 0;
     right: 50%;
     margin-right: -512px !important;
+    width: auto;
     
     background: transparent;
     color: #fff;
     border: none;
-    
     text-align: right;
-    
-    font-weight: 400;
+
     font-size: 22px;
     z-index: 100;
 }
@@ -218,12 +217,43 @@ html, body {
     display: inline-block;
     cursor: pointer;
 }
-.header .wrap-nav li > div ,
-.header .wrap-nav li {
+.header .wrap-nav .rc-menu-horizontal > .rc-menu-submenu,
+.header .wrap-nav .rc-menu-horizontal > .rc-menu-item {
+    font-weight: 400;
+}
+.header .wrap-nav > li.rc-menu-item{
     padding-top : 0px !important;
     padding-left: 4px !important;
-    padding-right: 4px !important;
-    
+    padding-right: 4px !important;    
+}
+.header .wrap-nav li.rc-menu-item-active,
+.header .wrap-nav li.rc-menu-submenu-active,
+.header .wrap-nav li.rc-menu-submenu-active > div {
+    background: transparent;
+    color: #f0ee35;
+    border-bottom-color: #f0ee35;
+    border-bottom-width: 2px;
+}
+/* 헤더 서브메뉴 */
+.rc-menu-vertical.rc-menu-sub { 
+    margin-top: 6px !important;
+    border: none;
+    box-shadow: 0px 4px 3px rgba(50,50,50,0.5);
+    background: #3fc80b !important;
+    border-radius: 0 0 2px 2px;
+    overflow: hidden;
+}
+.rc-menu-vertical.rc-menu-sub .rc-menu-item{
+    color: #fff;
+}
+.rc-menu-vertical.rc-menu-sub .rc-menu-item-active{
+    color: #f0ee35;
+    background: #4fd80b;
+    cursor: pointer;
+}
+/* 헤더 서브메뉴 끝*/
+.header .wrap-nav li > div {
+    padding: 0 !important;
 }
 .header .wrap-nav li > div {
     padding-bottom: 0 !important;
@@ -254,20 +284,21 @@ html, body {
 .page-main .illust-main {
     width: 100%;
     height: 280px;
-    background: url('./image/main_illu.png');
-    background-size: 66%;
+    margin-top: 100px;
+    background: url('./image/main_illu_3x.png');
+    background-size: cover;
     background-repeat: no-repeat;
     background-position: 50%;
     box-sizing: border-box;
 }
 .page-main .wrap-content-main {
-    height: calc(100% - 280px);
+    height: calc(100% - 280px - 100px);
     position: relative;
 }
 .wrap-searchbox {
     position: absolute;
     width: 100%;
-    height: 120px;
+    height: 140px;
     bottom: 50%;
     text-align: center;
 }
@@ -279,15 +310,15 @@ html, body {
     display: inline-block;
     box-sizing: border-box;
     width: 400px;
-    height: 48px;
+    height: 64px;
     vertical-align: bottom;
     border: 3px solid #4fd80b;
     outline: none;
     padding-left: 12px;
     padding-right: 12px;
-    font-size: 16px;
+    font-size: 24px;
     color: #222;
-    font-weight: bold;
+    font-weight: 400;
     
     margin: 0 -2px;
     position: relative;
@@ -299,21 +330,29 @@ html, body {
 }
 .wrap-searchbox .btn-search {
     display: inline-block;
-    width: 100px;
-    height: 48px;
-    line-height: 48px;
+    width: 140px;
+    height: 64px;
+    
     vertical-align: bottom;
     border: none;
     background: #4fd80b;
     color: #fff;
-    font-size: 16px;
+    font-size: 22px;
     letter-spacing: 1px;
     margin-left: -6px;
     font-weight: bold;
     cursor: pointer;
     
-    border-radius: 0;
+    border-radius: 0 4px 4px 0;
     margin: 0 -4px;
+
+    transition: 0.3s;
+}
+.wrap-searchbox .btn-search:hover {
+    color: #f0ee35;
+}
+.wrap-searchbox .btn-search:active {
+    color: #fff;
 }
 .page-main .box-summary {
     position: absolute;
@@ -322,7 +361,6 @@ html, body {
 }
 .page-main .box-summary .summary {
     font-size: 28px;
-    font-weight: bold;
     display: inline-block;
     margin: 0 24px;
     color: #666;
@@ -340,7 +378,7 @@ html, body {
 }
 .page-main .box-summary .num {
     color: #47c10a;
-    font-size: 40px;
+    font-size: 36px;
 }
 /* searchbox END */
 
