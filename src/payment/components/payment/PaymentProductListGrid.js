@@ -12,24 +12,26 @@ import '@vaadin/vaadin-dialog';
 
 import { comma } from '../../../common/utils';
 
-let gridData =[];
-let  selectCallback, deselectCallback = {};
 class PaymentProductListGrid extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {gridData: []}
+    this.state = {
+      gridData: [],
+      selectedItem: undefined
+    }
   }
+
   componentDidMount() {
-    selectCallback = this.props.selectCallback;
-    deselectCallback = this.props.deselectCallback;
     const { productList } = this.props;
     if (!productList || productList === undefined || productList.isEmpty()) {
       return
     }
+
+    let list =[];
     productList.forEach(e => {
       // push Value type is JSON
-      gridData.push({
+      list.push({
         productSid: e.get("productSid"),
         productCd: e.get("productCd"), 
         productNm: e.get("productNm"),
@@ -38,54 +40,40 @@ class PaymentProductListGrid extends Component {
         // cashRatio: e.get("cashRatio"),
       })
     })
-    this.setState({gridData: gridData});
-    
-
-
-
-
-    // // 스타일 적용 이후 우측정렬 미적용으로 인한 컬럼 렌더링 - 2019-07-12 @yieon
-    // const column = grid.querySelectorAll('vaadin-grid-column');
-    // column[2].renderer = function(root, column, rowData) {
-    //   root.innerHTML = rowData.item.productPoint
-    //   root.style = 'text-align: right'
-    // }
-    // column[3].renderer = function(root, column, rowData) {
-    //   root.innerHTML = rowData.item.pointCash
-    //   root.style = 'text-align: right'
-    // }
-
+    this.setState({gridData: list});
   }
+
   onGridSelected(item) {
+    const { selectedItem } = this.state;
+    if (selectedItem !== undefined && selectedItem !== null) {
+      if (item !== undefined && item !== null) {
+        if (selectedItem.productSid === item.productSid) {
+          return;
+        }
+      }
+    }
     this.setState({selectedItem: item});
-    // 단일 선택값 전달 이벤트 <PRE> 2019-06-04 : (다중선택 미사용으로 인한 기능 추가)
-    if(item === null || item === {}) {
-      console.log(deselectCallback);
-     deselectCallback(item);
-    }
-    else {
-      selectCallback(item);  
-    }
+    this.props.selectCallback(item);  
     
   }
 
   render() {
     return (
       <Fragment>
-        <DataTable id="table" value={this.state.gridData} 
-              //scrollable={true} 
-              paginator={true} rows={10} rowsPerPageOptions={[5,10,15,20]}  
-              selectionMode="single"  selection={this.state.selectedItem} 
-              onSelectionChange={e => this.onGridSelected(e.value)} 
-              // onRowClick={e => this.props.detailCallback(e.data)}
-              >
-            <Column selectionMode="single" style={{width:'3em', borderLeft:'none'}}/>
-            <Column field="productNm" header="결제번호"  style={{textAlign:'center', width: '20em', height:'2.5em'}} />
-            <Column field="productNm" header="상품명"  style={{textAlign:'center', width: '10em', height:'2.5em'}} />
-            <Column field="productPoint" header="충전 포인트"  style={{textAlign:'center', width: '10em'}} />
-            <Column field="pointCash" header="포인트 가격" style={{textAlign:'center', width: '20em'}}/>
-            <Column field="cashRatio" header="현금 비율" style={{textAlign:'center', width: '8em', borderRight:'none'}}/>
-          </DataTable>
+        <DataTable id="table" value={this.state.gridData}
+                   //scrollable={true} 
+                   paginator={true} rows={10} rowsPerPageOptions={[5,10,15,20]}  
+                   selectionMode="single"  selection={this.state.selectedItem} 
+                   onSelectionChange={e => this.onGridSelected(e.value)} 
+                   // onRowClick={e => this.props.detailCallback(e.data)}
+                   >
+          <Column selectionMode="single" style={{width:'3em', borderLeft:'none'}}/>
+          <Column field="productNm" header="결제번호"  style={{textAlign:'center', width: '20em', height:'2.5em'}} />
+          <Column field="productNm" header="상품명"  style={{textAlign:'center', width: '10em', height:'2.5em'}} />
+          <Column field="productPoint" header="충전 포인트"  style={{textAlign:'center', width: '10em'}} />
+          <Column field="pointCash" header="포인트 가격" style={{textAlign:'center', width: '20em'}}/>
+          {/* <Column field="cashRatio" header="현금 비율" style={{textAlign:'center', width: '8em', borderRight:'none'}}/> */}
+        </DataTable>
       </Fragment>
     );
   }

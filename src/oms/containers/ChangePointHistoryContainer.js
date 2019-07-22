@@ -11,12 +11,14 @@ class ChangePointHistoryContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      userNm: null,
-      odrNo: null,
-      paymentNo: null,
-      fromDt: null,
-      toDt: null,
-      changeType: null
+      search: {
+        userNm: null,
+        odrNo: null,
+        paymentNo: null,
+        fromDt: null,
+        toDt: null,
+        changeType: null
+      },
     }
   }
 
@@ -25,20 +27,20 @@ class ChangePointHistoryContainer extends Component {
      rerendering을 위한 변경된 값으로의 REST API를 호출한다. 
        -> 호출 후 state.search값 초기화
   */
-  searchCallback = async (userNm,odrNo,paymentNo,fromDt,toDt,changeType) => {
-    this.setState({userNm: userNm,odrNo: odrNo,paymentNo: paymentNo,fromDt: fromDt,toDt: toDt,changeType: changeType});
+  searchCallback = async (dataSearchChild) => {
+    this.setState({search: dataSearchChild});
 
     const { search } = this.state;
     this.getChangePointHistoryList(search);
     // state.search 값 초기화
-    this.setState({
+    this.setState({search: {
       userNm: null,
       odrNo: null,
       paymentNo: null,
       fromDt: null,
       toDt: null,
       changeType: null
-    });
+    }});
   }
 
   // 마운트 이전 권한 체크
@@ -48,18 +50,17 @@ class ChangePointHistoryContainer extends Component {
 
   // 마운트 직후 한번 (rendering 이전, 마운트 이후의 작업)
   componentDidMount() {
-    const { userNm,odrNo,paymentNo,fromDt,toDt,changeType } = this.state;
+    const { search } = this.state;
     // const { changePointHistoryList } = this.props;
     // if (!changePointHistoryList || changePointHistoryList === undefined || changePointHistoryList.isEmpty()) {
-        this.getChangePointHistoryList(userNm,odrNo,paymentNo,fromDt,toDt,changeType);
+        this.getChangePointHistoryList(search);
     // }
   }
 
-  getChangePointHistoryList = async (userNm,odrNo,paymentNo,fromDt,toDt,changeType) => {
-    console.log(userNm + "-" + odrNo + "-" + paymentNo + "-" + fromDt + "-" + toDt + "-" + changeType);
+  getChangePointHistoryList = async (search) => {
     const { ChangePointHistoryModule } = this.props;
     try {
-      await ChangePointHistoryModule.getChangePointHistoryList(userNm,odrNo,paymentNo,fromDt,toDt,changeType)
+      await ChangePointHistoryModule.getChangePointHistoryList(search)
     } catch (e) {
       console.log("error log : " + e);
     }
