@@ -40,7 +40,7 @@ class PaymentComplete extends Component {
       const btnGoPaymentHistory = document.querySelector('#btnGoPaymentHistory');
       btnGoPaymentHistory.className = "vaadin-button-large";
       btnGoPaymentHistory.addEventListener('click', function() {
-        window.location.href = "/#/payment/history/";
+        window.location.href = "/#/oms/order/history/email";
         window.location.reload();
       });
 

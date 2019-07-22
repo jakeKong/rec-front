@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as questionActions from "../../modules/QuestionModule";
 
-import '@vaadin/vaadin-ordered-layout';
 import '@vaadin/vaadin-button';
 import '@vaadin/vaadin-text-field/vaadin-text-area';
 import '@polymer/iron-icons';
@@ -47,7 +46,7 @@ class Comment extends Component {
     const {answer, cmt} = this.state;
     const taAnswerRegister = document.querySelector('#taAnswerRegister');
     taAnswerRegister.className = "vaadin-text-area-answer";
-    taAnswerRegister.shadowRoot.querySelector('div').querySelector('div').style = "background: white; padding: 0;";
+    taAnswerRegister.shadowRoot.querySelector('div').querySelector('div').style = "background: lightgray; padding: 0; font-size: 16px; color: red;";
     taAnswerRegister.placeholder = '댓글을 입력해주세요.'
     taAnswerRegister.addEventListener('input', function() {
       answer.answerTxt = taAnswerRegister.value;
@@ -166,7 +165,7 @@ class Comment extends Component {
           liCmtRegister.appendChild(btnCmtAdd);
           liAnswer.insertAdjacentElement('afterend', liCmtRegister);
           // text-area의 스타일 적용은 활성화 이후에 노출되는 shadowRoot이하의 컴포넌트 스타일에 적용시켜야 한다.
-          taCmtRegister.shadowRoot.querySelector('div').querySelector('div').style = "background: white; padding: 0;";
+          taCmtRegister.shadowRoot.querySelector('div').querySelector('div').style = "background: lightgray; padding: 0;";
         }
         // 입력 폼이 존재하지 않을 경우 입력 폼 생성 이벤트
         else {
@@ -174,7 +173,7 @@ class Comment extends Component {
           taCmtRegister.placeholder = '댓글을 입력해주세요.';
           liCmtRegister.appendChild(btnCmtAdd);
           liAnswer.insertAdjacentElement('afterend', liCmtRegister);
-          taCmtRegister.shadowRoot.querySelector('div').querySelector('div').style = "background: white; padding: 0;";
+          taCmtRegister.shadowRoot.querySelector('div').querySelector('div').style = "background: lightgray; padding: 0;";
         }
       })
 
@@ -227,7 +226,7 @@ class Comment extends Component {
           liAnswer.appendChild(btnAnswerUpdateComplete);
           liAnswer.className = 'li-comment-answer-update';
 
-          taAnswerTxt.shadowRoot.querySelector('div').querySelector('div').style = "background: white; padding: 0;";
+          taAnswerTxt.shadowRoot.querySelector('div').querySelector('div').style = "background: lightgray; padding: 0;";
         } else {
           btnAnswerUpdate.textContent = '수정'
           answer.answerTxt = '';
@@ -347,13 +346,13 @@ class Comment extends Component {
             taCmtRegister.placeholder = answerCmt.get('cmtWriter')+'님께 답글쓰기';
             liCmtRegister.appendChild(btnCmtCmtAdd);
             liCmt.insertAdjacentElement('afterend', liCmtRegister);
-            taCmtRegister.shadowRoot.querySelector('div').querySelector('div').style = "background: white; padding: 0;";
+            taCmtRegister.shadowRoot.querySelector('div').querySelector('div').style = "background: lightgray; padding: 0;";
           } else {
             btnCmtCmtRegister.textContent = '답글취소'
             taCmtRegister.placeholder = answerCmt.get('cmtWriter')+'님께 답글쓰기';
             liCmtRegister.appendChild(btnCmtCmtAdd);
             liCmt.insertAdjacentElement('afterend', liCmtRegister);
-            taCmtRegister.shadowRoot.querySelector('div').querySelector('div').style = "background: white; padding: 0;";
+            taCmtRegister.shadowRoot.querySelector('div').querySelector('div').style = "background: lightgray; padding: 0;";
           }
         })
         
@@ -406,7 +405,7 @@ class Comment extends Component {
             liCmt.appendChild(btnCmtUpdateComplete);
             liCmt.className = 'li-comment-cmt-update';
   
-            taCmtTxt.shadowRoot.querySelector('div').querySelector('div').style = "background: white; padding: 0;";
+            taCmtTxt.shadowRoot.querySelector('div').querySelector('div').style = "background: lightgray; padding: 0;";
           } else {
             btnCmtCmtUpdate.textContent = '수정'
             cmt.cmtTxt = '';
@@ -500,7 +499,6 @@ class QuestionComment extends Component {
 
   componentDidMount() {
     const {question, questionAnswerList} = this.props;
-    console.log(question);
     if (!questionAnswerList || questionAnswerList === null || questionAnswerList === undefined) {
       this.getQuestionAnswerList(question.questionSid);
     }
@@ -535,7 +533,6 @@ class QuestionComment extends Component {
       console.log("error log : " + e);
     }
   }
-
 
   // 문의사항 답변 등록 요청
   addAnswerCallback = async (questionSid, answerChild) => {

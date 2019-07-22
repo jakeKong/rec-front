@@ -9,7 +9,13 @@ import 'primeicons/primeicons.css';
 class NoticeGrid extends Component {
   constructor(props) {
     super(props);
-    this.state = {gridData: []}
+    this.state = {
+      gridData: [],
+      selectedItem: null
+    }
+    this.noticeTitleClickLabelTemplate = this.noticeTitleClickLabelTemplate.bind(this);
+    this.roleCheckColumnRenderingEvent = this.roleCheckColumnRenderingEvent.bind(this);
+    this.selectChangedEvent = this.selectChangedEvent.bind(this);
   }
   componentDidMount() {
     const { noticeList } = this.props;
@@ -39,39 +45,64 @@ class NoticeGrid extends Component {
       gridData.reverse();
       this.setState({gridData: gridData});
     }
+  }
 
+  noticeTitleClickLabelTemplate(rowData, column) {
+    const {detailCallback} = this.props;
+    function titleClickEvent() {
+      detailCallback(rowData)
+    }
+    return <label className="" onClick={titleClickEvent} >{rowData.noticeTitle}</label>;
   }
+
+  selectChangedEvent(e) {
+    this.setState({selectedItem: e.value})
+    const {selectCallback} = this.props;
+    let selectList = [];
+    e.value.forEach(e => {
+      selectList.push(e.noticeSid);
+    })
+    selectCallback(selectList)
+  }
+
+  roleCheckColumnRenderingEvent(role) {
+    if (role === 'ROLE_ADMIN' || role === 'ROLE_SYSADMIN') {
+      return (
+        <Fragment>
+          <DataTable id="table" 
+                    value={this.state.gridData} 
+                    paginator={true} 
+                    rows={10} 
+                    rowsPerPageOptions={[5,10,15,20]}  
+                    selection={this.state.selectedItem} 
+                    onSelectionChange={e => this.selectChangedEvent(e)} >
+            <Column selectionMode="multiple" style={{width:'2em', height:'2.5em'}} />
+            <Column field="index" header="번호"  style={{textAlign:'center'}} />
+            <Column body={this.noticeTitleClickLabelTemplate} header="제목"  style={{textAlign:'center'}} />
+            <Column field="reportingDt" header="작성일자"  style={{textAlign:'center'}}/>
+          </DataTable>
+        </Fragment>
+      )
+    } else {
+      return (
+        <Fragment>
+          <DataTable id="table" 
+                    value={this.state.gridData} 
+                    paginator={true} 
+                    rows={10} 
+                    rowsPerPageOptions={[5,10,15,20]} >
+            <Column field="index" header="번호"  style={{textAlign:'center'}} />
+            <Column body={this.noticeTitleClickLabelTemplate} header="제목"  style={{textAlign:'center'}} />
+            <Column field="reportingDt" header="작성일자"  style={{textAlign:'center'}}/>
+          </DataTable>
+        </Fragment>
+      );
+    }
+  }
+
   render() {
-    return (
-      <Fragment>
-        <DataTable id="table" 
-                   value={this.state.gridData} 
-                   paginator={true} 
-                   rows={10} 
-                   rowsPerPageOptions={[5,10,15,20]}  
-                   selection={this.state.selectedItem} 
-                   onSelectionChange={e => this.setState({selectedItem: e.value})} 
-                   onRowClick={e => this.props.detailCallback(e.data)}
-                   footer={this.displaySelection(this.state.selectedItem)}>
-          <Column selectionMode="multiple" style={{width:'2em', height:'2.5em'}}/>
-          {/* <Column field="noticeSid" header="번호"  style={{textAlign:'center'}} /> */}
-          <Column field="index" header="번호"  style={{textAlign:'center'}} />
-          <Column field="noticeTitle" header="제목"  style={{textAlign:'center'}}/>
-          <Column field="reportingDt" header="작성일자"  style={{textAlign:'center'}}/>
-        </DataTable>
-      </Fragment>
-    );
-  }
-  displaySelection(data) {
-    if(!data || data.length === 0) {
-        return <div style={{textAlign: 'left'}}>No Selection</div>;
-    }
-    else {
-        if(data instanceof Array)
-            return <ul style={{textAlign: 'left', margin: 0}}>{data.map((item,i) => <li key={item.noticeSid}>{item.noticeSid + ' - ' + item.noticeTitle + ' - ' + item.reportingDt}</li>)}</ul>;
-        else
-            return <div style={{textAlign: 'left'}}>Selected Item: { data.noticeSid + ' - ' + data.noticeTitle + ' - ' + data.reportingDt}</div>
-    }
+    const { role } = this.props;
+    return this.roleCheckColumnRenderingEvent(role);
   }
 }
 export default NoticeGrid;

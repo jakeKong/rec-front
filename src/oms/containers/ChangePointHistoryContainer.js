@@ -70,17 +70,17 @@ class ChangePointHistoryContainer extends Component {
     const { search } = this.state;
     let changePointDto = {
       'changeDt': new Date(),
-      'paymentCash': dto.paymentCash,
+      'paymentCash': dto.paymentCashOrigin,
       'changeType': 'PAYMENT_SUB',
-      'changePoint': dto.changePoint,
-      'currentBalPoint': dto.currentBalPoint,
+      'changePoint': dto.changePointOrigin,
+      'currentBalPoint': dto.currentBalPointOrigin,
       'odrNo': dto.odrNo,
       'paymentNo': dto.paymentNo,
       'activated': false
     }
     this.updateChangePointHistoryActivated(dto.changePointSid, false);
     this.addChangePointHistory(dto.email, changePointDto, search)
-    this.updateUserByBalancePointDifference(dto.email, dto.changePoint);
+    this.updateUserByBalancePointDifference(dto.email, dto.changePointOrigin);
   }
 
   addChangePointHistory = async (email, dto, search) => {
@@ -114,7 +114,7 @@ class ChangePointHistoryContainer extends Component {
     const { changePointHistoryList, pending, error, success, role } = this.props;
     return (
       <Fragment>
-        <div className="div-search">
+        <div className="wrap-search">
           <ChangePointHistorySearch searchCallback={ this.searchCallback } role={ role } />
         </div>
         <div className="div-main">

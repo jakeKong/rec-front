@@ -29,7 +29,6 @@ class RCMenu extends Component {
               <MenuItem key="/#/payment/product">상품구매</MenuItem>
               <MenuItem key="/#/oms/order/history/email">주문내역 조회</MenuItem>
               <MenuItem key="/#/oms/changepoint/history/email">포인트 변동내역 조회</MenuItem>
-              <MenuItem key="/#/payment/history">결제내역 조회</MenuItem>
             </SubMenu>
             <SubMenu title={ <span className="submenu-title-wrapper">운영관리</span> } key="operation">
               <MenuItem key="/#/oms/order/history">주문내역 관리</MenuItem>
@@ -64,7 +63,6 @@ class RCMenu extends Component {
               <MenuItem key="/#/payment/product">상품구매</MenuItem>
               <MenuItem key="/#/oms/order/history/email">주문내역 조회</MenuItem>
               <MenuItem key="/#/oms/changepoint/history/email">포인트 변동내역 조회</MenuItem>
-              <MenuItem key="/#/payment/history">결제내역 조회</MenuItem>
             </SubMenu>
           </Menu>
         </Fragment>

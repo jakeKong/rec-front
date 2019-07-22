@@ -25,40 +25,17 @@ class NoticeManageContainer extends Component {
     }
     this.detailStatusChangeEvent = this.detailStatusChangeEvent.bind(this);
     this.registerStatusChangeEvent = this.registerStatusChangeEvent.bind(this);
-  }
-
-  componentWillMount() {
-
+    this.selectedDeleteCheckEvent = this.selectedDeleteCheckEvent.bind(this);
   }
 
   componentDidMount() {
-    // const { noticeList } = this.props;
-    // 공지사항 목록이 존재하지 않을 경우 목록조회 API서비스 호출
-    // if (!noticeList || noticeList === undefined || noticeList.isEmpty()) {
-      this.getNoticeList();
-    // }
+    this.getNoticeList();
 
-    const { selectList } = this.state;
-    const deleteNoticeList = this.deleteNoticeList;
-
+    const selectedDeleteCheckEvent = this.selectedDeleteCheckEvent;
     const btnSelectDelete = document.querySelector('#btnSelectDelete');
     btnSelectDelete.innerHTML = '선택삭제';
     btnSelectDelete.addEventListener('click', function() {
-      if (selectList.length > 0) {
-        const check = window.confirm('선택한 항목을 삭제 하시겠습니까?');
-        if (check === true) {
-          deleteNoticeList(selectList);
-        }
-      } else {
-        const nfNotfoundSelectColumn = document.createElement('vaadin-notification');
-        nfNotfoundSelectColumn.renderer = function(root) {
-          root.textContent = '선택된 항목이 존재하지 않습니다.'
-        }
-        document.body.appendChild(nfNotfoundSelectColumn);
-        nfNotfoundSelectColumn.position = 'middle';
-        nfNotfoundSelectColumn.duration = 2000;
-        nfNotfoundSelectColumn.opened = true;
-      }
+      selectedDeleteCheckEvent();
     });
 
     const registerStatusChangeEvent = this.registerStatusChangeEvent;
@@ -67,6 +44,27 @@ class NoticeManageContainer extends Component {
     btnRegister.addEventListener('click', function() {
       registerStatusChangeEvent();
     });
+  }
+
+  selectedDeleteCheckEvent() {
+    const { selectList } = this.state;
+    const deleteNoticeList = this.deleteNoticeList;
+
+    if (selectList.length > 0) {
+      const check = window.confirm('선택한 항목을 삭제 하시겠습니까?');
+      if (check === true) {
+        deleteNoticeList(selectList);
+      }
+    } else {
+      const nfNotfoundSelectColumn = document.createElement('vaadin-notification');
+      nfNotfoundSelectColumn.renderer = function(root) {
+        root.textContent = '선택된 항목이 존재하지 않습니다.'
+      }
+      document.body.appendChild(nfNotfoundSelectColumn);
+      nfNotfoundSelectColumn.position = 'middle';
+      nfNotfoundSelectColumn.duration = 2000;
+      nfNotfoundSelectColumn.opened = true;
+    }
   }
 
   // 공지사항 값 초기화
@@ -132,22 +130,8 @@ class NoticeManageContainer extends Component {
   }
 
   // 그리드의 체크박스 선택 시 선택한 컬럼의 값을 선택목록에 저장
-  selectCallback = async (selectDto) => {
-    const { selectList } = this.state;
-    selectList.push(selectDto.noticeSid)
-    this.setState({selectList})
-  }
-
-  // 그리드의 체크박스 선택 취소 했을때 선택목록에 저장되어있는 값 중 선택취소한 컬럼의 값을 찾아 목록에서 제거
-  deselectCallback = async (selectDto) => {
-    const { selectList } = this.state;
-    const itemToFind = selectList.find(function(item) {
-      // return item.noticeSid === selectDto.noticeSid
-      return item === selectDto.noticeSid
-    });
-    const idx = selectList.indexOf(itemToFind);
-    if (idx > -1) selectList.splice(idx, 1)
-    this.setState({selectList})
+  selectCallback = async (getSelectList) => {
+    this.setState({selectList: getSelectList});
   }
 
   // 공지사항 등록 요청
@@ -226,7 +210,7 @@ class NoticeManageContainer extends Component {
           <div className="div-main">
             { pending && <div className="boxLoading"/> }
             { error && <h1>Server Error!</h1> }
-            { !registerStatus && !detailStatus && success && <NoticeGrid noticeList={ noticeList } detailCallback={ this.detailCallback } role={ role } selectCallback={ this.selectCallback } deselectCallback={ this.deselectCallback } /* registerCallback={ this.registerCallback } */ />}
+            { !registerStatus && !detailStatus && success && <NoticeGrid noticeList={ noticeList } detailCallback={ this.detailCallback } role={ role } selectCallback={ this.selectCallback } />}
             { detailStatus && <NoticeDetail notice={ notice } detailToListCallback={ this.detailToListCallback } role={ role } registerCallback={ this.registerCallback } deleteCallback={this.deleteCallback } /> }
             { registerStatus ? <NoticeRegister registerToListCallback={ this.registerToListCallback } addCallback={ this.addCallback } noticeDto={ notice } updateCallback={ this.updateCallback } registerToDetailCallback={ this.registerToDetailCallback } /> : null }
           </div>

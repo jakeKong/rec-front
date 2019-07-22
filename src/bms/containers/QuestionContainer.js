@@ -64,23 +64,15 @@ class QuestionContainer extends Component {
     }})
   }
 
-  searchCallback = async ( fromDt, toDt, questionTitle, questionWriter) => {
-    this.setState({search: {
+  searchCallback = ( fromDt, toDt, questionTitle, questionWriter ) => {
+    let searchValue = {
       fromDt: fromDt,
       toDt: toDt,
       questionTitle: questionTitle,
       questionWriter: questionWriter
-    }});
-    const { search } = this.state;
+    };
     const { email } = this.props;
-    this.getQuestionListByEmail(email, search);
-    // state.search 값 초기화
-    this.setState({search: {
-      fromDt: null,
-      toDt: null,
-      questionTitle: null,
-      questionWriter: null
-    }});
+    this.getQuestionListByEmail(email, searchValue);
   }
 
   // 상세조회 상태로 변경
