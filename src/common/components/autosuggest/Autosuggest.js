@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import shallowEqualArrays from 'shallow-equal/arrays';
 import Autowhatever from 'react-autowhatever';
 import { mapToAutowhateverTheme } from './theme';
-import customTheme from "../../../styles/components/autosuggest.scss";
+//import customTheme from "../../../styles/components/autosuggest.scss";
 
 const alwaysTrue = () => true;
 const defaultShouldRenderSuggestions = value => value.trim().length > 0;
@@ -92,7 +92,7 @@ export default class Autosuggest extends Component {
     multiSection: false,
     focusInputOnSuggestionClick: true,
     highlightFirstSuggestion: false,
-    theme: customTheme,
+    //theme: customTheme,
     id: '1'
   };
 
