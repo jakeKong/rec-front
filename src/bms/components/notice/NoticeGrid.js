@@ -30,20 +30,41 @@ class NoticeGrid extends Component {
       let dateFormat = require('dateformat');
       // 그리드 컬럼 인덱스를 위한 변수
       let i=1;
-      let gridData =[];
-      noticeList.forEach(e => {
-        // push Value type is JSON
-        gridData.push({
+      let list =[];
+      // noticeList.map(e => ({
+      //   ...e, 
+      //   noticeSid: e.get('noticeSid'),
+      //   noticeTitle: e.get("noticeTitle"),
+      //   noticeTxt: e.get("noticeTxt"),
+      //   noticeWriter: e.get("noticeWriter"),
+      //   date: new Date(e.get('reportingDt')).getTime() 
+      // }))
+      // .sort((prev, next) => prev.date > next.date ? 1 : -1)
+      // // .sort((prev, next) => prev.date - next.date)
+      // .forEach(v => {
+      //   list.push({
+      //     index: i++,
+      //     noticeSid: v.noticeSid,
+      //     noticeTitle: v.noticeTitle,
+      //     noticeTxt: v.noticeTxt,
+      //     noticeWriter: v.noticeWriter,
+      //     reportingDt: dateFormat(v.date, 'yyyy년mm월dd일 HH:MM:ss')
+      //   })
+      // })
+
+      noticeList.sort((prev, next) => new Date(prev.get('reportingDt')).getTime() > new Date(next.get('reportingDt')).getTime() ? 1 : -1)
+      // .sort((prev, next) => prev.date - next.date)
+      .forEach(e => {
+        list.push({
           index: i++,
-          noticeSid: e.get("noticeSid"),
+          noticeSid: e.get('noticeSid'),
           noticeTitle: e.get("noticeTitle"),
           noticeTxt: e.get("noticeTxt"),
-          // noticeWriter: e.get("noticeWriter"),
-          reportingDt: dateFormat(new Date(e.get("reportingDt")), 'yyyy년mm월dd일 HH:MM:ss')
+          noticeWriter: e.get("noticeWriter"),
+          reportingDt: dateFormat(new Date(e.get('reportingDt')), 'yyyy년mm월dd일 HH:MM:ss')
         })
-      });
-      gridData.reverse();
-      this.setState({gridData: gridData});
+      })
+      this.setState({gridData: list.reverse()});
     }
   }
 

@@ -41,7 +41,6 @@ class BlogTyleNewsRegister extends Component {
         value: false
       },
     }
-    // this.uploadFile = this.uploadFile.bind(this);
   }
 
   /**
@@ -61,16 +60,6 @@ class BlogTyleNewsRegister extends Component {
       e.preventDefault();
     }
   }
-
-  // uploadFile = async (file) => {
-  //   const { FileLoadModule } = this.props;
-  //   try {
-  //     await FileLoadModule.uploadFile(file);
-  //   } catch (e) {
-  //     console.log("error log : " + e);
-  //   }
-  // }
-
   componentDidMount() {
     // search parameter default setting
     const { dto, clicked } = this.state;
@@ -83,13 +72,10 @@ class BlogTyleNewsRegister extends Component {
         method: 'POST',
         url: `${config.fileService}/files/uploadFile`,
         headers: {
-          // 'Content-Type': 'application/json; charset=UTF-8',
           'Content-Type': 'multipart/form-data; charset=UTF-8',
           'Accept': 'application/json'
         },
-        // file
         responseType: 'file',
-        // data: JSON.stringify(file)
         data: file
       }).then(response => {
         dto.img = response.data.fileDownloadUri;
@@ -120,13 +106,13 @@ class BlogTyleNewsRegister extends Component {
       document.querySelector('#lbImage').innerHTML = "파일 이미지";
         
       const tfTitle = document.querySelector('#tfTitle');
-      tfTitle.maxlength = '10';
+      tfTitle.maxlength = '20';
       tfTitle.className = 'vaadin-text-field-width-200-flex-80';
       tfTitle.addEventListener('input', function() {
         dto.title = tfTitle.value;
       });
       const tfSubTitle = document.querySelector('#tfSubTitle');
-      tfSubTitle.maxlength = '15';
+      tfSubTitle.maxlength = '10';
       tfSubTitle.className = 'vaadin-text-field-width-200-flex-80';
       tfSubTitle.addEventListener('input', function() {
         dto.subTitle = tfSubTitle.value;
@@ -136,19 +122,34 @@ class BlogTyleNewsRegister extends Component {
       tfLink.addEventListener('input', function() {
         dto.link = tfLink.value;
       });
+      const tfImage = document.querySelector('#tfImage');
+      tfImage.className = 'vaadin-text-field-width-200-flex-80';
+      tfImage.addEventListener('input', function() {
+        dto.img = tfImage.value;
+        if (tfImage.value !== "") {
+          ipImg.disabled = true;
+        } else {
+          ipImg.disabled = false;
+        }
+      });
 
-      // const uploadFile = this.uploadFile;
       const ipImg = document.querySelector('#ipImg');
       let form = null;
       ipImg.addEventListener('input', function(e) {
         form = new FormData();
         form.append('file', e.target.files[0])
+        if (e.target.files[0] !== undefined) {
+          tfImage.disabled = true;
+        } else {
+          tfImage.disabled = false;
+        }
       })
 
       if (blog === undefined) {
-        tfTitle.placeholder = '상품 코드를 입력해주세요.';
-        tfSubTitle.placeholder = '상품 명을 입력해주세요.';
-        tfLink.placeholder = '상품 포인트를 입력해주세요.';
+        tfTitle.placeholder = '타이틀 명을 입력해주세요.';
+        tfSubTitle.placeholder = '부동산 분류를 입력해주세요.';
+        tfLink.placeholder = '링크를 입력해주세요.';
+        tfImage.placeholder = '이미지 주소 링크를 입력해주세요.'
       } else {
         if (blog.sid !== null) {
           dto.sid = blog.sid;
@@ -167,12 +168,7 @@ class BlogTyleNewsRegister extends Component {
         }
         if (blog.img !== null) {
           dto.img = blog.img;
-          // uploadFile.innerHTML = blog.img;
-          // uploadFile.hidden = true;
         }
-        // if (blog.writeDt !== null) {
-        //   dto.writeDt = blog.writeDt;
-        // }
       }
 
       // eslint-disable-next-line
@@ -194,20 +190,18 @@ class BlogTyleNewsRegister extends Component {
           return;
         }
         if (dto.img === null || dto.img === undefined || dto.img === "") {
-          if (form !== null || form !== undefined) {
+          if (form !== null && form !== undefined) {
             uploadFile(form)
           } else {
             window.alert('입력되지 않은 값이 있습니다. 입력 후 다시 시도해주세요.');
             return;
           }
         } else {
-          if (form !== null || form !== undefined) {
+          if (form !== null && form !== undefined) {
             uploadFile(form)
           }
         }
-        // if (dto.writeDt === null || undefined) {
-          dto.writeDt = new Date();
-        // }
+        dto.writeDt = new Date();
         dto.writer = '관리자';
         dto.visibility = true;
         
@@ -261,8 +255,11 @@ class BlogTyleNewsRegister extends Component {
             </div>
             <div className="default-column">
               <label id="lbImage" className="label-flex-20-left" />
-              <img id="img" alt=""/>
-              <input type="file" id="ipImg" />
+              <input type="file" id="ipImg" className="input-flex-80-left" />
+            </div>
+            <div className="default-column">
+              <label id="lbImageTo" className="label-flex-20-left" />
+              <vaadin-text-field id="tfImage" required prevent-invalid-input/>
             </div>
           </div>
           <div className="div-register-popup-bottom">
@@ -274,16 +271,5 @@ class BlogTyleNewsRegister extends Component {
     );
   }
 }
-// export default connect(
-//   state => ({
-//     file: state.files.file,
-//     pending: state.files.pending,
-//     error: state.files.error,
-//     success: state.files.success,
-//   }),
-//   dispatch => ({
-//     FileLoadModule: bindActionCreators(FileLoadActions, dispatch)
-//   })
-// )(BlogTyleNewsRegister);
 
 export default BlogTyleNewsRegister;

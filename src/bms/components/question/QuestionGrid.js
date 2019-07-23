@@ -25,12 +25,13 @@ class QuestionGrid extends Component {
     }
 
     let dateFormat = require('dateformat');
-    let gridData =[];
     // 그리드 컬럼 인덱스를 위한 변수
     let i=1;
-    questionList.forEach(e => {
+    let list =[];
+    questionList.sort((prev, next) => new Date(prev.get('reportingDt')).getTime() > new Date(next.get('reportingDt')).getTime() ? 1 : -1)
+    .forEach(e => {
       // push Value type is JSON
-      gridData.push({
+      list.push({
         index: i++,
         questionSid: e.get("questionSid"),
         questionTitle: e.get("questionTitle"),
@@ -40,8 +41,7 @@ class QuestionGrid extends Component {
         reportingDt: dateFormat(new Date(e.get("reportingDt")), 'yyyy년mm월dd일 HH:MM:ss')
       })
     })
-    gridData.reverse();
-    this.setState({gridData: gridData});
+    this.setState({gridData: list.reverse()});
   }
 
   questionTitleClickLabelTemplate(rowData, column) {

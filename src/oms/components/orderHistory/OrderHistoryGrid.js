@@ -31,8 +31,8 @@ class OrderHistoryGrid extends Component {
     let dateFormat = require('dateformat');
     let list = [];
     let i=1;
-    orderHistoryList.forEach(e => {
-
+    orderHistoryList.sort((prev, next) => new Date(prev.get('odrDt')).getTime() > new Date(next.get('odrDt')).getTime() ? 1 : -1)
+    .forEach(e => {
       let status = '';
       statusItems.forEach(function(row){
         if (e.get('status') === row.value) {

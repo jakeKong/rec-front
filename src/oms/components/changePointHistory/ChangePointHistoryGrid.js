@@ -28,7 +28,8 @@ class ChangePointHistoryGrid extends Component {
     
     let dateFormat = require('dateformat');
     let list = [];
-    changePointHistoryList.forEach(e => {
+    changePointHistoryList.sort((prev, next) => new Date(prev.get('changeDt')).getTime() > new Date(next.get('changeDt')).getTime() ? 1 : -1)
+    .forEach(e => {
       let changeType = '';
       changeTypeItems.forEach(function(row){
         if (e.get('changeType') === row.value) {

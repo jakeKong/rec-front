@@ -25,7 +25,8 @@ class BlogTyleNews extends Component {
     const divBlogColumns = document.createElement('div');
     divBlogColumns.className = 'masonry';
 
-    blogTyleNewsList.reverse().forEach(e => {
+    blogTyleNewsList.sort((prev, next) => new Date(prev.get('tylenewsWriteDt')).getTime() > new Date(next.get('tylenewsWriteDt')).getTime() ? 1 : -1)
+    .reverse().forEach(e => {
       if (e.get('tylenewsVisibility') === true) {
         const divBlogCard = document.createElement('div');
         divBlogCard.className = 'card';
@@ -33,8 +34,11 @@ class BlogTyleNews extends Component {
         const image = document.createElement('img');
         // 블로그 이미지
         image.className = 'image';
-        image.src = e.get('tylenewsImg');
-  
+        if (e.get('tylenewsImg') === "" || e.get('tylenewsImg') === null) {
+          image.src = 'http://srd.iptime.org:8006/web/rec/api/file/files/downloadFile/61561aa0-a44c-463a-aa5a-118236815330';
+        } else {
+          image.src = e.get('tylenewsImg');
+        }
         const divBlogCardTitle = document.createElement('div');
         divBlogCardTitle.className = 'title';
         const pTitle = document.createElement('p');
@@ -42,7 +46,6 @@ class BlogTyleNews extends Component {
         pTitle.innerHTML = e.get('tylenewsTitle');
         // 연결된 블로그 링크 호출 이벤트
         pTitle.addEventListener('click', function() {
-          console.log(e.get('tylenewsLink'))
           window.open(e.get('tylenewsLink'));
         })
         divBlogCardTitle.appendChild(pTitle);
