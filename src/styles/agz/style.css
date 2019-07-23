@@ -71,7 +71,6 @@ body *{
 html, body, #root .index {
     width: 100%;
     height: 100%;
-    overflow: hidden;
 }
 .width-full {
     width: 1024px;
@@ -117,8 +116,9 @@ html, body, #root .index {
 }
 .mc /*Main Contents*/{
     box-sizing: border-box;
-    height: calc(100% - 80px - 80px);
-    min-height: calc(100% - 80px - 80px);
+    height: calc(100% - 80px - 34px);
+    min-height: calc(100% - 80px - 34px);
+    overflow: auto;
 }
 .div-inline {
     display: inline-block;
@@ -138,7 +138,7 @@ html, body, #root .index {
 }
 .agz-scroll::-webkit-scrollbar-thumb
 {
-    background-color: #4fd80b;
+    background-color: #4fd81b;
 	background-image: -webkit-gradient(linear, 0 0, 0 100%,
 	                   color-stop(.5, rgba(255, 255, 255, .2)),
 					   color-stop(.5, transparent), to(transparent));
@@ -152,16 +152,16 @@ html, body, #root .index {
     font-weight: 300;
     padding-top: 24px;
     padding-bottom: 8px;
-    color: #4fd80b;
+    color: #4fd81b;
 }
 /* Page Common END*/
 
 /* Colors */
 .agz-bg {
-    background: #4fd80b;
+    background: #4fd81b;
 }
 .agz-fc {
-    color: #4fd80b !important;
+    color: #4fd81b !important;
 }
 
 /* colors END */
@@ -258,7 +258,7 @@ html, body, #root .index {
 .rc-menu-vertical.rc-menu-sub .rc-menu-item-active,
 .rc-menu-vertical.rc-menu-sub .rc-menu-item-selected{
     color: #f0ee35;
-    background: #4fd80b;
+    background: #4fd81b;
     cursor: pointer;
 }
 /* 헤더 서브메뉴 끝*/
@@ -322,7 +322,7 @@ html, body, #root .index {
     width: 400px;
     height: 64px;
     vertical-align: bottom;
-    border: 3px solid #4fd80b;
+    border: 3px solid #4fd81b;
     outline: none;
     padding-left: 12px;
     padding-right: 12px;
@@ -345,7 +345,7 @@ html, body, #root .index {
     
     vertical-align: bottom;
     border: none;
-    background: #4fd80b;
+    background: #4fd81b;
     color: #fff;
     font-size: 22px;
     letter-spacing: 1px;
@@ -454,9 +454,9 @@ html, body, #root .index {
 }
 /* table selector */
 .p-datatable .p-checkbox-box.p-highlight {
-    border-color: #4fd80b !important;
+    border-color: #4fd81b !important;
     background-color: #fff !important;
-    color: #4fd80b !important;
+    color: #4fd81b !important;
 }
 
 /* table pagination */
@@ -466,7 +466,7 @@ html, body, #root .index {
     margin-top: 24px;
 }
 .p-datatable .p-paginator .p-paginator-page.p-highlight {
-    background-color: #4fd80b !important;
+    background-color: #4fd81b !important;
 }
 
 
@@ -582,7 +582,7 @@ html, body, #root .index {
 }
 .pagination .btn.prev:hover,
 .pagination .btn.next:hover{
-    color: #4fd80b;
+    color: #4fd81b;
 }
 .pagination .btn.number {
     background: #e4fff1;
@@ -594,7 +594,7 @@ html, body, #root .index {
     color: #fff;
 }
 .pagination .btn.number:hover {
-    background: #4fd80b;
+    background: #4fd81b;
     color: #fff;
 }
     /* Btns */
@@ -621,7 +621,7 @@ html, body, #root .index {
 .btn.down-excel {
     display: inline-block;
     color: #fff;
-    background: #4fd80b;
+    background: #4fd81b;
     font-size: 12px;
     padding: 8px 18px;
     border-radius: 24px;
@@ -687,9 +687,61 @@ html, body, #root .index {
     font-size: 12px;
 }
 /* tile news END */
-/* land info */
+/* PAGE - land info */
 .wrap-land-info {
     display: inline-block;
+}
+
+/* TODO 랜드 인포 페이지 클래스 삽입 필요 */
+.div-search {
+    height: 50px !important;
+    box-sizing: content-box !important;
+    margin-bottom: 6px !important;
+}
+.div-search > div > div:first-child {
+    /* 검색 input */
+    width: calc(60% - 100px) !important;
+    vertical-align: middle;
+}
+.div-search > div > div:last-child {
+    display: inline-block;
+    vertical-align: middle;
+    height: 50px !important;
+    margin-left: 0 !important;
+}
+.div-search > div > div:last-child vaadin-button {
+    height: 50px;
+    margin: 0;
+    background-color: #4fd81b;
+    color: #fff;
+    border-radius: 0;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.div-search > div > div:last-child vaadin-button:hover {
+    background-color: #3fc80b;
+}
+.div-search input[type=text]{
+    width: 100%;
+    height: 50px;
+    border: none;
+    border: 2px solid #4fd81b;
+    border-radius: 0;
+    color: #444;
+}
+/* 서치박스 자동완성 드롭다운 */
+.div-search .react-autosuggest__suggestions-container {
+    width: 100%;
+    top: 50px !important;
+    left: 0;
+}
+.div-search .react-autosuggest__suggestions-container--open {
+    border-width: 2px;
+    border-color: #eee;
+    border-top: none;
+}
+.wrap-land-info {
+    width: 100%;
 }
 .div-land-info-item {
     display: block;
@@ -697,25 +749,23 @@ html, body, #root .index {
 }
 
 .div-land-info-item.left {
-    width: 404px;
-    margin-right: 16px;
+    width: 380px;
+    margin-right: 17px;
     height: 100%;
-    box-sizing: border-box;
 }
 .div-land-info-item.right {
-    width: 604px;
+    width: calc(100% - 380px - 17px);
     height: 100%;
-    box-sizing: border-box;
 }
 
 .wrap-land-info table{
     width: 100%;
     font-weight: 200;
 }
-.wrap-land-info table td,
+/* .wrap-land-info table td,
 .wrap-land-info table th {
-    box-sizing: border-box;
-}
+    
+} */
 .wrap-land-info table tr {
     border-bottom: 1px solid #eee;
 }
@@ -725,18 +775,22 @@ html, body, #root .index {
 
 .tbl-info-01 {
     border-top: 2px solid #aaa;
+    height: 260px;
 }
 .tbl-info-01 th,
 .tbl-info-01 td {
     box-sizing: border-box;
-    height: 32px;
-    line-height: 32px;
+    max-height: 42px;
+    line-height: 42px;
     text-indent: 12px;
     font-size: 14px;
 }
 .tbl-info-01 th {
     width: 30%;
     background: #f7f7f8;
+}
+.tbl-info-01 td {
+    font-size: 13px;
 }
 .tbl-info-01 .double {
     height: 64px;
@@ -747,12 +801,13 @@ html, body, #root .index {
     margin-top: 6px;
     width: 100%;
     border-top: 2px solid #aaa;
+    height: 69px;
 }
 .tbl-info-02 th,
 .tbl-info-02 td {
     box-sizing: border-box;
-    height: 28px;
-    line-height: 32px;
+    line-height: 34px;
+    height: 34px;
     text-indent: 12px;
     text-align: center;
     font-size: 14px;
@@ -779,7 +834,7 @@ html, body, #root .index {
 }
 .wrap-land-info .map {
     width: 100%;
-    height: 335px;
+    height: 340px;
     box-sizing: border-box;
     border: 1px solid #f7f7f8;
 }
@@ -828,7 +883,7 @@ html, body, #root .index {
     font-size: 24px;
 }
 .receipt .amount.cash {
-    color: #4fd80b;
+    color: #4fd81b;
 }
 .receipt .amount.point {
     color: #0b78d8;
@@ -865,7 +920,7 @@ html, body, #root .index {
 /* log-purchase */
 .page-log-purchase .agz-bbs .btn-download {
     color: #fff !important;
-    background: #4fd80b;
+    background: #4fd81b;
     padding: 2px 8px;
     font-size: 12px;
 }
@@ -908,7 +963,7 @@ html, body, #root .index {
     margin: 0 !important;
 }
 .div-sub-main vaadin-button {
-    color: #4fd80b;
+    color: #4fd81b;
     border-radius: 0;
     margin: 0;
     cursor: pointer;
@@ -916,7 +971,7 @@ html, body, #root .index {
 }
 .div-sub-main vaadin-button:hover {
     color: #fff;
-    background: #4fd80b;
+    background: #4fd81b;
 }
 .div-sub-main vaadin-button:active {
     background: #3fc80b;
