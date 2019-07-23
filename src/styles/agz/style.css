@@ -218,10 +218,11 @@ html, body, #root .index {
 .header .wrap-nav li {
     display: inline-block;
     cursor: pointer;
+    font-weight: 400;
 }
 .header .wrap-nav .rc-menu-horizontal > .rc-menu-submenu,
 .header .wrap-nav .rc-menu-horizontal > .rc-menu-item {
-    font-weight: 400;
+    font-weight: 300;
 }
 .header .wrap-nav > li.rc-menu-item{
     padding-top : 0px !important;
@@ -328,7 +329,7 @@ html, body, #root .index {
     padding-right: 12px;
     font-size: 24px;
     color: #222;
-    font-weight: 400;
+    font-weight: 300 !important;
     
     margin: 0 -2px;
     position: relative;
@@ -350,7 +351,7 @@ html, body, #root .index {
     font-size: 22px;
     letter-spacing: 1px;
     margin-left: -6px;
-    font-weight: bold;
+    font-weight: 400;
     cursor: pointer;
     
     margin: 0 -4px;
@@ -405,8 +406,8 @@ html, body, #root .index {
     border-bottom: 1px solid #eee !important;
 }
 .p-datatable thead tr th{
-    height: 24px !important;
-    line-height: 24px !important;
+    height: 28px !important;
+    line-height: 28px !important;
     margin-bottom: 12px !important;
     color: #666 !important;
     font-size: 14px !important;
@@ -443,14 +444,15 @@ html, body, #root .index {
     color: #444 !important;
 }
 .p-datatable tbody tr td {
-    height: 28px !important;
-    line-height: 28px !important;
+    height: 32px !important;
+    line-height: 32px !important;
     border-bottom: 1px solid #e1e1e1 !important;
     font-size: 14px !important;
     border: none !important;
     background: transparent !important;
-    color: #aaa !important;
+    color: #666 !important;
     transition: 0.3s;
+    font-weight: 300 ;
 }
 /* table selector */
 .p-datatable .p-checkbox-box.p-highlight {
@@ -489,6 +491,8 @@ html, body, #root .index {
 .p-datatable tbody tr td:nth-of-type(3),
 .p-datatable thead tr th:nth-of-type(3) {
     width: 70% !important;
+    text-align: left !important;
+    padding-left: 24px !important;
 }
 /* TABLE END */
 
@@ -558,6 +562,21 @@ html, body, #root .index {
 }
 .wrap-search .select:hover {
     border: 1px solid #bbb;
+}
+.react-autosuggest__input {
+    font-weight: 300 !important;
+}
+/* 서치박스 자동완성 드롭다운 */
+.searchbox .react-autosuggest__suggestions-container {
+    width: 100%;
+    top: 48px !important;
+    left: -2px;
+}
+.searchbox .react-autosuggest__suggestions-container--open {
+    border-width: 2px;
+    border-color: #eee;
+    border-top: none;
+    font-size: 12px;
 }
 
     /* searchbox END */
@@ -700,7 +719,7 @@ html, body, #root .index {
 }
 .div-search > div > div:first-child {
     /* 검색 input */
-    width: calc(60% - 100px) !important;
+    width: calc(80% - 100px) !important;
     vertical-align: middle;
 }
 .div-search > div > div:last-child {
@@ -740,8 +759,13 @@ html, body, #root .index {
     border-color: #eee;
     border-top: none;
 }
+
+/* 부동산 상세정보 */
 .wrap-land-info {
     width: 100%;
+    max-height: 590px;
+    overflow:auto;
+    margin-top: 8px;
 }
 .div-land-info-item {
     display: block;
@@ -749,12 +773,12 @@ html, body, #root .index {
 }
 
 .div-land-info-item.left {
-    width: 380px;
-    margin-right: 17px;
+    width: calc(100% - 610px - 16px);
+    margin-right: 16px;
     height: 100%;
 }
 .div-land-info-item.right {
-    width: calc(100% - 380px - 17px);
+    width: 610px;
     height: 100%;
 }
 
@@ -762,55 +786,44 @@ html, body, #root .index {
     width: 100%;
     font-weight: 200;
 }
-/* .wrap-land-info table td,
-.wrap-land-info table th {
-    
-} */
-.wrap-land-info table tr {
-    border-bottom: 1px solid #eee;
-}
+
 .wrap-land-info table th {
     font-weight: 400;
 }
 
+.wrap-land-info table tr {
+    border-bottom: 1px solid #eee;
+}
+
 .tbl-info-01 {
     border-top: 2px solid #aaa;
-    height: 260px;
+    height: 166px;
 }
 .tbl-info-01 th,
 .tbl-info-01 td {
     box-sizing: border-box;
-    max-height: 42px;
-    line-height: 42px;
-    text-indent: 12px;
-    font-size: 14px;
+    max-height: 26px;
+    line-height: 26px;
+    padding-left: 12px;
+    font-size: 13px;
 }
 .tbl-info-01 th {
     width: 30%;
     background: #f7f7f8;
 }
-.tbl-info-01 td {
-    font-size: 13px;
-}
-.tbl-info-01 .double {
-    height: 64px;
-    word-break: break-all;
-}
 
 .tbl-info-02 {
     margin-top: 6px;
-    width: 100%;
     border-top: 2px solid #aaa;
-    height: 69px;
+    height: 60px;
 }
 .tbl-info-02 th,
 .tbl-info-02 td {
     box-sizing: border-box;
-    line-height: 34px;
-    height: 34px;
-    text-indent: 12px;
+    line-height: 26px;
+    height: 26px;
     text-align: center;
-    font-size: 14px;
+    font-size: 12px;
 }
 .tbl-info-02 th {
     background: #f7f7f8;
@@ -819,18 +832,25 @@ html, body, #root .index {
 .tbl-info-03 {
     margin-top: 6px;
     border-top: 2px solid #aaa;
+    max-height: 280px
+}
+.tbl-info-03 tr {
+    height: 26px;
 }
 .tbl-info-03 th,
 .tbl-info-03 td {
     box-sizing: border-box;
-    height: 26px;
+    max-height: 26px;
     line-height: 26px;
     text-indent: 12px;
-    font-size: 14px;
 }
 .tbl-info-03 th {
     background: #f7f7f8;
     width: 30%;
+    font-size: 13px;
+}
+.tbl-info-03 td {
+    font-size: 11px;
 }
 .wrap-land-info .map {
     width: 100%;
@@ -848,21 +868,50 @@ html, body, #root .index {
 .tbl-info-04 td {
     box-sizing: border-box;
     text-align: center;
-    font-size: 14px;
-}
-.tbl-info-04 td {
-    height: 44px;
-    line-height: 26px;
 }
 .tbl-info-04 th {
-    height: 38px;
-    line-height: 38px;
+    max-height: 30px;
+    line-height: 30px;
+    font-size: 13px;
+}
+.tbl-info-04 td {
+    max-height: 34px;
+    line-height: 34px;
+    font-size: 12px;
+}
+.tbl-info-04 th:nth-of-type(1),
+.tbl-info-04 td:nth-of-type(1){
+    width: 10%;
+}
+.tbl-info-04 th:nth-of-type(2),
+.tbl-info-04 td:nth-of-type(2){
+    width: 70%;
 }
 .tbl-info-04 tr:nth-of-type(2n-1) {
     background: #f8f8f9; 
 }
 .tbl-info-04 th {
     background: #f7f7f8;
+}
+#btnMakePdf {
+    position: absolute;
+    left: 50%;
+    margin: 0;
+    margin-left: -512px !important;
+    border-radius: 0;
+    width: 1024px;
+    color: #fff;
+    background-color: #4fd81b;
+    cursor: pointer;
+    transition: 0.3s;
+}
+#btnMakePdf:hover {
+    background-color: #3fc80b;
+}
+#btnMakePdf:active {
+    background-color: #fff;
+    border: 1px solid #3fc80b;
+    color: #4fd81b;
 }
 /* land info END */
 /* purchase */
