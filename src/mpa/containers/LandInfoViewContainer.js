@@ -5,10 +5,11 @@ import LandInfoViewModule, * as landInfoViewActions from "../modules/LandInfoVie
 import { LandInfoView } from "../index";
 import { AddressSearch } from '../../common';
 import '@vaadin/vaadin-button';
+import customTheme from '../../styles/agz/landInfo_suggest_thema.css';
 
 let enabled = false;
 let searchKey;
-let IMP = null;
+
 class LandInfoViewContainer extends Component {
 
   // state set을 위한 초기 생성자
@@ -18,13 +19,11 @@ class LandInfoViewContainer extends Component {
       search: {
         jibunAddr: '',
         roadAddr: '',
-        pnu: '11111111111111111111'
+        pnu: '111111111111111111'
       },
+      selectedSuggestion: null,
     };
     this.makeLandInfo = this.makeLandInfo.bind(this);
-    
-    this.getLandInfo(this.state.search);
-    IMP = window.IMP;
   }
   isDisabled = () => {
     return enabled;
@@ -62,66 +61,75 @@ class LandInfoViewContainer extends Component {
     }
   }
   makeLandInfo = async (search) => {
-    // const { LandInfoViewModule } = this.props;
-    // try {
-    //   await LandInfoViewModule.makeLandInfo(search)
-    // } catch (e) {
-    //   console.log("error log : " + e);
-    // }
-    IMP.init('imp74972676');
-     // IMP.request_pay(param, callback) 호출
-    IMP.request_pay({ // param
-      pg: "kcp.A52CY",
-      pay_method: "card",
-      merchant_uid: "ORD20180131-0000011",
-      name: "노르웨이 회전 의자",
-      amount: 64900,
-      buyer_email: "gildong@gmail.com",
-      buyer_name: "홍길동",
-      buyer_tel: "010-4242-4242",
-      buyer_addr: "서울특별시 강남구 신사동",
-      buyer_postcode: "01181"
-    }, rsp => { // callback
-      console.log(rsp);
-      if (rsp.success) {
-          console.log(rsp.success);
-      } else {
-          console.log('결제 실패');
-      }
-    });
+    const { LandInfoViewModule } = this.props;
+    try {
+      await LandInfoViewModule.makeLandInfo(search)
+    } catch (e) {
+      console.log("error log : " + e);
+    }
   }
 
 // 마운트 이전 권한 체크
 
-  // componentDidMount() {
-  //   const { search } = this.state;
-  //   const { landInfo } = this.props;
-  //     if(!landInfo || landInfo === undefined || landInfo.isEmpty()) {
-  //       this.getLandInfo(search);
-  //     }
-  // }
+// componentDidMount() {
+//   const { search } = this.state;
+//   const { landInfo } = this.props;
+//     if(!landInfo || landInfo === undefined || landInfo.isEmpty()) {
+//       this.getLandInfo(search);
+//     }
+// }
+
 // 마운트 직후 한번 (rendering 이전, 마운트 이후의 작업)
   componentDidMount() {
-  const { landInfoData } = this.props;
-    // if(!landInfoData || landInfoData === undefined || landInfoData.isEmpty()) {
-    //   this.getLandInfo(search);
-    // }
-    
+    //주문버튼 설정
     const makeLandInfo = this.makeLandInfo;
     const btnMakePdf = document.querySelector('#btnMakePdf');
     btnMakePdf.innerHTML = '주문'
     btnMakePdf.addEventListener('click', function() {
       makeLandInfo(searchKey);
     })
+    
+    //MAIN 화면 혹은 기타 화면으로 부터 넘어온 주소검색 결과가 있는지 확인한여 처리한다.
+    if(this.props.postStat !== undefined) {
+      const {selectedSuggestion} = this.props.postStat;
+      
+      this.setState({
+        search: {
+          jibunAddr: selectedSuggestion.jibunAddr,
+          roadAddr: selectedSuggestion.roadAddr,
+          pnu: selectedSuggestion.bdMgtSn.substring(0,18)
+        },
+        selectedSuggestion: {selectedSuggestion}
+      });
+      
+      searchKey = {
+        jibunAddr: selectedSuggestion.jibunAddr,
+        roadAddr: selectedSuggestion.roadAddr,
+        pnu: selectedSuggestion.bdMgtSn
+      };
+      this.getLandInfo(searchKey);
+    }
+    //이전 화면에서 넘어온 값이 아닌경우
+    else {
+      this.getLandInfo(searchKey);
+    }
+    
+    const { landInfoData } = this.props;
+    // if(!landInfoData || landInfoData === undefined || landInfoData.isEmpty()) {
+    //   this.getLandInfo(search);
+    // }
+    
   }
   
   render() {
     const { pending, error, success, landInfoData } = this.props;
     return (
       <Fragment>
-        <div>
-          <div className="div-search"><AddressSearch onComplete={this.onComplete} onSearchClick={this.onSearchClick} /></div>
-          <div>
+        <div >
+          <div className="searchbox">
+            <AddressSearch onComplete={this.onComplete} onSearchClick={this.onSearchClick} theme={customTheme} btnClassName='button-address-search'/>
+          </div>
+          <div style={{marginTop:'2px'}}>
             {pending && <div className="boxLoading" />}
             {error && <h1>Server Error!</h1>}
             {success && <LandInfoView landInfoData={landInfoData}/>}

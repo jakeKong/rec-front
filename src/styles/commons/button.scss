@@ -62,3 +62,22 @@
   color: red;
   float: right;
 }
+
+.button-address-search {
+  display: inline-block;
+  width: 100px;
+  height: 48px;
+  line-height: 48px;
+  vertical-align: bottom;
+  border: none;
+  background: #4fd80b;
+  color: #fff;
+  font-size: 16px;
+  letter-spacing: 1px;
+  margin-left: -6px;
+  font-weight: bold;
+  cursor: pointer;
+  
+  border-radius: 0;
+  margin: 0 -4px;
+}
