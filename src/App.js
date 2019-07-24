@@ -6,7 +6,7 @@ import { BlogTyleNewsPage, BlogTyleNewsManagePage } from './blog';
 import { UserManagePage } from './scm';
 import { OrderHistoryPage, OrderHistoryByEmailPage, /*ReportMakeHistoryPage,*/ ChangePointHistoryPage, ChangePointHistoryByEmailPage, ProductManagePage } from './oms';
 import { NoticePage, NoticeManagePage, QuestionPage, QuestionManagePage } from './bms';
-import { PaymentPage, PaymentHistoryPage } from './payment';
+import { PaymentPage } from './payment';
 import { BrRecapTitleInfoPage, LandInfoViewPage } from './mpa';
 
 const App = () => {
@@ -60,8 +60,6 @@ const App = () => {
       <Route exact path="/mpa/recaptitle/list" component={ BrRecapTitleInfoPage }/>
       {/* 상품 구매 */}
       <Route exact path="/payment/product" component={ PaymentPage }/>
-      {/* 결제 내역 */}
-      <Route exact path="/payment/history" component={ PaymentHistoryPage }/>
 
       <Route component={NotFoundPage}/>
     </Switch>

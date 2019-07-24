@@ -52,7 +52,8 @@ class BlogTyleNewsGrid extends Component {
     let dateFormat = require('dateformat');
     let list = [];
     let i=1;
-    blogTyleNewsList.reverse().forEach(e => {
+    blogTyleNewsList.sort((prev, next) => new Date(prev.get('tylenewsWriteDt')).getTime() > new Date(next.get('tylenewsWriteDt')).getTime() ? 1 : -1)
+    .forEach(e => {
       list.push({
         index: i++,
         sid: e.get('tylenewsSid'),
@@ -67,7 +68,7 @@ class BlogTyleNewsGrid extends Component {
     });
     // Grid Items Setting
     const grid = document.querySelector('vaadin-grid');
-    grid.items = list;
+    grid.items = list.reverse();
 
     grid.className = "agz-bbs";
 

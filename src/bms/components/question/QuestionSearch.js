@@ -25,7 +25,6 @@ class QuestionSearch extends Component {
 
   componentDidMount() {
     // search parameter default setting
-    let { fromDt, toDt } = this.state;
     const { role } = this.props;
 
     // search label set
@@ -35,26 +34,10 @@ class QuestionSearch extends Component {
     lbSearch.innerHTML = '제목';
     
     
-    //날짜 선택 필드 세팅
-    {
-      // Start date-picker set
-      const dpStart = document.querySelector('#dpStart')
-      // default before Week date set
-      fromDt = dateFormat(new Date(monthBeforeDate), 'yyyy-mm-dd');
-      this.setState({fromDt: fromDt});
-      dpStart.onChanged = function() {
-        fromDt = dpStart.value;
-      };
-
-      // End date-picker set
-      const dpEnd = document.querySelector('#dpEnd')
-      // default today
-      toDt = dateFormat(new Date(currentDate), 'yyyy-mm-dd');
-      this.setState({toDt: toDt});
-      dpEnd.addEventListener('onChanged', function() {
-        toDt = dpEnd.value;
-      })
-    }
+    // default before Week date set
+    this.setState({fromDt: dateFormat(new Date(monthBeforeDate), 'yyyy-mm-dd')});
+    // default today
+    this.setState({toDt: dateFormat(new Date(currentDate), 'yyyy-mm-dd')});
 
     const drSearch = document.querySelector('#drSearch');
     if (role === 'ROLE_ADMIN') {
@@ -81,13 +64,11 @@ class QuestionSearch extends Component {
   // 제목 텍스트 입력 이벤트
   SearchItemByTitleInputEvent(e) {
     this.setState({questionTitle: e.target.value})
-    console.log(e.target.value)
   }
 
   // 이름 텍스트 입력 이벤트
   SearchItemByNameInputEvent(e) {
     this.setState({questionWriter: e.target.value})
-    console.log(e.target.value)
   }
 
   // 버튼 클릭 이벤트
@@ -112,28 +93,20 @@ class QuestionSearch extends Component {
     return (
       <Fragment>
         <label className="label" id="lbDate" />
-        <Calendar locale={calendarLocale} id="dpStart" showIcon={true} dateFormat="yy-mm-dd" value={this.state.fromDt} onChange={(e) => this.setState({fromDt: e.value})}/>
-        {/* <vaadin-date-picker id="dpStart" /> */}
+        <Calendar className="calendar-width-100" locale={calendarLocale} id="dpStart" showIcon={true} dateFormat="yy-mm-dd" value={this.state.fromDt} onChange={(e) => this.setState({fromDt: dateFormat(new Date(e.value), 'yyyy-mm-dd')})}/>
         <label className="label" id="lbPunct" />
-        <Calendar locale={calendarLocale} id="dpEnd" showIcon={true} dateFormat="yy-mm-dd" value={this.state.toDt} onChange={(e) => this.setState({toDt: e.value})}/>
-        {/* <vaadin-date-picker id="dpEnd" /> */}
+        <Calendar className="calendar-width-100" locale={calendarLocale} id="dpEnd" showIcon={true} dateFormat="yy-mm-dd" value={this.state.toDt} onChange={(e) => this.setState({toDt: dateFormat(new Date(e.value), 'yyyy-mm-dd')})}/>
 
-        {/* <vaadin-combo-box id="cbSearch"/> */}
         <Dropdown id="drSearch" 
+                  className="dropdown-width-100"
                   value={this.state.searchItemValue}
                   options={drSearchItems} 
                   onChange={e=>this.SearchItemChangeEvent(e)} />
         <label className="label" id="lbSearch"/>
-        <span className="p-float-label">
         { this.state.searchItemValue === 'title' &&
           <InputText id="itSearch" value={this.state.questionTitle} onChange={(e) => this.SearchItemByTitleInputEvent(e)} /> }
         { this.state.searchItemValue === 'name' &&
           <InputText id="itSearch" value={this.state.questionWriter} onChange={(e) => this.SearchItemByNameInputEvent(e)} /> }
-        </span>
-
-        {/* <vaadin-text-field id="tfSearch"> */}
-          {/* <iron-icon icon="vaadin:search" slot="prefix" /> */}
-        {/* </vaadin-text-field> */}
 
         <vaadin-button id="btnSearch" onClick={e => this.searchClick(e)}/>
       </Fragment>

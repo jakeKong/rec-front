@@ -74,7 +74,7 @@ class ChangePointHistoryByEmailContainer extends Component {
     const { changePointHistoryList, pending, error, success } = this.props;
     return (
       <Fragment>
-        <div className="div-search">
+        <div className="wrap-search">
           <ChangePointHistorySearch searchCallback={ this.searchCallback } />
         </div>
         <div className="div-main">

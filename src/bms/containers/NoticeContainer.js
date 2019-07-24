@@ -51,7 +51,6 @@ class NoticeContainer extends Component {
 
   // 그리드로부터 전달받은 공지사항 값으로 상세조회 화면으로 변경
   detailCallback = async (noticeDto) => {
-    console.log(noticeDto);
     this.setState({notice: noticeDto});
     this.detailStatusChangeEvent();
   }

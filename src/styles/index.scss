@@ -27,12 +27,17 @@
 @import "./components/vaadin-details.scss";
 @import "./components/vaadin-list-box.scss";
 
+@import './components/primereact-calendar.scss';
+@import './components/primereact-dropdown.scss';
+
 // agz
 @import "./agz/style.css";
 @import "./agz/table_style.css";
 @import "./agz/reset_v01.css";
 // @import "./agz/prime_react_theme.scss";
-
+.input-flex-80-left {
+  flex: 80;
+}
 // .index {
 //   width: 100%;
 //   height: 100%;
