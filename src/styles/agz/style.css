@@ -10,6 +10,7 @@
     margin: 0;
 }
 
+
 /* RESET END */
 
 /* FONT 글씨체 */
@@ -67,10 +68,9 @@ body *{
 /* FONT END */
 
 /* Layout 레이아웃 공통 */
-html, body {
+html, body, #root .index {
     width: 100%;
     height: 100%;
-    overflow: hidden;
 }
 .width-full {
     width: 1024px;
@@ -116,7 +116,9 @@ html, body {
 }
 .mc /*Main Contents*/{
     box-sizing: border-box;
-    height: calc(100% - 80px - 80px);
+    height: calc(100% - 80px - 34px);
+    min-height: calc(100% - 80px - 34px);
+    overflow: auto;
 }
 .div-inline {
     display: inline-block;
@@ -136,7 +138,7 @@ html, body {
 }
 .agz-scroll::-webkit-scrollbar-thumb
 {
-    background-color: #4fd80b;
+    background-color: #4fd81b;
 	background-image: -webkit-gradient(linear, 0 0, 0 100%,
 	                   color-stop(.5, rgba(255, 255, 255, .2)),
 					   color-stop(.5, transparent), to(transparent));
@@ -148,18 +150,18 @@ html, body {
 .page-description {
     font-size: 34px;
     font-weight: 300;
-    padding-top: 36px;
-    padding-bottom: 20px;
-    color: #4fd80b;
+    padding-top: 24px;
+    padding-bottom: 8px;
+    color: #4fd81b;
 }
 /* Page Common END*/
 
 /* Colors */
 .agz-bg {
-    background: #4fd80b;
+    background: #4fd81b;
 }
 .agz-fc {
-    color: #4fd80b !important;
+    color: #4fd81b !important;
 }
 
 /* colors END */
@@ -200,30 +202,69 @@ html, body {
 }
 .header .wrap-nav {
     position: absolute;
-    top: 46px;
+    bottom: 0;
     right: 50%;
     margin-right: -512px !important;
+    width: auto;
     
     background: transparent;
     color: #fff;
     border: none;
-    
     text-align: right;
-    
-    font-weight: 400;
+
     font-size: 22px;
     z-index: 100;
 }
 .header .wrap-nav li {
     display: inline-block;
     cursor: pointer;
+    font-weight: 400;
 }
-.header .wrap-nav li > div ,
-.header .wrap-nav li {
+.header .wrap-nav .rc-menu-horizontal > .rc-menu-submenu,
+.header .wrap-nav .rc-menu-horizontal > .rc-menu-item {
+    font-weight: 300;
+}
+.header .wrap-nav > li.rc-menu-item{
     padding-top : 0px !important;
     padding-left: 4px !important;
-    padding-right: 4px !important;
-    
+    padding-right: 4px !important;    
+}
+.header .wrap-nav li.rc-menu-item-active,
+.header .wrap-nav li.rc-menu-submenu-active,
+.header .wrap-nav li.rc-menu-submenu-active > div {
+    background: transparent;
+    color: #f0ee35;
+    border-bottom-color: #f0ee35;
+    border-bottom-width: 2px;
+}
+.header .wrap-nav li.rc-menu-item-selected,
+.header .wrap-nav li.rc-menu-submenu-selected {
+    /* 현재 선택된 메뉴 */
+    color: #f0ee35 !important;
+    border-bottom-color: #f0ee35 !important;
+    background-color: transparent !important;
+}
+/* 헤더 서브메뉴 */
+.rc-menu-vertical.rc-menu-sub { 
+    margin-top: 6px !important;
+    border: none;
+    box-shadow: 0px 4px 3px rgba(50,50,50,0.5);
+    background: #3fc80b !important;
+    border-radius: 0 0 2px 2px;
+    overflow: hidden;
+}
+.rc-menu-vertical.rc-menu-sub .rc-menu-item{
+    color: #fff;
+}
+.rc-menu-vertical.rc-menu-sub .rc-menu-item-active,
+.rc-menu-vertical.rc-menu-sub .rc-menu-item-selected{
+    color: #f0ee35;
+    background: #4fd81b;
+    cursor: pointer;
+}
+/* 헤더 서브메뉴 끝*/
+.header .wrap-nav li > div {
+    padding: 0 !important;
 }
 .header .wrap-nav li > div {
     padding-bottom: 0 !important;
@@ -254,20 +295,21 @@ html, body {
 .page-main .illust-main {
     width: 100%;
     height: 280px;
-    background: url('./image/main_illu.png');
-    background-size: 66%;
+    margin-top: 100px;
+    background: url('./image/main_illu_3x.png');
+    background-size: cover;
     background-repeat: no-repeat;
     background-position: 50%;
     box-sizing: border-box;
 }
 .page-main .wrap-content-main {
-    height: calc(100% - 280px);
+    height: calc(100% - 280px - 100px);
     position: relative;
 }
 .wrap-searchbox {
     position: absolute;
     width: 100%;
-    height: 120px;
+    height: 140px;
     bottom: 50%;
     text-align: center;
 }
@@ -279,15 +321,15 @@ html, body {
     display: inline-block;
     box-sizing: border-box;
     width: 400px;
-    height: 48px;
+    height: 64px;
     vertical-align: bottom;
-    border: 3px solid #4fd80b;
+    border: 3px solid #4fd81b;
     outline: none;
     padding-left: 12px;
     padding-right: 12px;
-    font-size: 16px;
+    font-size: 24px;
     color: #222;
-    font-weight: bold;
+    font-weight: 300 !important;
     
     margin: 0 -2px;
     position: relative;
@@ -299,21 +341,28 @@ html, body {
 }
 .wrap-searchbox .btn-search {
     display: inline-block;
-    width: 100px;
-    height: 48px;
-    line-height: 48px;
+    width: 140px;
+    height: 64px;
+    
     vertical-align: bottom;
     border: none;
-    background: #4fd80b;
+    background: #4fd81b;
     color: #fff;
-    font-size: 16px;
+    font-size: 22px;
     letter-spacing: 1px;
     margin-left: -6px;
-    font-weight: bold;
+    font-weight: 400;
     cursor: pointer;
     
-    border-radius: 0;
     margin: 0 -4px;
+
+    transition: 0.3s;
+}
+.wrap-searchbox .btn-search:hover {
+    color: #f0ee35;
+}
+.wrap-searchbox .btn-search:active {
+    color: #fff;
 }
 .page-main .box-summary {
     position: absolute;
@@ -322,7 +371,6 @@ html, body {
 }
 .page-main .box-summary .summary {
     font-size: 28px;
-    font-weight: bold;
     display: inline-block;
     margin: 0 24px;
     color: #666;
@@ -340,87 +388,114 @@ html, body {
 }
 .page-main .box-summary .num {
     color: #47c10a;
-    font-size: 40px;
+    font-size: 36px;
 }
 /* searchbox END */
 
-/* table bbs */
-body .p-datatable table {
+/* TABLE */
+.p-datatable {
+    margin-top: 20px;
+}
+.p-datatable table {
     border-collapse: collapse;
     width: 100%;
     table-layout: fixed;
-  }
-  body .p-datatable .p-datatable-thead > tr > th {
-    padding: 0.571em 0.857em;
-    border-bottom: 1px solid #9e2323;
-    border-top: 1px solid #9e2323;
-    border-left: 1px solid #9e2323;
-    border-right: 0px solid #9e2323;
-    font-weight: 700;
-    color: #ffffff;
-    background-color: #4fd80b;
-    text-align: center;
-  }
-  body .p-datatable .p-datatable-tbody > tr > td {
-    background: inherit;
-    border-bottom: 1px solid #9e2323;
-    border-top: 1px solid #9e2323;
-    border-left: 1px solid #9e2323;
-    border-right: 1px solid #9e2323;
-    background-color: #b5dda280;
-    padding: 0.429em 0.857em;
-  }
-  
-.agz-bbs {
-    display: inline-block;
-    margin-top: 6px;
-    
-    width: 100%;
-    height: auto;
-}
-.agz-bbs .cell{
-    display: block;
-    float: left;
-}
-.agz-bbs .th {
-    height: 40px;
-    line-height: 40px;
-    margin-bottom: 12px;
-    color: #666;
-    font-size: 14px;
-    
-}
-.agz-bbs .tc {
-    height: 40px;
-    line-height: 40px;
-    text-indent: 10px;
-    border-bottom: 1px solid #e1e1e1;
-    cursor: pointer;
-    
-    font-size: 14px;
-    color: #aaa;
-}
-.agz-bbs .tc .title {
-    color: #222;
-    font-size: 16px;
-    cursor: pointer;
-}
-.agz-bbs .tc[selected=selected]{
-    background: #eee;
 }
 
-.w-0 {width: 0%;}
-.w-3 {width: 3%;}
-.w-5 {width: 5%;}
-.w-7 {width: 7%;}
-.w-8 {width: 8%;}
-.w-10 {width: 10%;}
-.w-20 {width: 20%;}
-.w-30 {width: 20%;}
-.w-40 {width: 20%;}
-.w-50 {width: 20%;}
-.w-60 {width: 60%;}
-.w-160 {width: 160%;}
+.p-datatable thead tr {
+    border-bottom: 1px solid #eee !important;
+}
+.p-datatable thead tr th{
+    height: 28px !important;
+    line-height: 28px !important;
+    margin-bottom: 12px !important;
+    color: #666 !important;
+    font-size: 14px !important;
+    border: none !important;
+    background: transparent !important;
+    font-weight: 500 !important;
+}
+.p-datatable tbody tr {
+    border-bottom: 1px solid #eee !important;
+    cursor: pointer !important;
+    transition: 0.3s;
+    background: #fff !important;
+}
+.p-datatable tbody tr:nth-of-type(2n-1) {
+    /* 홀수번째 배경색 */
+    background: #f7f7f7 !important;
+}
+.p-datatable tbody tr:hover {
+    /* 마우스 오버 효과 */
+    background: #bbeea1 !important;
+}
+.p-datatable tbody tr:hover td {
+    color: #444 !important;
+}
+.p-datatable tbody tr:active {
+    /* 마우스 온클릭 효과 */
+    background: #fff !important;
+}
+.p-datatable tbody tr.p-highlight {
+    /* 선택기능으로 선택된 row */
+    background: #bbeea1 !important;
+}
+.p-datatable tbody tr.p-highlight td {
+    color: #444 !important;
+}
+.p-datatable tbody tr td {
+    height: 32px !important;
+    line-height: 32px !important;
+    border-bottom: 1px solid #e1e1e1 !important;
+    font-size: 14px !important;
+    border: none !important;
+    background: transparent !important;
+    color: #666 !important;
+    transition: 0.3s;
+    font-weight: 300 ;
+}
+/* table selector */
+.p-datatable .p-checkbox-box.p-highlight {
+    border-color: #4fd81b !important;
+    background-color: #fff !important;
+    color: #4fd81b !important;
+}
+
+/* table pagination */
+.p-datatable .p-paginator {
+    background-color: transparent !important;
+    border: none !important;
+    margin-top: 24px;
+}
+.p-datatable .p-paginator .p-paginator-page.p-highlight {
+    background-color: #4fd81b !important;
+}
+
+
+/* table footer : 개발자용 정보 표시하는 부분인듯하여 보이지 않게 처리했습니다. */
+.p-datatable .p-datatable-footer {
+    display: none;
+}
+
+/* table width 공지사항 한정 */
+/* TODO 각 페이지마다 셀의 넓이가 다른데 조정을 위해 테이블 wrapper나 페이지에 다른 클래스명을 먹여야 할 것 같습니다. */
+.p-datatable tbody tr td:nth-of-type(1),
+.p-datatable thead tr th:nth-of-type(1) {
+    width: 6% !important;
+    text-align: center;
+}
+.p-datatable tbody tr td:nth-of-type(2),
+.p-datatable thead tr th:nth-of-type(2) {
+    width: 6% !important;
+}
+.p-datatable tbody tr td:nth-of-type(3),
+.p-datatable thead tr th:nth-of-type(3) {
+    width: 70% !important;
+    text-align: left !important;
+    padding-left: 24px !important;
+}
+/* TABLE END */
+
     /* Searchbox */
 .wrap-search{
     text-align: center;
@@ -488,6 +563,21 @@ body .p-datatable table {
 .wrap-search .select:hover {
     border: 1px solid #bbb;
 }
+.react-autosuggest__input {
+    font-weight: 300 !important;
+}
+/* 서치박스 자동완성 드롭다운 */
+.searchbox .react-autosuggest__suggestions-container {
+    width: 100%;
+    top: 48px !important;
+    left: -2px;
+}
+.searchbox .react-autosuggest__suggestions-container--open {
+    border-width: 2px;
+    border-color: #eee;
+    border-top: none;
+    font-size: 12px;
+}
 
     /* searchbox END */
     /*Pagination*/
@@ -511,7 +601,7 @@ body .p-datatable table {
 }
 .pagination .btn.prev:hover,
 .pagination .btn.next:hover{
-    color: #4fd80b;
+    color: #4fd81b;
 }
 .pagination .btn.number {
     background: #e4fff1;
@@ -523,7 +613,7 @@ body .p-datatable table {
     color: #fff;
 }
 .pagination .btn.number:hover {
-    background: #4fd80b;
+    background: #4fd81b;
     color: #fff;
 }
     /* Btns */
@@ -550,7 +640,7 @@ body .p-datatable table {
 .btn.down-excel {
     display: inline-block;
     color: #fff;
-    background: #4fd80b;
+    background: #4fd81b;
     font-size: 12px;
     padding: 8px 18px;
     border-radius: 24px;
@@ -567,31 +657,38 @@ body .p-datatable table {
 
 /* tile news */
 .tilenews {
-    height:100%;
+    box-sizing: border-box;
+    height: calc(100% - 66px);
 }
 .tilenews .masonry {
     height: 100%;
     padding: 0 14px;
-    column-count: 3;
-    column-gap: 40px;
     padding-top: 54px;
+    padding-bottom: 30px;
 }
 .tilenews .masonry .card {
     display: inline-block;
-    margin: 0 0 40px 0;
-    width: 100%;
+    margin-right: 5%;
+    margin-bottom: 40px;
+    min-height: 330px;
+    max-height: 330px;
+    width: 30%;
     box-shadow: 0px 8px 10px rgba(0,0,0,0.2);
     overflow: hidden;
     border: 1px solid #eee;
     cursor: pointer;
     transition: 0.3s;
 }
+.tilenews .masonry .card:nth-of-type(3n) {
+    margin-right: 0;
+}
 .tilenews .masonry .card:hover{
     box-shadow: 0px 10px 12px rgba(0,0,0,0.3);
 }
-
 .tilenews .card .image {
     width: 100%;
+    max-height: 220px;
+    min-height: 180px;
 }
 .tilenews .card .title {
     text-align: right;
@@ -609,9 +706,66 @@ body .p-datatable table {
     font-size: 12px;
 }
 /* tile news END */
-/* land info */
+/* PAGE - land info */
 .wrap-land-info {
     display: inline-block;
+}
+
+/* TODO 랜드 인포 페이지 클래스 삽입 필요 */
+.div-search {
+    height: 50px !important;
+    box-sizing: content-box !important;
+    margin-bottom: 6px !important;
+}
+.div-search > div > div:first-child {
+    /* 검색 input */
+    width: calc(80% - 100px) !important;
+    vertical-align: middle;
+}
+.div-search > div > div:last-child {
+    display: inline-block;
+    vertical-align: middle;
+    height: 50px !important;
+    margin-left: 0 !important;
+}
+.div-search > div > div:last-child vaadin-button {
+    height: 50px;
+    margin: 0;
+    background-color: #4fd81b;
+    color: #fff;
+    border-radius: 0;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.div-search > div > div:last-child vaadin-button:hover {
+    background-color: #3fc80b;
+}
+.div-search input[type=text]{
+    width: 100%;
+    height: 50px;
+    border: none;
+    border: 2px solid #4fd81b;
+    border-radius: 0;
+    color: #444;
+}
+/* 서치박스 자동완성 드롭다운 */
+.div-search .react-autosuggest__suggestions-container {
+    width: 100%;
+    top: 50px !important;
+    left: 0;
+}
+.div-search .react-autosuggest__suggestions-container--open {
+    border-width: 2px;
+    border-color: #eee;
+    border-top: none;
+}
+
+/* 부동산 상세정보 */
+.wrap-land-info {
+    width: 100%;
+    max-height: 590px;
+    overflow:auto;
+    margin-top: 8px;
 }
 .div-land-info-item {
     display: block;
@@ -619,65 +773,57 @@ body .p-datatable table {
 }
 
 .div-land-info-item.left {
-    width: 404px;
+    width: calc(100% - 610px - 16px);
     margin-right: 16px;
     height: 100%;
-    box-sizing: border-box;
 }
 .div-land-info-item.right {
-    width: 604px;
+    width: 610px;
     height: 100%;
-    box-sizing: border-box;
 }
 
 .wrap-land-info table{
     width: 100%;
     font-weight: 200;
 }
-.wrap-land-info table td,
-.wrap-land-info table th {
-    box-sizing: border-box;
-}
-.wrap-land-info table tr {
-    border-bottom: 1px solid #eee;
-}
+
 .wrap-land-info table th {
     font-weight: 400;
 }
 
+.wrap-land-info table tr {
+    border-bottom: 1px solid #eee;
+}
+
 .tbl-info-01 {
     border-top: 2px solid #aaa;
+    height: 166px;
 }
 .tbl-info-01 th,
 .tbl-info-01 td {
     box-sizing: border-box;
-    height: 32px;
-    line-height: 32px;
-    text-indent: 12px;
-    font-size: 14px;
+    max-height: 26px;
+    line-height: 26px;
+    padding-left: 12px;
+    font-size: 13px;
 }
 .tbl-info-01 th {
     width: 30%;
     background: #f7f7f8;
 }
-.tbl-info-01 .double {
-    height: 64px;
-    word-break: break-all;
-}
 
 .tbl-info-02 {
     margin-top: 6px;
-    width: 100%;
     border-top: 2px solid #aaa;
+    height: 60px;
 }
 .tbl-info-02 th,
 .tbl-info-02 td {
     box-sizing: border-box;
-    height: 28px;
-    line-height: 32px;
-    text-indent: 12px;
+    line-height: 26px;
+    height: 26px;
     text-align: center;
-    font-size: 14px;
+    font-size: 12px;
 }
 .tbl-info-02 th {
     background: #f7f7f8;
@@ -686,22 +832,29 @@ body .p-datatable table {
 .tbl-info-03 {
     margin-top: 6px;
     border-top: 2px solid #aaa;
+    max-height: 280px
+}
+.tbl-info-03 tr {
+    height: 26px;
 }
 .tbl-info-03 th,
 .tbl-info-03 td {
     box-sizing: border-box;
-    height: 26px;
+    max-height: 26px;
     line-height: 26px;
     text-indent: 12px;
-    font-size: 14px;
 }
 .tbl-info-03 th {
     background: #f7f7f8;
     width: 30%;
+    font-size: 13px;
+}
+.tbl-info-03 td {
+    font-size: 11px;
 }
 .wrap-land-info .map {
     width: 100%;
-    height: 335px;
+    height: 340px;
     box-sizing: border-box;
     border: 1px solid #f7f7f8;
 }
@@ -715,21 +868,50 @@ body .p-datatable table {
 .tbl-info-04 td {
     box-sizing: border-box;
     text-align: center;
-    font-size: 14px;
-}
-.tbl-info-04 td {
-    height: 44px;
-    line-height: 26px;
 }
 .tbl-info-04 th {
-    height: 38px;
-    line-height: 38px;
+    max-height: 30px;
+    line-height: 30px;
+    font-size: 13px;
+}
+.tbl-info-04 td {
+    max-height: 34px;
+    line-height: 34px;
+    font-size: 12px;
+}
+.tbl-info-04 th:nth-of-type(1),
+.tbl-info-04 td:nth-of-type(1){
+    width: 10%;
+}
+.tbl-info-04 th:nth-of-type(2),
+.tbl-info-04 td:nth-of-type(2){
+    width: 70%;
 }
 .tbl-info-04 tr:nth-of-type(2n-1) {
     background: #f8f8f9; 
 }
 .tbl-info-04 th {
     background: #f7f7f8;
+}
+#btnMakePdf {
+    position: absolute;
+    left: 50%;
+    margin: 0;
+    margin-left: -512px !important;
+    border-radius: 0;
+    width: 1024px;
+    color: #fff;
+    background-color: #4fd81b;
+    cursor: pointer;
+    transition: 0.3s;
+}
+#btnMakePdf:hover {
+    background-color: #3fc80b;
+}
+#btnMakePdf:active {
+    background-color: #fff;
+    border: 1px solid #3fc80b;
+    color: #4fd81b;
 }
 /* land info END */
 /* purchase */
@@ -750,7 +932,7 @@ body .p-datatable table {
     font-size: 24px;
 }
 .receipt .amount.cash {
-    color: #4fd80b;
+    color: #4fd81b;
 }
 .receipt .amount.point {
     color: #0b78d8;
@@ -787,13 +969,69 @@ body .p-datatable table {
 /* log-purchase */
 .page-log-purchase .agz-bbs .btn-download {
     color: #fff !important;
-    background: #4fd80b;
+    background: #4fd81b;
     padding: 2px 8px;
     font-size: 12px;
 }
+<<<<<<< HEAD
 .btn-download {
   color: #fff !important;
   background: #4fd80b;
   padding: 2px 8px;
   font-size: 12px;
 /* log-purchase END */
+=======
+/* log-purchase END */
+
+/* PAGE-notice */
+
+.div-board-title {
+    margin-top: 30px;
+    padding-top: 20px;
+    padding-bottom: 0px;
+    height: 64px !important;
+    color: #444;
+    border-bottom: none !important;
+    border-top: 2px solid #ddd;
+    text-indent: 20px;
+    font-size: 18px !important;
+}
+.div-board-sub-title {
+    text-align: left !important;
+    color: #888;
+    border-bottom: 1px solid #eee;
+    text-indent: 32px;
+    font-size: 13px !important;
+}
+.div-board-sub-title label {
+    margin-right: 24px;
+}
+#toastEditor {
+    border-bottom: 2px solid #ddd;
+    height: 490px;
+    overflow: auto;
+    padding-top: 24px;
+    padding-bottom: 24px;
+    padding-left: 2em !important;
+    padding-right: 2em !important;
+}
+.div-sub-main {
+    padding-top: 24px !important;
+    margin: 0 !important;
+}
+.div-sub-main vaadin-button {
+    color: #4fd81b;
+    border-radius: 0;
+    margin: 0;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.div-sub-main vaadin-button:hover {
+    color: #fff;
+    background: #4fd81b;
+}
+.div-sub-main vaadin-button:active {
+    background: #3fc80b;
+}
+/* PAGE-notice END*/
+>>>>>>> e69aea94ff954f8032863639f71dfef15867c9d2

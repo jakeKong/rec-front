@@ -6,11 +6,14 @@ import * as changePointHistoryActions from "../../oms/modules/ChangePointHistory
 import * as paymentActions from "../modules/PaymentModule";
 import * as userManageActions from "../../scm/modules/UserModule";
 import { PaymentProductListGrid, PaymentComplete } from "../index";
+import config from '../../config';
 
 import '@vaadin/vaadin-notification';
 
 import { removeComma } from '../../common/utils';
 
+//ImPort 페이결제 라이브러리
+let IMP = null;
 class PaymentContainer extends Component {
 
   // state set을 위한 초기 생성자
@@ -32,6 +35,8 @@ class PaymentContainer extends Component {
       totalPay: 0,
       totalPoint: 0
     };
+    //ImPort 페이 결제를 위한 라이브러리 로딩    
+    IMP = window.IMP;
   }
 
   // 그리드의 선택 시 선택한 컬럼의 값을 선택목록에 저장
@@ -212,6 +217,86 @@ class PaymentContainer extends Component {
     }
   }
 
+  // 아임포트 결제 창 호출
+  openImPortPay = () => {
+    const { productDto } = this.state;
+    if (productDto.pointCash < 1000) {
+      const nfNotAllowPayment = document.createElement('vaadin-notification');
+      nfNotAllowPayment.renderer = function(root) {
+        root.textContent = '선택한 금액이 1,000원 이상이어야 결제가 가능합니다.'
+      } 
+      document.body.appendChild(nfNotAllowPayment);
+      nfNotAllowPayment.position = 'middle';
+      nfNotAllowPayment.duration = 2000;
+      nfNotAllowPayment.opened = true;
+      return;
+    }
+    if (productDto.pointCash === undefined) {
+     const nfNotAllowPayment = document.createElement('vaadin-notification');
+     nfNotAllowPayment.renderer = function(root) {
+       root.textContent = '선택한 상품이 없습니다. 상품을 선택해주세요'
+     } 
+     document.body.appendChild(nfNotAllowPayment);
+     nfNotAllowPayment.position = 'middle';
+     nfNotAllowPayment.duration = 2000;
+     nfNotAllowPayment.opened = true;
+     return;
+    }
+    //결재 번호 생성. 생성 실패시 오류  메시지 팝업
+    const merchantUid = fetch(`${config.commonService}ukey/perchas/`).then(res => res.json()).then((data) => {
+      if(data.length >= 10) {              
+        return data;
+      }
+      else { console.log('결제번호 생성 실패');return "";}
+    }).catch(console.log);  
+    if (merchantUid === "") {
+      const nfNotAllowPayment = document.createElement('vaadin-notification');
+      nfNotAllowPayment.renderer = function(root) {
+        root.textContent = '결제번호 생성에 실패하였습니다. 잠시 후 다시 시도해 주십시오.'
+      } 
+      document.body.appendChild(nfNotAllowPayment);
+      nfNotAllowPayment.position = 'middle';
+      nfNotAllowPayment.duration = 2000;
+      nfNotAllowPayment.opened = true;
+      return;
+    }
+
+    //구매 상품 명칭 생생성
+    const itemName = "ALGO "+productDto.pointCash+" 포인트 구매";
+    
+    //결제 모듈 초기화
+    IMP.init(config.importpayMemberId);
+     // IMP.request_pay(param, callback) 호출
+    IMP.request_pay({ // param
+      pg: "kcp.A52CY",
+      pay_method: "card",
+      merchant_uid: merchantUid,
+      name: itemName,
+      amount: productDto.pointCash,
+      buyer_email: "gildong@gmail.com",
+      buyer_name: "홍길동",
+      buyer_tel: "010-4242-4242",
+      buyer_addr: "서울특별시 강남구 신사동",
+      buyer_postcode: "01181"
+    }, rsp => { // callback
+      // console.log(rsp);
+      if (rsp.success) {
+        // console.log(rsp.success);
+        //TODO: 이언철-> 결제 완료 후 서버에 포인트 업데이트 하는 로직 추가 요망
+      } else {
+        // console.log('결제 실패');
+        const nfNotAllowPayment = document.createElement('vaadin-notification');
+        nfNotAllowPayment.renderer = function(root) {
+          root.textContent = '결제 요청이 실패하였습니다. 확인 후 재 시도 바랍니다.'
+        } 
+        document.body.appendChild(nfNotAllowPayment);
+        nfNotAllowPayment.position = 'middle';
+        nfNotAllowPayment.duration = 2000;
+        nfNotAllowPayment.opened = true;
+        return;
+      }
+    });
+  }
   updateUserByBalancePointIncrease = async (email, increasePoint) => {
     const { UserManageModule } = this.props;
     try {
@@ -255,10 +340,14 @@ class PaymentContainer extends Component {
     const openNaverPay = this.openNaverPay;
     const naverPayBtn = document.querySelector('#naverPayBtn');
     naverPayBtn.textContent = "Pay 결제하기"
-    naverPayBtn.type = "smallWhite"
+    naverPayBtn.type = "smallWhite"    
+    
+    const openImPortPay = this.openImPortPay;
     naverPayBtn.addEventListener('click', function() {
       // 네이버페이 결제 창 호출
-      openNaverPay();
+      // openNaverPay();
+      // ImPort 페이 결제 창 호출
+      openImPortPay();
     });
   }
 

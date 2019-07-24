@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import PropTypes from 'prop-types';
 import '@vaadin/vaadin-button';
 import Autosuggest from 'react-autosuggest';
 
@@ -9,17 +9,25 @@ import config from '../../../config';
 const getSuggestionValue = suggestion => suggestion.roadAddr;
 
 //선택대상 목록을 표출하는 형태 정의 하나의 아이템이 여러줄로 나오는 형태로 변경 가능함
-const renderSuggestion = suggestion => (
-  <div>
-    {suggestion.roadAddr}
-  </div>
-);
+function renderSuggestion(suggestion) {
+  return (
+    <div>도로명 : {suggestion.roadAddr} <br/>
+    지번명 : {suggestion.jibunAddr}</div>
+  );
+}
 
-let url = `${config.commonService}juso/list/`;
+const url = `${config.commonService}juso/list/`;
 let selectedSuggestion = null;
-let onComplete;
-let onSearchClick;
 class AddressSearch extends Component {
+  static propTypes = {    
+    onComplete: PropTypes.func,
+    onSearchClick: PropTypes.func,
+    btnClassName: PropTypes.string,
+  }
+ 
+  static defaultProps = {
+    btnClassName: 'button-address-search',
+  }
   constructor() {
     super();
     this.state = {
@@ -27,16 +35,16 @@ class AddressSearch extends Component {
       suggestions: [],
     };
   }
-
+  onSearchClick = async (selectedSuggestion) => { 
+  }
+  onComplete  = async (selectedSuggestion) => {   
+  }
   // Teach Autosuggest how to calculate suggestions for any given input value.
   getSuggestions = value => {
     fetch(url + value)
           .then(res => res.json())
           .then((data) => {     
-            // console.log(url + value);     
-            //  console.log(data);      
-            if(data.length >= 1 && data[0].roadAddr !== null) {              
-              // console.log(data);
+            if(data.length >= 1 && data[0].roadAddr !== null) {       
               this.setState({suggestions: data});              
             }
             else {this.setState({suggestions: []});}
@@ -51,13 +59,12 @@ class AddressSearch extends Component {
   };
 
   componentDidMount() {
-    const btnSearch = document.querySelector('#btnSearch');
-    btnSearch.innerHTML = '정보조회';
-    onComplete = this.props.onComplete;
-    onSearchClick = this.props.onSearchClick;
+      const btnSearch = document.querySelector('#btnSearch');
+      btnSearch.innerHTML = '정보조회';
+      const {onSearchClick, btnClassName} = this.props;
+      btnSearch.className = btnClassName;
 
-    btnSearch.addEventListener('click',onSearchClick);
-
+      btnSearch.addEventListener('click',onSearchClick);
   }
   //자동완성 제안 주소 중 하나를 선택한 경우 발생하는 이벤트
   //이벤트 발생 시 현재 선택한 suggestion을 기록
@@ -71,7 +78,8 @@ class AddressSearch extends Component {
    * 'enter' - user selected the suggestion using enter key
    */
   onSuggestionSelected =(event, { suggestion, suggestionValue, suggestionIndex, sectionIndex, method }) => {
-    selectedSuggestion = suggestion;
+    selectedSuggestion = suggestion;    
+    const {onComplete} = this.props;
     onComplete(selectedSuggestion);
   }
   onSuggestionsFetchRequested = ({ value }) => {
@@ -100,10 +108,11 @@ class AddressSearch extends Component {
   
   render() {
     const { value, suggestions } = this.state;
+    const showButton = this.prop;
 
     // Autosuggest will pass through all these props to the input.
     const inputProps = {
-      placeholder: '검색어를 입력하세요',
+      placeholder: '주소를 입력하세요',
       value,                              // usually comes from the application state
       // onBlur,                             // called when the input loses focus, e.g. when user presses Tab
       // type: 'search',                     //usually means that user typed something, but can also be that they pressed Backspace, pasted something into the input, etc.
@@ -112,7 +121,7 @@ class AddressSearch extends Component {
 
     return (
         <div style={{textAlign: 'center'}}>
-          <div style={{ display: 'inline-block', width: '70%'}}>
+          <div style={{ display: 'inline-block'}}>
             <Autosuggest
                 suggestions={suggestions}
                 onSuggestionSelected={this.onSuggestionSelected}
@@ -123,8 +132,8 @@ class AddressSearch extends Component {
                 inputProps={inputProps}
               />
           </div>
-          <div style={{ display: 'inline-block',  marginLeft: 10}}>
-            <vaadin-button id="btnSearch" />
+          <div style={{ display: 'inline-block'}}>
+            <vaadin-button id="btnSearch"/>
           </div>
         </div>
     );
