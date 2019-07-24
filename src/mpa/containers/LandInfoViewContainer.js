@@ -19,7 +19,7 @@ class LandInfoViewContainer extends Component {
       search: {
         jibunAddr: '',
         roadAddr: '',
-        pnu: '111111111111111111'
+        pnu: '1111111111111111111'
       },
       selectedSuggestion: null,
     };
@@ -111,7 +111,7 @@ class LandInfoViewContainer extends Component {
     }
     //이전 화면에서 넘어온 값이 아닌경우
     else {
-      this.getLandInfo(searchKey);
+      this.getLandInfo(this.state.search);
     }
     
     const { landInfoData } = this.props;
@@ -132,7 +132,7 @@ class LandInfoViewContainer extends Component {
           <div style={{marginTop:'2px'}}>
             {pending && <div className="boxLoading" />}
             {error && <h1>Server Error!</h1>}
-            {success && <LandInfoView landInfoData={landInfoData}/>}
+            {!pending && !error && <LandInfoView landInfoData={landInfoData}/>}
           </div>
           <div style={{ display: 'inline-block', textAlign: 'right', marginLeft: '85%'}}>
             <vaadin-button id="btnMakePdf"/>

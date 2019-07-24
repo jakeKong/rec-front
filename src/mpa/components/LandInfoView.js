@@ -1,5 +1,9 @@
 import React, { Component, Fragment } from 'react';
+//import NumberFormat from 'react-number-format';
+const dateFormat = require('dateformat');
 
+const curruncyFormat = (value) => new Intl.NumberFormat('en-IN', {style: 'currency',currency: 'KRW'}).format(value);
+const commaFormat = (value) => new Intl.NumberFormat('en-IN', {maximumSignificantDigits: 3}).format(value);
 class LandInfoView extends Component {
   constructor(props) {
     super(props);
@@ -14,9 +18,7 @@ class LandInfoView extends Component {
       },
     }
   }
-
   componentDidMount() {
-    // const { dto } = this.state;
     const { landInfoData } = this.props;
     if (!landInfoData || landInfoData === undefined || landInfoData.isEmpty()) {
       return
@@ -38,6 +40,7 @@ class LandInfoView extends Component {
       document.querySelector('#tdBcRat').innerHTML = landInfoData.get("bcRat");//건폐율(%)
       document.querySelector('#tdVlRat').innerHTML = landInfoData.get("vlRat");//용적률(%)
       document.querySelector('#tdUseAprDay').innerHTML = landInfoData.get("useAprDay");//사용승인일
+      // document.querySelector('#tdUseAprDay').innerHTML = dateFormat(new Date(landInfoData.get("useAprDay")), 'yyyy년mm월dd일');//사용승인일
     }
     //토지대장
     {	
@@ -75,13 +78,50 @@ class LandInfoView extends Component {
         document.querySelector('#tdAddrD').innerHTML = tradList.get(3).get("지번주소");
         document.querySelector('#tdAddrE').innerHTML = tradList.get(4).get("지번주소");
         document.querySelector('#tdAddrF').innerHTML = tradList.get(5).get("지번주소");
+        
+        if(tradList.get(0).get("거래시점").length ===6) {
+          document.querySelector('#tdTradeDateA').innerHTML = tradList.get(0).get("거래시점").substring(0,4) + '-' +tradList.get(0).get("거래시점").substring(4,6);
+        }
+        else {
+          document.querySelector('#tdTradeDateA').innerHTML = tradList.get(0).get("거래시점");
+        }
+        if(tradList.get(1).get("거래시점").length ===6) {
+          document.querySelector('#tdTradeDateB').innerHTML = tradList.get(1).get("거래시점").substring(0,4) + '-' +tradList.get(1).get("거래시점").substring(4,6);
+        }
+        else {
+          document.querySelector('#tdTradeDateB').innerHTML = tradList.get(1).get("거래시점");
+        }
+        if(tradList.get(2).get("거래시점").length ===6) {
+          document.querySelector('#tdTradeDateC').innerHTML = tradList.get(2).get("거래시점").substring(0,4) + '-' +tradList.get(2).get("거래시점").substring(4,6);
+        }
+        else {
+          document.querySelector('#tdTradeDateC').innerHTML = tradList.get(2).get("거래시점");
+        }
+        if(tradList.get(3).get("거래시점").length ===6) {
+          document.querySelector('#tdTradeDateD').innerHTML = tradList.get(3).get("거래시점").substring(0,4) + '-' +tradList.get(3).get("거래시점").substring(4,6);
+        }
+        else {
+          document.querySelector('#tdTradeDateD').innerHTML = tradList.get(3).get("거래시점");
+        }
+        if(tradList.get(4).get("거래시점").length ===6) {
+          document.querySelector('#tdTradeDateE').innerHTML = tradList.get(4).get("거래시점").substring(0,4) + '-' +tradList.get(4).get("거래시점").substring(4,6);
+        }
+        else {
+          document.querySelector('#tdTradeDateE').innerHTML = tradList.get(4).get("거래시점");
+        }
+        if(tradList.get(5).get("거래시점").length ===6) {
+          document.querySelector('#tdTradeDateF').innerHTML = tradList.get(5).get("거래시점").substring(0,4) + '-' +tradList.get(5).get("거래시점").substring(4,6);
+        }
+        else {
+          document.querySelector('#tdTradeDateF').innerHTML = tradList.get(5).get("거래시점");
+        }
 
-        document.querySelector('#tdPriceA').innerHTML = tradList.get(0).get("거래가격");
-        document.querySelector('#tdPriceB').innerHTML = tradList.get(1).get("거래가격");
-        document.querySelector('#tdPriceC').innerHTML = tradList.get(2).get("거래가격");
-        document.querySelector('#tdPriceD').innerHTML = tradList.get(3).get("거래가격");
-        document.querySelector('#tdPriceE').innerHTML = tradList.get(4).get("거래가격");
-        document.querySelector('#tdPriceF').innerHTML = tradList.get(5).get("거래가격");
+        document.querySelector('#tdPriceA').innerHTML = curruncyFormat(tradList.get(0).get("거래가격"));
+        document.querySelector('#tdPriceB').innerHTML = curruncyFormat(tradList.get(1).get("거래가격"));
+        document.querySelector('#tdPriceC').innerHTML = curruncyFormat(tradList.get(2).get("거래가격"));
+        document.querySelector('#tdPriceD').innerHTML = curruncyFormat(tradList.get(3).get("거래가격"));
+        document.querySelector('#tdPriceE').innerHTML = curruncyFormat(tradList.get(4).get("거래가격"));
+        document.querySelector('#tdPriceF').innerHTML = curruncyFormat(tradList.get(5).get("거래가격"));
       }
     }
     document.querySelector('#imgMap').src = landInfoData.get("analysisTradeInfo").get("mapUrl");//도로접면
@@ -217,36 +257,43 @@ class LandInfoView extends Component {
                     <tr>
                       <th>기호</th>
                       <th>지번</th>
+                      <th>매매시점</th>
                       <th>매매가격</th>
                     </tr>
                     <tr>
                       <td>A</td>
                       <td id="tdAddrA"></td>
+                      <td id="tdTradeDateA"></td>
                       <td id="tdPriceA" className="th-right"></td>
                     </tr>
                     <tr>
                       <td>B</td>
                       <td id="tdAddrB"></td>
+                      <td id="tdTradeDateB"></td>
                       <td id="tdPriceB" className="th-right"></td>
                     </tr>
                     <tr>
                       <td>C</td>
                       <td id="tdAddrC"></td>
+                      <td id="tdTradeDateC"></td>
                       <td id="tdPriceC" className="th-right"></td>
                     </tr>
                     <tr>
                       <td>D</td>
                       <td id="tdAddrD"></td>
+                      <td id="tdTradeDateD"></td>
                       <td id="tdPriceD" className="th-right"></td>
                     </tr>
                     <tr>
                       <td>E</td>
                       <td id="tdAddrE"></td>
+                      <td id="tdTradeDateE"></td>
                       <td id="tdPriceE" className="th-right"></td>
                     </tr>
                     <tr>
                       <td>F</td>
                       <td id="tdAddrF"></td>
+                      <td id="tdTradeDateF"></td>
                       <td id="tdPriceF" className="th-right"></td>
                     </tr>
                     </tbody>
