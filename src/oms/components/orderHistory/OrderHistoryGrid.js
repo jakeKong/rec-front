@@ -195,19 +195,19 @@ class OrderHistoryGrid extends Component {
             <DataTable id="table" value={this.state.gridData} 
                 scrollable={true} 
                 paginator={true} rows={10} rowsPerPageOptions={[5,10,15,20]} >
-                <Column field="index" header="번호"  style={{textAlign:'center', width: '6em', height:'2.5em'}} />
-                <Column field="odrNo" header="주문 번호"  style={{textAlign:'center', width: '15em', height:'2.5em'}} />
-                <Column field="odrDt" header="주문 일자"  style={{textAlign:'center', width: '20em'}} />
-                <Column field="marketPrice" header="시세가" style={{textAlign:'center', width: '10em'}}/>
-                <Column field="realEstateType" header="부동산 유형" style={{textAlign:'center', width: '8em'}}/>
-                <Column field="variationPoint" header="증감 포인트"  style={{textAlign:'center', width: '10em'}}/>
-                <Column field="downloadEndDt" header="다운로드 만료기간"  style={{textAlign:'center', width: '20em'}}/>
-                <Column columnKey="grdBtnDownload" body={this.btnDownloadTemplate} header="다운로드" style={{textAlign:'center', width: '8em'}}/>
-                <Column field="downloadCnt" header="다운로드 횟수"  style={{textAlign:'center', width: '10em'}}/>
-                <Column field="status" header="상태" style={{textAlign:'center', width: '10em'}}/>
-                <Column columnKey="grdBtnPurchaseCancle" body={this.btnPurchaseCancleTemplate} header="구매취소"  style={{textAlign:'center', width: '8em', display:this.state.calcleCheck}}/>
-                <Column columnKey="grdOrdererNm" field="ordererNm" header="주문자"  style={{textAlign:'center', width: '10em', display:this.state.hiddenCheck}}/>
-                <Column columnKey="grdEmail" field="email"  header="아이디" style={{textAlign:'center', width: '10em', display:this.state.hiddenCheck}}/>
+                <Column field="index" header="번호"/>
+                <Column field="odrNo" header="주문 번호"/>
+                <Column field="odrDt" header="주문 일자"/>
+                <Column field="marketPrice" header="시세가"/>
+                <Column field="realEstateType" header="부동산 유형"/>
+                <Column field="variationPoint" header="증감 포인트"/>
+                <Column field="downloadEndDt" header="다운로드 만료기간"/>
+                <Column columnKey="grdBtnDownload" body={this.btnDownloadTemplate} header="다운로드"/>
+                <Column field="downloadCnt" header="다운로드 횟수"/>
+                <Column field="status" header="상태"/>
+                <Column columnKey="grdBtnPurchaseCancle" body={this.btnPurchaseCancleTemplate} header="구매취소"  style={{ display:this.state.calcleCheck}}/>
+                <Column columnKey="grdOrdererNm" field="ordererNm" header="주문자"  style={{display:this.state.hiddenCheck}}/>
+                <Column columnKey="grdEmail" field="email"  header="아이디" style={{display:this.state.hiddenCheck}}/>
             </DataTable>
           </div>
           <div className="align-right-text">

@@ -68,10 +68,10 @@ class PaymentProductListGrid extends Component {
                    // onRowClick={e => this.props.detailCallback(e.data)}
                    >
           <Column selectionMode="single" style={{width:'3em', borderLeft:'none'}}/>
-          <Column field="productNm" header="결제번호"  style={{textAlign:'center', width: '20em', height:'2.5em'}} />
-          <Column field="productNm" header="상품명"  style={{textAlign:'center', width: '10em', height:'2.5em'}} />
-          <Column field="productPoint" header="충전 포인트"  style={{textAlign:'center', width: '10em'}} />
-          <Column field="pointCash" header="포인트 가격" style={{textAlign:'center', width: '20em'}}/>
+          <Column field="productNm" header="결제번호"/>
+          <Column field="productNm" header="상품명" />
+          <Column field="productPoint" header="충전 포인트"/>
+          <Column field="pointCash" header="포인트 가격"/>
           {/* <Column field="cashRatio" header="현금 비율" style={{textAlign:'center', width: '8em', borderRight:'none'}}/> */}
         </DataTable>
       </Fragment>

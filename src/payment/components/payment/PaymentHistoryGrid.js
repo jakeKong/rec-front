@@ -46,11 +46,11 @@ class PaymentHistoryGrid extends Component {
                 selection={this.state.selectedItem} 
                 onSelectionChange={e => this.setState({selectedItem: e.value})} 
                 >
-              <Column field="paymentId" header="결제번호"  style={{textAlign:'center', width: '20em', height:'2.5em'}} />
-              <Column field="productName" header="상품명"  style={{textAlign:'center', width: '10em', height:'2.5em'}} />
-              <Column field="totalPayAmount" header="결제금액"  style={{textAlign:'center', width: '10em'}} />
-              <Column field="tradeConfirmYmdt" header="결제완료일자" style={{textAlign:'center', width: '20em'}}/>
-              <Column field="primaryPayMeans" header="결제방식" style={{textAlign:'center', width: '8em'}}/>
+              <Column field="paymentId" header="결제번호" />
+              <Column field="productName" header="상품명" />
+              <Column field="totalPayAmount" header="결제금액" />
+              <Column field="tradeConfirmYmdt" header="결제완료일자"/>
+              <Column field="primaryPayMeans" header="결제방식"/>
             </DataTable>
         </div>
       </Fragment>

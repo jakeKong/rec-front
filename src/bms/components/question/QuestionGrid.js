@@ -73,11 +73,11 @@ class QuestionGrid extends Component {
                     rowsPerPageOptions={[5,10,15,20]}  
                     selection={this.state.selectedItem} 
                     onSelectionChange={e => this.selectChangedEvent(e)} >
-            <Column selectionMode="multiple" style={{width:'2em', height:'2.5em'}}/>
-            <Column field="index" header="번호"  style={{textAlign:'center'}} />
-            <Column body={this.questionTitleClickLabelTemplate} header="제목" style={{textAlign:'center'}}/>
-            <Column field="questionWriter" header="작성자" style={{textAlign:'center'}}/>
-            <Column field="reportingDt" header="작성일자" style={{textAlign:'center'}}/>
+            <Column selectionMode="multiple"/>
+            <Column field="index" header="번호"/>
+            <Column body={this.questionTitleClickLabelTemplate} header="제목"/>
+            <Column field="questionWriter" header="작성자"/>
+            <Column field="reportingDt" header="작성일자"/>
           </DataTable>
         </Fragment>
       )
@@ -89,10 +89,10 @@ class QuestionGrid extends Component {
                     paginator={true} 
                     rows={10} 
                     rowsPerPageOptions={[5,10,15,20]} >
-            <Column field="index" header="번호"  style={{textAlign:'center'}} />
-            <Column body={this.questionTitleClickLabelTemplate} header="제목" style={{textAlign:'center'}}/>
-            <Column field="questionWriter" header="작성자" style={{textAlign:'center'}}/>
-            <Column field="reportingDt" header="작성일자" style={{textAlign:'center'}}/>
+            <Column field="index" header="번호"/>
+            <Column body={this.questionTitleClickLabelTemplate} header="제목"/>
+            <Column field="questionWriter" header="작성자"/>
+            <Column field="reportingDt" header="작성일자"/>
           </DataTable>
         </Fragment>
       );

@@ -148,15 +148,15 @@ class ChangePointHistoryGrid extends Component {
                      rowsPerPageOptions={[5,10,15,20]}  
                      selection={this.state.selectedItem} 
                      onSelectionChange={e => this.setState({selectedItem: e.value})} >
-            <Column field="changeDt" header="변동 일자"  style={{textAlign:'center', width: '20em', height:'2.5em'}} />
-            <Column field="odrPaymentNo" header="결제(주문)번호"  style={{textAlign:'center', width: '20em'}} />
-            <Column field="paymentCash" header="결제 금액"  style={{textAlign:'center', width: '8em'}}/>
-            <Column field="changeType" header="변동 유형"  style={{textAlign:'center', width: '8em'}}/>
-            <Column field="changePoint" header="변동 포인트"  style={{textAlign:'center', width: '10em'}}/>
-            <Column field="currentBalPoint" header="남은 포인트"  style={{textAlign:'center', width: '10em'}}/>
-            <Column columnKey="grdUserNm" field="userNm" header="주문자"  style={{textAlign:'center', width: '6em', display:this.state.hiddenCheck}}/>
-            <Column columnKey="grdEmail" field="email" header="아이디"  style={{textAlign:'center', width: '10em', display:this.state.hiddenCheck}}/>
-            <Column columnKey="grdBtnPaymentCancle" body={this.cancelTemplate} style={{textAlign:'center', width: '8em', display:this.state.hiddenCheck}} />
+            <Column field="changeDt" header="변동 일자"/>
+            <Column field="odrPaymentNo" header="결제(주문)번호"/>
+            <Column field="paymentCash" header="결제 금액"/>
+            <Column field="changeType" header="변동 유형"/>
+            <Column field="changePoint" header="변동 포인트"/>
+            <Column field="currentBalPoint" header="남은 포인트"/>
+            <Column columnKey="grdUserNm" field="userNm" header="주문자"  style={{display:this.state.hiddenCheck}}/>
+            <Column columnKey="grdEmail" field="email" header="아이디"  style={{display:this.state.hiddenCheck}}/>
+            <Column columnKey="grdBtnPaymentCancle" body={this.cancelTemplate} style={{display:this.state.hiddenCheck}} />
           </DataTable>
           </div>
           <div className="div-sub-top-right">
