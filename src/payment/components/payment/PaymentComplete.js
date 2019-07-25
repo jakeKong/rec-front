@@ -7,21 +7,23 @@ import { comma } from '../../../common/utils';
 class PaymentComplete extends Component {
 
   componentDidMount() {
-    const { paymentRequest } = this.props;
-    if (!paymentRequest || paymentRequest === undefined || paymentRequest === null) {
+    const { purchaseResult } = this.props;
+    if (!purchaseResult || purchaseResult === undefined || purchaseResult === null) {
       return
     } else {
-  
+
+      let dateFormat = require('dateformat');
+
       document.querySelector('#lbPaymentCompleteNotification').innerHTML = "포인트 구매가 정상적으로 처리되었습니다."
 
       document.querySelector('#lbPaymentId').innerHTML = "구매번호 : ";
-      document.querySelector('#lbPaymentIdResult').innerHTML = paymentRequest.body.detail.paymentId;
+      document.querySelector('#lbPaymentIdResult').innerHTML = purchaseResult.merchant_uid;
       document.querySelector('#lbTotalPayAmount').innerHTML = "총 결제금액 : ";
-      document.querySelector('#lbTotalPayAmountResult').innerHTML = comma(paymentRequest.body.detail.totalPayAmount)+' 원';
+      document.querySelector('#lbTotalPayAmountResult').innerHTML = comma(purchaseResult.paid_amount)+' 원';
       document.querySelector('#lbTradeConfirmYmdt').innerHTML = "구매일자 : ";
-      document.querySelector('#lbTradeConfirmYmdtResult').innerHTML = paymentRequest.body.detail.tradeConfirmYmdt;
+      document.querySelector('#lbTradeConfirmYmdtResult').innerHTML = dateFormat(new Date(purchaseResult.paid_at*1000), 'yyyy년 mm월 dd일 HH:MM:ss');
       document.querySelector('#lbPurchasePoint').innerHTML = "구매포인트 : ";
-      document.querySelector('#lbPurchasePointResult').innerHTML = comma(paymentRequest.totalPoint)+' P';
+      document.querySelector('#lbPurchasePointResult').innerHTML = comma(purchaseResult.custom_data.point)+' P';
 
       const btnGoProduct = document.querySelector('#btnGoProduct');
       btnGoProduct.className = "vaadin-button-large";
@@ -40,7 +42,7 @@ class PaymentComplete extends Component {
       const btnGoPaymentHistory = document.querySelector('#btnGoPaymentHistory');
       btnGoPaymentHistory.className = "vaadin-button-large";
       btnGoPaymentHistory.addEventListener('click', function() {
-        window.location.href = "/#/oms/order/history/email";
+        window.location.href = "/#/oms/changepoint/history/email";
         window.location.reload();
       });
 
@@ -84,7 +86,7 @@ class PaymentComplete extends Component {
             </vaadin-button>
             <vaadin-button id="btnGoPaymentHistory">
               <iron-icon icon="vaadin:angle-right" slot="suffix" />
-              구매내역
+              포인트 변동내역
             </vaadin-button>
           </div>
         </div>
