@@ -61,6 +61,9 @@ class QuestionManageContainer extends Component {
       nfNotfoundSelectColumn.position = 'middle';
       nfNotfoundSelectColumn.duration = 2000;
       nfNotfoundSelectColumn.opened = true;
+      window.setTimeout(function() {
+        nfNotfoundSelectColumn.remove();
+      }, 2000)
     }
   }
 
