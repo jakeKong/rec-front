@@ -19,7 +19,7 @@ class LandInfoView extends Component {
     }
   }
   componentDidMount() {
-    const { landInfoData } = this.props;
+    const { landInfoData, isSearched } = this.props;
     if (!landInfoData || landInfoData === undefined || landInfoData.isEmpty()) {
       return
     }
@@ -65,15 +65,18 @@ class LandInfoView extends Component {
     {
       const analysisTradeInfo = landInfoData.get("analysisTradeInfo");
       
-      console.log(analysisTradeInfo);
+      console.log(isSearched);
       const tradList = analysisTradeInfo.get("trade");
       // console.log(tradList);
       // console.log(tradList.get(0));
       // console.log(tradList.get(0).get("지번주소"));
       // console.log(tradList.get(0).get("거래건축가격"));
       if(tradList == null || tradList.size ==0) {
-        //분석결과 정보가 없으면 얼럿을 띄워준다.
-        window.alert('해당 주소에 대한 부동산 분석정보가 없습니다.');
+        //화면 로딩시에 바로 얼럿이 나오는 것을 막아주기
+        if(isSearched) {
+          //분석결과 정보가 없으면 얼럿을 띄워준다.
+          window.alert('해당 주소에 대한 분석 대상지가 없습니다.');
+        }
       }
       else if(tradList.size ==1){
         document.querySelector('#tdAddrA').innerHTML = tradList.get(0).get("지번주소");

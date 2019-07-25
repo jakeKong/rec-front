@@ -9,7 +9,7 @@ import customTheme from '../../styles/agz/landInfo_suggest_thema.css';
 
 let enabled = false;
 let searchKey;
-
+let isSearched = false;
 class LandInfoViewContainer extends Component {
 
   // state set을 위한 초기 생성자
@@ -54,6 +54,7 @@ class LandInfoViewContainer extends Component {
 
   getLandInfo = async (search) => {
     const { LandInfoViewModule } = this.props;
+    if(search.pnu !== '1111111111111111111') isSearched = true;
     try {
       await LandInfoViewModule.getLandInfo(search)
     } catch (e) {
@@ -92,7 +93,7 @@ class LandInfoViewContainer extends Component {
     //MAIN 화면 혹은 기타 화면으로 부터 넘어온 주소검색 결과가 있는지 확인한여 처리한다.
     if(this.props.postStat !== undefined) {
       const {selectedSuggestion} = this.props.postStat;
-      
+      isSearched = false;
       this.setState({
         search: {
           jibunAddr: selectedSuggestion.jibunAddr,
@@ -132,7 +133,7 @@ class LandInfoViewContainer extends Component {
           <div style={{marginTop:'2px'}}>
             {pending && <div className="boxLoading" />}
             {error && <h1>Server Error!</h1>}
-            {!pending && !error && <LandInfoView landInfoData={landInfoData}/>}
+            {!pending && !error && <LandInfoView landInfoData={landInfoData} isSearched={isSearched}/>}
           </div>
           <div style={{ display: 'inline-block', textAlign: 'right', marginLeft: '85%'}}>
             <vaadin-button id="btnMakePdf"/>
