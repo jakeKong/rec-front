@@ -470,6 +470,12 @@ html, body, #root .index {
 .p-datatable .p-paginator .p-paginator-page.p-highlight {
     background-color: #4fd81b !important;
 }
+.p-datatable .p-dropdown-label.p-inputtext {
+    height: 32px;
+    line-height: 32px;
+    padding-top: 0;
+    padding-bottom: 0;
+}
 
 
 /* table footer : 개발자용 정보 표시하는 부분인듯하여 보이지 않게 처리했습니다. */
@@ -486,10 +492,6 @@ html, body, #root .index {
 }
 .p-datatable tbody tr td:nth-of-type(2),
 .p-datatable thead tr th:nth-of-type(2) {
-    width: 6% !important;
-}
-.p-datatable tbody tr td:nth-of-type(3),
-.p-datatable thead tr th:nth-of-type(3) {
     width: 70% !important;
     text-align: left !important;
     padding-left: 24px !important;
@@ -1026,3 +1028,92 @@ html, body, #root .index {
     background: #3fc80b;
 }
 /* PAGE-notice END*/
+/* PAGE-login */
+.div-login * {
+    display: block !important;
+}
+.div-login-card #lbLoginId, #lbLoginPw {
+    margin-bottom: 6px;
+    font-size: 12px;
+    color: #aaa;
+}
+.div-login {
+    padding: 0 !important;
+    width: 400px;
+    box-shadow: 0px 0px 3px 2px rgba(100,100,100,0.1);
+    margin: 0 auto;
+}
+.div-login-card {
+    border: none !important;
+    padding: 42px !important;
+    width:100% !important;
+    display: block !important;
+}
+.div-login-card .div-login-input-field {
+    display: block !important;
+    width: 100%;
+    margin: 0 auto;
+}
+.div-login-card .label-login-title {
+    display: none !important;
+    margin-bottom: 32px;
+    color: #444;
+}
+.div-login-card .vaadin-text-field-id, .vaadin-text-field-pw {
+    width: 100%;
+}
+.div-login-card .vaadin-text-field-id::before , .vaadin-text-field-pw::before {
+    display: none;
+}
+.div-login-card .div-login-button-field {
+    margin-top: 32px;
+    padding:0 !important;
+}
+.div-login-card .vaadin-text-field-container[part='input-field'] {
+    background: #fff !important;
+    border: 1px solid #eee !important;
+}
+.div-login-card .div-login-button-field vaadin-button {
+    margin: 0;
+    height: 52px !important;
+    border-radius: 0;
+    cursor: pointer;
+}
+.div-login-card .vaadin-button-login,
+.div-login-card .vaadin-button-login-naver {
+    margin: 0;
+    font-size: 14px;
+}
+.div-login-card .vaadin-button-login {
+    border: none !important;
+    margin-bottom: 12px !important;
+    color: #fff;
+    background-color: #4fd81b;
+}
+.div-login-card .vaadin-button-login-naver {
+    background: url('./image/naver-simbol.png');
+    background-size : 36px;
+    background-repeat: no-repeat;
+    background-position-x: 12px;
+    background-position-y: 50%;
+    border: 1px solid #eee !important;
+    color: #999;
+}
+.div-login .div-login-card .div-sub-field {
+    width: 100%;
+    padding: 0 !important;
+    text-align: right;
+    margin-top: 6px;
+}
+.div-login-card .div-sub-field label{
+    display: inline-block !important;
+    color: #999 !important;
+    font-size: 12px !important;
+    padding: 0 4px;
+    transition: 0.3s;
+}
+.div-login-card .div-sub-field .label-register:hover ,
+.div-login-card .div-sub-field .label-findby-idpw:hover {
+    color: #555 !important;
+}
+/* PAGE-login END */
