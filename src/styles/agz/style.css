@@ -764,8 +764,10 @@ html, body, #root .index {
 
 /* 부동산 상세정보 */
 .wrap-land-info {
+    display: block;
     width: 100%;
     max-height: 590px;
+    min-height: 590px;
     overflow:auto;
     margin-top: 8px;
 }
@@ -1117,3 +1119,133 @@ html, body, #root .index {
     color: #555 !important;
 }
 /* PAGE-login END */
+/* PAGE-register */
+.div-register {
+    padding: 24px 0 0 0 !important;
+    margin: 0 !important;
+}
+.div-register-title {
+    display: inline-block !important;
+    width: 100% ;
+    padding: 0 0 24px 0 !important;
+    border-bottom: 3px dashed #f4f4f4;
+}
+.div-register-title > div {
+    display: block !important;
+    float: left !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 25%;
+    height: 60px !important;
+    line-height: 60px;
+    border: none !important;
+    position: relative;
+}
+.div-register-title > div > label {
+    font-size: 15px !important;
+    font-weight: 300 !important;
+    letter-spacing: 1px;
+    padding-left: 12px;
+    color: #aaa;
+
+}
+.div-register-title > div.div-register-title-focus-on {
+    /* background-color: #bbeea1 !important; */
+    background-color: #47c10a !important;
+}
+.div-register-title > div.div-register-title-focus-on label {
+    font-size: 18px !important;
+    font-weight: 500 !important;
+    color: #fff !important;
+}
+
+
+.div-register-title > div:after,
+.div-register-title > div:before {
+    content: '';
+    position: absolute;
+    z-index:1;
+    left: 100%;
+}
+.div-register-title > div.div-register-title-focus-on:after{
+    border-left: 30px solid #47c10a;
+    border-top: 31px solid transparent;
+    border-bottom:31px solid transparent;
+}
+.div-register-title > div.div-register-title-focus-off:after {
+    border-left: 30px solid #eee;
+    border-top: 30px solid transparent;
+    border-bottom:30px solid transparent;
+}
+.div-register-title > div.div-register-title-focus-off:before {
+    border-left: 30px solid #fff;
+    border-top: 30px solid transparent;
+    border-bottom:30px solid transparent;
+    left: calc(100% - 3px);
+    z-index: 2;
+}
+.div-register-title > div:last-child:after,
+.div-register-title > div:last-child:before {
+    display: none !important;
+}
+.div-register .label-register-agree-sub-title {
+    display: inline-block;
+    padding: 6px 12px 12px 12px;
+    font-size: 24px !important;
+    color: #222 !important;
+    font-weight: 300 !important;
+}
+.div-register .vaadin-text-area-register-agree {
+    margin-top: -10px !important;
+}
+.div-register .vaadin-text-area-register-agree * {
+    font-size: 12px !important;
+}
+.div-register .vaadin-text-area-register-agree::before {
+    height: 0;
+}
+.div-register .div-register-agree-box-check {
+    font-size: 12px;
+    margin-top: 6px;
+}
+.div-register .div-register-agree-total label{
+    color: #555;
+}
+.div-register .div-register-agree-total {
+    border-bottom: 3px dashed #eee;
+}
+.div-register .div-register-agree-total vaadin-checkbox {
+    padding: 8px 14px;
+    border-radius: 2px;
+    background: #fff;
+    color: #777;
+    border: 1px solid #eee;
+
+}
+.div-register .div-register-agree-button {
+    padding-top: 14px !important;
+}
+.div-register #btnCommonRegister,
+.div-register #btnNaverRegister{
+    border-radius: 0 ;
+    height: 50px;
+    font-weight: 400;
+    border: none;
+    cursor: pointer;
+}
+.div-register #btnCommonRegister {
+    background: #4fd81b;
+    color: #fff;
+}
+.div-register #btnNaverRegister {
+    background: url('./image/naver-simbol.png');
+    background-size : 36px;
+    background-repeat: no-repeat;
+    background-position-x: 12px;
+    background-position-y: 50%;
+    border: 1px solid #eee !important;
+    color: #999;
+    width: 210px;
+    padding-left: 50px;
+}
+/* PAGE-register END */
