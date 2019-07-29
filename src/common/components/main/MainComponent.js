@@ -11,6 +11,9 @@ class MainComponent extends Component {
     this.state ={
       selectedSuggestion: null,
       isRedirect: false,
+      landCnt: 0,
+      buildCnt: 0,
+      tradeCnt: 0,
     }
   }
 
@@ -30,9 +33,23 @@ class MainComponent extends Component {
   }
 
   componentDidMount() {
-
+    this.getInfoCount();
   }
 
+  getInfoCount() {
+    fetch('http://localhost:8004/web/rec/api/mpa/analysis/summry/count')
+          .then(res =>res.text())
+          .then((data) => {     
+            console.log(data);
+            const dataArr = data.split(',');            
+            this.setState({
+              landCnt: parseInt(dataArr[0],10),
+              buildCnt: parseInt(dataArr[1],10),
+              tradeCnt: parseInt(dataArr[2],10)
+            });
+          })
+          .catch(console.log);  
+  }
   render() {
     //주소검색이 정상적으로 된 경우 주택정보 검색 화면으로 Redirect 한다.
     if(this.state.isRedirect === true) {
@@ -53,17 +70,23 @@ class MainComponent extends Component {
           </div>
           <p className="box-summary">
               <span className="summary">
-                거래정보&nbsp;
-                <CountUp className="num" start={1} end={102864}
+                토지정보&nbsp;
+                <CountUp className="num" start={1} end={this.state.landCnt}
                   duration={duration} useEasing={true} separator="," redraw={true}/>
                 건
               </span>
               <span className="summary">
-                시세정보&nbsp;
-                <CountUp className="num" start={1} end={114152}
+                건물정보&nbsp;
+                <CountUp className="num" start={1} end={this.state.buildCnt}
                   duration={duration} useEasing={true} separator="," redraw={true}/>
                 건
               </span>
+              { <span className="summary">
+                거래정보&nbsp;
+                <CountUp className="num" start={1} end={this.state.tradeCnt}
+                  duration={duration} useEasing={true} separator="," redraw={true}/>
+                건
+              </span> }
             </p>
         </div>
       </Fragment>

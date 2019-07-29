@@ -2,7 +2,7 @@ import axios from 'axios';
 import config from '../../config';
 
 
-//토지 속성 정보
+//주택정보 조회 
 export const getLandInfoView = (search) => 
 axios({
     method: 'POST',
@@ -34,4 +34,3 @@ axios({
         'pnu': search.pnu,
     })
 });
-  

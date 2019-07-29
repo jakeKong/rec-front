@@ -16,7 +16,7 @@ function renderSuggestion(suggestion) {
   );
 }
 
-const url = `${config.commonService}juso/list/`;
+const url = `${config.commonService}/juso/list/`;
 let selectedSuggestion = null;
 class AddressSearch extends Component {
   static propTypes = {    
