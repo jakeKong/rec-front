@@ -125,7 +125,7 @@ html, body, #root .index {
 }
 
 .agz-scroll {
-	overflow-y: scroll;
+	/* overflow-y: scroll; */
 }
 .agz-scroll::-webkit-scrollbar-track
 {
@@ -152,7 +152,7 @@ html, body, #root .index {
     font-weight: 300;
     padding-top: 24px;
     padding-bottom: 8px;
-    color: #4fd81b;
+    color: rgba(0,0,0,0.8);
 }
 /* Page Common END*/
 
@@ -414,6 +414,7 @@ html, body, #root .index {
     border: none !important;
     background: transparent !important;
     font-weight: 500 !important;
+    text-align: left !important;
 }
 .p-datatable tbody tr {
     border-bottom: 1px solid #eee !important;
@@ -485,7 +486,7 @@ html, body, #root .index {
 
 /* table width 공지사항 한정 */
 /* TODO 각 페이지마다 셀의 넓이가 다른데 조정을 위해 테이블 wrapper나 페이지에 다른 클래스명을 먹여야 할 것 같습니다. */
-.p-datatable tbody tr td:nth-of-type(1),
+/* .p-datatable tbody tr td:nth-of-type(1),
 .p-datatable thead tr th:nth-of-type(1) {
     width: 6% !important;
     text-align: center;
@@ -495,27 +496,39 @@ html, body, #root .index {
     width: 70% !important;
     text-align: left !important;
     padding-left: 24px !important;
-}
+} */
 /* TABLE END */
 
     /* Searchbox */
 .wrap-search{
     text-align: center;
-    margin-top: 16px;
-    margin-bottom: 24px;
+    padding-top: 16px;
+    
 }
 .wrap-search > * {
-    /* display: inline-block; */
-    vertical-align: bottom;
+    vertical-align: middle;
     box-sizing: border-box;
-    height: 32px;
-    line-height: 32px;
 }
-.wrap-search .label {
-    display: inline-block;
+.wrap-search label {
+    font-size: 13px;
+    width: 0;
     color: #888;
-    margin: 0 8px;
-    min-width: 80px;
+    padding: 0 12px 0 18px;
+}
+.wrap-search .label:first-child {
+    padding-left: 0;
+}
+.wrap-search .p-dropdown-label {
+    padding: 0;
+}
+.wrap-search .p-dropdown {
+    height: 32px;
+    line-height: 30px;
+    min-width: 100px;
+    text-align: center;
+}
+.wrap-search .p-dropdown * {
+    font-size: 13px;
 }
 .wrap-search .btn {
     width: 80px;
@@ -527,6 +540,7 @@ html, body, #root .index {
     border-radius: 2px;
     margin-left: 24px;
     font-size: 14px;
+    height: 32px;
 }
 .wrap-search .btn:hover {
     background: #3fc80b;
@@ -541,6 +555,13 @@ html, body, #root .index {
     width: 150px;
     border-bottom: 1px solid #eee;
     cursor: pointer;
+}
+.wrap-search .p-calendar {
+    margin-right: 32px;
+}
+.wrap-search #lbPunct {
+    padding-left: 6px;
+    padding-right: 6px;
 }
 .wrap-search .datepickr:hover {
     border-bottom-color: #bbb;
@@ -665,15 +686,15 @@ html, body, #root .index {
 .tilenews .masonry {
     height: 100%;
     padding: 0 14px;
-    padding-top: 54px;
-    padding-bottom: 30px;
+    padding-top: 24px;
+    padding-bottom: 0px;
 }
 .tilenews .masonry .card {
     display: inline-block;
     margin-right: 5%;
-    margin-bottom: 40px;
-    min-height: 330px;
-    max-height: 330px;
+    margin-bottom: 12px;
+    min-height: 280px;
+    max-height: 280px;
     width: 30%;
     box-shadow: 0px 8px 10px rgba(0,0,0,0.2);
     overflow: hidden;
@@ -689,14 +710,14 @@ html, body, #root .index {
 }
 .tilenews .card .image {
     width: 100%;
-    max-height: 220px;
-    min-height: 180px;
+    max-height: 180px;
+    min-height: 160px;
 }
 .tilenews .card .title {
     text-align: right;
-    
     font-size: 20px;
-    padding: 24px 20px 0px 60px;
+    padding: 18px 20px 0px 60px;
+    color: rgba(0,0,0,0.8);
 }
 .tilenews .card .title p {
     word-break: keep-all;
@@ -770,6 +791,10 @@ html, body, #root .index {
     min-height: 590px;
     overflow:auto;
     margin-top: 8px;
+}
+.searchbox + div {
+    width:100% !important;
+    min-height: 590px;
 }
 .div-land-info-item {
     display: block;
@@ -889,7 +914,7 @@ html, body, #root .index {
 }
 .tbl-info-04 th:nth-of-type(2),
 .tbl-info-04 td:nth-of-type(2){
-    width: 70%;
+    width: 65%;
 }
 .tbl-info-04 tr:nth-of-type(2n-1) {
     background: #f8f8f9; 
@@ -901,9 +926,9 @@ html, body, #root .index {
     position: absolute;
     left: 50%;
     margin: 0;
-    margin-left: -512px !important;
+    margin-left: calc( 512px - 160px ) !important;
     border-radius: 0;
-    width: 1024px;
+    width: 160px;
     color: #fff;
     background-color: #4fd81b;
     cursor: pointer;
@@ -1145,7 +1170,7 @@ html, body, #root .index {
     font-size: 15px !important;
     font-weight: 300 !important;
     letter-spacing: 1px;
-    padding-left: 12px;
+    padding-left: 24px;
     color: #aaa;
 
 }
