@@ -486,17 +486,17 @@ html, body, #root .index {
 
 /* table width 공지사항 한정 */
 /* TODO 각 페이지마다 셀의 넓이가 다른데 조정을 위해 테이블 wrapper나 페이지에 다른 클래스명을 먹여야 할 것 같습니다. */
-/* .p-datatable tbody tr td:nth-of-type(1),
-.p-datatable thead tr th:nth-of-type(1) {
+.section-table-notice tbody tr td:nth-of-type(1),
+.section-table-notice thead tr th:nth-of-type(1) {
     width: 6% !important;
     text-align: center;
 }
-.p-datatable tbody tr td:nth-of-type(2),
-.p-datatable thead tr th:nth-of-type(2) {
+.section-table-notice tbody tr td:nth-of-type(2),
+.section-table-notice thead tr th:nth-of-type(2) {
     width: 70% !important;
     text-align: left !important;
     padding-left: 24px !important;
-} */
+}
 /* TABLE END */
 
     /* Searchbox */
@@ -1272,5 +1272,55 @@ html, body, #root .index {
     color: #999;
     width: 210px;
     padding-left: 50px;
+}
+
+.div-register .div-register-complete {
+    margin-top: 50px;
+}
+.div-register .div-register-complete .p-register-complete-title {
+    display: inline-block;
+    width: 400px;
+    font-size: 24px !important;
+    font-weight: 400;
+    line-height: 32px;
+    color: rgba(0,0,0,0.8);
+    margin-bottom: 12px;
+}
+.div-register .div-register-complete .p-register-complete-sub-title {
+    font-size: 13px !important;
+    font-weight: 200;
+    color: rgba(0,0,0,0.5);
+}
+.div-register .div-register-complete .div-register-complete-field {
+    margin-top: 42px;
+    margin-left: 17em !important;
+    margin-right: 17em !important;
+}
+.div-register .div-register-complete .div-register-complete-field .div-register-complete-field-title {
+    line-height: 32px;
+    font-weight: 400;
+    border-right: 1px solid #eee;
+}
+.div-register .div-register-complete .div-register-complete-field .div-register-complete-field-value {
+    line-height: 32px;
+    font-weight: 200;
+    text-align: left;
+}
+.div-register .div-register-complete-button vaadin-button{
+    height: 46px;
+    border: none;
+    border-radius: 0;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.div-register .div-register-complete-button vaadin-button:hover {
+    opacity: 0.8;
+}
+.div-register .div-register-complete-button vaadin-button#btnGoLogin {
+    background: #4fd81b;
+    color: #fff;
+}
+.div-register .div-register-complete-button vaadin-button#btnGoHome {
+    color: rgba(0,0,0,0.5);
 }
 /* PAGE-register END */
