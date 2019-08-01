@@ -7,6 +7,8 @@ import { OrderHistoryGrid, OrderHistorySearch } from "../index";
 
 import '@vaadin/vaadin-ordered-layout';
 
+import storage from '../../common/storage';
+
 class OrderHistoryByEmailContainer extends Component {
 
   // state set을 위한 초기 생성자
@@ -33,8 +35,8 @@ class OrderHistoryByEmailContainer extends Component {
     this.setState({search: dataSearchChild});
 
     const { search } = this.state;
-    const { email } = this.props;
-    this.getOrderHistoryListByEmail(email, search);
+    const loggedInfo = storage.get('loggedInfo');
+    this.getOrderHistoryListByEmail(loggedInfo.email, search);
     // state.search 값 초기화
     this.setState({search: {
       ordererNm: null,
@@ -55,12 +57,10 @@ class OrderHistoryByEmailContainer extends Component {
   componentDidMount() {
     // orderHistoryListByEmail Setting //
     // 전달받은 email값이 존재 할 경우 최초 마운트시 grid의 목록조회 API를 요청한다.
-    const { email } = this.props;
-    if (email || email !== null || email !== undefined) {
-      // const { orderHistoryList } = this.props;
-      // if (!orderHistoryList || orderHistoryList === undefined || orderHistoryList.isEmpty()) {
+    const loggedInfo = storage.get('loggedInfo');
+    if (loggedInfo.email || loggedInfo.email !== null || loggedInfo.email !== undefined) {
         const { search } = this.state;
-        this.getOrderHistoryListByEmail(email, search);
+        this.getOrderHistoryListByEmail(loggedInfo.email, search);
       // }
     }
   }
@@ -76,7 +76,7 @@ class OrderHistoryByEmailContainer extends Component {
 
   orderCancleCallback = (dto) => {
     const { search } =this.state;
-    const { email } = this.props;
+    const loggedInfo = storage.get('loggedInfo');
     let orderDto = {
       'odrNo': dto.odrNo,
       'odrDt': new Date(),
@@ -90,9 +90,9 @@ class OrderHistoryByEmailContainer extends Component {
       'status': 'TRADE_CANCLE',
       'activated': false
     };
-    this.updateOrderHistoryActivated(dto.odrSid, email, false);
-    this.addOrderHistory(email, orderDto, search);
-    this.updateUserByBalancePointIncrease(email, dto.variationPoint);
+    this.updateOrderHistoryActivated(dto.odrSid, loggedInfo.email, false);
+    this.addOrderHistory(loggedInfo.email, orderDto, search);
+    this.updateUserByBalancePointIncrease(loggedInfo.email, dto.variationPoint);
   }
 
   addOrderHistory = async (email, dto, search) => {
@@ -145,9 +145,6 @@ export default connect(
     pending: state.orderHistory.pending,
     error: state.orderHistory.error,
     success: state.orderHistory.success,
-    // 임시 값 (삭제 후 pageTemplate등 상위 컴포넌트에서 email정보를 받아와 props로 사용해야 함)
-    email: 'yieon@test.com',
-    // role: 'ROLE_ADMIN'
   }),
   dispatch => ({
     OrderHistoryModule: bindActionCreators(orderHistoryActions, dispatch),

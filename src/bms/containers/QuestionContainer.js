@@ -6,6 +6,8 @@ import { QuestionDetail, QuestionGrid, QuestionRegister, QuestionSearch } from "
 
 import '@vaadin/vaadin-ordered-layout';
 
+import storage from '../../common/storage';
+
 class QuestionContainer extends Component {
 
   constructor(props) {
@@ -38,9 +40,9 @@ class QuestionContainer extends Component {
 
   componentDidMount() {
     const { search } = this.state;
-    const { /* questionList,*/ email } = this.props;
+    const loggedInfo = storage.get('loggedInfo')
     // if (!questionList || questionList === undefined || questionList.isEmpty()) {
-      this.getQuestionListByEmail(email, search);
+      this.getQuestionListByEmail(loggedInfo.email, search);
     // }
 
     const registerStatusChangeEvent = this.registerStatusChangeEvent;
@@ -71,8 +73,8 @@ class QuestionContainer extends Component {
       questionTitle: questionTitle,
       questionWriter: questionWriter
     };
-    const { email } = this.props;
-    this.getQuestionListByEmail(email, searchValue);
+    const loggedInfo = storage.get('loggedInfo')
+    this.getQuestionListByEmail(loggedInfo.email, searchValue);
   }
 
   // 상세조회 상태로 변경
@@ -92,8 +94,8 @@ class QuestionContainer extends Component {
     this.setState({detailStatus: false})
     this.resetQuestion();
     const { search } = this.state;
-    const { email } = this.props;
-    this.getQuestionListByEmail(email, search);
+    const loggedInfo = storage.get('loggedInfo')
+    this.getQuestionListByEmail(loggedInfo.email, search);
   }
 
   // 등록 및 수정 상태로 변경
@@ -123,26 +125,26 @@ class QuestionContainer extends Component {
   // 문의사항 등록 요청
   addCallback = async (questionChild) => {
     this.setState({question: questionChild})
-    const { email } = this.props;
+    const loggedInfo = storage.get('loggedInfo')
     const { question, search } = this.state;
-    this.addQuestion(email, question, search);
+    this.addQuestion(loggedInfo.email, question, search);
     this.resetQuestion();
   }
 
   // 문의사항 수정 요청
   updateCallback = async (questionSid, questionChild) => {
     this.setState({question: questionChild})
-    const { email } = this.props;
+    const loggedInfo = storage.get('loggedInfo')
     const { question, search } = this.state;
-    this.updateQuestion(questionSid, email, question, search);
+    this.updateQuestion(questionSid, loggedInfo.email, question, search);
     this.resetQuestion();
   }
 
   // 문의사항 단일항목 삭제 요청
   deleteCallback = async (questionSid) => {
     const { search } = this.state;
-    const { email } = this.props;
-    this.deleteQuestionByEmail(questionSid, email, search);
+    const loggedInfo = storage.get('loggedInfo')
+    this.deleteQuestionByEmail(questionSid, loggedInfo.email, search);
     this.resetQuestion();
   }
 
@@ -189,7 +191,12 @@ class QuestionContainer extends Component {
   render() {
     const { detailStatus, question, registerStatus } = this.state;
     // const { questionList, questionAnswerList, pending, error, success } = this.props;
-    const { questionList, pending, error, success, email } = this.props;
+    const { questionList, pending, error, success } = this.props;
+    const loggedInfo = storage.get('loggedInfo')
+    let email = null;
+    if (loggedInfo) {
+      email = loggedInfo.email
+    }
 
     return (
       <Fragment>
@@ -222,9 +229,6 @@ export default connect(
     pending: state.question.pending,
     error: state.question.error,
     success: state.question.success,
-
-    // 임시 설정
-    email: 'yieon@test.com'
   }),
   dispatch => ({
     QuestionModule: bindActionCreators(questionActions, dispatch)

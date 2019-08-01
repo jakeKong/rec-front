@@ -28,21 +28,21 @@ class PaymentComplete extends Component {
       const btnGoProduct = document.querySelector('#btnGoProduct');
       btnGoProduct.className = "vaadin-button-large";
       btnGoProduct.addEventListener('click', function() {
-        window.location.href = "/#/payment/product/";
+        window.location.href = "/payment/product/";
         window.location.reload();
       })
 
       const btnGoHome = document.querySelector('#btnGoHome');
       btnGoHome.className = "vaadin-button-large";
       btnGoHome.addEventListener('click', function() {
-        window.location.href = "/#/";
+        window.location.href = "/";
         window.location.reload();
       });
 
       const btnGoPaymentHistory = document.querySelector('#btnGoPaymentHistory');
       btnGoPaymentHistory.className = "vaadin-button-large";
       btnGoPaymentHistory.addEventListener('click', function() {
-        window.location.href = "/#/oms/changepoint/history/email";
+        window.location.href = "/oms/changepoint/history/email";
         window.location.reload();
       });
 

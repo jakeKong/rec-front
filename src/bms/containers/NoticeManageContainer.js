@@ -7,6 +7,8 @@ import { NoticeGrid, NoticeDetail, NoticeRegister } from "../index";
 import '@vaadin/vaadin-ordered-layout';
 import '@vaadin/vaadin-button';
 
+import storage from '../../common/storage';
+
 class NoticeManageContainer extends Component {
 
   constructor(props) {
@@ -140,18 +142,18 @@ class NoticeManageContainer extends Component {
   // 공지사항 등록 요청
   addCallback = async (noticeChild) => {
     this.setState({notice: noticeChild})
-    const { email } = this.props;
+    const loggedInfo = storage.get('loggedInfo')
     const { notice } = this.state;
-    this.addNotice(email, notice);
+    this.addNotice(loggedInfo.email, notice);
     this.resetNotice();
   }
 
   // 공지사항 수정 요청
   updateCallback = async (noticeSid, noticeChild) => {
     this.setState({notice: noticeChild})
-    const { email } = this.props;
+    const loggedInfo = storage.get('loggedInfo')
     const { notice } = this.state;
-    this.updateNotice(noticeSid, email, notice);
+    this.updateNotice(noticeSid, loggedInfo.email, notice);
     this.resetNotice();
   }
 
@@ -206,7 +208,12 @@ class NoticeManageContainer extends Component {
 
   render() {
     const { detailStatus, notice, registerStatus } = this.state;
-    const { noticeList, pending, error, success, role } = this.props;
+    const { noticeList, pending, error, success } = this.props;
+    let role = 'GUEST';
+    const loggedInfo = storage.get('loggedInfo')
+    if (loggedInfo && loggedInfo.assignedRoles.indexOf('ROLE_ADMIN') !== -1) {
+      role = 'ROLE_ADMIN';
+    }
     return (
       <Fragment>
         <div>
@@ -234,10 +241,6 @@ export default connect(
     error: state.notice.error,
     success: state.notice.success,
     // complete: state.notice.complete,
-
-    // 임시 설정
-    role: 'ROLE_ADMIN',
-    email: 'admin@test.com'
   }),
   dispatch => ({
     NoticeModule: bindActionCreators(noticeActions, dispatch)

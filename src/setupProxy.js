@@ -44,4 +44,10 @@ module.exports = function(app) {
       changeOrigin: true
     })
   );
+  app.use(
+    proxy('/uaa', { 
+      target: 'http://srd.iptime.org:5000', 
+      changeOrigin: true
+    })
+  );
 }

@@ -84,16 +84,18 @@ class QuestionGrid extends Component {
     } else {
       return (
         <Fragment>
-          <DataTable id="table"
-                    value={this.state.gridData} 
-                    paginator={true} 
-                    rows={10} 
-                    rowsPerPageOptions={[5,10,15,20]} >
-            <Column field="index" header="번호"/>
-            <Column body={this.questionTitleClickLabelTemplate} header="제목"/>
-            <Column field="questionWriter" header="작성자"/>
-            <Column field="reportingDt" header="작성일자"/>
-          </DataTable>
+          <section className="section-datatable-question">
+            <DataTable id="table"
+                      value={this.state.gridData} 
+                      paginator={true} 
+                      rows={10} 
+                      rowsPerPageOptions={[5,10,15,20]} >
+              <Column field="index" header="번호"/>
+              <Column body={this.questionTitleClickLabelTemplate} header="제목"/>
+              <Column field="questionWriter" header="작성자"/>
+              <Column field="reportingDt" header="작성일자"/>
+            </DataTable>
+          </section>
         </Fragment>
       );
     }

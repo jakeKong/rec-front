@@ -89,6 +89,7 @@ class NoticeGrid extends Component {
   roleCheckColumnRenderingEvent(role) {
     if (role === 'ROLE_ADMIN' || role === 'ROLE_SYSADMIN') {
       return (
+        // 관리자 (공통된 스타일로 사용)
         <Fragment>
           <DataTable id="table" 
                     value={this.state.gridData} 
@@ -106,16 +107,19 @@ class NoticeGrid extends Component {
       )
     } else {
       return (
+        // 사용자 (기능별 스타일 적용에 필요한 section 추가)
         <Fragment>
-          <DataTable id="table" 
-                    value={this.state.gridData} 
-                    paginator={true} 
-                    rows={10} 
-                    rowsPerPageOptions={[5,10,15,20]} >
-            <Column field="index" header="번호"/>
-            <Column body={this.noticeTitleClickLabelTemplate} header="제목"/>
-            <Column field="reportingDt" header="작성일자"/>
-          </DataTable>
+          <section className="section-table-notice">
+            <DataTable id="table" 
+                      value={this.state.gridData} 
+                      paginator={true} 
+                      rows={10} 
+                      rowsPerPageOptions={[5,10,15,20]} >
+              <Column field="index" header="번호"/>
+              <Column body={this.noticeTitleClickLabelTemplate} header="제목"/>
+              <Column field="reportingDt" header="작성일자"/>
+            </DataTable>
+          </section>
         </Fragment>
       );
     }

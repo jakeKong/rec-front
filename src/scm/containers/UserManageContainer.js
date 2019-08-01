@@ -8,6 +8,8 @@ import '@vaadin/vaadin-ordered-layout';
 import '@vaadin/vaadin-button';
 import '@vaadin/vaadin-notification';
 
+import storage from '../../common/storage';
+
 class UserManageContainer extends Component {
 
   constructor(props) {
@@ -41,9 +43,10 @@ class UserManageContainer extends Component {
   componentDidMount() {
     const { userList } = this.props;
     const { search } = this.state;
+    const token = storage.get('token');
     // 사용자 목록이 존재하지 않을 경우 목록조회 API서비스 호출
     if (!userList || userList === undefined || userList.isEmpty()) {
-      this.getUserList(search);
+      this.getUserList(search, token);
     }
 
     const { selectList } = this.state;
@@ -55,7 +58,7 @@ class UserManageContainer extends Component {
       if (selectList.length > 0) {
         const check = window.confirm('선택한 항목을 삭제 하시겠습니까?');
         if (check === true) {
-          deleteUsers(selectList, search);
+          deleteUsers(selectList, search, token);
         }
       } else {
         const nfNotfoundSelectColumn = document.createElement('vaadin-notification');
@@ -131,10 +134,10 @@ class UserManageContainer extends Component {
   }
 
   // 사용자 목록 조회 호출
-  getUserList = async (search) => {
+  getUserList = async (search, token) => {
     const { UserModule } = this.props;
     try {
-      await UserModule.getUserList(search)
+      await UserModule.getUserList(search, token)
     } catch (e) {
       console.log("error log : " + e);
     }
@@ -163,7 +166,8 @@ class UserManageContainer extends Component {
   addCallback = async (userChild) => {
     this.setState({user: userChild})
     const { user, search } = this.state;
-    this.addUser(user, search);
+    const token = storage.get('token');
+    this.addUser(user, search, token);
     this.resetUser();
   }
 
@@ -171,52 +175,54 @@ class UserManageContainer extends Component {
   updateCallback = async (userChild) => {
     this.setState({user: userChild})
     const { user, search } = this.state;
-    this.updateUser(user, search);
+    const token = storage.get('token');
+    this.updateUser(user, search, token);
     this.resetUser();
   }
 
   // 사용자 단일항목 삭제 요청
   deleteCallback = async (email) => {
     const { search } = this.state;
-    this.deleteUser(email, search);
+    const token = storage.get('token');
+    this.deleteUser(email, search, token);
     this.resetUser();
   }
 
   // 사용자 등록 API 호출 이벤트
-  addUser = async (user, search) => {
+  addUser = async (user, search, token) => {
     const { UserModule } = this.props;
     try {
-      await UserModule.addUser(user, search)
+      await UserModule.addUser(user, search, token)
     } catch (e) {
       console.log("error log : " + e);
     }
   }
 
   // 사용자 수정 API 호출 이벤트
-  updateUser = async (user, search) => {
+  updateUser = async (user, search, token) => {
     const { UserModule } = this.props;
     try {
-      await UserModule.updateUser(user, search)
+      await UserModule.updateUser(user, search, token)
     } catch (e) {
       console.log("error log : " + e);
     }
   }
 
   // 사용자 단일항목 삭제 API 호출 이벤트
-  deleteUser = async (email, search) => {
+  deleteUser = async (email, search, token) => {
     const { UserModule } = this.props;
     try {
-      await UserModule.deleteUser(email, search)
+      await UserModule.deleteUser(email, search, token)
     } catch (e) {
       console.log("error log : " + e);
     }
   }
 
   // 사용자 선택삭제 API 호출 이벤트
-  deleteUsers = async (list, search) => {
+  deleteUsers = async (list, search, token) => {
     const { UserModule } = this.props;
     try {
-      await UserModule.deleteUsers(list, search)
+      await UserModule.deleteUsers(list, search, token)
     } catch (e) {
       console.log("error log : " + e);
     }
@@ -237,7 +243,12 @@ class UserManageContainer extends Component {
 
   render() {
     const { user, popupOpened } = this.state;
-    const { userList, pending, error, success, role } = this.props;
+    const { userList, pending, error, success } = this.props;
+    let role = 'GUEST';
+    const loggedInfo = storage.get('loggedInfo');
+    if (loggedInfo && loggedInfo.assignedRoles.indexOf('ROLE_ADMIN') !== -1) {
+      role = 'ROLE_ADMIN';
+    }
     return (
       <Fragment>
         <div>
@@ -276,10 +287,6 @@ export default connect(
     error: state.user.error,
     success: state.user.success,
     // complete: state.user.complete,
-
-    // 임시 설정
-    role: 'ROLE_ADMIN',
-    email: 'admin@test.com'
   }),
   dispatch => ({
     UserModule: bindActionCreators(userActions, dispatch)

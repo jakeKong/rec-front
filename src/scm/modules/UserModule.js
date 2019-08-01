@@ -50,15 +50,15 @@ const UPDATE_USER_BY_BALANCE_POINT_DIFFERENCE_RECEIVED = 'user/UPDATE_USER_BY_BA
 const UPDATE_USER_BY_BALANCE_POINT_DIFFERENCE_FAILURE = 'user/UPDATE_USER_BY_BALANCE_POINT_DIFFERENCE_FAILURE';
 
 // Actions
-export const getUserList = createAction(GET_USER_LIST, search => search);
-export const getUser = createAction(GET_USER_LIST, email => email);
-export const addUser = createAction(ADD_USER, (userDto, search) => ({userDto, search}));
-export const updateUser = createAction(UPDATE_USER, (userDto, search) => ({userDto, search}));
-export const deleteUser = createAction(DELETE_USER, (email, search) => ({email, search}));
-export const deleteUsers = createAction(DELETE_USERS, (emails, search) => ({emails, search}));
-export const updateUserByBalancePoint = createAction(UPDATE_USER_BY_BALANCE_POINT, (email, balancePoint) => ({email, balancePoint}));
-export const updateUserByBalancePointIncrease = createAction(UPDATE_USER_BY_BALANCE_POINT_INCREASE, (email, increasePoint) => ({email, increasePoint}));
-export const updateUserByBalancePointDifference = createAction(UPDATE_USER_BY_BALANCE_POINT_DIFFERENCE, (email, differencePoint) => ({email, differencePoint}));
+export const getUserList = createAction(GET_USER_LIST, (search, token) => ({search, token}));
+export const getUser = createAction(GET_USER, (email, token) => ({email, token}));
+export const addUser = createAction(ADD_USER, (userDto, search, token) => ({userDto, search, token}));
+export const updateUser = createAction(UPDATE_USER, (userDto, search, token) => ({userDto, search, token}));
+export const deleteUser = createAction(DELETE_USER, (email, search, token) => ({email, search, token}));
+export const deleteUsers = createAction(DELETE_USERS, (emails, search, token) => ({emails, search, token}));
+export const updateUserByBalancePoint = createAction(UPDATE_USER_BY_BALANCE_POINT, (email, balancePoint, token) => ({email, balancePoint, token}));
+export const updateUserByBalancePointIncrease = createAction(UPDATE_USER_BY_BALANCE_POINT_INCREASE, (email, increasePoint, token) => ({email, increasePoint, token}));
+export const updateUserByBalancePointDifference = createAction(UPDATE_USER_BY_BALANCE_POINT_DIFFERENCE, (email, differencePoint, token) => ({email, differencePoint, token}));
 
 // 초기 state값 설정
 const initialState = Map({
@@ -74,14 +74,14 @@ const initialState = Map({
 function* getUserListSaga(action) {
   if (action.payload.search !== undefined) {
     try {
-      const response = yield call(api.getUserList, action.payload.search);
+      const response = yield call(api.getUserList, action.payload.search, action.payload.token);
       yield put({type: GET_USER_LIST_RECEIVED, payload: response});
     } catch (error) {
       yield put({type: GET_USER_LIST_FAILURE, payload: error});
     }
   } else {
     try {
-      const response = yield call(api.getUserList, action.payload);
+      const response = yield call(api.getUserList, action.payload.search, action.payload.token);
       yield put({type: GET_USER_LIST_RECEIVED, payload: response});
     } catch (error) {
       yield put({type: GET_USER_LIST_FAILURE, payload: error});
@@ -92,17 +92,17 @@ function* getUserListSaga(action) {
 // getUser Saga
 function* getUserSaga(action) {
   try {
-    const response = yield call(api.getUser, action.payload);
-    yield put({type: GET_USER_LIST_RECEIVED, payload: response});
+    const response = yield call(api.getUser, action.payload.email, action.payload.token);
+    yield put({type: GET_USER_RECEIVED, payload: response});
   } catch (error) {
-    yield put({type: GET_USER_LIST_FAILURE, payload: error});
+    yield put({type: GET_USER_FAILURE, payload: error});
   }
 }
 
 // addUser Saga
 function* addUserSaga(action) {
   try {
-    const response = yield call(api.addUser, action.payload.userDto);
+    const response = yield call(api.addUser, action.payload.userDto, action.payload.token);
     yield put({type: ADD_USER_RECEIVED, payload: response})
     // 추가완료 이후 목록 갱신 호출
     yield call(getUserListSaga, action);
@@ -114,7 +114,7 @@ function* addUserSaga(action) {
 // updateUser Saga
 function* updateUserSaga(action) {
   try {
-    const response = yield call(api.updateUser, action.payload.userDto);
+    const response = yield call(api.updateUser, action.payload.userDto, action.payload.token);
     yield put({type: UPDATE_USER_RECEIVED, payload: response})
     // 수정완료 이후 목록 갱신 호출
     yield call(getUserListSaga, action);
@@ -126,7 +126,7 @@ function* updateUserSaga(action) {
 // deleteUser Saga
 function* deleteUserSaga(action) {
   try {
-    const response = yield call(api.deleteUser, action.payload.email);
+    const response = yield call(api.deleteUser, action.payload.email, action.payload.token);
     yield put({type: DELETE_USER_RECEIVED, payload: response})
     // 삭제완료 이후 목록 갱신 호출
     yield call(getUserListSaga, action);
@@ -138,7 +138,7 @@ function* deleteUserSaga(action) {
 // deleteUsers Saga
 function* deleteUsersSaga(action) {
   try {
-    const response = yield call(api.deleteUsers, action.payload.emails);
+    const response = yield call(api.deleteUsers, action.payload.emails, action.payload.token);
     yield put({type: DELETE_USERS_RECEIVED, payload: response})
     // 삭제완료 이후 목록 갱신 호출
     yield call(getUserListSaga, action);
@@ -150,7 +150,7 @@ function* deleteUsersSaga(action) {
 // updateUserByBalancePoint Saga
 function* updateUserByBalancePointSaga(action) {
   try {
-    const response = yield call(api.updateUserByBalancePoint, action.payload.email, action.payload.balancePoint);
+    const response = yield call(api.updateUserByBalancePoint, action.payload.email, action.payload.balancePoint, action.payload.token);
     yield put({type: UPDATE_USER_BY_BALANCE_POINT_RECEIVED, payload: response})
   } catch (error) {
     yield put({type: UPDATE_USER_BY_BALANCE_POINT_FAILURE, payload: error});
@@ -160,7 +160,7 @@ function* updateUserByBalancePointSaga(action) {
 // updateUserByBalancePointIncrease Saga
 function* updateUserByBalancePointIncreaseSaga(action) {
   try {
-    const response = yield call(api.updateUserByBalancePointIncrease, action.payload.email, action.payload.increasePoint);
+    const response = yield call(api.updateUserByBalancePointIncrease, action.payload.email, action.payload.increasePoint, action.payload.token);
     yield put({type: UPDATE_USER_BY_BALANCE_POINT_INCREASE_RECEIVED, payload: response})
   } catch (error) {
     yield put({type: UPDATE_USER_BY_BALANCE_POINT_INCREASE_FAILURE, payload: error});
@@ -170,7 +170,7 @@ function* updateUserByBalancePointIncreaseSaga(action) {
 // updateUserByBalancePointDifference Saga
 function* updateUserByBalancePointDifferenceSaga(action) {
   try {
-    const response = yield call(api.updateUserByBalancePointDifference, action.payload.email, action.payload.differencePoint);
+    const response = yield call(api.updateUserByBalancePointDifference, action.payload.email, action.payload.differencePoint, action.payload.token);
     yield put({type: UPDATE_USER_BY_BALANCE_POINT_DIFFERENCE_RECEIVED, payload: response})
   } catch (error) {
     yield put({type: UPDATE_USER_BY_BALANCE_POINT_DIFFERENCE_FAILURE, payload: error});

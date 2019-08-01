@@ -6,6 +6,8 @@ import { OrderHistoryGrid, OrderHistorySearch } from "../index";
 
 import '@vaadin/vaadin-ordered-layout';
 
+import storage from '../../common/storage';
+
 class OrderHistoryContainer extends Component {
 
   // state set을 위한 초기 생성자
@@ -71,7 +73,12 @@ class OrderHistoryContainer extends Component {
   }
 
   render() {
-    const { orderHistoryList, pending, error, success, role } = this.props;
+    const { orderHistoryList, pending, error, success } = this.props;
+    let role = 'GUEST';
+    const loggedInfo = storage.get('loggedInfo');
+    if (loggedInfo && loggedInfo.assignedRoles.indexOf('ROLE_ADMIN') !== -1) {
+      role = 'ROLE_ADMIN'
+    }
     return (
       <Fragment>
         <div className="wrap-search">
@@ -93,9 +100,6 @@ export default connect(
     pending: state.orderHistory.pending,
     error: state.orderHistory.error,
     success: state.orderHistory.success,
-
-    // 임시 권한 설정
-    role: 'ROLE_ADMIN'
   }),
   dispatch => ({
     OrderHistoryModule: bindActionCreators(orderHistoryActions, dispatch)

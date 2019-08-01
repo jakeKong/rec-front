@@ -140,7 +140,7 @@ class ChangePointHistoryGrid extends Component {
   render() {
     return (      
       <Fragment>
-        <div>
+        <section className="section-datatable-changehistory">
           <DataTable id="table" 
                      value={this.state.gridData} 
                      scrollable={true} 
@@ -158,10 +158,10 @@ class ChangePointHistoryGrid extends Component {
             <Column columnKey="grdEmail" field="email" header="아이디"  style={{display:this.state.hiddenCheck}}/>
             <Column columnKey="grdBtnPaymentCancle" body={this.cancelTemplate} style={{display:this.state.hiddenCheck}} />
           </DataTable>
-          </div>
-          <div className="div-sub-top-right">
-            <vaadin-button id="btnExcel" />
-          </div>
+        </section>
+        <div className="div-sub-top-right">
+          <vaadin-button id="btnExcel" />
+        </div>
       </Fragment>
     );
   }

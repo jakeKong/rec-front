@@ -4,6 +4,8 @@ import { bindActionCreators } from "redux";
 import * as changePointHistoryActions from "../modules/ChangePointHistoryModule";
 import { ChangePointHistoryGrid, ChangePointHistorySearch } from "../index";
 
+import storage from '../../common/storage';
+
 class ChangePointHistoryByEmailContainer extends Component {
 
   // state set을 위한 초기 생성자
@@ -30,8 +32,8 @@ class ChangePointHistoryByEmailContainer extends Component {
     this.setState({search: dataSearchChild});
 
     const { search } = this.state;
-    const { email } = this.props;
-    this.getChangePointHistoryListByEmail(email, search);
+    const loggedInfo = storage.get('loggedInfo');
+    this.getChangePointHistoryListByEmail(loggedInfo.email, search);
     // state.search 값 초기화
     this.setState({search: {
       userNm: null,
@@ -50,12 +52,12 @@ class ChangePointHistoryByEmailContainer extends Component {
 
   // 마운트 직후 한번 (rendering 이전, 마운트 이후의 작업)
   componentDidMount() {
-    const { email } = this.props;
-    if (email || email !== null || email !== undefined) {
+    const loggedInfo = storage.get('loggedInfo');
+    if (loggedInfo.email || loggedInfo.email !== null || loggedInfo.email !== undefined) {
         const { search } = this.state;
         // const { changePointHistoryList } = this.props;
         // if (!changePointHistoryList || changePointHistoryList === undefined || changePointHistoryList.isEmpty()) {
-            this.getChangePointHistoryListByEmail(email, search);
+            this.getChangePointHistoryListByEmail(loggedInfo.email, search);
         // }
     }
 
@@ -93,9 +95,6 @@ export default connect(
     pending: state.changePointHistory.pending,
     error: state.changePointHistory.error,
     success: state.changePointHistory.success,
-
-    // 임시 값 (삭제 후 pageTemplate등 상위 컴포넌트에서 email정보를 받아와 props로 사용해야 함)
-    email: 'yieon@test.com'
   }),
   dispatch => ({
     ChangePointHistoryModule: bindActionCreators(changePointHistoryActions, dispatch),

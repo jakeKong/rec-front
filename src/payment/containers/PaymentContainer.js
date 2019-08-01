@@ -12,6 +12,7 @@ import config from '../../config';
 
 import '@vaadin/vaadin-notification';
 
+import storage from '../../common/storage';
 import { removeComma } from '../../common/utils';
 
 //ImPort 페이결제 라이브러리
@@ -82,6 +83,7 @@ class PaymentContainer extends Component {
     }
   }
 
+  /*
   addOrderHistory = async (email, dto) => {
     const { OrderHistoryModule } = this.props;
     try {
@@ -90,6 +92,7 @@ class PaymentContainer extends Component {
       console.log("error log : " + e);
     }
   }
+  */
 
   addChangePointHistory = async (email, dto) => {
     const { ChangePointHistoryModule } = this.props;
@@ -103,7 +106,6 @@ class PaymentContainer extends Component {
   // 아임포트 결제 창 호출
   openIamPortPay = () => {
     const { productDto, purchaseResult } = this.state;
-    const { email } = this.props
     //결제 번호 생성. 생성 실패시 오류  메시지 팝업
     let merchantUid = null;
     axios({
@@ -169,9 +171,11 @@ class PaymentContainer extends Component {
               paymentNo: rsp.merchant_uid,
               activated: true
             }
-            this.addChangePointHistory(email, dto);
+            const loggedInfo = storage.get('loggedInfo');
+            const token = storage.get('token');
+            this.addChangePointHistory(loggedInfo.email, dto);
             // 사용자 포인트 추가 이벤트
-            this.updateUserByBalancePointIncrease(email, removeComma(rsp.custom_data.point))
+            this.updateUserByBalancePointIncrease(loggedInfo.email, removeComma(rsp.custom_data.point), token)
   
           } else {
             if (rsp.error_code === 'F1002') {
@@ -187,10 +191,10 @@ class PaymentContainer extends Component {
     });
   }
 
-  updateUserByBalancePointIncrease = async (email, increasePoint) => {
+  updateUserByBalancePointIncrease = async (email, increasePoint, token) => {
     const { UserManageModule } = this.props;
     try {
-      await UserManageModule.updateUserByBalancePointIncrease(email, increasePoint)
+      await UserManageModule.updateUserByBalancePointIncrease(email, increasePoint, token)
     } catch (e) {
       console.log("error log : " + e);
     }
@@ -230,7 +234,6 @@ class PaymentContainer extends Component {
   render() {
     const { successPay, purchaseResult } = this.state;
     const { productList, pending, error, success } = this.props;
-    const { paymentRequest, paymentPending, paymentError, paymentSuccess } = this.props;
     
     return (
       <Fragment>
@@ -280,13 +283,6 @@ export default connect(
     error: state.product.error,
     success: state.product.success,
     complete: state.product.complete,
-
-    paymentRequest: state.payment.paymentRequest,
-    paymentPending: state.payment.pending,
-    paymentError: state.payment.error,
-    paymentSuccess: state.payment.success,
-
-    email: 'yieon@test.com'
   }),
   dispatch => ({
     ProductManageModule: bindActionCreators(productManageActions, dispatch),

@@ -2,7 +2,22 @@ import React from 'react';
 import { PageTemplate } from '../../common';
 import { NoticeManageContainer } from '../index';
 
-const NoticePage = () => {
+import { Redirect } from 'react-router';
+import storage from '../../common/storage';
+
+const NoticeManagePage = () => {
+  // 로그인 상태가 아닐 경우
+  if (!storage.get('loggedInfo')) {
+    return <Redirect to={{
+      pathname: "/",
+    }} push={true}/>;
+  }
+  // 사용자 권한이 없을 경우
+  if (storage.get('loggedInfo').assignedRoles.indexOf('ROLE_ADMIN') === -1) {
+    return <Redirect to={{
+      pathname: "/",
+    }} push={true}/>;
+  }
   return (
     // <div>
       <PageTemplate>
@@ -13,4 +28,4 @@ const NoticePage = () => {
   );
 };
 
-export default NoticePage;
+export default NoticeManagePage;

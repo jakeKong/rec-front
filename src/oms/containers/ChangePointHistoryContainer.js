@@ -5,6 +5,8 @@ import * as changePointHistoryActions from "../modules/ChangePointHistoryModule"
 import * as userManageActions from "../../scm/modules/UserModule";
 import { ChangePointHistoryGrid, ChangePointHistorySearch } from "../index";
 
+import storage from '../../common/storage';
+
 class ChangePointHistoryContainer extends Component {
 
   // state set을 위한 초기 생성자
@@ -78,9 +80,10 @@ class ChangePointHistoryContainer extends Component {
       'paymentNo': dto.paymentNo,
       'activated': false
     }
+    const token = storage.get('token');
     this.updateChangePointHistoryActivated(dto.changePointSid, false);
     this.addChangePointHistory(dto.email, changePointDto, search)
-    this.updateUserByBalancePointDifference(dto.email, dto.changePointOrigin);
+    this.updateUserByBalancePointDifference(dto.email, dto.changePointOrigin, token);
   }
 
   addChangePointHistory = async (email, dto, search) => {
@@ -101,17 +104,22 @@ class ChangePointHistoryContainer extends Component {
     }
   }
 
-  updateUserByBalancePointDifference = async (email, differencePoint) => {
+  updateUserByBalancePointDifference = async (email, differencePoint, token) => {
     const { UserManageModule } = this.props;
     try {
-      await UserManageModule.updateUserByBalancePointDifference(email, differencePoint)
+      await UserManageModule.updateUserByBalancePointDifference(email, differencePoint, token)
     } catch (e) {
       console.log("error log : " + e);
     }
   }
 
   render() {
-    const { changePointHistoryList, pending, error, success, role } = this.props;
+    const { changePointHistoryList, pending, error, success } = this.props;
+    let role = 'GUEST';
+    const loggedInfo = storage.get('loggedInfo');
+    if (loggedInfo && loggedInfo.assignedRoles.indexOf('ROLE_ADMIN') !== -1) {
+      role = 'ROLE_ADMIN'
+    }
     return (
       <Fragment>
         <div className="wrap-search">
@@ -133,10 +141,6 @@ export default connect(
     pending: state.changePointHistory.pending,
     error: state.changePointHistory.error,
     success: state.changePointHistory.success,
-
-    // 임시 값 (삭제 후 pageTemplate등 상위 컴포넌트에서 email정보를 받아와 props로 사용해야 함)
-    // email: 'yieon@test.com',
-    role: 'ROLE_ADMIN'
   }),
   dispatch => ({
     ChangePointHistoryModule: bindActionCreators(changePointHistoryActions, dispatch),

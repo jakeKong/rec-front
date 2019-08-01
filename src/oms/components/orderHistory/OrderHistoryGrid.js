@@ -191,7 +191,7 @@ class OrderHistoryGrid extends Component {
   render() {
     return (
       <Fragment>
-          <div>
+          <section className="section-datatable-orderhistory">
             <DataTable id="table" value={this.state.gridData} 
                 scrollable={true} 
                 paginator={true} rows={10} rowsPerPageOptions={[5,10,15,20]} >
@@ -209,7 +209,7 @@ class OrderHistoryGrid extends Component {
                 <Column columnKey="grdOrdererNm" field="ordererNm" header="주문자"  style={{display:this.state.hiddenCheck}}/>
                 <Column columnKey="grdEmail" field="email"  header="아이디" style={{display:this.state.hiddenCheck}}/>
             </DataTable>
-          </div>
+          </section>
           <div className="align-right-text">
             <vaadin-button id="btnExcel"/>
           </div>

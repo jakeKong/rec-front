@@ -8,11 +8,17 @@ class Login extends Component {
   constructor(props) {
     super(props);
     this.state ={
+      // email: null,
+      // password: null,
 
     }
   }
 
   componentDidMount() {
+    // const bcrypt = require('bcrypt-nodejs');
+    // const crypto = require('crypto')
+    
+    const { RealEstateCommunityLoginAttempt } = this.props;
 
     document.querySelector('#lbLoginTitle').innerHTML = '로그인';
     document.querySelector('#lbLoginId').innerHTML = '아이디';
@@ -38,8 +44,41 @@ class Login extends Component {
     const btnLogin = document.querySelector('#btnLogin');
     btnLogin.textContent = '로그인'
     btnLogin.className = 'vaadin-button-login';
+    // let bcryptEncodeValue;
     btnLogin.addEventListener('click', function() {
       // 로그인 버튼 클릭 이벤트
+      if (tfLoginId.value === null || tfLoginId.value === '' || tfLoginId.value === undefined) {
+        window.confirm('아이디를 입력해주세요');
+        return;
+      }
+      if (pfLoginPw.value === null || pfLoginPw.value === '' || pfLoginPw.value === undefined) {
+        window.confirm('비밀번호를 입력해주세요');
+        return;
+      }
+
+      RealEstateCommunityLoginAttempt(tfLoginId.value, pfLoginPw.value)
+
+      // // let current_date = (new Date()).valueOf().toString();
+      // // let AESHashKey = crypto.createHash('sha256').update(current_date + 'hashKey').digest('hex'); 
+      // let AESHashKey = '_rec_pass_key_valuetoaes';
+      // let iv = AESHashKey.substring(0, 16)
+      // let chiper = crypto.createCipher('aes-256-cbc', AESHashKey, iv.byteLength());
+      // let AEScryptEncodeValue = chiper.update(pfLoginPw.value, 'utf8', 'base64');
+      // AEScryptEncodeValue += chiper.final('base64');
+      // RealEstateCommunityLoginAttempt(tfLoginId.value, AEScryptEncodeValue, iv);
+      
+      /*
+      bcrypt.hash(pfLoginPw.value, null, null, function(err, hash) {
+        console.log(err)
+        if (err === null) {
+          let bcryptEncodeValue = hash;
+          console.log('bcrypt Encode complete!')
+          RealEstateCommunityLoginAttempt(tfLoginId.value, bcryptEncodeValue);
+        } else {
+          console.log('bcrypt Encode failure..')
+        }
+      })
+      */
     })
 
     // -- 네이버 로그인 버튼 적용 필요
@@ -49,7 +88,6 @@ class Login extends Component {
     btnNaverLogin.addEventListener('click', function() {
       // 네이버로그인 버튼 클릭 이벤트
     })
-
   }
 
   render() {

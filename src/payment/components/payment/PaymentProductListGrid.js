@@ -60,20 +60,22 @@ class PaymentProductListGrid extends Component {
   render() {
     return (
       <Fragment>
-        <DataTable id="table" value={this.state.gridData}
-                   //scrollable={true} 
-                   paginator={true} rows={10} rowsPerPageOptions={[5,10,15,20]}  
-                   selectionMode="single"  selection={this.state.selectedItem} 
-                   onSelectionChange={e => this.onGridSelected(e.value)} 
-                   // onRowClick={e => this.props.detailCallback(e.data)}
-                   >
-          <Column selectionMode="single" style={{width:'3em', borderLeft:'none'}}/>
-          <Column field="productNm" header="결제번호"/>
-          <Column field="productNm" header="상품명" />
-          <Column field="productPoint" header="충전 포인트"/>
-          <Column field="pointCash" header="포인트 가격"/>
-          {/* <Column field="cashRatio" header="현금 비율" style={{textAlign:'center', width: '8em', borderRight:'none'}}/> */}
-        </DataTable>
+        <section className="section-datatable-payment">
+          <DataTable id="table" value={this.state.gridData}
+                    //scrollable={true} 
+                    paginator={true} rows={10} rowsPerPageOptions={[5,10,15,20]}  
+                    selectionMode="single"  selection={this.state.selectedItem} 
+                    onSelectionChange={e => this.onGridSelected(e.value)} 
+                    // onRowClick={e => this.props.detailCallback(e.data)}
+                    >
+            <Column selectionMode="single" style={{width:'3em', borderLeft:'none'}}/>
+            <Column field="productNm" header="결제번호"/>
+            <Column field="productNm" header="상품명" />
+            <Column field="productPoint" header="충전 포인트"/>
+            <Column field="pointCash" header="포인트 가격"/>
+            {/* <Column field="cashRatio" header="현금 비율" style={{textAlign:'center', width: '8em', borderRight:'none'}}/> */}
+          </DataTable>
+        </section>
       </Fragment>
     );
   }

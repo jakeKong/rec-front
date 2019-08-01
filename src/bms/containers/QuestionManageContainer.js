@@ -6,6 +6,8 @@ import { QuestionDetail, QuestionGrid, QuestionSearch } from "../index";
 
 import '@vaadin/vaadin-ordered-layout';
 
+import storage from '../../common/storage';
+
 class QuestionManageContainer extends Component {
 
   constructor(props) {
@@ -139,7 +141,16 @@ class QuestionManageContainer extends Component {
 
   render() {
     const { detailStatus, question } = this.state;
-    const { questionList, pending, error, success, email, role } = this.props;
+    const { questionList, pending, error, success } = this.props;
+    const loggedInfo = storage.get('loggedInfo')
+    let email = null;
+    let role = 'GUEST';
+    if (loggedInfo) {
+      email = loggedInfo.email;
+      if (loggedInfo.assignedRoles.indexOf('ROLE_ADMIN') !== -1) {
+        role = 'ROLE_ADMIN';
+      }
+    }
     return (
       <Fragment>
         <div>
@@ -164,15 +175,9 @@ class QuestionManageContainer extends Component {
 export default connect(
   state => ({
     questionList: state.question.questionList,
-    // questionAnswerList: state.question.questionAnswerList,
-    // questionAnswerCmtList: state.question.questionAnswerCmtList,
     pending: state.question.pending,
     error: state.question.error,
     success: state.question.success,
-
-    // 임시 설정
-    role: 'ROLE_ADMIN',
-    email: 'admin@test.com'
   }),
   dispatch => ({
     QuestionModule: bindActionCreators(questionActions, dispatch)
