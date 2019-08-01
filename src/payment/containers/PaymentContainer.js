@@ -168,7 +168,6 @@ class PaymentContainer extends Component {
               paymentCash: rsp.paid_amount,
               changeType: 'PAYMENT_ADD',
               changePoint: removeComma(rsp.custom_data.point),
-              // 계정별 현재 잔여포인트에서 차감해야함 (로그인 기능 구현 이후 작업 필요)
               currentBalPoint: loggedInfo.balancePoint + removeComma(rsp.custom_data.point),
               paymentNo: rsp.merchant_uid,
               activated: true
