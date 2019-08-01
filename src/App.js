@@ -30,6 +30,7 @@ class App extends Component {
     const loggedInfo = storage.get('loggedInfo'); // 로그인 정보를 로컬스토리지에서 가져옵니다.
     if(!loggedInfo) return; // 로그인 정보가 없다면 여기서 멈춥니다.
     const token = storage.get('token');
+    if(!token) return;
     this.getUser(loggedInfo.email, token)
   }
 

@@ -18,7 +18,7 @@ class LoginContainer extends Component {
     this.state = {
       token: undefined
     }
-    this.RealEstateCommunityLoginAttempt = this.RealEstateCommunityLoginAttempt.bind(this);
+    // this.RealEstateCommunityLoginAttempt = this.RealEstateCommunityLoginAttempt.bind(this);
   }
 
   // 사용자 목록 조회 호출
@@ -34,9 +34,10 @@ class LoginContainer extends Component {
   RealEstateCommunityLoginAttempt = async(email, password) => {
     try {
       await oauth_web.owner.getToken(email, password).then((result) => {
-        console.log(result)
+        // console.log(result)
         // email, password로 발급받은 토큰값으로 api 호출 가능여부 테스트 - 2019-07-30 - yieon - SUCCESS
         this.setState({token: result.accessToken});
+        storage.set('token', result.accessToken)
         // Token 요청 성공 이후 email 사용자 정보 조회
         // this.getUser(email)
         this.getUser(email, result.accessToken)
@@ -59,7 +60,6 @@ class LoginContainer extends Component {
     if (token !== null && token !== undefined && token !== '') {
       if (loggedInfo !== undefined && loggedInfo !== null) {
         storage.set('loggedInfo', loggedInfo)
-        storage.set('token', token)
         return <Redirect to={{
           pathname: "/",
           // state: { session : session }
