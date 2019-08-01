@@ -23,27 +23,24 @@ class PaymentComplete extends Component {
       document.querySelector('#lbTradeConfirmYmdt').innerHTML = "구매일자 : ";
       document.querySelector('#lbTradeConfirmYmdtResult').innerHTML = dateFormat(new Date(purchaseResult.paid_at*1000), 'yyyy년 mm월 dd일 HH:MM:ss');
       document.querySelector('#lbPurchasePoint').innerHTML = "구매포인트 : ";
-      document.querySelector('#lbPurchasePointResult').innerHTML = comma(purchaseResult.custom_data.point)+' P';
+      document.querySelector('#lbPurchasePointResult').innerHTML = purchaseResult.custom_data.point+' P';
 
       const btnGoProduct = document.querySelector('#btnGoProduct');
       btnGoProduct.className = "vaadin-button-large";
       btnGoProduct.addEventListener('click', function() {
         window.location.href = "/payment/product/";
-        window.location.reload();
       })
 
       const btnGoHome = document.querySelector('#btnGoHome');
       btnGoHome.className = "vaadin-button-large";
       btnGoHome.addEventListener('click', function() {
         window.location.href = "/";
-        window.location.reload();
       });
 
       const btnGoPaymentHistory = document.querySelector('#btnGoPaymentHistory');
       btnGoPaymentHistory.className = "vaadin-button-large";
       btnGoPaymentHistory.addEventListener('click', function() {
         window.location.href = "/oms/changepoint/history/email";
-        window.location.reload();
       });
 
     }

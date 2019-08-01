@@ -47,10 +47,22 @@ class App extends Component {
     }
   }
 
+  userInfoUpdate(loggedInfo) {
+    storage.set('compareInfo', loggedInfo);
+    if (storage.get('compareInfo') !== storage.get('loggedInfo')) {
+      storage.remove('loggedInfo');
+      storage.remove('compareInfo');
+      storage.set('loggedInfo', loggedInfo);
+    }
+  }
+
   render() {
-    const { error } = this.props;
+    const { error, loggedInfo } = this.props;
     if (error === true) {
       this.sessionFailedEvent(error)
+    }
+    if (loggedInfo !== null && loggedInfo !== undefined) {
+      this.userInfoUpdate(loggedInfo);
     }
     return (
       <Switch>

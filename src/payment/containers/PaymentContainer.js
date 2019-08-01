@@ -158,8 +158,10 @@ class PaymentContainer extends Component {
             this.setState({successPay: true})
             this.setState({purchaseResult: rsp})
 
-            // 카드사 승인번호 : rsp.apply_num
+            const loggedInfo = storage.get('loggedInfo');
+            const token = storage.get('token');
 
+            // 카드사 승인번호 : rsp.apply_num
             // 포인트 변동내역에 추가 
             let dto = {
               changeDt: new Date(rsp.paid_at*1000),
@@ -167,12 +169,11 @@ class PaymentContainer extends Component {
               changeType: 'PAYMENT_ADD',
               changePoint: removeComma(rsp.custom_data.point),
               // 계정별 현재 잔여포인트에서 차감해야함 (로그인 기능 구현 이후 작업 필요)
-              currentBalPoint: 100000 + removeComma(rsp.custom_data.point),
+              currentBalPoint: loggedInfo.balancePoint + removeComma(rsp.custom_data.point),
               paymentNo: rsp.merchant_uid,
               activated: true
             }
-            const loggedInfo = storage.get('loggedInfo');
-            const token = storage.get('token');
+
             this.addChangePointHistory(loggedInfo.email, dto);
             // 사용자 포인트 추가 이벤트
             this.updateUserByBalancePointIncrease(loggedInfo.email, removeComma(rsp.custom_data.point), token)
