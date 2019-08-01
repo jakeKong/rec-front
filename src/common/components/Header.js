@@ -13,7 +13,10 @@ class Header extends Component {
   }
 
   componentDidMount() {
-    document.querySelector('#name').textContent = '홍길동';
+    if (storage.get('loggedInfo') !== undefined && storage.get('loggedInfo') !== null) {
+      document.querySelector('#name').textContent = storage.get('loggedInfo').name;
+      document.querySelector('#balancePoint').textContent = storage.get('loggedInfo').balancePoint+'P';
+    }
     // document.querySelector('#MyPage').textContent = '마이페이지';
 
     const btnHeadLogout = document.querySelector('#btnHeadLogout');
@@ -47,6 +50,7 @@ class Header extends Component {
             { loggedInfo ? 
             <div className="div-header-sub-menu wrap-btn-client">
               <label id="name" className="label-color-focus" hidden={!loggedInfo}/>
+              <label id="balancePoint" hidden={!loggedInfo}/>
               <label id="nameTo" hidden={!loggedInfo}/>
               <button id="btnHeadLogout" hidden={!loggedInfo}/>
               {/* <label id="MyPage" className="label-focus" hidden={!loggedInfo}/> */}
@@ -55,6 +59,7 @@ class Header extends Component {
             </div> : 
             <div className="div-header-sub-menu wrap-btn-client">
               <label id="name" className="label-color-focus" hidden={!loggedInfo}/>
+              <label id="balancePoint" hidden={!loggedInfo}/>
               <label id="nameTo" hidden={!loggedInfo}/>
               <button id="btnHeadLogout" hidden={!loggedInfo}/>
               {/* <label id="MyPage" className="label-focus" hidden={!loggedInfo}/> */}
