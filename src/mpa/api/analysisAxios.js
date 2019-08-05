@@ -32,5 +32,7 @@ axios({
         'jibunAddr': search.jibunAddr,
         'roadAddr': search.roadAddr,
         'pnu': search.pnu,
+        comment: search.comment,
+        userId: search.userId
     })
 });

@@ -6,6 +6,9 @@ import { LandInfoView } from "../index";
 import { AddressSearch } from '../../common';
 import '@vaadin/vaadin-button';
 import customTheme from '../../styles/agz/landInfo_suggest_thema.css';
+import LandInfoOrderCommentPopup from "../components/LandInfoOrderCommentPopup";
+
+import storage from '../../common/storage';
 
 let enabled = false;
 let searchKey;
@@ -19,11 +22,58 @@ class LandInfoViewContainer extends Component {
       search: {
         jibunAddr: '',
         roadAddr: '',
-        pnu: '1111111111111111111'
+        pnu: '1111111111111111111',
+        comment: '',
+        userId: 'user@test.com',
+        userNm: '사용자',
       },
       selectedSuggestion: null,
+      popupOpened: false,
     };
-    this.makeLandInfo = this.makeLandInfo.bind(this);
+    this.makeLandInfo = this.makeLandInfo.bind(this);    
+    this.popupOpenStateEvent = this.popupOpenStateEvent.bind(this);
+  }
+  
+  popupClose = async (dataClickChild) => {
+    this.setState({popupOpened: dataClickChild});
+  }
+  popupOpenStateEvent() {
+    this.setState({popupOpened: true});
+  }
+  
+  addCallback = async(comment) => {
+    // searchKey = {
+    //   jibunAddr: this.state.jibunAddr,
+    //   roadAddr: this.state.roadAddr,
+    //   pnu: this.state.pnu,
+    //   comment: comment,
+    //   userId: this.state.userId,
+    //   userNm: this.state.userNm
+    // };
+    //const makeLandInfo = this.makeLandInfo;
+    
+    if (storage.get('loggedInfo')) {
+      searchKey = {
+        jibunAddr: this.state.search.jibunAddr,
+        roadAddr: this.state.search.roadAddr,
+        pnu: this.state.search.pnu,
+        comment: comment,
+        userId: storage.get('loggedInfo').email,
+        userNm: storage.get('loggedInfo').name,
+      };
+      console.log(searchKey);
+      this.setState({search: {comment: comment}});
+      this.makeLandInfo(searchKey);
+    }
+    else {
+      //얼럿
+    }
+    //name, email, balancePoint
+    
+  }
+  
+  popupAddAndUpdateCheckOpenEvent(popupOpened) {
+    return <LandInfoOrderCommentPopup addCallback={ this.addCallback } popupOpened={ popupOpened } popupClose={ this.popupClose }/>      
   }
   isDisabled = () => {
     return enabled;
@@ -36,15 +86,12 @@ class LandInfoViewContainer extends Component {
       search: {
         jibunAddr: selectedSuggestion.jibunAddr,
         roadAddr: selectedSuggestion.roadAddr,
-        pnu: selectedSuggestion.bdMgtSn
+        pnu: selectedSuggestion.bdMgtSn,
+        comment: '',
+        userId: 'user@test.com',
+        userNm: '사용자',
       }
     });
-
-    searchKey = {
-      jibunAddr: selectedSuggestion.jibunAddr,
-      roadAddr: selectedSuggestion.roadAddr,
-      pnu: selectedSuggestion.bdMgtSn
-    };
     this.enabled = false;
   }
   onSearchClick = async (selectedSuggestion) => { 
@@ -83,11 +130,12 @@ class LandInfoViewContainer extends Component {
 // 마운트 직후 한번 (rendering 이전, 마운트 이후의 작업)
   componentDidMount() {
     //주문버튼 설정
-    const makeLandInfo = this.makeLandInfo;
+    
+    const popupOpenStateEvent = this.popupOpenStateEvent;
     const btnMakePdf = document.querySelector('#btnMakePdf');
     btnMakePdf.innerHTML = '주문'
     btnMakePdf.addEventListener('click', function() {
-      makeLandInfo(searchKey);
+      popupOpenStateEvent();
     })
     
     //MAIN 화면 혹은 기타 화면으로 부터 넘어온 주소검색 결과가 있는지 확인한여 처리한다.
@@ -98,7 +146,10 @@ class LandInfoViewContainer extends Component {
         search: {
           jibunAddr: selectedSuggestion.jibunAddr,
           roadAddr: selectedSuggestion.roadAddr,
-          pnu: selectedSuggestion.bdMgtSn.substring(0,18)
+          pnu: selectedSuggestion.bdMgtSn.substring(0,19),
+          comment: '',
+          userId: 'user@test.com',
+          userNm: '사용자',
         },
         selectedSuggestion: {selectedSuggestion}
       });
@@ -106,7 +157,10 @@ class LandInfoViewContainer extends Component {
       searchKey = {
         jibunAddr: selectedSuggestion.jibunAddr,
         roadAddr: selectedSuggestion.roadAddr,
-        pnu: selectedSuggestion.bdMgtSn
+        pnu: selectedSuggestion.bdMgtSn.substring(0,19),
+        comment: '',
+        userId: 'user@test.com',
+        userNm: '사용자',
       };
       this.getLandInfo(searchKey);
     }
@@ -115,7 +169,7 @@ class LandInfoViewContainer extends Component {
       this.getLandInfo(this.state.search);
     }
     
-    const { landInfoData } = this.props;
+    // const { landInfoData } = this.props;
     // if(!landInfoData || landInfoData === undefined || landInfoData.isEmpty()) {
     //   this.getLandInfo(search);
     // }
@@ -124,6 +178,7 @@ class LandInfoViewContainer extends Component {
   
   render() {
     const { pending, error, success, landInfoData } = this.props;
+    const { popupOpened } = this.state;
     return (
       <Fragment>
         <div >
@@ -138,6 +193,11 @@ class LandInfoViewContainer extends Component {
           <div style={{ display: 'inline-block', textAlign: 'right', marginLeft: '85%'}}>
             <vaadin-button id="btnMakePdf"/>
           </div>
+          { isSearched === true && popupOpened === true &&
+            <script>
+              {this.popupAddAndUpdateCheckOpenEvent(popupOpened)};
+            </script>
+          }
         </div>
       </Fragment>
     );

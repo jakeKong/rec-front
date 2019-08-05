@@ -6,7 +6,7 @@ import Autosuggest from 'react-autosuggest';
 import config from '../../../config';
 
 //suggestion이 단순 String 이면 상관없으나 DTO(JSON)이면 화면에 표출해줄 특정 필드를 선택해야 된다.
-const getSuggestionValue = suggestion => suggestion.roadAddr;
+const getSuggestionValue = suggestion => suggestion.jibunAddr;
 
 //선택대상 목록을 표출하는 형태 정의 하나의 아이템이 여러줄로 나오는 형태로 변경 가능함
 function renderSuggestion(suggestion) {
@@ -36,19 +36,27 @@ class AddressSearch extends Component {
     };
   }
   onSearchClick = async (selectedSuggestion) => { 
+    const { onSearchClick } = this.props;
+    onSearchClick && onSearchClick();
+    
+    this.onSuggestionsClearRequested();
   }
   onComplete  = async (selectedSuggestion) => {   
   }
   // Teach Autosuggest how to calculate suggestions for any given input value.
   getSuggestions = value => {
-    fetch(url + value)
-          .then(res => res.json())
-          .then((data) => {     
-            if(data.length >= 1 && data[0].roadAddr !== null) {       
-              this.setState({suggestions: data});              
-            }
-            else {this.setState({suggestions: []});}
-          }).catch(console.log);  
+    const inputValue = value.trim().toLowerCase();
+    //2글자 이상 입력해야 검색하기
+    if(inputValue.length >= 2) {
+      fetch(url + value)
+            .then(res => res.json())
+            .then((data) => {     
+              if(data.length >= 1 && data[0].roadAddr !== null) {       
+                this.setState({suggestions: data});              
+              }
+              else {this.setState({suggestions: []});}
+            }).catch(console.log);  
+      }
   };
 
   onChange = (event, { newValue }) => {
@@ -61,10 +69,10 @@ class AddressSearch extends Component {
   componentDidMount() {
       const btnSearch = document.querySelector('#btnSearch');
       btnSearch.innerHTML = '정보조회';
-      const {onSearchClick, btnClassName} = this.props;
+      const {btnClassName} = this.props;
       btnSearch.className = btnClassName;
 
-      btnSearch.addEventListener('click',onSearchClick);
+      btnSearch.addEventListener('click',this.onSearchClick);
   }
   //자동완성 제안 주소 중 하나를 선택한 경우 발생하는 이벤트
   //이벤트 발생 시 현재 선택한 suggestion을 기록
@@ -80,6 +88,7 @@ class AddressSearch extends Component {
   onSuggestionSelected =(event, { suggestion, suggestionValue, suggestionIndex, sectionIndex, method }) => {
     selectedSuggestion = suggestion;    
     const {onComplete} = this.props;
+    this.onComplete(selectedSuggestion);
     onComplete(selectedSuggestion);
   }
   onSuggestionsFetchRequested = ({ value }) => {
@@ -90,9 +99,10 @@ class AddressSearch extends Component {
   //This function will be called every time you need to clear suggestions.
   //When alwaysRenderSuggestions={true}, you don't have to implement this function.
   onSuggestionsClearRequested = () => {//(required unless alwaysRenderSuggestions={true})
-    // this.setState({
-    //   suggestions: []
-    // });
+    this.setState({
+      suggestions: []
+    });
+    selectedSuggestion = null;
   };
 
   //This function is called when the highlighted suggestion changes.
