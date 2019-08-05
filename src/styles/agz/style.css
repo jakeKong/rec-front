@@ -118,7 +118,8 @@ html, body, #root .index {
     box-sizing: border-box;
     height: calc(100% - 80px - 116px);
     min-height: calc(100% - 80px - 116px);
-    overflow: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 .div-inline {
     display: inline-block;
@@ -782,6 +783,9 @@ html, body, #root .index {
 /* PAGE - land info */
 .wrap-land-info {
     display: inline-block;
+}
+.page-description + div > div.searchbox > div {
+    text-align: right !important;
 }
 
 /* TODO 랜드 인포 페이지 클래스 삽입 필요 */
