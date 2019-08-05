@@ -422,7 +422,8 @@ html, body, #root .index {
     transition: 0.3s;
     background: #fff !important;
 }
-.p-datatable tbody tr:nth-of-type(2n-1) {
+.p-datatable tbody tr:nth-of-type(2n-1),
+.section-table-notice .p-datatable tbody tr:nth-of-type(2n-1) {
     /* 홀수번째 배경색 */
     background: #f7f7f7 !important;
 }
@@ -1165,6 +1166,9 @@ html, body, #root .index {
     line-height: 60px;
     border: none !important;
     position: relative;
+}
+.div-register-title > div > label:first-child {
+    padding-left: 0;
 }
 .div-register-title > div > label {
     font-size: 15px !important;
