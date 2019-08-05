@@ -7,92 +7,94 @@ vaadin-grid {
 /* <-- section classname changed apply test - yieon */
 
 
-.section-table-notice {
-  margin: 0;
-}
-.section-table-notice .p-datatable {
-  margin-top: 20px;
-}
-.section-table-notice .p-datatable table {
-  border-collapse: collapse;
-  width: 100%;
-  table-layout: fixed;
-}
+// .section-table-notice {
+//   margin: 0;
+// }
+// .section-table-notice .p-datatable {
+//   margin-top: 20px;
+// }
+// .section-table-notice .p-datatable table {
+//   border-collapse: collapse;
+//   width: 100%;
+//   table-layout: fixed;
+// }
 
-.section-table-notice .p-datatable thead tr {
-  border-bottom: 1px solid #eee !important;
-}
-.section-table-notice .p-datatable thead tr th{
-  height: 28px !important;
-  line-height: 28px !important;
-  margin-bottom: 12px !important;
-  color: #666 !important;
-  font-size: 14px !important;
-  border: none !important;
-  background: transparent !important;
-  font-weight: 500 !important;
-  text-align: left !important;
-}
-.section-table-notice .p-datatable tbody tr {
-  border-bottom: 1px solid #eee !important;
-  cursor: pointer !important;
-  transition: 0.3s;
-  background: #fff !important;
-}
+// .section-table-notice .p-datatable thead tr {
+//   border-bottom: 1px solid #eee !important;
+// }
+// .section-table-notice .p-datatable thead tr th{
+//   height: 28px !important;
+//   line-height: 28px !important;
+//   margin-bottom: 12px !important;
+//   color: #666 !important;
+//   font-size: 14px !important;
+//   border: none !important;
+//   background: transparent !important;
+//   font-weight: 500 !important;
+//   text-align: left !important;
+// }
+// .section-table-notice .p-datatable tbody tr {
+//   border-bottom: 1px solid #eee !important;
+//   cursor: pointer !important;
+//   transition: 0.3s;
+//   background: #fff !important;
+// }
 // section classname changed apply test - yieon
-.section-table-notice .p-datatable tbody tr:nth-of-type(2n-1) {
-  /* 홀수번째 배경색 */
-  background: #a1deee !important;
-}
+// deleted by cy - 20190805
+// .section-table-notice .p-datatable tbody tr:nth-of-type(2n-1) {
+//   /* 홀수번째 배경색 */
+//   // background: #a1deee !important;
+// }
 // section classname changed apply test - yieon
-.section-table-notice .p-datatable tbody tr:hover {
-  /* 마우스 오버 효과 */
-  background: #e6eea1 !important;
-}
-.section-table-notice .p-datatable tbody tr:hover td {
-  color: #444 !important;
-}
-.section-table-notice .p-datatable tbody tr:active {
-  /* 마우스 온클릭 효과 */
-  background: #fff !important;
-}
-.section-table-notice .p-datatable tbody tr.p-highlight {
-  /* 선택기능으로 선택된 row */
-  background: #bbeea1 !important;
-}
-.section-table-notice .p-datatable tbody tr.p-highlight td {
-  color: #444 !important;
-}
-.section-table-notice .p-datatable tbody tr td {
-  height: 32px !important;
-  line-height: 32px !important;
-  border-bottom: 1px solid #e1e1e1 !important;
-  font-size: 14px !important;
-  border: none !important;
-  background: transparent !important;
-  color: #666 !important;
-  transition: 0.3s;
-  font-weight: 300 ;
-}
+// deleted by cy - 20190805
+// .section-table-notice .p-datatable tbody tr:hover {
+//   /* 마우스 오버 효과 */
+//   // background: #e6eea1 !important;
+// }
+// .section-table-notice .p-datatable tbody tr:hover td {
+//   color: #444 !important;
+// }
+// .section-table-notice .p-datatable tbody tr:active {
+//   /* 마우스 온클릭 효과 */
+//   background: #fff !important;
+// }
+// .section-table-notice .p-datatable tbody tr.p-highlight {
+//   /* 선택기능으로 선택된 row */
+//   background: #bbeea1 !important;
+// }
+// .section-table-notice .p-datatable tbody tr.p-highlight td {
+//   color: #444 !important;
+// }
+// .section-table-notice .p-datatable tbody tr td {
+//   height: 32px !important;
+//   line-height: 32px !important;
+//   border-bottom: 1px solid #e1e1e1 !important;
+//   font-size: 14px !important;
+//   border: none !important;
+//   background: transparent !important;
+//   color: #666 !important;
+//   transition: 0.3s;
+//   font-weight: 300 ;
+// }
 /* table selector */
-.section-table-notice .p-datatable .p-checkbox-box.p-highlight {
-  border-color: #4fd81b !important;
-  background-color: #fff !important;
-  color: #4fd81b !important;
-}
+// .section-table-notice .p-datatable .p-checkbox-box.p-highlight {
+//   border-color: #4fd81b !important;
+//   background-color: #fff !important;
+//   color: #4fd81b !important;
+// }
 
-/* table pagination */
-.section-table-notice .p-datatable .p-paginator {
-  background-color: transparent !important;
-  border: none !important;
-  margin-top: 24px;
-}
-.section-table-notice .p-datatable .p-paginator .p-paginator-page.p-highlight {
-  background-color: #4fd81b !important;
-}
-.section-table-notice .p-datatable .p-dropdown-label.p-inputtext {
-  height: 32px;
-  line-height: 32px;
-  padding-top: 0;
-  padding-bottom: 0;
-}
+// /* table pagination */
+// .section-table-notice .p-datatable .p-paginator {
+//   background-color: transparent !important;
+//   border: none !important;
+//   margin-top: 24px;
+// }
+// .section-table-notice .p-datatable .p-paginator .p-paginator-page.p-highlight {
+//   background-color: #4fd81b !important;
+// }
+// .section-table-notice .p-datatable .p-dropdown-label.p-inputtext {
+//   height: 32px;
+//   line-height: 32px;
+//   padding-top: 0;
+//   padding-bottom: 0;
+// }
