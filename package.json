@@ -2,6 +2,7 @@
   "name": "front",
   "version": "0.1.0",
   "private": true,
+  "homepage": "http://srd.iptime.org",
   "dependencies": {
     "@babel/polyfill": "^7.4.4",
     "@polymer/iron-icons": "^3.0.1",

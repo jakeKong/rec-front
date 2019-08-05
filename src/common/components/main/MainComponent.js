@@ -4,6 +4,7 @@ import CountUp from 'react-countup';
 import { AddressSearch } from '../../../common';
 import customTheme from '../../../styles/agz/main_suggest_thema.css';
 
+import config from '../../../config';
 const duration=5;
 class MainComponent extends Component {
   constructor(props) {
@@ -37,7 +38,9 @@ class MainComponent extends Component {
   }
 
   getInfoCount() {
-    fetch('http://localhost:8004/web/rec/api/mpa/analysis/summry/count')
+    
+    const url = `${config.mainSummryService}`;
+    fetch(url)
           .then(res =>res.text())
           .then((data) => {     
             console.log(data);

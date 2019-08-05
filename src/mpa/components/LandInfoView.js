@@ -78,70 +78,72 @@ class LandInfoView extends Component {
           window.alert('해당 주소에 대한 분석 대상지가 없습니다.');
         }
       }
-      else if(tradList.size ==1){
-        document.querySelector('#tdAddrA').innerHTML = tradList.get(0).get("지번주소");
-        if(tradList.get(0).get("거래시점").length ===6) {
-          document.querySelector('#tdTradeDateA').innerHTML = tradList.get(0).get("거래시점").substring(0,4) + '-' +tradList.get(0).get("거래시점").substring(4,6);
-        }
-        else {
-          document.querySelector('#tdTradeDateA').innerHTML = tradList.get(0).get("거래시점");
-        }
+      else {
+        if(tradList.size >=1){
+          document.querySelector('#tdAddrA').innerHTML = tradList.get(0).get("지번주소");
+          if(tradList.get(0).get("거래시점").length ===6) {
+            document.querySelector('#tdTradeDateA').innerHTML = tradList.get(0).get("거래시점").substring(0,4) + '-' +tradList.get(0).get("거래시점").substring(4,6);
+          }
+          else {
+            document.querySelector('#tdTradeDateA').innerHTML = tradList.get(0).get("거래시점");
+          }
 
-        document.querySelector('#tdPriceA').innerHTML = curruncyFormat(tradList.get(0).get("거래가격"));
-      }
-      else if(tradList.size ==2){
+          document.querySelector('#tdPriceA').innerHTML = curruncyFormat(tradList.get(0).get("거래가격"));
+        }
+        if(tradList.size >=2){
 
-        document.querySelector('#tdAddrB').innerHTML = tradList.get(1).get("지번주소");
-        if(tradList.get(1).get("거래시점").length ===6) {
-          document.querySelector('#tdTradeDateB').innerHTML = tradList.get(1).get("거래시점").substring(0,4) + '-' +tradList.get(1).get("거래시점").substring(4,6);
+          document.querySelector('#tdAddrB').innerHTML = tradList.get(1).get("지번주소");
+          if(tradList.get(1).get("거래시점").length ===6) {
+            document.querySelector('#tdTradeDateB').innerHTML = tradList.get(1).get("거래시점").substring(0,4) + '-' +tradList.get(1).get("거래시점").substring(4,6);
+          }
+          else {
+            document.querySelector('#tdTradeDateB').innerHTML = tradList.get(1).get("거래시점");
+          }
+          document.querySelector('#tdPriceB').innerHTML = curruncyFormat(tradList.get(1).get("거래가격"));
         }
-        else {
-          document.querySelector('#tdTradeDateB').innerHTML = tradList.get(1).get("거래시점");
-        }
-        document.querySelector('#tdPriceB').innerHTML = curruncyFormat(tradList.get(1).get("거래가격"));
-      }
-      else if(tradList.size ==3){
+        if(tradList.size >=3){
 
-        document.querySelector('#tdAddrC').innerHTML = tradList.get(2).get("지번주소");
-        if(tradList.get(2).get("거래시점").length ===6) {
-          document.querySelector('#tdTradeDateC').innerHTML = tradList.get(2).get("거래시점").substring(0,4) + '-' +tradList.get(2).get("거래시점").substring(4,6);
+          document.querySelector('#tdAddrC').innerHTML = tradList.get(2).get("지번주소");
+          if(tradList.get(2).get("거래시점").length ===6) {
+            document.querySelector('#tdTradeDateC').innerHTML = tradList.get(2).get("거래시점").substring(0,4) + '-' +tradList.get(2).get("거래시점").substring(4,6);
+          }
+          else {
+            document.querySelector('#tdTradeDateC').innerHTML = tradList.get(2).get("거래시점");
+          }
+          document.querySelector('#tdPriceC').innerHTML = curruncyFormat(tradList.get(2).get("거래가격"));
         }
-        else {
-          document.querySelector('#tdTradeDateC').innerHTML = tradList.get(2).get("거래시점");
-        }
-        document.querySelector('#tdPriceC').innerHTML = curruncyFormat(tradList.get(2).get("거래가격"));
-      }
-      else if(tradList.size ==4){
+        if(tradList.size >=4){
 
-        document.querySelector('#tdAddrD').innerHTML = tradList.get(3).get("지번주소");
-        if(tradList.get(3).get("거래시점").length ===6) {
-          document.querySelector('#tdTradeDateD').innerHTML = tradList.get(3).get("거래시점").substring(0,4) + '-' +tradList.get(3).get("거래시점").substring(4,6);
+          document.querySelector('#tdAddrD').innerHTML = tradList.get(3).get("지번주소");
+          if(tradList.get(3).get("거래시점").length ===6) {
+            document.querySelector('#tdTradeDateD').innerHTML = tradList.get(3).get("거래시점").substring(0,4) + '-' +tradList.get(3).get("거래시점").substring(4,6);
+          }
+          else {
+            document.querySelector('#tdTradeDateD').innerHTML = tradList.get(3).get("거래시점");
+          }
+          document.querySelector('#tdPriceD').innerHTML = curruncyFormat(tradList.get(3).get("거래가격"));
         }
-        else {
-          document.querySelector('#tdTradeDateD').innerHTML = tradList.get(3).get("거래시점");
-        }
-        document.querySelector('#tdPriceD').innerHTML = curruncyFormat(tradList.get(3).get("거래가격"));
-      }
-      else if(tradList.size == 5){
+        if(tradList.size >= 5){
 
-        document.querySelector('#tdAddrE').innerHTML = tradList.get(4).get("지번주소");
-        if(tradList.get(4).get("거래시점").length ===6) {
-          document.querySelector('#tdTradeDateE').innerHTML = tradList.get(4).get("거래시점").substring(0,4) + '-' +tradList.get(4).get("거래시점").substring(4,6);
+          document.querySelector('#tdAddrE').innerHTML = tradList.get(4).get("지번주소");
+          if(tradList.get(4).get("거래시점").length ===6) {
+            document.querySelector('#tdTradeDateE').innerHTML = tradList.get(4).get("거래시점").substring(0,4) + '-' +tradList.get(4).get("거래시점").substring(4,6);
+          }
+          else {
+            document.querySelector('#tdTradeDateE').innerHTML = tradList.get(4).get("거래시점");
+          }
+          document.querySelector('#tdPriceE').innerHTML = curruncyFormat(tradList.get(4).get("거래가격"));
         }
-        else {
-          document.querySelector('#tdTradeDateE').innerHTML = tradList.get(4).get("거래시점");
+        if(tradList.size > 5){
+          document.querySelector('#tdAddrF').innerHTML = tradList.get(5).get("지번주소");
+          if(tradList.get(5).get("거래시점").length ===6) {
+            document.querySelector('#tdTradeDateF').innerHTML = tradList.get(5).get("거래시점").substring(0,4) + '-' +tradList.get(5).get("거래시점").substring(4,6);
+          }
+          else {
+            document.querySelector('#tdTradeDateF').innerHTML = tradList.get(5).get("거래시점");
+          }
+          document.querySelector('#tdPriceF').innerHTML = curruncyFormat(tradList.get(5).get("거래가격"));
         }
-        document.querySelector('#tdPriceE').innerHTML = curruncyFormat(tradList.get(4).get("거래가격"));
-      }
-      else if(tradList.size > 5){
-        document.querySelector('#tdAddrF').innerHTML = tradList.get(5).get("지번주소");
-        if(tradList.get(5).get("거래시점").length ===6) {
-          document.querySelector('#tdTradeDateF').innerHTML = tradList.get(5).get("거래시점").substring(0,4) + '-' +tradList.get(5).get("거래시점").substring(4,6);
-        }
-        else {
-          document.querySelector('#tdTradeDateF').innerHTML = tradList.get(5).get("거래시점");
-        }
-        document.querySelector('#tdPriceF').innerHTML = curruncyFormat(tradList.get(5).get("거래가격"));
       }
     }
     document.querySelector('#imgMap').src = landInfoData.get("analysisTradeInfo").get("mapUrl");//도로접면
