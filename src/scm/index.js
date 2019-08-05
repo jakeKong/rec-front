@@ -1,5 +1,5 @@
 // SCM - api
-export { getUserList, getUser, addUser, updateUser, deleteUser, deleteUsers, updateUserByBalancePoint, updateUserByBalancePointIncrease, updateUserByBalancePointDifference } from './api/userAxios';
+export { getUserList, getUser, getUserByNameAndTell, addUser, updateUser, updateUserPwByEmailAndPassword, deleteUser, deleteUsers, updateUserByBalancePoint, updateUserByBalancePointIncrease, updateUserByBalancePointDifference } from './api/userAxios';
 
 // SCM - component
 export { default as UserSearch } from './components/user/UserSearch';

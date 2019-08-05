@@ -11,6 +11,12 @@ export { default as MainGrid } from './components/main/MainGrid';
 export { default as MainSearch } from './components/main/MainSearch';
 export { default as MainComponent } from './components/main/MainComponent';
 export { default as Login } from './components/login/Login';
+export { default as IdFindByAuth } from './components/find/IdFindByAuth';
+export { default as IdFindByResult } from './components/find/IdFindByResult';
+export { default as PwFindById } from './components/find/PwFindById';
+export { default as PwFindByAuth } from './components/find/PwFindByAuth';
+export { default as PwFindByReset } from './components/find/PwFindByReset';
+export { default as PwFindByResult } from './components/find/PwFindByResult';
 export { default as RegisterAgree } from './components/register/RegisterAgree';
 export { default as RegisterAuth } from './components/register/RegisterAuth';
 export { default as RegisterInput } from './components/register/RegisterInput';
@@ -22,12 +28,14 @@ export { default as AddressSearch } from './components/address/AddressSearch';
 // COMMON - container
 export { default as MainContainer } from './containers/MainContainer';
 export { default as LoginContainer } from './containers/LoginContainer';
+export { default as IdPwFindContainer } from './containers/IdPwFindContainer';
 export { default as RegisterContainer } from './containers/RegisterContainer';
 
 // COMMON - page
 export { default as MainPage } from './pages/MainPage';
 export { default as NotFoundPage } from './pages/NotFoundPage';
 export { default as LoginPage } from './pages/LoginPage';
+export { default as IdPwFindPage } from './pages/IdPwFindPage';
 export { default as RegisterPage } from './pages/RegisterPage';
 
 

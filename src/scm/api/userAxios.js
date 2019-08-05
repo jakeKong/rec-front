@@ -28,6 +28,17 @@ export const getUser = (email, token) => axios({
   }
 });
 
+// 특정 조건(이름, 전화번호) 사용자 정보 조회
+export const getUserByNameAndTell = (name, phone, token) => axios({
+  method: 'GET',
+  url: `${config.systemService}/user/search/${name}/${phone}`,
+  headers: {
+    'Content-Type': 'application/json; charset=UTF-8',
+    'Accept': 'application/json',
+    'Authorization': `Bearer ${token}`
+  }
+});
+
 // 사용자 등록
 export const addUser = (userDto, token) => axios({
   method: 'POST',
@@ -67,6 +78,17 @@ export const updateUser = (userDto, token) => axios({
     'balancePoint': userDto.balancePoint,
     'assignedRoles': userDto.assignedRoles,
   })
+});
+
+// 사용자 비밀번호 변경
+export const updateUserPwByEmailAndPassword = (email, afterpw, beforepw, token) => axios({
+  method: 'PUT',
+  url: `${config.systemService}/user/update/pw/${email}/${afterpw}/${beforepw}`,
+  headers: {
+    'Content-Type': 'application/json; charset=UTF-8',
+    'Accept': 'application/json',
+    'Authorization': `Bearer ${token}`
+  }
 });
 
 // 사용자 삭제
