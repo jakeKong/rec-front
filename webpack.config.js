@@ -14,6 +14,9 @@ module.exports = {
         filename: '[name].[hash].js',
         publicPath: '/',
     },
+    resolveLoader: {
+        modules: [path.join(__dirname, 'node_modules')]
+    },
     module: {
         rules: [
             {
@@ -72,3 +75,4 @@ module.exports = {
       extensions: ['.js', '.json', '.jsx', '.css', '.scss'],
     },
 }
+module.exports = config;
