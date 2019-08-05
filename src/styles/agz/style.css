@@ -116,8 +116,8 @@ html, body, #root .index {
 }
 .mc /*Main Contents*/{
     box-sizing: border-box;
-    height: calc(100% - 80px - 34px);
-    min-height: calc(100% - 80px - 34px);
+    height: calc(100% - 80px - 116px);
+    min-height: calc(100% - 80px - 116px);
     overflow: auto;
 }
 .div-inline {
@@ -149,7 +149,7 @@ html, body, #root .index {
 /* Page Common 페이지 공통 */
 .page-description {
     font-size: 34px;
-    font-weight: 300;
+    font-weight: 200;
     padding-top: 24px;
     padding-bottom: 8px;
     color: rgba(0,0,0,0.8);
@@ -175,8 +175,14 @@ html, body, #root .index {
     padding: 0;
 }
 .header .logo {
-    height: 80px;
+    margin-top: 6px;
+    height: 69px;
+    width: 120px;
     cursor: pointer;
+    background: url('./image/agz_logo_header.png');
+    box-sizing: border-box;
+    padding-left: 120px;
+    background-size: cover;
 }
     /* 헤더 사용자 버튼 */
 .header .wrap-btn-client {
@@ -199,6 +205,12 @@ html, body, #root .index {
 }
 .header .wrap-btn-client button:hover {
     background: #f0ee35 !important;
+}
+.header .div-header-sub-menu #name{
+    color: #fff;
+    font-size: 13px;
+    margin-right: 12px;
+    font-weight: 300;
 }
 .header .wrap-nav {
     position: absolute;
@@ -288,6 +300,35 @@ html, body, #root .index {
     
     text-align: center;
     background: #fff;
+}
+.footer_new .footer-layer1 {
+    padding-top: 0 !important;
+    height: 22px !important;
+}
+.footer_new .footer-layer2 {
+    height: 65px !important;
+    margin-bottom: 12px !important;
+    margin-top: 14px !important;
+}
+.footer_new .footer-layer2 .footer-content > a > img{
+    display: none !important;
+}
+.footer_new .footer-layer2 .footer-content > a {
+    background: url('./image/agz_logo_footer.png');
+    background-position: 50%;
+    background-size: cover;
+    display: block;
+    float: left;
+    width: 113px;
+    height: 65px;
+    margin-right: 24px;
+}
+.footer_new .footer-layer2 .footer-content address {
+    line-height: 16px;
+    color: rgba(0,0,0,0.7);
+    font-weight: 300;
+    font-size: 11px !important;
+    letter-spacing: 1px;
 }
 /* footer END */
 
@@ -427,7 +468,8 @@ html, body, #root .index {
     /* 홀수번째 배경색 */
     background: #f7f7f7 !important;
 }
-.p-datatable tbody tr:hover {
+.p-datatable tbody tr:hover,
+.section-table-notice .p-datatable tbody tr:hover {
     /* 마우스 오버 효과 */
     background: #bbeea1 !important;
 }
@@ -605,18 +647,25 @@ html, body, #root .index {
 
     /* searchbox END */
     /*Pagination*/
+    .p-datatable .p-dropdown-label.p-inputtext {
+    height: 32px;
+    line-height: 32px;
+    padding-top: 0;
+    padding-bottom: 0;
+}
 .pagination {
     text-align: center;
-    margin-top: 24px;
-    
+    margin-top: 16px;
 }
 .pagination .btn{
-    display: inline-block;
-    width: 28px;
+    display: inline-block !important;
+    width: 28px !important;
     height: 28px;
     line-height: 28px;
     font-size: 12px;
     cursor: pointer;
+    padding: 0;
+    min-width: 28px;
 }
 .pagination .btn.prev,
 .pagination .btn.next {
@@ -630,10 +679,10 @@ html, body, #root .index {
 .pagination .btn.number {
     background: #e4fff1;
     border-radius: 2px;
-    color: #80ca5c;
+    color: #4fd81b;
 }
 .pagination .btn.number[selected="true"] {
-    background: #00da59;
+    background-color: #4fd81b !important;
     color: #fff;
 }
 .pagination .btn.number:hover {
@@ -686,7 +735,7 @@ html, body, #root .index {
 }
 .tilenews .masonry {
     height: 100%;
-    padding: 0 14px;
+    padding: 0 36px;
     padding-top: 24px;
     padding-bottom: 0px;
 }
@@ -711,8 +760,8 @@ html, body, #root .index {
 }
 .tilenews .card .image {
     width: 100%;
-    max-height: 180px;
-    min-height: 160px;
+    max-height: 160px;
+    min-height: 140px;
 }
 .tilenews .card .title {
     text-align: right;
@@ -826,7 +875,7 @@ html, body, #root .index {
 }
 
 .tbl-info-01 {
-    border-top: 2px solid #aaa;
+    border-top: 1px solid #aaa;
     height: 166px;
 }
 .tbl-info-01 th,
@@ -844,7 +893,7 @@ html, body, #root .index {
 
 .tbl-info-02 {
     margin-top: 6px;
-    border-top: 2px solid #aaa;
+    border-top: 1px solid #aaa;
     height: 60px;
 }
 .tbl-info-02 th,
@@ -861,7 +910,7 @@ html, body, #root .index {
 
 .tbl-info-03 {
     margin-top: 6px;
-    border-top: 2px solid #aaa;
+    border-top: 1px solid #aaa;
     max-height: 280px
 }
 .tbl-info-03 tr {
@@ -892,7 +941,7 @@ html, body, #root .index {
 .tbl-info-04 {
     margin-top: 6px;
     width: 100%;
-    border-top: 2px solid #aaa;
+    border-top: 1px solid #aaa;
 }
 .tbl-info-04 th,
 .tbl-info-04 td {
@@ -928,6 +977,7 @@ html, body, #root .index {
     left: 50%;
     margin: 0;
     margin-left: calc( 512px - 160px ) !important;
+    margin-top: -12px;
     border-radius: 0;
     width: 160px;
     color: #fff;
@@ -949,14 +999,30 @@ html, body, #root .index {
     border-top: 2px dashed #eee;
     padding-top: 12px;
 }
+.section-datatable-payment .p-datatable-thead th:nth-of-type(1),
+.section-datatable-payment .p-datatable-tbody td:nth-of-type(1){
+    width: 5% !important;
+}
+.section-datatable-payment .p-datatable-thead th:nth-of-type(2),
+.section-datatable-payment .p-datatable-tbody td:nth-of-type(2){
+    width: 25% !important;
+}
+.section-datatable-payment .p-datatable-thead th:nth-of-type(3),
+.section-datatable-payment .p-datatable-tbody td:nth-of-type(3){
+    width: 30% !important;
+}
 .receipt {
+    display: inline-block;
     width: 100%;
-    text-align: right;
+    text-align: left;
     padding: 24px 0 16px 0;;
+}
+.receipt .div-inline{
+    margin: 0;
 }
 .receipt .label {
     font-size: 16px;
-    padding-left:20px
+    padding-right: 4px;
 }
 .receipt .amount {
     font-size: 24px;
@@ -967,32 +1033,42 @@ html, body, #root .index {
 .receipt .amount.point {
     color: #0b78d8;
 }
+.receipt .label-currency {
+    padding-right: 20px;
+    padding-left: 6px;
+}
 .desc-purchase {
     display: block;
     width: 100%;
-    text-align: right;
+    text-align: left;
     font-size: 13px;
     color: #666;
 }
-.wrap-btn-naverpay {
-    padding-top: 30px;
+.wrap-btn-iamportpay {
+    margin-top: -56px;
+    text-align: right;
 }
-.wrap-btn-naverpay button {
+.wrap-btn-iamportpay button {
     width: 200px;
     height: 60px;
     background: #fff;
     border: 1px solid #ccc;
-    text-align: right;
+    text-align: center;
     padding: 0 30px 0 30px;
-    background: url(image/naver-simbol.png);
+    /* background: url(image/naver-simbol.png);
     background-size: 30px;
     background-repeat: no-repeat;
-    background-position: 20px;
+    background-position: 20px; */
     font-size: 20px;
     transition: 0.3s;
 }
-.wrap-btn-naverpay button:hover {
+.wrap-btn-iamportpay button:hover {
     border: 1px solid #222;
+}
+.wrap-btn-iamportpay button:active {
+    border: 1px solid #222;
+    background: #222;
+    color: #fff;
 }
 /* purchase END */
 
@@ -1003,8 +1079,70 @@ html, body, #root .index {
     padding: 2px 8px;
     font-size: 12px;
 }
-/* log-purchase END */
+.section-datatable-orderhistory .p-datatable-thead th:nth-of-type(1),
+.section-datatable-orderhistory .p-datatable-tbody td:nth-of-type(1) {
+    width: 54px;
+}
+.section-datatable-orderhistory .p-datatable-thead th:nth-of-type(2),
+.section-datatable-orderhistory .p-datatable-tbody td:nth-of-type(2) {
+    width: 180px;
+}
+.section-datatable-orderhistory .p-datatable-thead th:nth-of-type(3),
+.section-datatable-orderhistory .p-datatable-tbody td:nth-of-type(3) {
+    width: 200px;
+}
+.section-datatable-orderhistory .p-datatable-thead th:nth-of-type(4),
+.section-datatable-orderhistory .p-datatable-tbody td:nth-of-type(4) {
+    width: 180px;
+}
+.section-datatable-orderhistory .p-datatable-thead th:nth-of-type(5),
+.section-datatable-orderhistory .p-datatable-tbody td:nth-of-type(5) {
+    width: 92px;
+}
+.section-datatable-orderhistory .p-datatable-thead th:nth-of-type(6),
+.section-datatable-orderhistory .p-datatable-tbody td:nth-of-type(6) {
+    width: 92px;
+}
+.section-datatable-orderhistory .p-datatable-thead th:nth-of-type(7),
+.section-datatable-orderhistory .p-datatable-tbody td:nth-of-type(7) {
+    width: 200px;
+}
+.section-datatable-orderhistory .p-datatable-thead th:nth-of-type(8),
+.section-datatable-orderhistory .p-datatable-tbody td:nth-of-type(8) {
+    width: 100px;
+}
+.section-datatable-orderhistory .p-datatable-thead th:nth-of-type(9),
+.section-datatable-orderhistory .p-datatable-tbody td:nth-of-type(9) {
+    width: 80px;
+}
+.section-datatable-orderhistory .p-datatable-thead th:nth-of-type(10),
+.section-datatable-orderhistory .p-datatable-tbody td:nth-of-type(10) {
+    width: 80px;
+}
+.section-datatable-orderhistory .p-datatable-thead th:nth-of-type(11),
+.section-datatable-orderhistory .p-datatable-tbody td:nth-of-type(11) {
+    width: 100px;
+}
 
+/* log-purchase END */
+/* log-point 포인트 변동 내역 조회 테이블*/
+.section-datatable-changehistory .p-datatable-thead th:nth-of-type(1),
+.section-datatable-changehistory .p-datatable-tbody td:nth-of-type(1) {
+    width: 200px;
+}
+.section-datatable-changehistory .p-datatable-thead th:nth-of-type(2),
+.section-datatable-changehistory .p-datatable-tbody td:nth-of-type(2) {
+    width: 200px;
+}
+.section-datatable-changehistory .p-datatable-thead th:nth-of-type(3),
+.section-datatable-changehistory .p-datatable-tbody td:nth-of-type(3) {
+    width: 200px;
+}
+.section-datatable-changehistory .p-datatable-thead th:nth-of-type(4),
+.section-datatable-changehistory .p-datatable-tbody td:nth-of-type(4) {
+    width: 120px;
+}
+/* log-point END */
 /* PAGE-notice */
 
 .div-board-title {
@@ -1030,7 +1168,7 @@ html, body, #root .index {
 }
 #toastEditor {
     border-bottom: 2px solid #ddd;
-    height: 490px;
+    height: 400px;
     overflow: auto;
     padding-top: 24px;
     padding-bottom: 24px;
