@@ -292,7 +292,7 @@ class PaymentContainer extends Component {
       "taxScopeAmount": (removeComma(productDto.pointCash)*0.9),
       "taxExScopeAmount": (removeComma(productDto.pointCash)*0.1),
       "productCount": 1,
-      "returnUrl": "http://localhost:3000/#/payment/product",
+      "returnUrl": "http://algozip.co.kr:3000/#/payment/product",
       // "returnUrl": "https://localhost:3000/#/payment/product",
       "productItems": [{
         "categoryType": "ETC",

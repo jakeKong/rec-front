@@ -18,8 +18,8 @@ import '@vaadin/vaadin-text-field';
 /*
 const addImage = (blob) => axios({
   method: 'POST',
-  // url: `http://localhost:3001/image/`,
-  url: `http://localhost:8003/bms/image/`,
+  // url: `http://algozip.co.kr:3001/image/`,
+  url: `http://algozip.co.kr:8003/bms/image/`,
   headers: {
     'Content-Type': 'multipart/form-data; boundary=${data._boundary',
     // 'Content-Type': undefined
@@ -126,7 +126,7 @@ class NoticeRegister extends Component {
       //     addImage(formData);
       //     // 60초 대기
       //     window.setTimeout(60000);
-      //     callback(`http://localhost:3001/image/${formData.get('blob').name}`)
+      //     callback(`http://algozip.co.kr:3001/image/${formData.get('blob').name}`)
       //     return false;
 
       //     /* base64 변환
