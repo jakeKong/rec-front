@@ -4,7 +4,7 @@ const HtmlWebpackTagsPlugin = require('html-webpack-tags-plugin');
 
 module.exports = {
     devtool : 'eval-source-map',
-    mode: 'development'    ,//production
+    mode: 'production'    ,//production
     entry: {
         vendor: ['@babel/polyfill', 'eventsource-polyfill', 'react', 'react-dom'],
         app: ['@babel/polyfill', 'eventsource-polyfill', './src/index.js'],
