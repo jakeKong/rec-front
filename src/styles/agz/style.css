@@ -1340,7 +1340,7 @@ html, body, #root .index {
 /* PAGE-login END */
 /* PAGE-register */
 .div-register {
-    padding: 24px 0 0 0 !important;
+    padding: 24px 0 24px 0 !important;
     margin: 0 !important;
 }
 .div-register-title {
@@ -1471,6 +1471,53 @@ html, body, #root .index {
     padding-left: 50px;
 }
 
+/*회원정보 입력*/
+.div-register .div-register-input {
+    padding-top: 40px !important;
+    padding-left: 220px !important;
+    padding-right: 220px !important;
+}
+.div-register .div-register-input > div{
+    padding: 0 !important;
+    padding: 8px 0 !important;
+}
+.div-register .div-register-input > div label {
+    color: #666;
+    font-size: 13px;
+}
+.div-register .div-register-input #btnAddressSearch {
+    border: none;
+    color: #fff;
+    height: 36px;
+    background: #4fd81b;
+    border-radius: 2px;
+    padding: 0 18px;
+}
+.div-register .div-register-input #btnAddressSearch:hover {
+    background: #47c10a;
+}
+.div-register .div-register-popup-bottom {
+    width: 100%;
+}
+.div-register .div-register-popup-bottom vaadin-button {
+    border-radius: 0 ;
+    height: 50px;
+    font-weight: 400;
+    border: none;
+    cursor: pointer;
+}
+.div-register .div-register-popup-bottom vaadin-button#btnOk {
+    background: #4fd81b;
+    color: #fff;
+}
+
+.div-register .div-register-popup-bottom vaadin-button#btnOk:hover {
+    background: #47c10a;
+}
+.div-register .div-register-popup-bottom vaadin-button#btnCancle {
+    color: #666;
+}
+/*가입완료*/
 .div-register .div-register-complete {
     margin-top: 50px;
 }
