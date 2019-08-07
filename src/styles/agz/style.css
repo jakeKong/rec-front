@@ -291,7 +291,7 @@ html, body, #root .index {
 /* header END */
 
 /* footer */
-.footer{
+/* .footer{
     position: absolute;
     left: 0;
     bottom: 0;
@@ -301,8 +301,8 @@ html, body, #root .index {
     
     text-align: center;
     background: #fff;
-}
-.footer_new .footer-layer1 {
+} */
+/* .footer_new .footer-layer1 {
     padding-top: 0 !important;
     height: 22px !important;
 }
@@ -328,6 +328,57 @@ html, body, #root .index {
     line-height: 16px;
     color: rgba(0,0,0,0.7);
     font-weight: 300;
+    font-size: 11px !important;
+    letter-spacing: 1px;
+} */
+.footer_new{
+    position: absolute;
+
+    left: 0;
+    bottom: 0;
+    
+    width: 100%;
+    
+    text-align: center;
+    background: #333 !important;
+    border-top: none !important;
+    box-sizing: border-box !important;
+    max-height: 116px;
+}
+.footer_new .footer-layer1 {
+    padding-top: 6px !important;
+    height: 22px !important;
+    border-bottom: none !important;
+}
+.footer_new .footer-layer1 a {
+    color: #fff !important;
+}
+.footer_new .footer-layer2 {
+    display: inline-block;
+    box-sizing: border-box;
+    padding-bottom: 0px !important;
+    padding-top: 14px !important;
+    margin: 0 auto !important;
+    text-align: left;
+    max-height: 94px;
+}
+.footer_new .footer-layer2 .footer-content > a > img{
+    display: none !important;
+}
+.footer_new .footer-layer2 .footer-content > a {
+    background: url('./image/agz_logo_footer.png');
+    background-position: 50%;
+    background-size: cover;
+    display: block;
+    float: left;
+    width: 113px;
+    height: 65px;
+    margin-right: 24px;
+}
+.footer_new .footer-layer2 .footer-content address {
+    line-height: 16px;
+    color: #fff;
+    font-weight: 200;
     font-size: 11px !important;
     letter-spacing: 1px;
 }
