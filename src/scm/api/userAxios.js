@@ -39,7 +39,7 @@ export const getUserByNameAndTell = (name, phone, token) => axios({
   }
 });
 
-// 사용자 등록
+// 사용자 등록 (관리)
 export const addUser = (userDto, token) => axios({
   method: 'POST',
   url: `${config.systemService}/user/add`,
@@ -51,6 +51,28 @@ export const addUser = (userDto, token) => axios({
   data: JSON.stringify({
     'email': userDto.email,
     'name': userDto.name,
+    'tellNo': userDto.tellNo,
+    'address': userDto.address,
+    'addressNo': userDto.addressNo,
+    'birthDt': userDto.birthDt,
+    'createdUser': userDto.createdUser,
+    'assignedRoles': userDto.assignedRoles,
+  })
+});
+
+// 사용자 등록(고객)
+export const createUser = (userDto, token) => axios({
+  method: 'POST',
+  url: `${config.systemService}/user/create`,
+  headers: {
+    'Content-Type': 'application/json; charset=UTF-8',
+    'Accept': 'application/json',
+    'Authorization': `Bearer ${token}`
+  },
+  data: JSON.stringify({
+    'email': userDto.email,
+    'name': userDto.name,
+    'password': userDto.password,
     'tellNo': userDto.tellNo,
     'address': userDto.address,
     'addressNo': userDto.addressNo,
@@ -80,10 +102,21 @@ export const updateUser = (userDto, token) => axios({
   })
 });
 
-// 사용자 비밀번호 변경
-export const updateUserPwByEmailAndPassword = (email, afterpw, beforepw, token) => axios({
+// 사용자 비밀번호 초기화
+export const resetUserPwByEmailAndPassword = (email, afterpw, token) => axios({
   method: 'PUT',
-  url: `${config.systemService}/user/update/pw/${email}/${afterpw}/${beforepw}`,
+  url: `${config.systemService}/user/reset/pw/${email}/${afterpw}`,
+  headers: {
+    'Content-Type': 'application/json; charset=UTF-8',
+    'Accept': 'application/json',
+    'Authorization': `Bearer ${token}`
+  }
+});
+
+// 사용자 비밀번호 변경
+export const updateUserPwByEmailAndPassword = (email, beforepw, afterpw, token) => axios({
+  method: 'PUT',
+  url: `${config.systemService}/user/update/pw/${email}/${beforepw}/${afterpw}`,
   headers: {
     'Content-Type': 'application/json; charset=UTF-8',
     'Accept': 'application/json',
@@ -148,4 +181,15 @@ export const updateUserByBalancePointDifference = (email, differencePoint, token
     'Authorization': `Bearer ${token}`
   },
   data: JSON.stringify(differencePoint)
+});
+
+// 추천인 코드 존재여부 확인
+export const checkRecommendCode = (recommendCode, token) => axios({
+  method: 'GET',
+  url: `${config.systemService}/user/check/${recommendCode}`,
+  headers: {
+    'Content-Type': 'application/json; charset=UTF-8',
+    'Accept': 'application/json',
+    'Authorization': `Bearer ${token}`
+  }
 });

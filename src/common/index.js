@@ -37,5 +37,7 @@ export { default as NotFoundPage } from './pages/NotFoundPage';
 export { default as LoginPage } from './pages/LoginPage';
 export { default as IdPwFindPage } from './pages/IdPwFindPage';
 export { default as RegisterPage } from './pages/RegisterPage';
+export { default as NaverCallbackLogPage } from './pages/NaverCallbackLogPage';
+export { default as NaverCallbackRegPage } from './pages/NaverCallbackRegPage';
 
 

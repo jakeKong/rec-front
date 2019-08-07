@@ -6,7 +6,7 @@ import * as userActions from "./scm/modules/UserModule";
 
 import storage from './common/storage';
 
-import { MainPage, NotFoundPage, LoginPage, RegisterPage, IdPwFindPage } from './common';
+import { MainPage, NotFoundPage, LoginPage, RegisterPage, IdPwFindPage, NaverCallbackLogPage, NaverCallbackRegPage } from './common';
 import { BlogTyleNewsPage, BlogTyleNewsManagePage } from './blog';
 import { UserManagePage } from './scm';
 import { OrderHistoryPage, OrderHistoryByEmailPage, /*ReportMakeHistoryPage,*/ ChangePointHistoryPage, ChangePointHistoryByEmailPage, ProductManagePage } from './oms';
@@ -71,11 +71,19 @@ class App extends Component {
         <Route exact path="/" component={MainPage} />
   
         {/* 로그인 */}
-        <Route exact path="/login" component={LoginPage} />
+        <Route exact path="/login/" component={LoginPage} />
+        {/* BY NAVER 로그인 */}
+        <Route exact path="/login/:email" component={LoginPage} />
         {/* 회원가입 */}
         <Route exact path="/register" component={RegisterPage} />
+        {/* BY NAVER 회원가입 */}
+        <Route exact path="/register/:userinfo" component={RegisterPage} />
         {/* 아이디/비밀번호 찾기 */}
         <Route exact path="/user/findhelp" component={IdPwFindPage} />
+        {/* NAVER LOG POPUP */}
+        <Route exact path="/naver/log/pop" component={NaverCallbackLogPage} />
+        {/* NAVER REG POPUP */}
+        <Route exact path="/naver/reg/pop" component={NaverCallbackRegPage} />
         
         {/* 블로그 */}
         <Route exact path="/blog/tyle" component={BlogTyleNewsPage} />

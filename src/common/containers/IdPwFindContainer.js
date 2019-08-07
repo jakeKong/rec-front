@@ -6,7 +6,7 @@ import * as userActions from "../../scm/modules/UserModule";
 import { IdFindByAuth, IdFindByResult, PwFindById, PwFindByAuth, PwFindByReset, PwFindByResult } from "../index";
 
 import { oauth_web } from '../../OAuth2Config'
-import { getUser, getUserByNameAndTell, updateUserPwByEmailAndPassword} from '../../scm/api/userAxios';
+import { getUser, getUserByNameAndTell, resetUserPwByEmailAndPassword } from '../../scm/api/userAxios';
 
 class IdPwFindContainer extends Component {
 
@@ -92,13 +92,6 @@ class IdPwFindContainer extends Component {
                   });
   }
 
-  // 사용자 목록 조회 호출
-  getUserCheck = async (email, token) => {
-    getUser(email, token).then(e => {
-      this.setState({userInfo: e.data});
-    })
-  }
-
   // 특정 조건(이름, 전화번호) 사용자 목록 조회 호출
   getUserByNameAndTellEvent = (name, phone, token) => {
     getUserByNameAndTell(name, phone, token).then(e => {
@@ -132,9 +125,17 @@ class IdPwFindContainer extends Component {
 
   // 비밀번호 찾기 - 1. 아이디 입력 후 status 전환 이벤트
   focusPwIdStatusToChangeEvent(id) {
-    this.getUserCheck(id, this.state.token);
-    this.setState({pwIdStatus: false,
-                   pwAuthStatus: true,})
+    getUser(id, this.state.token).then(e => {
+      if (e.data !== '' && e.data !== null && e.data !== undefined) {
+        this.setState({userInfo: e.data});
+        this.setState({pwIdStatus: false,
+                       pwAuthStatus: true})
+      } else {
+        window.alert('가입된 회원이 존재하지 않습니다.')
+      }
+    }).catch(err => {
+      console.log(err)
+    })
   }
 
   // 비밀번호 찾기 - 2. 인증 후 status 전환 이벤트
@@ -144,16 +145,28 @@ class IdPwFindContainer extends Component {
   }
 
   // 비밀번호 찾기 - 3. 비밀번호 리셋 요청 Callback
-  PwResetCallbackEvent(email, beforepw, afterpw) {
-    updateUserPwByEmailAndPassword(email, beforepw, afterpw, this.state.token).then(res => {
+  PwResetCallbackEvent(email, afterpw) {
+    resetUserPwByEmailAndPassword(email, afterpw, this.state.token).then(res => {
       this.setState({pwResetStatus: false, 
-                     pwResultStatus: true});
+                      pwResultStatus: true});
       this.setState({resultCode: 'complete'})
     }).catch(error => {
       console.log(error)
       window.alert('비밀번호를 다시 확인해주세요.');
     })
   }
+
+  // 비밀번호 찾기 - 3. 비밀번호 변경 요청 Callback
+  // PwResetCallbackEvent(email, beforepw, afterpw) {
+  //   updateUserPwByEmailAndPassword(email, beforepw, afterpw, this.state.token).then(res => {
+  //     this.setState({pwResetStatus: false, 
+  //                    pwResultStatus: true});
+  //     this.setState({resultCode: 'complete'})
+  //   }).catch(error => {
+  //     console.log(error)
+  //     window.alert('비밀번호를 다시 확인해주세요.');
+  //   })
+  // }
 
   findComponentRenderEvent(focusId, focusPw, userInfo, resultCode) {
     if (focusId === true) {

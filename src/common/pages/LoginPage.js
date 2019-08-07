@@ -5,7 +5,7 @@ import { LoginContainer } from '../index';
 import { Redirect } from 'react-router';
 import storage from '../../common/storage';
 
-const LoginPage = () => {
+const LoginPage = (props) => {
   if (storage.get('loggedInfo')) {
     return <Redirect to={{
       pathname: "/",
@@ -15,7 +15,7 @@ const LoginPage = () => {
     // <div>
       <PageTemplate>
         <div className="page-description">로그인</div>
-        <LoginContainer />
+        <LoginContainer email={props.location.search.replace('?','')}/>
       </PageTemplate>
     // </div>
   );

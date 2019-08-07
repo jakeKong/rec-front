@@ -5,7 +5,7 @@ class PwFindByReset extends Component {
   constructor(props) {
     super(props);
     this.state ={
-      afterpw: '',
+      // afterpw: '',
       beforepw: '',
       rebeforepw: ''
     }
@@ -13,7 +13,7 @@ class PwFindByReset extends Component {
   }
 
   componentDidMount() {
-    document.querySelector('#lbAfterPw').innerHTML = '기존 비밀번호';
+    // document.querySelector('#lbAfterPw').innerHTML = '기존 비밀번호';
     document.querySelector('#lbBeforePw').innerHTML = '새로운 비밀번호';
     document.querySelector('#lbBeforeRePw').innerHTML = '재입력';
   }
@@ -21,9 +21,10 @@ class PwFindByReset extends Component {
   passwordResetEvent() {
     const { email, PwResetCallbackEvent } = this.props;
     const { afterpw, beforepw, rebeforepw } = this.state;
-    if (afterpw === '') {
-      window.alert('기존 비밀번호를 입력해주세요.')
-    }
+    // const { afterpw, beforepw, rebeforepw } = this.state;
+    // if (afterpw === '') {
+    //   window.alert('기존 비밀번호를 입력해주세요.')
+    // }
     if (beforepw === '') {
       window.alert('새로운 비밀번호를 입력해주세요.')
     }
@@ -33,13 +34,14 @@ class PwFindByReset extends Component {
     if (beforepw !== rebeforepw) {
       window.alert('변경 비밀번호가 일치하지 않습니다.\n확인 후 다시 시도해주세요')
     } else {
-      PwResetCallbackEvent(email, afterpw, beforepw);
+      // PwResetCallbackEvent(email, afterpw, beforepw);
+      PwResetCallbackEvent(email, beforepw);
     }
   }
 
-  pwResetAfterPWInputEvent(e) {
-    this.setState({afterpw: e.target.value})
-  }
+  // pwResetAfterPWInputEvent(e) {
+  //   this.setState({afterpw: e.target.value})
+  // }
 
   pwResetBeforePWInputEvent(e) {
     this.setState({beforepw: e.target.value})
@@ -54,10 +56,10 @@ class PwFindByReset extends Component {
     return (
       <Fragment>
         <div>
-          <div>
+          {/* <div>
             <label id="lbAfterPw"/>
             <Password value={this.state.afterpw} onChange={(e) => this.pwResetAfterPWInputEvent(e) }/>
-          </div>
+          </div> */}
           <div>
             <label id="lbBeforePw"/>
             <Password value={this.state.beforepw} onChange={(e) => this.pwResetBeforePWInputEvent(e) }/>

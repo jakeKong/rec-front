@@ -1,12 +1,13 @@
 import React, { Component, Fragment } from 'react';
 
-import '@vaadin/vaadin-text-field';
-import '@vaadin/vaadin-combo-box';
-import '@vaadin/vaadin-button';
+import { InputText } from 'primereact/inputtext';
+// import { Dropdown } from 'primereact/dropdown';
+import { Password } from 'primereact/password';
+import { Calendar } from 'primereact/calendar';
 
-import Sugar from 'sugar';
-import 'sugar/locales/ko';
+import { calendarLocale } from '../../items';
 
+let dateFormat = require('dateformat');
 class RegisterInput extends Component {
   constructor(props) {
     super(props);
@@ -22,35 +23,43 @@ class RegisterInput extends Component {
         createdUser: null,
         assignedRoles: [],
       },
+      tEmailName: '',
+      tEmailDomain: '',
+      tEmailCom: '',
+      tPassword: '',
+      tRePassword: '',
+      tName: '',
+      tTellStation: '',
+      tTellByNumber: '',
+      tTellNumberByNumber: '',
+      tbirthDt: null,
+      tAddressNo: '',
+      tAddress: '',
+      tAddressTo: '',
+
+      recommendCode: '',
     }
+    this.userAddCallEvent = this.userAddCallEvent.bind(this);
+
+    this.changeTEmailName = this.changeTEmailName.bind(this);
+    this.changeTEmailDomain = this.changeTEmailDomain.bind(this);
+    this.changeTEmailCom = this.changeTEmailCom.bind(this);
+
+    this.changeTPassword = this.changeTPassword.bind(this);
+    this.changeTRePassword = this.changeTRePassword.bind(this);
+
+    this.changeTName = this.changeTName.bind(this);
+
+    this.changeTTellStation = this.changeTTellStation.bind(this);
+    this.changeTTellByNumber = this.changeTTellByNumber.bind(this);
+    this.changeTTellNumberByNumber = this.changeTTellNumberByNumber.bind(this);
+
+    this.changeTAddressNo = this.changeTAddressNo.bind(this);
+    this.changeTAddress = this.changeTAddress.bind(this);
+    this.changeTAddressTo = this.changeTAddressTo.bind(this);
   }
 
   componentDidMount() {
-    const { dto } = this.state;
-    // const resetDto = () => {
-    //   tfEmailName.value = null;
-    //   tfEmailDomain.value = null;
-    //   tfEmailCom.value = null;
-    //   tfNm.value = null;
-    //   tfPw.value = null;
-    //   tfRepw.value = null;
-    //   tfTellStation.value = null;
-    //   tfTellByNumber.value = null;
-    //   tfTellNumberByNumber.value = null;
-    //   tfAddress.value = null;
-    //   tfAddressNo.value = null;
-    //   dpBirthDt.value = null;
-    //   dto.email = null;
-    //   dto.password = null;
-    //   dto.name = null;
-    //   dto.tellNo = null;
-    //   dto.address = null;
-    //   dto.addressNo = null;
-    //   dto.birthDt = null;
-    //   dto.createdUser = null;
-    //   dto.assignedRoles = [];
-    // }
-
     document.querySelector('#lbEmail').innerHTML = "이메일";
     document.querySelector('#lbEmailCommercial').innerHTML = " @ ";
     document.querySelector('#lbEmailPeriod').innerHTML = " . ";
@@ -65,140 +74,202 @@ class RegisterInput extends Component {
     document.querySelector('#lbTellNoHyphenTo').innerHTML = " - ";
 
     document.querySelector('#lbAddress').innerHTML = "주소";
-    // document.querySelector('#lbAddressNo').innerHTML = "&nbsp&nbsp우편번호";
     document.querySelector('#lbBirthDt').innerHTML = "생년월일";
 
-    // 이메일 입력필드
-    const tfEmailName = document.querySelector('#tfEmailName');
-    tfEmailName.className = 'vaadin-text-field-width-200';
-    // tfEmailName.placeholder = '이메일을 입력해주세요.';
-    const tfEmailDomain = document.querySelector('#tfEmailDomain');
-    tfEmailDomain.className = 'vaadin-text-field-width-100';
-    const tfEmailCom = document.querySelector('#tfEmailCom');
-    tfEmailCom.className = 'vaadin-text-field-width-70';
+    document.querySelector('#lbRecommendCode').innerHTML = "추천인 코드";
 
-    // 비밀번호 입력필드
-    const tfPw = document.querySelector('#tfPw');
-    tfPw.className = 'vaadin-text-field-width-200-flex-80';
-    tfPw.placeholder = 'password';
-    tfPw.addEventListener('input', function() {
-      // dto.password = tfPw.value;
-    })
+    const { userinfo } = this.props;
 
-    // 비밀번호 확인 입력필드
-    const tfRepw = document.querySelector('#tfRepw');
-    tfRepw.className = 'vaadin-text-field-width-200-flex-80';
-    tfRepw.placeholder = 'RePassword';
-    tfRepw.addEventListener('input', function() {
-      // need add event
-    })
-
-    // 이름 입력필드
-    const tfNm = document.querySelector('#tfNm');
-    tfNm.className = 'vaadin-text-field-width-200-flex-80';
-    tfNm.placeholder = '이름을 입력해주세요';
-    tfNm.addEventListener('input', function() {
-      dto.name = tfNm.value;
-    })
-
-    // 생년월일 입력필드
-    const dpBirthDt = document.querySelector('#dpBirthDt');
-    dpBirthDt.className = "vaadin-date-picker-width-150-flex-80";
-    dpBirthDt.i18n = {
-      today: '오늘',
-      cancel: '취소',
-      firstDayOfWeek: 1,
-      monthNames:
-        '1월_2월_3월_4월_5월_6월_7월_8월_9월_10월_11월_12월'.split('_'),
-      weekdays: '일요일_월요일_화요일_수요일_목요일_금요일_토요일'.split('_'),
-      weekdaysShort: '일_월_화_수_목_금_토'.split('_'),
-      formatDate: function(date) {
-        return Sugar.Date.format(Sugar.Date.create(date), '{yyyy}년{MM}월{dd}일');
-      },
-      formatTitle: function(monthName, fullYear) {
-        return fullYear + '년 ' + monthName;
-      },
+    const changeTEmailName = this.changeTEmailName;
+    const changeTEmailDomain = this.changeTEmailDomain;
+    const changeTEmailCom = this.changeTEmailCom;
+    const changeTName = this.changeTName;
+    if (userinfo !== null && userinfo !== '' && userinfo !== undefined) {
+      console.log(userinfo);
+      let emailName = userinfo.email.substring(0, userinfo.email.indexOf('@'));
+      let emailDomain = userinfo.email.substring(userinfo.email.indexOf('@')+1, userinfo.email.indexOf('.'));
+      let emailCom = userinfo.email.substring(userinfo.email.indexOf('.')+1, userinfo.email.length);
+      changeTEmailName(emailName);
+      changeTEmailDomain(emailDomain);
+      changeTEmailCom(emailCom);
+      // email 추출
+      changeTName(userinfo.name)
     }
-    dpBirthDt.addEventListener('value-changed', function() {
-      dto.birthDt = dpBirthDt.value;
-    })   
 
-    // 전화번호 입력필드
-    const tfTellStation = document.querySelector('#tfTellStation');
-    tfTellStation.className = 'vaadin-text-field-width-100'
-    const tfTellByNumber = document.querySelector('#tfTellByNumber');
-    tfTellByNumber.className = 'vaadin-text-field-width-100';
-    const tfTellNumberByNumber = document.querySelector('#tfTellNumberByNumber');
-    tfTellNumberByNumber.className = 'vaadin-text-field-width-100';
-
-    // 주소 입력필드 (비활성)
-    const tfAddressNo = document.querySelector('#tfAddressNo');
-    tfAddressNo.className = 'vaadin-text-field-width-200';
-    tfAddressNo.disabled = true;
-
+    const itdetailAddress = document.querySelector('#itdetailAddress');
     const btnAddressSearch = document.querySelector('#btnAddressSearch');
+    const changeTAddressNo = this.changeTAddressNo;
+    const changeTAddress = this.changeTAddress;
     btnAddressSearch.textContent = '주소검색';
     btnAddressSearch.addEventListener('click', function() {
       // 도로명주소 오픈 API 호출
+      window.daum.postcode.load(function() {
+        new window.daum.Postcode({
+          oncomplete: function(data) {
+            // 우편번호
+            changeTAddressNo(data.zonecode);
+            // 주소
+            changeTAddress(data.address);
+            // 상세주소 입력필드 활성화
+            itdetailAddress.readOnly = false;
+            itdetailAddress.placeholder = '상세주소를 입력해주세요.';
+          }
+        }).open();
+      })
     });
-    
-    const tfAddress = document.querySelector('#tfAddress');
-    tfAddress.className = 'vaadin-text-field-width-full';
-    tfAddress.disabled = true;
 
-    const { addCallback } = this.props;
+    const userAddCallEvent = this.userAddCallEvent;
     const btnOk = document.querySelector('#btnOk');
     btnOk.innerHTML = "확인";
     btnOk.addEventListener('click', function() {
-      if (tfEmailName.value !== '' && tfEmailDomain.value !== '' && tfEmailCom.value !== '') {
-        dto.email = tfEmailName.value+'@'+tfEmailDomain.value+'.'+tfEmailCom.value;
-      }
-      if (tfTellStation.value !== '' && tfTellByNumber.value !== '' && tfTellNumberByNumber.value !== '') {
-        dto.tellNo = tfTellStation.value+'-'+tfTellByNumber.value+'-'+tfTellNumberByNumber.value;
-      }
-      if (dto.email === null || dto.email === undefined || dto.email === '') {
-        window.alert('입력되지 않은 항목이 있습니다. 입력 후 다시 시도해주세요.');
-        return;
-      }
-      // if (dto.password === null || dto.password === undefined || dto.password === '') {
-      //   window.alert('입력되지 않은 항목이 있습니다. 입력 후 다시 시도해주세요.');
-      //   return;
-      // }
-      if (dto.name === null || dto.name === undefined || dto.name === '') {
-        window.alert('입력되지 않은 항목이 있습니다. 입력 후 다시 시도해주세요.');
-        return;
-      }
-      if (dto.tellNo === null || dto.tellNo === undefined || dto.tellNo === '') {
-        window.alert('입력되지 않은 항목이 있습니다. 입력 후 다시 시도해주세요.');
-        return;
-      }
-      // if (dto.address === null || dto.address === undefined || dto.address === '') {
-      //   window.alert('입력되지 않은 항목이 있습니다. 입력 후 다시 시도해주세요.');
-      //   return;
-      // }
-      // if (dto.addressNo === null || dto.addressNo === undefined || dto.addressNo === '') {
-      //   window.alert('입력되지 않은 항목이 있습니다. 입력 후 다시 시도해주세요.');
-      //   return;
-      // }
-      if (dto.birthDt === null || dto.birthDt === undefined || dto.birthDt === '') {
-        window.alert('입력되지 않은 항목이 있습니다. 입력 후 다시 시도해주세요.');
-        return;
-      }
-      dto.assignedRoles.push('ROLE_USER');
-      // 임시 설정
-      dto.createdUser = '관리자';
-      addCallback(dto);
-      // resetDto();
+      userAddCallEvent();
     });
 
     const btnCancle = document.querySelector('#btnCancle');
     btnCancle.innerHTML = "취소";
     btnCancle.addEventListener('click', function() {
-      // 취소 이벤트 추가 필요
-      // resetDto();
+      window.location.href = '/register';
     });
-
   }
+
+  userAddCallEvent() {
+    const { addCallback, addRecommendToAddCallback } = this.props;
+
+    const { dto } = this.state;
+    const { tEmailName, tEmailDomain, tEmailCom, 
+            tPassword, tRePassword, 
+            tName, 
+            tTellStation, tTellByNumber, tTellNumberByNumber, 
+            tbirthDt,
+            tAddressNo, tAddress, tAddressTo,
+            recommendCode } = this.state;
+
+    if (tEmailName !== '' && tEmailDomain !== '' && tEmailCom !== '') {
+      if (tEmailName.length < 3) {
+        window.alert('아이디가 너무 짧습니다.')
+        return;
+      }
+      if (tEmailDomain.length < 3 || tEmailCom.length < 2) {
+        window.alert('이메일 주소를 다시 확인해주세요.')
+        return;
+      }
+      dto.email = tEmailName+'@'+tEmailDomain+'.'+tEmailCom;
+    } else {
+      window.alert('이메일을 입력해주세요.')
+      return;
+    }
+
+    if (tPassword !== '' && tRePassword !== '') {
+      if (tPassword === tRePassword) {
+        if (tPassword.length < 5) {
+          window.alert('비밀번호가 너무 짧습니다.\n5자 이상 입력해주세요.')
+          return;
+        }
+        if (tRePassword.length < 5) {
+          window.alert('비밀번호가 너무 짧습니다.\n5자 이상 입력해주세요.')
+          return;
+        }
+        dto.password = tPassword;
+      } else {
+        window.alert('비밀번호가 일치하지 않습니다.\n확인 후 다시 시도해주세요.')
+        return;
+      }
+    } else {
+      window.alert('비밀번호를 입력해주세요.')
+      return;
+    }
+
+    if (tName !== '') {
+      if (tName.length < 2) {
+        window.alert('2자 이상 입력해주세요.')
+        return;
+      } else {
+        dto.name = tName;
+      }
+    } else {
+      window.alert('이름을 입력해주세요.')
+      return;
+    }
+
+    if (tbirthDt !== '' && tbirthDt !== undefined && tbirthDt !== null) {
+      dto.birthDt = tbirthDt;
+    } else {
+      window.alert('생년월일을 입력해주세요.')
+      return;
+    }
+
+    if (tTellStation !== '' && tTellByNumber !== '' && tTellNumberByNumber !== '') {
+      dto.tellNo = tTellStation+'-'+tTellByNumber+'-'+tTellNumberByNumber;
+    } else {
+      window.alert('전화번호를 입력해주세요.')
+      return;
+    }
+
+    if (tAddressNo !== null && tAddressNo !== '' && tAddress !== null && tAddress !== '') {
+      if (tAddressTo !== null && tAddress !== '') {
+        dto.addressNo = tAddressNo;
+        dto.address = tAddress + ' ' + tAddressTo;
+      } else {
+        dto.addressNo = tAddressNo;
+        dto.address = tAddress;
+      }
+    }
+
+    dto.assignedRoles.push('ROLE_USER');
+    dto.createdUser = '관리자';
+    if (recommendCode !== null && recommendCode !== '' && recommendCode !== undefined) {
+      addRecommendToAddCallback(dto, recommendCode);
+    } else {
+      addCallback(dto);
+    }
+  }
+
+  changeTEmailName(e) { 
+    if (e.target === undefined || e.target === null) {
+      this.setState({tEmailName: e})
+      document.querySelector('#itEname').readOnly = true;
+    } else {
+      this.setState({tEmailName: e.target.value})
+    }
+  }
+  changeTEmailDomain(e) { 
+    if (e.target === undefined || e.target === null) {
+      this.setState({tEmailDomain: e})
+      document.querySelector('#itEdomain').readOnly = true;
+    } else {
+      this.setState({tEmailDomain: e.target.value}) 
+    }
+  }
+  changeTEmailCom(e) { 
+    if (e.target === undefined || e.target === null) {
+      this.setState({tEmailCom: e})
+      document.querySelector('#itEcom').readOnly = true;
+    } else {
+      this.setState({tEmailCom: e.target.value}) 
+    }
+  }
+
+  changeTPassword(e) { this.setState({tPassword: e.target.value}) }
+  changeTRePassword(e) { this.setState({tRePassword: e.target.value}) }
+
+  changeTName(e) { 
+    if (e.target === undefined || e.target === null) {
+      this.setState({tName: e})
+      document.querySelector('#itNm').readOnly = true;
+    } else {
+      this.setState({tName: e.target.value}) 
+    }
+  }
+
+  changeTTellStation(e) { this.setState({tTellStation: e.target.value}) }
+  changeTTellByNumber(e) { this.setState({tTellByNumber: e.target.value}) }
+  changeTTellNumberByNumber(e) { this.setState({tTellNumberByNumber: e.target.value}) }
+
+  changeTAddressNo(res) { this.setState({tAddressNo: res}) }
+  changeTAddress(res) { this.setState({tAddress: res}) }
+  changeTAddressTo(e) { this.setState({tAddressTo: e.target.value}) }
+
+  changeTRecommendCode(e) { this.setState({recommendCode: e.target.value}) }
 
   render() {
     return (
@@ -207,54 +278,68 @@ class RegisterInput extends Component {
           <div className="email-column">
             <label id="lbEmail" className="label-flex-20-left"/>
             <div className="div-flex-80-left">
-              <vaadin-text-field id="tfEmailName" required prevent-invalid-input pattern="([a-zA-Zㄱ-ㅎ가-힣0-9]+?)"/>
+              <InputText id="itEname" maxLength="15" value={this.state.tEmailName} onChange={e=>this.changeTEmailName(e)}/>
               <label id="lbEmailCommercial"/>
-              <vaadin-text-field id="tfEmailDomain" required prevent-invalid-input pattern="([a-zA-Zㄱ-ㅎ가-힣0-9]+?)"/>
+              <InputText id="itEdomain" maxLength="10" value={this.state.tEmailDomain} onChange={e=>this.changeTEmailDomain(e)}/>
               <label id="lbEmailPeriod"/>
-              <vaadin-text-field id="tfEmailCom" required prevent-invalid-input pattern="([a-zA-Zㄱ-ㅎ가-힣0-9]+?)"/>
+              <InputText id="itEcom" maxLength="15" value={this.state.tEmailCom} onChange={e=>this.changeTEmailCom(e)}/>
             </div>
           </div>
           <div className="default-column">
             <label id="lbPw" className="label-flex-20-left"/>
-            <vaadin-text-field id="tfPw" required prevent-invalid-input pattern="^([a-zA-Zㄱ-ㅎ가-힣0-9\s]+$)"/>
+            <div className="div-flex-80-left">
+              <Password maxLength="15" value={this.state.tPassword} onChange={e=>this.changeTPassword(e)}/>
+            </div>
           </div>
           <div className="default-column">
             <label id="lbRepw" className="label-flex-20-left"/>
-            <vaadin-text-field id="tfRepw" required prevent-invalid-input pattern="^([a-zA-Zㄱ-ㅎ가-힣0-9\s]+$)"/>
+            <div className="div-flex-80-left">
+              <Password maxLength="15" value={this.state.tRePassword} onChange={e=>this.changeTRePassword(e)}/>
+            </div>
           </div>
           <div className="default-column">
             <label id="lbNm" className="label-flex-20-left"/>
-            <vaadin-text-field id="tfNm" required prevent-invalid-input pattern="^([a-zA-Zㄱ-ㅎ가-힣0-9\s]+$)"/>
+            <div className="div-flex-80-left">
+              <InputText id="itNm" maxLength="8" value={this.state.tName} onChange={e=>this.changeTName(e)}/>
+            </div>
           </div>
           <div className="default-column">
             <label id="lbBirthDt" className="label-flex-20-left"/>
-            <vaadin-date-picker id="dpBirthDt"/>
+            <div className="div-flex-80-left">
+              <Calendar className="calendar-width-100" locale={calendarLocale} showIcon={true} dateFormat="yy-mm-dd" value={this.state.tbirthDt} onChange={(e) => this.setState({tbirthDt: dateFormat(new Date(e.value), 'yyyy-mm-dd')})}/>
+            </div>
           </div>
           <div className="default-column">
             <label id="lbTellNo" className="label-flex-20-left"/>
             <div className="div-flex-80-left">
-              <vaadin-text-field id="tfTellStation" required prevent-invalid-input pattern="^(\d{0,3}?)?$"/>
+              <InputText keyfilter="pint" maxLength="3" value={this.state.tTellStation} onChange={e=>this.changeTTellStation(e)}/>
               <label id="lbTellNoHyphen"/>
-              <vaadin-text-field id="tfTellByNumber" required prevent-invalid-input pattern="^(\d{0,4}?)?$"/>
+              <InputText keyfilter="pint" maxLength="4" value={this.state.tTellByNumber} onChange={e=>this.changeTTellByNumber(e)}/>
               <label id="lbTellNoHyphenTo"/>
-              <vaadin-text-field id="tfTellNumberByNumber" required prevent-invalid-input pattern="^(\d{0,4}?)?$"/>
+              <InputText keyfilter="pint" maxLength="4" value={this.state.tTellNumberByNumber} onChange={e=>this.changeTTellNumberByNumber(e)}/>
             </div>
           </div>
           <div className="address-column">
             <label id="lbAddress" className="label-flex-20-left"/>
             <div className="div-flex-80-left">
               <div>
-                <vaadin-text-field id="tfAddressNo" required prevent-invalid-input pattern="^(\d{0,7}?)?$"/>
+                <InputText value={this.state.tAddressNo} onChange={e=>this.changeTAddressNo(e)} readOnly/>
                 <button id="btnAddressSearch"/>
               </div>
-              <vaadin-text-field id="tfAddress" required prevent-invalid-input pattern="([a-zA-Zㄱ-ㅎ가-힣0-9]+?)"/>
+              <InputText value={this.state.tAddress} onChange={e=>this.changeTAddress(e)} readOnly/>
+              <InputText id="itdetailAddress" value={this.state.tAddressTo} onChange={e=>this.changeTAddressTo(e)} readOnly/>
             </div>
-            {/* <label id="lbAddressNo" className="label-flex-20-left"/> */}
+          </div>
+          <div className="default-column">
+            <label id="lbRecommendCode" className="label-flex-20-left"/>
+            <div className="div-flex-80-left">
+              <InputText maxLength="10" value={this.state.recommendCode} onChange={e=>this.changeTRecommendCode(e)}/>
+            </div>
           </div>
         </div>
         <div className="div-register-popup-bottom">
-            <vaadin-button id="btnOk"/>
-            <vaadin-button id="btnCancle" theme="error"/>
+          <button id="btnOk"/>
+          <button id="btnCancle"/>
         </div>
       </Fragment>
     );
