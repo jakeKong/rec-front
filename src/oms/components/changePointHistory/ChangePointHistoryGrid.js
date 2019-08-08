@@ -76,17 +76,18 @@ class ChangePointHistoryGrid extends Component {
         const check = window.confirm('조회된 정보를 엑셀로 저장 하시겠습니까?');
         if (check === true) {
           let excelList = [];
-          let excelNumber = 1;
-          changePointHistoryList.forEach(e => {
+          // let excelNumber = 1;
+          changePointHistoryList.sort((prev, next) => new Date(prev.get('changeDt')).getTime() > new Date(next.get('changeDt')).getTime() ? 1 : -1)
+          .forEach(e => {
             let changeType = '';
             changeTypeItems.forEach(function(row){
               if (e.get('changeType') === row.value) {
-                changeType = row.textContent;
+                changeType = row.label;
               };
             });
             // push Value type is JSON
             excelList.push({
-              번호: excelNumber++,
+              // 번호: excelNumber++,
               변동일자: dateFormat(new Date(e.get("changeDt")), 'yyyy년mm월dd일 HH:MM:ss'),
               '결제(주문)번호': e.get("odrNo") ? e.get("odrNo") : e.get("paymentNo"),
               // 결제번호: e.get("paymentNo"),
@@ -106,7 +107,7 @@ class ChangePointHistoryGrid extends Component {
           XLSX.utils.book_append_sheet(workbook, worksheet, "포인트_변동내역");
     
           /* generate an XLSX file */
-          let writeName = dateFormat(new Date(), 'yyyymmdd')+"_SRD_포인트_변동내역.xlsx"
+          let writeName = dateFormat(new Date(), 'yyyymmdd')+"_ALGO_포인트_변동내역.xlsx"
           XLSX.writeFile(workbook, writeName);
         }
       })

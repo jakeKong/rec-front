@@ -3,7 +3,6 @@ import React, { Fragment, Component } from 'react';
 import main_illu from '../../styles/agz/image/main_illu_3x.png';
 
 import {Dialog} from 'primereact/dialog';
-import {ScrollPanel} from 'primereact/scrollpanel';
 
 class Footer extends Component {
   constructor(props) {
@@ -11,7 +10,7 @@ class Footer extends Component {
     this.state = {
       search: {
         intro: false,
-        notice: false,
+        // notice: false,
         termsofservice: false,
         privacy: false,
         liability: false,
@@ -52,12 +51,12 @@ class Footer extends Component {
     this.setState({intro: false})
   }
 
-  infoNotice() {
-    this.setState({notice: true})
-  }
-  infoNoticeClose() {
-    this.setState({notice: false})
-  }
+  // infoNotice() {
+  //   this.setState({notice: true})
+  // }
+  // infoNoticeClose() {
+  //   this.setState({notice: false})
+  // }
 
   infoTermsofservice() {
     this.setState({termsofservice: true})
@@ -94,7 +93,8 @@ class Footer extends Component {
           <div className="width-ful">
             <div className="footer-layer1">
               <a onClick={() => this.infoIntro()}>크로스워크 소개</a>
-              <a onClick={() => this.infoNotice()}>공지사항</a>
+              <a href="/bms/notice">공지사항</a>
+              {/* <a onClick={() => this.infoNotice()}>공지사항</a> */}
               <a onClick={() => this.infoTermsofservice()}>이용약관</a>
               <a onClick={() => this.infoPrivacy()}>개인정보 처리방침</a>
               <a onClick={() => this.infoLiability()}>책임한계와 법적고지</a>
@@ -116,9 +116,9 @@ class Footer extends Component {
         <Dialog header="크로스워크 소개" visible={this.state.intro} onHide={() => this.infoIntroClose()}>
           <textarea id="taInfoIntro" rows="20" cols="100" readOnly />
         </Dialog>
-        <Dialog header="공지사항" visible={this.state.notice} onHide={() => this.infoNoticeClose()}>
+        {/* <Dialog header="공지사항" visible={this.state.notice} onHide={() => this.infoNoticeClose()}>
           <textarea id="taInfoNotice" rows="20" cols="100" readOnly />
-        </Dialog>
+        </Dialog> */}
         <Dialog header="이용약관" visible={this.state.termsofservice} onHide={() => this.infoTermsofserviceClose()}>
           <textarea id="taInfoTermsofservice" rows="20" cols="100" readOnly />
         </Dialog>

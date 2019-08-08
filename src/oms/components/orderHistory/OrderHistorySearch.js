@@ -36,7 +36,8 @@ class OrderHistorySearch extends Component {
       status: null,
       searchStatusItemValue: 'ALL',
       searchRealEstateTypeItemValue: 'ALL',
-      searchOrderCheckItemValue: 'odrNo'
+      searchOrderCheckItemValue: 'odrNo',
+      inputCheck: false
     }
     this.resetState = this.resetState.bind(this);
     this.searchCallEvent = this.searchCallEvent.bind(this);
@@ -110,11 +111,21 @@ class OrderHistorySearch extends Component {
 
   // 주문번호 입력 텍스트필드 이벤트
   SearchItemByOrderNumberInputEvent(e) {
+    if (e.target.value === '') {
+      this.setState({inputCheck: false})
+    } else {
+      this.setState({inputCheck: true})
+    }
     this.setState({odrNo: e.target.value})
   }
 
   // (관리) 주문자 입력 텍스트필드 이벤트
   SearchItemByOrdererNameInputEvent(e) {
+    if (e.target.value === '') {
+      this.setState({inputCheck: false})
+    } else {
+      this.setState({inputCheck: true})
+    }
     this.setState({ordererNm: e.target.value})
   }
 
@@ -145,10 +156,11 @@ class OrderHistorySearch extends Component {
       ]
       return (
         <Fragment>
-          <Dropdown className="dropdown-width-100"
+          <Dropdown id="dpOrderItem" 
+                    className="dropdown-width-100"
                     value={this.state.searchOrderCheckItemValue}
                     options={orderCheckItems} 
-                    onChange={e=>this.SearchOrderCheckItemChangeEvent(e)} />
+                    onChange={e=>this.SearchOrderCheckItemChangeEvent(e)} disabled={this.state.inputCheck}/>
           {this.orderItemCheckFieldRendering()}
         </Fragment>
       )

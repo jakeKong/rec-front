@@ -24,16 +24,19 @@ class ChangePointHistorySearch extends Component {
   constructor(props) {
     super(props);
     this.state ={
-      userNm: null,
-      odrNo: null,
-      paymentNo: null,
+      userNm: '',
+      odrNo: '',
+      paymentNo: '',
       changeType: null,
       fromDt: null,
       toDt: null,
       searchItemValue: 'ALL',
+      searchAllItemValue: 'paymentNo',
       searchPaymentItemValue: 'paymentNo',
       searchPurchaseItemValue: 'odrNo'
     }
+
+    this.SearchAllItemChangeEvent = this.SearchAllItemChangeEvent.bind(this);
     this.SearchItemChangeEvent = this.SearchItemChangeEvent.bind(this);
     this.roleCheckFieldRendering = this.roleCheckFieldRendering.bind(this);
     this.paymentItemCheckFieldRendering = this.paymentItemCheckFieldRendering.bind(this);
@@ -106,6 +109,33 @@ class ChangePointHistorySearch extends Component {
     this.setState({userNm: e.target.value})
   }
 
+  // 전체 컬럼 항목 선택 이벤트 - 결제번호 / 구매번호
+  SearchEmailAllItemChangeEvent(e) {
+    this.setState({searchAllItemValue: e.value})
+    this.setState({paymentNo: '',
+                   odrNo: ''})
+  }
+  
+  // 전체 컬럼 항목에 따르는 입력 텍스트필드 반환 - 결제번호 / 구매번호
+  allEmailItemCheckFieldRendering() {
+    const { searchAllItemValue } = this.state;
+    if (searchAllItemValue === 'odrNo') {
+      return <InputText value={this.state.odrNo} onChange={(e) => this.SearchItemByPurchaseInputEvent(e)} />
+    } else if (searchAllItemValue === 'paymentNo') {
+      return <InputText value={this.state.paymentNo} onChange={(e) => this.SearchItemByPaymentInputEvent(e)} />
+    } else {
+      return null;
+    }
+  }
+
+  // (관리) 전체 컬럼 항목 선택 이벤트 - 결제번호 / 구매번호 / 사용자 선택
+  SearchAllItemChangeEvent(e) {
+    this.setState({searchPaymentItemValue: e.value})
+    this.setState({paymentNo: '',
+                   odrNo: '',
+                   userNm: ''})
+  }
+
   // 변동 유형 컬럼 항목 선택 이벤트 - 전체/결제/결제취소/구매/구매취소/이벤트지급/이벤트지급취소 선택
   SearchItemChangeEvent(e) {
     this.setState({searchItemValue: e.value})
@@ -128,7 +158,29 @@ class ChangePointHistorySearch extends Component {
     this.setState({odrNo: '',
                    userNm: ''})
   }
+
+  // (관리) 전체 컬럼 항목 선택 이벤트 - 결제번호 / 구매번호 / 사용자 선택
+  SearchAllItemChangeEvent(e) {
+    this.setState({searchAllItemValue: e.value})
+    this.setState({paymentNo: '',
+                   odrNo: '',
+                   userNm: ''})
+  }
   
+  // (관리) 전체 컬럼 항목에 따르는 입력 텍스트필드 반환 - 결제번호 / 구매번호 / 사용자 선택
+  allItemCheckFieldRendering() {
+    const { searchAllItemValue } = this.state;
+    if (searchAllItemValue === 'odrNo') {
+      return <InputText value={this.state.odrNo} onChange={(e) => this.SearchItemByPurchaseInputEvent(e)} />
+    } else if (searchAllItemValue === 'paymentNo') {
+      return <InputText value={this.state.paymentNo} onChange={(e) => this.SearchItemByPaymentInputEvent(e)} />
+    } else if (searchAllItemValue === 'userNm') {
+      return <InputText value={this.state.userNm} onChange={(e) => this.SearchItemByUserNameInputEvent(e)} />
+    } else {
+      return null;
+    }
+  }
+
   // (관리) 결제번호 컬럼 항목에 따르는 입력 텍스트필드 반환 - 결제번호 / 사용자 선택
   paymentItemCheckFieldRendering() {
     const { searchPaymentItemValue } = this.state;
@@ -155,8 +207,41 @@ class ChangePointHistorySearch extends Component {
 
   // 최초 권한 체크 스크립트 (권한 및 선택 아이템 컬럼값에 따른 결과값 리턴)
   roleCheckFieldRendering(role, searchItemValue) {
+    // 전체
+    if (searchItemValue === 'ALL') {
+      if (role === 'ROLE_ADMIN' || role === 'ROLE_SYSADMIN') {
+        const drSearchAllItems = [
+          {label: '결제번호', value: 'paymentNo'},
+          {label: '구매번호', value: 'odrNo'},
+          {label: '사용자', value: 'userNm'}
+        ]
+        return (
+          <Fragment>
+            <Dropdown className="dropdown-width-100"
+                      value={this.state.searchAllItemValue}
+                      options={drSearchAllItems} 
+                      onChange={e=>this.SearchAllItemChangeEvent(e)} />
+            {this.allItemCheckFieldRendering()}
+          </Fragment>
+        );
+      } else {
+        const drSearchAllItems = [
+          {label: '결제번호', value: 'paymentNo'},
+          {label: '구매번호', value: 'odrNo'},
+        ]
+        return (
+          <Fragment>
+            <Dropdown className="dropdown-width-100"
+                      value={this.state.searchAllItemValue}
+                      options={drSearchAllItems} 
+                      onChange={e=>this.SearchEmailAllItemChangeEvent(e)} />
+            {this.allEmailItemCheckFieldRendering()}
+          </Fragment>
+        );
+      }
+    }
     // 결제 관련 컬럼 선택 시
-    if (searchItemValue === 'PAYMENT_ADD' || searchItemValue === 'PAYMENT_SUB') {
+    else if (searchItemValue === 'PAYMENT_ADD' || searchItemValue === 'PAYMENT_SUB') {
       // 권한 체크에 따른 결과값 리턴
       if (role === 'ROLE_ADMIN' || role === 'ROLE_SYSADMIN') {
         const drSearchPaymentItems = [
