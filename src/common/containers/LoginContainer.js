@@ -10,15 +10,20 @@ import { Login } from "../index";
 import storage from '../storage';
 import { oauth_web } from '../../OAuth2Config'
 
+import { getUser } from '../../scm/api/userAxios';
+import { fromJS } from 'immutable';
+
 class LoginContainer extends Component {
 
   // state set을 위한 초기 생성자
   constructor(props) {
     super(props);
     this.state = {
-      token: undefined
+      token: undefined,
+      loggedInfo: undefined
     }
     // this.RealEstateCommunityLoginAttempt = this.RealEstateCommunityLoginAttempt.bind(this);
+    this.NaverLoginAttempt = this.NaverLoginAttempt.bind(this);
   }
 
   // 사용자 목록 조회 호출
@@ -48,23 +53,67 @@ class LoginContainer extends Component {
     }
   }
 
+  NaverLoginAttempt = async(email) => {
+    try {
+      await oauth_web.owner.getToken('guest@test.com', 'test123').then((result) => {
+        this.setState({token: result.accessToken});
+        storage.set('token', result.accessToken)
+
+        getUser(email, result.accessToken).then(e => {
+          if (e.data === '') {
+            window.confirm('계정이 존재하지 않습니다.\n회원가입 후 다시 시도해주세요.');
+            storage.remove('loggedInfo');
+            storage.remove('token');
+            window.location.href="/register";
+          } else {
+            this.setState({userInfo: fromJS(e.data)});
+          }
+        }).catch(err => {
+          console.log(err);
+          window.confirm('계정이 존재하지 않습니다.\n회원가입 후 다시 시도해주세요.');
+          storage.remove('loggedInfo');
+          storage.remove('token');
+          window.location.href="/register";
+        })
+
+      })
+    } catch(error) {
+      console.log(error);
+      window.confirm('토큰 발급에 실패하였습니다.\n새로고침 혹은 브라우저 재실행 후 다시 시도해주세요.');
+    }
+  }
+
   // 마운트 직후 한번 (rendering 이전 마운트 이후의 작업)
   componentDidMount() {
-
+    console.log(this.props.email);
+    const { email } = this.props;
+    if (email !== undefined && email !== null && email !== '') {
+      this.NaverLoginAttempt(email);
+    }
   }
 
   render() {
-    const { token } = this.state;
+    const { token, userInfo } = this.state;
     const { loggedInfo } = this.props;
     // token redirect
     if (token !== null && token !== undefined && token !== '') {
-      if (loggedInfo !== undefined && loggedInfo !== null) {
+      if (loggedInfo !== undefined && loggedInfo !== null && loggedInfo !== '') {
         storage.set('loggedInfo', loggedInfo)
         return <Redirect to={{
           pathname: "/",
           // state: { session : session }
         }} push={true}/>;
-      } else return null;
+      } else if (userInfo !== undefined && userInfo !== null && userInfo !== '') {
+        storage.set('loggedInfo', userInfo)
+        return <Redirect to={{
+          pathname: "/",
+          // state: { session : session }
+        }} push={true}/>;
+      } else return (
+        <div className="div-login">
+          <Login RealEstateCommunityLoginAttempt={this.RealEstateCommunityLoginAttempt}/>
+        </div>
+      );
     } else {
       return (
         <div className="div-login">

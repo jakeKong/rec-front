@@ -1,8 +1,5 @@
 import React, { Component, Fragment } from 'react';
 
-import '@vaadin/vaadin-text-field';
-import '@vaadin/vaadin-button';
-
 class RegisterComplete extends Component {
   constructor(props) {
     super(props);
@@ -41,13 +38,13 @@ class RegisterComplete extends Component {
       // }
       const btnGoLogin = document.querySelector('#btnGoLogin');
       btnGoLogin.textContent = '로그인';
-      btnGoLogin.className = 'vaadin-button-register-complete';
+      // btnGoLogin.className = 'vaadin-button-register-complete';
       btnGoLogin.addEventListener('click', function() {
         window.location.href = '/#/login';
       });
       const btnGoHome = document.querySelector('#btnGoHome');
       btnGoHome.textContent = '홈으로'
-      btnGoHome.className = 'vaadin-button-register-complete';
+      // btnGoHome.className = 'vaadin-button-register-complete';
       btnGoHome.addEventListener('click', function() {
         window.location.href = '/#/';
       });
@@ -83,8 +80,8 @@ class RegisterComplete extends Component {
           </div>
         </div>
         <div className="div-register-complete-button">
-          <vaadin-button id="btnGoLogin"/>
-          <vaadin-button id="btnGoHome"/>
+          <button id="btnGoLogin"/>
+          <button id="btnGoHome"/>
         </div>
       </Fragment>
     );

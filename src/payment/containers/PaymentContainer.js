@@ -105,7 +105,7 @@ class PaymentContainer extends Component {
 
   // 아임포트 결제 창 호출
   openIamPortPay = () => {
-    const { productDto, purchaseResult } = this.state;
+    const { productDto } = this.state;
     //결제 번호 생성. 생성 실패시 오류  메시지 팝업
     let merchantUid = null;
     axios({

@@ -10,14 +10,14 @@ class Login extends Component {
     this.state ={
       // email: null,
       // password: null,
-
+      user: {
+        email: undefined,
+        name: undefined
+      }
     }
   }
 
   componentDidMount() {
-    // const bcrypt = require('bcrypt-nodejs');
-    // const crypto = require('crypto')
-    
     const { RealEstateCommunityLoginAttempt } = this.props;
 
     document.querySelector('#lbLoginTitle').innerHTML = '로그인';
@@ -44,7 +44,6 @@ class Login extends Component {
     const btnLogin = document.querySelector('#btnLogin');
     btnLogin.textContent = '로그인'
     btnLogin.className = 'vaadin-button-login';
-    // let bcryptEncodeValue;
     btnLogin.addEventListener('click', function() {
       // 로그인 버튼 클릭 이벤트
       if (tfLoginId.value === null || tfLoginId.value === '' || tfLoginId.value === undefined) {
@@ -57,36 +56,26 @@ class Login extends Component {
       }
 
       RealEstateCommunityLoginAttempt(tfLoginId.value, pfLoginPw.value)
-
-      // // let current_date = (new Date()).valueOf().toString();
-      // // let AESHashKey = crypto.createHash('sha256').update(current_date + 'hashKey').digest('hex'); 
-      // let AESHashKey = '_rec_pass_key_valuetoaes';
-      // let iv = AESHashKey.substring(0, 16)
-      // let chiper = crypto.createCipher('aes-256-cbc', AESHashKey, iv.byteLength());
-      // let AEScryptEncodeValue = chiper.update(pfLoginPw.value, 'utf8', 'base64');
-      // AEScryptEncodeValue += chiper.final('base64');
-      // RealEstateCommunityLoginAttempt(tfLoginId.value, AEScryptEncodeValue, iv);
-      
-      /*
-      bcrypt.hash(pfLoginPw.value, null, null, function(err, hash) {
-        console.log(err)
-        if (err === null) {
-          let bcryptEncodeValue = hash;
-          console.log('bcrypt Encode complete!')
-          RealEstateCommunityLoginAttempt(tfLoginId.value, bcryptEncodeValue);
-        } else {
-          console.log('bcrypt Encode failure..')
-        }
-      })
-      */
     })
 
-    // -- 네이버 로그인 버튼 적용 필요
-    const btnNaverLogin = document.querySelector('#btnNaverLogin');
-    btnNaverLogin.textContent = '네이버 로그인'
-    btnNaverLogin.className = 'vaadin-button-login-naver';
-    btnNaverLogin.addEventListener('click', function() {
-      // 네이버로그인 버튼 클릭 이벤트
+    let naverLogin = new window.naver.LoginWithNaverId({
+      clientId: "nwXOVGpHJOzfV1oBeUqn",
+      // clientSecret = 'hr1p7IcsN7';
+      callbackUrl: "http://localhost:3000/naver/log/pop",
+      // callbackUrl: "http://localhost:3000/login",
+      isPopup: true, /* 팝업을 통한 연동처리 여부 */
+      loginButton: {color: "white", type: 3, height: 60} /* 로그인 버튼의 타입을 지정 */
+    })
+    naverLogin.init();
+
+    const lbRegister = document.querySelector('#lbRegister');
+    lbRegister.addEventListener('click', function() {
+      window.location.href = '/register';
+    })
+
+    const lbFindByIdPw = document.querySelector('#lbFindByIdPw');
+    lbFindByIdPw.addEventListener('click', function() {
+      window.location.href = '/user/findhelp';
     })
   }
 
@@ -108,8 +97,10 @@ class Login extends Component {
             </div>
             <div className="div-login-button-field">
               <vaadin-button id="btnLogin"/>
-              {/* 네이버 로그인 버튼으로 변경 필요 */}
-              <vaadin-button id="btnNaverLogin"/>
+              {/* <vaadin-button id="btnNaverLogin"/> */}
+              {/* <div id="naver_id_login"></div> */}
+              <div id="naverIdLogin"></div>
+              {/* <a id="naverLogin"><img src='http://static.nid.naver.com/oauth/small_g_in.PNG' height='50'/></a> */}
             </div>
           </div>
           <div className="div-sub-field">

@@ -5,7 +5,8 @@ import { RegisterContainer } from '../index';
 import { Redirect } from 'react-router';
 import storage from '../../common/storage';
 
-const RegisterPage = () => {
+const RegisterPage = (props) => {
+  let params = decodeURIComponent(props.location.search);
   if (storage.get('loggedInfo')) {
     return <Redirect to={{
       pathname: "/",
@@ -15,7 +16,7 @@ const RegisterPage = () => {
     // <div>
       <PageTemplate>
         <div className="page-description">회원가입</div>
-        <RegisterContainer />
+        <RegisterContainer unrefined_userinfo={params}/>
       </PageTemplate>
     // </div>
   );
