@@ -6,7 +6,7 @@ import { Password } from 'primereact/password';
 import { Calendar } from 'primereact/calendar';
 
 import { calendarLocale } from '../../items';
-
+import '@vaadin/vaadin-button'
 let dateFormat = require('dateformat');
 class RegisterInput extends Component {
   constructor(props) {
@@ -338,8 +338,8 @@ class RegisterInput extends Component {
           </div>
         </div>
         <div className="div-register-popup-bottom">
-          <button id="btnOk"/>
-          <button id="btnCancle"/>
+          <vaadin-button id="btnOk"/>
+          <vaadin-button id="btnCancle"/>
         </div>
       </Fragment>
     );
