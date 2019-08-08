@@ -71,7 +71,8 @@ function* addChangePointHistorySaga(action) {
   try {
     const response = yield call(api.addChangePointHistory, action.payload.email, action.payload.dto);
     yield put({type: ADD_CHANGE_POINT_HISTORY_RECEIVED, payload: response});
-    yield call(getChangePointHistoryListSaga, action)
+    // yield call(getChangePointHistoryListSaga, action)
+    yield call(getChangePointHistoryListByEmailSaga, action)
   } catch (error) {
     yield put({type: ADD_CHANGE_POINT_HISTORY_FAILURE, payload: error});
   }

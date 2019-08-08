@@ -1,70 +1,63 @@
 import React, { Component } from 'react';
 import { Switch, Route } from 'react-router-dom';
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import * as userActions from "./scm/modules/UserModule";
-
+import { fromJS } from 'immutable';
 import storage from './common/storage';
 
 import { MainPage, NotFoundPage, LoginPage, RegisterPage, IdPwFindPage, NaverCallbackLogPage, NaverCallbackRegPage } from './common';
 import { BlogTyleNewsPage, BlogTyleNewsManagePage } from './blog';
-import { UserManagePage } from './scm';
+import { UserManagePage, UserDetailPage } from './scm';
 import { OrderHistoryPage, OrderHistoryByEmailPage, /*ReportMakeHistoryPage,*/ ChangePointHistoryPage, ChangePointHistoryByEmailPage, ProductManagePage } from './oms';
 import { NoticePage, NoticeManagePage, QuestionPage, QuestionManagePage } from './bms';
 import { PaymentPage } from './payment';
 import { BrRecapTitleInfoPage, LandInfoViewPage } from './mpa';
 
+import { getUser } from './scm';
+
 class App extends Component {
   
-  // 사용자 목록 조회 호출
-  getUser = (email, token) => {
-    const { UserModule } = this.props;
-    try {
-      UserModule.getUser(email, token);
-    } catch (e) {
-      console.log("error log : " + e);
-    }
-  }
-
-  initializeUserInfo = async () => {
+  initializeUserInfo = () => {
     const loggedInfo = storage.get('loggedInfo'); // 로그인 정보를 로컬스토리지에서 가져옵니다.
     if(!loggedInfo) return; // 로그인 정보가 없다면 여기서 멈춥니다.
     const token = storage.get('token');
     if(!token) return;
-    this.getUser(loggedInfo.email, token)
+    getUser(loggedInfo.email, token).then(res => {
+      if (res.data !== '') {
+        storage.set('compareInfo', fromJS(res.data));
+        this.compareWithUserInfo(storage.get('loggedInfo'), storage.get('compareInfo'))
+      } else {
+        storage.remove('loggedInfo');
+        storage.remove('token');
+        window.alert('아이디가 존재하지 않습니다.')
+        return window.location.reload();
+      }
+    }).catch(err => {
+      console.log(err)
+      storage.remove('loggedInfo');
+      storage.remove('token');
+      window.alert('로그인 세션이 만료되었습니다.\n다시 로그인 해주세요.')
+      return window.location.reload();
+    })
+  }
+
+  compareWithUserInfo(prevUserInfo, nextUserInfo) {
+    if (prevUserInfo.name !== nextUserInfo.name || 
+        prevUserInfo.tellNo !== nextUserInfo.tellNo || 
+        prevUserInfo.birthDt !== nextUserInfo.birthDt ||
+        prevUserInfo.address !== nextUserInfo.address ||
+        prevUserInfo.addressNo !== nextUserInfo.addressNo ||
+        prevUserInfo.balancePoint !== nextUserInfo.balancePoint) {
+      storage.remove('loggedInfo');
+      storage.remove('compareInfo');
+      storage.set('loggedInfo', nextUserInfo);
+      window.location.reload();
+    }
   }
 
   componentDidMount() {
     this.initializeUserInfo();
   }
 
-  // 해당 토큰으로 유저정보 조회에 실패 세션 종료 이벤트
-  sessionFailedEvent(err) {
-    if (err === true) {
-      storage.remove('loggedInfo');
-      storage.remove('token');
-      window.alert('로그인 세션이 만료되었습니다.\n다시 로그인 해주세요.')
-      return window.location.reload();
-    }
-  }
-
-  userInfoUpdate(loggedInfo) {
-    storage.set('compareInfo', loggedInfo);
-    if (storage.get('compareInfo') !== storage.get('loggedInfo')) {
-      storage.remove('loggedInfo');
-      storage.remove('compareInfo');
-      storage.set('loggedInfo', loggedInfo);
-    }
-  }
-
   render() {
-    const { error, loggedInfo } = this.props;
-    if (error === true) {
-      this.sessionFailedEvent(error)
-    }
-    if (loggedInfo !== null && loggedInfo !== undefined) {
-      this.userInfoUpdate(loggedInfo);
-    }
     return (
       <Switch>
         {/* 홈 */}
@@ -95,6 +88,8 @@ class App extends Component {
   
         {/* 사용자 관리 */}
         <Route exact path="/scm/user/manage" component={ UserManagePage }/>
+        {/* 회원정보 */}
+        <Route exact path="/user/details" component={ UserDetailPage }/>
   
         {/* 주문내역 조회(고객) */}
         <Route exact path="/oms/order/history/email" component={ OrderHistoryByEmailPage }/>
@@ -132,13 +127,4 @@ class App extends Component {
   };
 }
 
-export default connect(
-  state => ({
-    error: state.user.error,
-    success: state.user.success,
-    loggedInfo: state.user.user
-  }),
-  dispatch => ({
-    UserModule: bindActionCreators(userActions, dispatch)
-  })
-)(App);
+export default App;

@@ -5,49 +5,38 @@ class PwFindByReset extends Component {
   constructor(props) {
     super(props);
     this.state ={
-      // afterpw: '',
-      beforepw: '',
-      rebeforepw: ''
+      afterpw: '',
+      reafterpw: ''
     }
     this.passwordResetEvent = this.passwordResetEvent.bind(this);
   }
 
   componentDidMount() {
-    // document.querySelector('#lbAfterPw').innerHTML = '기존 비밀번호';
-    document.querySelector('#lbBeforePw').innerHTML = '새로운 비밀번호';
-    document.querySelector('#lbBeforeRePw').innerHTML = '재입력';
+    document.querySelector('#lbAfterPw').innerHTML = '새로운 비밀번호';
+    document.querySelector('#lbAfterRePw').innerHTML = '재입력';
   }
 
   passwordResetEvent() {
     const { email, PwResetCallbackEvent } = this.props;
-    const { afterpw, beforepw, rebeforepw } = this.state;
-    // const { afterpw, beforepw, rebeforepw } = this.state;
-    // if (afterpw === '') {
-    //   window.alert('기존 비밀번호를 입력해주세요.')
-    // }
-    if (beforepw === '') {
+    const { afterpw, reafterpw } = this.state;
+    if (afterpw === '') {
       window.alert('새로운 비밀번호를 입력해주세요.')
     }
-    if (rebeforepw === '') {
+    if (reafterpw === '') {
       window.alert('새로운 비밀번호를 입력해주세요.')
     }
-    if (beforepw !== rebeforepw) {
+    if (afterpw !== reafterpw) {
       window.alert('변경 비밀번호가 일치하지 않습니다.\n확인 후 다시 시도해주세요')
     } else {
-      // PwResetCallbackEvent(email, afterpw, beforepw);
-      PwResetCallbackEvent(email, beforepw);
+      PwResetCallbackEvent(email, afterpw);
     }
   }
 
-  // pwResetAfterPWInputEvent(e) {
-  //   this.setState({afterpw: e.target.value})
-  // }
-
-  pwResetBeforePWInputEvent(e) {
+  pwResetAfterPWInputEvent(e) {
     this.setState({beforepw: e.target.value})
   }
 
-  pwResetBeforeRePWInputEvent(e) {
+  pwResetAfterRePWInputEvent(e) {
     this.setState({rebeforepw: e.target.value})
   }
 
@@ -56,17 +45,13 @@ class PwFindByReset extends Component {
     return (
       <Fragment>
         <div>
-          {/* <div>
+          <div>
             <label id="lbAfterPw"/>
             <Password value={this.state.afterpw} onChange={(e) => this.pwResetAfterPWInputEvent(e) }/>
-          </div> */}
-          <div>
-            <label id="lbBeforePw"/>
-            <Password value={this.state.beforepw} onChange={(e) => this.pwResetBeforePWInputEvent(e) }/>
           </div>
           <div>
-            <label id="lbBeforeRePw"/>
-            <Password value={this.state.rebeforepw} onChange={(e) => this.pwResetBeforeRePWInputEvent(e) }/>
+            <label id="lbAfterRePw"/>
+            <Password value={this.state.reafterpw} onChange={(e) => this.pwResetAfterRePWInputEvent(e) }/>
           </div>
           <div>
             <button onClick={this.passwordResetEvent}>변경하기</button>

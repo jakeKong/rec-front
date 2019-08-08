@@ -60,6 +60,7 @@ class RCMenu extends Component {
               </SubMenu>
               <MenuItem key="/bms/question">문의사항</MenuItem>
               <SubMenu title={ <span className="submenu-title-wrapper">마이페이지</span> } key="mypage">
+                <MenuItem key="/user/details">회원정보</MenuItem>
                 <MenuItem key="/payment/product">상품구매</MenuItem>
                 <MenuItem key="/oms/order/history/email">주문내역 조회</MenuItem>
                 <MenuItem key="/oms/changepoint/history/email">포인트 변동내역 조회</MenuItem>

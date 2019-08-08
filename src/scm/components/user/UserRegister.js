@@ -25,8 +25,8 @@ class UserRegister extends Component {
         email: null,
         name: null,
         tellNo: null,
-        address: null,
-        addressNo: null,
+        // address: null,
+        // addressNo: null,
         birthDt: null,
         createdUser: null,
         assignedRoles: [],
@@ -166,14 +166,14 @@ class UserRegister extends Component {
         tfTellStation.value = null;
         tfTellByNumber.value = null;
         tfTellNumberByNumber.value = null;
-        tfAddress.value = null;
-        tfAddressNo.value = null;
+        // tfAddress.value = null;
+        // tfAddressNo.value = null;
         dpBirthDt.value = null;
         dto.email = null;
         dto.name = null;
         dto.tellNo = null;
-        dto.address = null;
-        dto.addressNo = null;
+        // dto.address = null;
+        // dto.addressNo = null;
         dto.birthDt = null;
         dto.createdUser = null;
         dto.assignedRoles = [];
@@ -199,8 +199,8 @@ class UserRegister extends Component {
       document.querySelector('#lbTellNoHyphen').innerHTML = " - ";
       document.querySelector('#lbTellNoHyphenTo').innerHTML = " - ";
 
-      document.querySelector('#lbAddress').innerHTML = "주소";
-      document.querySelector('#lbAddressNo').innerHTML = "&nbsp&nbsp우편번호";
+      // document.querySelector('#lbAddress').innerHTML = "주소";
+      // document.querySelector('#lbAddressNo').innerHTML = "&nbsp&nbsp우편번호";
       document.querySelector('#lbBirthDt').innerHTML = "생년월일";
 
       // 이메일 입력필드
@@ -229,12 +229,12 @@ class UserRegister extends Component {
       tfTellNumberByNumber.className = 'vaadin-text-field-width-100';
 
       // 주소 입력필드 (비활성)
-      const tfAddress = document.querySelector('#tfAddress');
-      tfAddress.className = 'vaadin-text-field-width-100-flex-30';
-      tfAddress.disabled = true;
-      const tfAddressNo = document.querySelector('#tfAddressNo');
-      tfAddressNo.className = 'vaadin-text-field-width-100-flex-30';
-      tfAddressNo.disabled = true;
+      // const tfAddress = document.querySelector('#tfAddress');
+      // tfAddress.className = 'vaadin-text-field-width-100-flex-30';
+      // tfAddress.disabled = true;
+      // const tfAddressNo = document.querySelector('#tfAddressNo');
+      // tfAddressNo.className = 'vaadin-text-field-width-100-flex-30';
+      // tfAddressNo.disabled = true;
 
       // 생년월일 입력필드
       const dpBirthDt = document.querySelector('#dpBirthDt');
@@ -363,14 +363,14 @@ class UserRegister extends Component {
           tfTellByNumber.value = user.tellNo.substr(user.tellNo.indexOf("-")+1, user.tellNo.lastIndexOf("-")-user.tellNo.indexOf("-")-1);
           tfTellNumberByNumber.value = user.tellNo.substr(user.tellNo.lastIndexOf("-")+1, user.tellNo.lastIndexOf("-"));
         }
-        if (user.address !== null) {
-          dto.address = user.address;
-          tfAddress.value = user.address;
-        }
-        if (user.addressNo !== null) {
-          dto.addressNo = user.addressNo;
-          tfAddressNo.value = user.addressNo;
-        }
+        // if (user.address !== null) {
+        //   dto.address = user.address;
+        //   tfAddress.value = user.address;
+        // }
+        // if (user.addressNo !== null) {
+        //   dto.addressNo = user.addressNo;
+        //   tfAddressNo.value = user.addressNo;
+        // }
         if (user.birthDt !== null) {
           dto.birthDt = user.birthDt;
           dpBirthDt.value = user.birthDt;
@@ -501,12 +501,12 @@ class UserRegister extends Component {
                 <vaadin-text-field id="tfTellNumberByNumber" required prevent-invalid-input pattern="^(\d{0,4}?)?$"/>
               </div>
             </div>
-            <div className="address-column">
+            {/* <div className="address-column">
               <label id="lbAddress" className="label-flex-20-left"/>
               <vaadin-text-field id="tfAddress" required prevent-invalid-input pattern="([a-zA-Zㄱ-ㅎ가-힣0-9]+?)"/>
               <label id="lbAddressNo" className="label-flex-20-left"/>
               <vaadin-text-field id="tfAddressNo" required prevent-invalid-input pattern="^(\d{0,7}?)?$"/>
-            </div>
+            </div> */}
             <div className="default-column">
               <label id="lbBirthDt" className="label-flex-20-left"/>
               <vaadin-date-picker id="dpBirthDt"/>

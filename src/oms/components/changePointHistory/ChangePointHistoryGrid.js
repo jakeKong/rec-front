@@ -156,7 +156,7 @@ class ChangePointHistoryGrid extends Component {
             <Column field="currentBalPoint" header="남은 포인트"/>
             <Column columnKey="grdUserNm" field="userNm" header="주문자"  style={{display:this.state.hiddenCheck}}/>
             <Column columnKey="grdEmail" field="email" header="아이디"  style={{display:this.state.hiddenCheck}}/>
-            <Column columnKey="grdBtnPaymentCancle" body={this.cancelTemplate} style={{display:this.state.hiddenCheck}} />
+            <Column columnKey="grdBtnPaymentCancle" body={this.cancelTemplate} style={{display:!this.state.hiddenCheck}} />
           </DataTable>
         </section>
         <div className="div-sub-top-right">
