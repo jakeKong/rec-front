@@ -1049,6 +1049,9 @@ html, body, #root .index {
     color: #4fd81b;
 }
 /* land info END */
+/* 문의사항 QNA */
+/* 문의사항 등록 */
+/* 문의사항 QNA END */
 /* purchase */
 .page-purchase .agz-bbs {
     border-top: 2px dashed #eee;
@@ -1196,6 +1199,19 @@ html, body, #root .index {
 .section-datatable-changehistory .p-datatable-thead th:nth-of-type(4),
 .section-datatable-changehistory .p-datatable-tbody td:nth-of-type(4) {
     width: 120px;
+}
+.section-datatable-changehistory .p-datatable .p-button-warning {
+    border: none;
+    color: #fff;
+    background: rgb(236, 137, 137);
+    font-size: 12px;
+    padding: 3px 8px;
+}
+.section-datatable-changehistory .p-datatable .p-button-warning:hover {
+    background: rgb(236, 100, 100);
+}
+.section-datatable-changehistory .p-datatable .p-button-warning:active {
+    background: rgb(236, 160, 160);
 }
 /* log-point END */
 /* PAGE-notice */
@@ -1637,3 +1653,8 @@ html, body, #root .index {
     color: rgba(0,0,0,0.5);
 }
 /* PAGE-register END */
+/*
+TODO
+문의사항 업로드 페이지 css 적용 방법 논의
+
+*/
