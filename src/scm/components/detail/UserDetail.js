@@ -1,8 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import storage from '../../../common/storage';
 
-import {Card} from 'primereact/card';
-
 class UserDetail extends Component {
 
   constructor(props) {

@@ -86,8 +86,8 @@ class RegisterAgree extends Component {
     })
     naverLoginRegister.init();
 
-    let termsOfService = require('./termsOfService.txt')
-    let personalInformationCollectionAgreement = require('./personalInformationCollectionAgreement.txt')
+    let termsOfService = require('../../file/termsOfService.txt')
+    let personalInformationCollectionAgreement = require('../../file/personalInformationCollectionAgreement.txt')
     fetch(termsOfService).then(r => r.text()).then(text => {
       taTermsOfService.value = text;
     })
