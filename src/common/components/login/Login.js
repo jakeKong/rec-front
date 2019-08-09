@@ -61,7 +61,7 @@ class Login extends Component {
     let naverLogin = new window.naver.LoginWithNaverId({
       clientId: "nwXOVGpHJOzfV1oBeUqn",
       // clientSecret = 'hr1p7IcsN7';
-      callbackUrl: "http://localhost:3000/naver/log/pop",
+      callbackUrl: "http://algozip.co.kr/naver/log/pop",
       // callbackUrl: "http://localhost:3000/login",
       isPopup: true, /* 팝업을 통한 연동처리 여부 */
       loginButton: {color: "white", type: 3, height: 60} /* 로그인 버튼의 타입을 지정 */
