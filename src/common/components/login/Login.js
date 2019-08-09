@@ -5,13 +5,15 @@ import '@vaadin/vaadin-text-field/vaadin-password-field';
 import '@vaadin/vaadin-button';
 // import { Checkbox } from 'primereact/checkbox';
 import { ToggleButton } from 'primereact/togglebutton';
+// import {InputText} from 'primereact/inputtext';
+// import {Password} from 'primereact/password';
 
 class Login extends Component {
   constructor(props) {
     super(props);
     this.state ={
-      // id: '',
-      // password: null,
+      id: '',
+      password: '',
       user: {
         email: undefined,
         name: undefined
@@ -30,13 +32,14 @@ class Login extends Component {
 
     document.querySelector('#lbLoginTitle').innerHTML = '로그인';
     document.querySelector('#lbLoginId').innerHTML = '아이디';
+    document.querySelector('#lbLoginIdExample').innerHTML = 'ex) honggildong@naver.com';
     document.querySelector('#lbLoginPw').innerHTML = '비밀번호';
     document.querySelector('#lbRegister').innerHTML = '회원가입';
     document.querySelector('#lbPunct').innerHTML = ' | ';
     document.querySelector('#lbFindByIdPw').innerHTML = '아이디/비밀번호 찾기';
 
     const tfLoginId = document.querySelector('#tfLoginId');
-    tfLoginId.placeholder = 'ID';
+    tfLoginId.placeholder = 'EMAIL';
     tfLoginId.className = 'vaadin-text-field-id';
     // tfLoginId.addEventListener('input', function() {
       // 아이디 입력 이벤트
@@ -54,6 +57,7 @@ class Login extends Component {
     btnLogin.textContent = '로그인'
     btnLogin.className = 'vaadin-button-login';
     btnLogin.addEventListener('click', function() {
+      console.log(tfLoginId.value)
       // 로그인 버튼 클릭 이벤트
       if (tfLoginId.value === null || tfLoginId.value === '' || tfLoginId.value === undefined) {
         window.confirm('아이디를 입력해주세요');
@@ -65,6 +69,35 @@ class Login extends Component {
       }
       idSavedCheck(tfLoginId.value, pfLoginPw.value)
       // RealEstateCommunityLoginAttempt(tfLoginId.value, pfLoginPw.value)
+    })
+    // 텍스트필드에서 Enter Key 입력 시 Validation 체크 후 동작 이벤트
+    tfLoginId.addEventListener('keypress', function(e) {
+      if (e.keyCode === 13) {
+        if (tfLoginId.value === null || tfLoginId.value === '' || tfLoginId.value === undefined) {
+          tfLoginId.focus();
+          window.confirm('아이디를 입력해주세요');
+          return;
+        }
+        if (pfLoginPw.value === null || pfLoginPw.value === '' || pfLoginPw.value === undefined) {
+          pfLoginPw.focus();
+          window.confirm('비밀번호를 입력해주세요');
+          return;
+        }
+        idSavedCheck(tfLoginId.value, pfLoginPw.value)
+      }
+    })
+    pfLoginPw.addEventListener('keypress', function(e) {
+      if (tfLoginId.value === null || tfLoginId.value === '' || tfLoginId.value === undefined) {
+        tfLoginId.focus();
+        window.confirm('아이디를 입력해주세요');
+        return;
+      }
+      if (pfLoginPw.value === null || pfLoginPw.value === '' || pfLoginPw.value === undefined) {
+        pfLoginPw.focus();
+        window.confirm('비밀번호를 입력해주세요');
+        return;
+      }
+      idSavedCheck(tfLoginId.value, pfLoginPw.value)
     })
 
     let naverLogin = new window.naver.LoginWithNaverId({
@@ -139,10 +172,13 @@ class Login extends Component {
               <div className="div-login-form-id">
                 <label id="lbLoginId" className="label-login-id"/>
                 <vaadin-text-field id="tfLoginId"/>
+                {/* <InputText id="tfLoginId" value={this.state.id} onChange={e => this.setState({id: e.target.value})}></InputText> */}
+                <label id="lbLoginIdExample" style={{size: '9px', textAlign: 'left', color: 'lightgray'}} />
               </div>
               <div className="div-login-form-pw">
                 <label id="lbLoginPw" className="label-login-pw"/>
                 <vaadin-password-field id="pfLoginPw"/>
+                {/* <Password id="pfLoginPw" value={this.state.password} onChange={e => this.setState({password: e.target.value})}></Password> */}
               </div>
               {/* <Checkbox checked={this.state.checked} onChange={e => this.idTextSavedCheckEvent(e)} /> */}
               <ToggleButton checked={this.state.checked} onChange={e => this.idTextSavedCheckEvent(e)} onLabel="아이디 저장" offLabel="아이디 저장" onIcon="pi pi-check" offIcon="pi pi-times" style={{width: '120px'}}></ToggleButton>
