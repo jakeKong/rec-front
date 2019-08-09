@@ -2,32 +2,17 @@ import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as noticeActions from "../modules/NoticeModule";
-import { NoticeGrid, NoticeDetail, NoticeRegister } from "../index";
+import { NoticeGrid } from "../index";
 
-import '@vaadin/vaadin-ordered-layout';
 import '@vaadin/vaadin-button';
-
-import storage from '../../common/storage';
 
 class NoticeManageContainer extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      notice: {
-        noticeSid: null,
-        noticeTitle: null,
-        noticeTxt: null,
-        noticeWriter: null,
-        reportingDt: null
-      },
       selectList: [],
-      detailStatus: false,
-      registerStatus: false
     }
-    this.detailStatusChangeEvent = this.detailStatusChangeEvent.bind(this);
-    this.registerStatusChangeEvent = this.registerStatusChangeEvent.bind(this);
-    this.selectedDeleteCheckEvent = this.selectedDeleteCheckEvent.bind(this);
   }
 
   componentDidMount() {
@@ -40,11 +25,10 @@ class NoticeManageContainer extends Component {
       selectedDeleteCheckEvent();
     });
 
-    const registerStatusChangeEvent = this.registerStatusChangeEvent;
     const btnRegister = document.querySelector('#btnRegister');
     btnRegister.innerHTML = '등록';
     btnRegister.addEventListener('click', function() {
-      registerStatusChangeEvent();
+      window.location.href = '/bms/notice/register';
     });
   }
 
@@ -72,17 +56,6 @@ class NoticeManageContainer extends Component {
     }
   }
 
-  // 공지사항 값 초기화
-  resetNotice() {
-    this.setState({notice: {
-      noticeSid: null,
-      noticeTitle: null,
-      noticeTxt: null,
-      noticeWriter: null,
-      reportingDt: null
-    }})
-  }
-
   // 공지사항 목록 조회 호출
   getNoticeList = async () => {
     const { NoticeModule } = this.props;
@@ -92,105 +65,15 @@ class NoticeManageContainer extends Component {
       console.log("error log : " + e);
     }
   }
-  
-  // 상세조회 상태로 변경
-  detailStatusChangeEvent() {
-    this.setState({detailStatus: true})
-  }
 
   // 그리드로부터 전달받은 공지사항 값으로 상세조회 화면으로 변경
   detailCallback = async (noticeDto) => {
-    this.setState({notice: noticeDto});
-    this.detailStatusChangeEvent();
-  }
-
-  // 상세조회 화면에서 돌아가기 버튼 클릭 시 목록조회 화면으로 변경
-  detailToListCallback = async () => {
-    this.setState({detailStatus: false})
-    this.resetNotice();
-  }
-
-  // 등록 및 수정 상태로 변경
-  registerStatusChangeEvent() {
-    this.setState({registerStatus: true})
-  }
-
-  // 등록 화면에서 취소 버튼 클릭 시 목록조회 화면으로 변경
-  registerToListCallback = async () => {
-    this.setState({registerStatus: false})
-    this.resetNotice();
-  }
-
-  // 그리드로부터 전달받은 공지사항 값으로 등록 화면으로 변경
-  registerCallback = async (noticeChild) => {
-    this.setState({notice: noticeChild})
-    this.registerStatusChangeEvent();
-  }
-
-  // 수정 화면에서 취소 버튼 클릭 시 상세조회 화면으로 변경
-  registerToDetailCallback = async (noticeDto) => {
-    this.setState({notice: noticeDto});
-    this.setState({registerStatus: false})
-    this.detailStatusChangeEvent();
+    window.location.href = `/bms/notice/details/${noticeDto.noticeSid}`
   }
 
   // 그리드의 체크박스 선택 시 선택한 컬럼의 값을 선택목록에 저장
   selectCallback = async (getSelectList) => {
     this.setState({selectList: getSelectList});
-  }
-
-  // 공지사항 등록 요청
-  addCallback = async (noticeChild) => {
-    this.setState({notice: noticeChild})
-    const loggedInfo = storage.get('loggedInfo')
-    const { notice } = this.state;
-    this.addNotice(loggedInfo.email, notice);
-    this.resetNotice();
-  }
-
-  // 공지사항 수정 요청
-  updateCallback = async (noticeSid, noticeChild) => {
-    this.setState({notice: noticeChild})
-    const loggedInfo = storage.get('loggedInfo')
-    const { notice } = this.state;
-    this.updateNotice(noticeSid, loggedInfo.email, notice);
-    this.resetNotice();
-  }
-
-  // 공지사항 단일항목 삭제 요청
-  deleteCallback = async (noticeSid) => {
-    this.deleteNotice(noticeSid);
-    this.resetNotice();
-  }
-
-  // 공지사항 등록 API 호출 이벤트
-  addNotice = async (email, notice) => {
-    const { NoticeModule } = this.props;
-    try {
-      await NoticeModule.addNotice(email, notice)
-    } catch (e) {
-      console.log("error log : " + e);
-    }
-  }
-
-  // 공지사항 수정 API 호출 이벤트
-  updateNotice = async (noticeSid, email, notice) => {
-    const { NoticeModule } = this.props;
-    try {
-      await NoticeModule.updateNotice(noticeSid, email, notice)
-    } catch (e) {
-      console.log("error log : " + e);
-    }
-  }
-
-  // 공지사항 단일항목 삭제 API 호출 이벤트
-  deleteNotice = async (noticeSid) => {
-    const { NoticeModule } = this.props;
-    try {
-      await NoticeModule.deleteNotice(noticeSid)
-    } catch (e) {
-      console.log("error log : " + e);
-    }
   }
 
   // 공지사항 선택삭제 API 호출 이벤트
@@ -207,22 +90,15 @@ class NoticeManageContainer extends Component {
   }
 
   render() {
-    const { detailStatus, notice, registerStatus } = this.state;
+    const { detailStatus, registerStatus } = this.state;
     const { noticeList, pending, error, success } = this.props;
-    let role = 'GUEST';
-    const loggedInfo = storage.get('loggedInfo')
-    if (loggedInfo && loggedInfo.assignedRoles.indexOf('ROLE_ADMIN') !== -1) {
-      role = 'ROLE_ADMIN';
-    }
     return (
       <Fragment>
         <div>
           <div className="div-main">
             { pending && <div className="boxLoading"/> }
             { error && <h1>Server Error!</h1> }
-            { !registerStatus && !detailStatus && success && <NoticeGrid noticeList={ noticeList } detailCallback={ this.detailCallback } role={ role } selectCallback={ this.selectCallback } />}
-            { detailStatus && <NoticeDetail notice={ notice } detailToListCallback={ this.detailToListCallback } role={ role } registerCallback={ this.registerCallback } deleteCallback={this.deleteCallback } /> }
-            { registerStatus ? <NoticeRegister registerToListCallback={ this.registerToListCallback } addCallback={ this.addCallback } noticeDto={ notice } updateCallback={ this.updateCallback } registerToDetailCallback={ this.registerToDetailCallback } /> : null }
+            { success && <NoticeGrid noticeList={ noticeList } detailCallback={ this.detailCallback } selectCallback={ this.selectCallback } />}
           </div>
           <div className="div-sub-main" hidden={registerStatus || detailStatus || !success}>
             <vaadin-button id="btnSelectDelete" theme="error" />
@@ -240,7 +116,6 @@ export default connect(
     pending: state.notice.pending,
     error: state.notice.error,
     success: state.notice.success,
-    // complete: state.notice.complete,
   }),
   dispatch => ({
     NoticeModule: bindActionCreators(noticeActions, dispatch)

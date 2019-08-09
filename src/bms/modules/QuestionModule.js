@@ -9,6 +9,11 @@ const GET_QUESTION_LIST = 'question/GET_QUESTION_LIST';
 const GET_QUESTION_LIST_RECEIVED = 'question/GET_QUESTION_LIST_RECEIVED';
 const GET_QUESTION_LIST_FAILURE = 'question/GET_QUESTION_LIST_FAILURE';
 
+// getQuestion Action Types
+const GET_QUESTION = 'question/GET_QUESTION';
+const GET_QUESTION_RECEIVED = 'question/GET_QUESTION_RECEIVED';
+const GET_QUESTION_FAILURE = 'question/GET_QUESTION_FAILURE';
+
 // deleteQuestion Action Types
 const DELETE_QUESTION = 'question/DELETE_QUESTION';
 const DELETE_QUESTION_RECEIVED = 'question/DELETE_QUESTION_RECEIVED';
@@ -84,6 +89,7 @@ const DELETE_QUESTION_ANSWER_CMT_BY_EMAIL_FAILURE = 'question/DELETE_QUESTION_AN
 // Actions
 // 외부에서 호출하여 입력받아줄 값 ( ex) this.getProductList(search) )
 export const getQuestionList = createAction(GET_QUESTION_LIST, search => search);
+export const getQuestion = createAction(GET_QUESTION, questionSid => questionSid);
 export const deleteQuestion = createAction(DELETE_QUESTION, questionSid => questionSid);
 export const deleteQuestionByList = createAction(DELETE_QUESTION_BY_LIST, (ids, search) => ({ids, search}));
 
@@ -132,6 +138,16 @@ function* getQuestionListSaga(action) {
     } catch (error) {
       yield put({type: GET_QUESTION_LIST_FAILURE, payload: error});
     }
+  }
+}
+
+// getQuestion Saga
+function* getQuestionSaga(action) {
+  try {
+    const response = yield call(api.getQuestion, action.payload);
+    yield put({type: GET_QUESTION_RECEIVED, payload: response});
+  } catch (error) {
+    yield put({type: GET_QUESTION_FAILURE, payload: error});
   }
 }
 
@@ -317,6 +333,7 @@ function* deleteQuestionAnswerCmtSaga(action) {
 // Question default root Saga
 export function* questionSaga() {
   yield takeEvery(GET_QUESTION_LIST, getQuestionListSaga);
+  yield takeEvery(GET_QUESTION, getQuestionSaga);
   yield takeLatest(DELETE_QUESTION, deleteQuestionSaga);
   yield takeLatest(DELETE_QUESTION_BY_LIST, deleteQuestionByListSaga);
 
@@ -355,6 +372,23 @@ export default handleActions({
     console.log('ERROR: ' + error)
     return {error: true};
   },
+
+  // getQuestion Handler
+  [GET_QUESTION]: (state, action) => {
+    console.log('GET_QUESTION onPending')
+    return {pending: true, error: false};
+  },
+  [GET_QUESTION_RECEIVED]: (state, action) => {
+    console.log('GET_QUESTION_RECEIVED onReceived')
+    const {data: content} = action.payload;
+    return {pending: false, error: false, success: true, question: content};
+  },
+  [GET_QUESTION_FAILURE]: (state, action) => {
+    const {error} = action.payload;
+    console.log('GET_QUESTION_FAILURE onFailure')
+    console.log('ERROR: ' + error)
+    return {error: true};
+  },  
 
   // deleteQuestion Handler
   [DELETE_QUESTION]: (state, action) => {

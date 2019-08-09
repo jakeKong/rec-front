@@ -4,6 +4,8 @@ import '@vaadin/vaadin-ordered-layout';
 import '@vaadin/vaadin-button';
 
 import { QuestionComment } from "../../index";
+import storage from '../../../common/storage';
+import { deleteQuestion, deleteQuestionAnswerByEmail } from '../../api/questionAxios'
 
 // deps for viewer.
 require('tui-editor/dist/tui-editor-contents.css'); // editor content
@@ -15,7 +17,7 @@ const Viewer = require('tui-editor/dist/tui-editor-Viewer');
 class QuestionDetail extends Component {
 
   componentDidMount() {
-    const { question, detailToListCallback } = this.props;
+    const { question } = this.props;
     if (!question || question === undefined) {
       return
     }
@@ -34,40 +36,60 @@ class QuestionDetail extends Component {
 
     const btnGoList = document.querySelector('#btnGoList');
     btnGoList.textContent = "돌아가기";
-    btnGoList.addEventListener('click', function() {
-      detailToListCallback();
-    })
 
-    const btnUpdate = document.querySelector('#btnUpdate');
-    const { role } = this.props;
-    console.log(role)
-    if (role === 'ROLE_ADMIN' || role === 'ROLE_SYSADMIN') {
-      btnUpdate.hidden = true;
-    } else {
-      btnUpdate.hidden = false;
-      const { registerCallback } = this.props;
-      btnUpdate.textContent = "수정";
-      btnUpdate.addEventListener('click', function() {
-        registerCallback(question);
-        detailToListCallback();
-      })
-    }
-
-    const { deleteCallback } = this.props;
     const btnDelete = document.querySelector('#btnDelete');
     btnDelete.textContent = "삭제";
-    btnDelete.addEventListener('click', function() {
-      const check = window.confirm('문의사항을 삭제 하시겠습니까?');
-      if (check === true) {
-        deleteCallback(question.questionSid);
-        detailToListCallback();
+
+    const btnUpdate = document.querySelector('#btnUpdate');
+
+    if (storage.get('loggedInfo')) {
+      if (storage.get('loggedInfo').email === question.email) {
+        btnUpdate.hidden = false;
+        btnGoList.addEventListener('click', function() {
+          window.location.href = '/bms/question';
+        });
+        btnUpdate.textContent = "수정";
+      } else {
+        btnUpdate.hidden = true;
       }
-    })
+      if (storage.get('loggedInfo').assignedRoles.indexOf('ROLE_ADMIN') === -1) {
+
+        btnUpdate.addEventListener('click', function() {
+          window.location.href = `/bms/question/update/${question.questionSid}`;
+        });
+        btnDelete.addEventListener('click', function() {
+          const check = window.confirm('문의사항을 삭제 하시겠습니까?');
+          if (check === true) {
+            deleteQuestionAnswerByEmail(question.questionSid, storage.get('loggedInfo').email).then(res => {
+              window.alert('삭제 완료')
+              window.location.href = '/bms/question'
+            }).catch(err => {
+              console.log(err);
+            });
+          }
+        });
+      } else {
+        btnGoList.addEventListener('click', function() {
+          window.location.href = '/bms/question/manage';
+        });
+
+        btnDelete.addEventListener('click', function() {
+          const check = window.confirm('문의사항을 삭제 하시겠습니까?');
+          if (check === true) {
+            deleteQuestion(question.questionSid).then(res => {
+              window.alert('삭제 완료')
+              window.location.href = '/bms/question/manage'
+            }).catch(err => {
+              console.log(err);
+            });
+          }
+        });
+      }
+    }
   }
 
   render() {
     const { question, email } = this.props;
-    // const { question, questionAnswerList, addAnswerCallback, deleteAnswerCallback} = this.props;
     return (
       <Fragment>
         <div className="div-board">
@@ -84,7 +106,6 @@ class QuestionDetail extends Component {
               <div id="viewerSection" />
             </div>
             </div>
-            {/* <QuestionComment question={question} questionAnswerList={questionAnswerList} addAnswerCallback={addAnswerCallback} deleteAnswerCallback={deleteAnswerCallback}/> */}
             <QuestionComment question={question} email={email} />
           </div>
           <div>

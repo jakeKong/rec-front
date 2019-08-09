@@ -1,5 +1,5 @@
 import React from 'react';
-import { PageTemplate } from '../../common';
+import { PageTemplateToManage } from '../../common';
 import { NoticeManageContainer } from '../index';
 
 import { Redirect } from 'react-router';
@@ -20,10 +20,10 @@ const NoticeManagePage = () => {
   }
   return (
     // <div>
-      <PageTemplate>
+      <PageTemplateToManage>
         <div className="page-description">공지사항(관리)</div>
         <NoticeManageContainer />
-      </PageTemplate>
+      </PageTemplateToManage>
     // </div>
   );
 };

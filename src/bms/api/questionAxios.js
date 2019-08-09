@@ -17,6 +17,16 @@ export const getQuestionList = (search) => axios({
   })
 });
 
+// 문의사항 단일 항목 조회
+export const getQuestion = (questionSid) => axios({
+  method: 'GET',
+  url: `${config.boardService}/question/${questionSid}`,
+  headers: {
+    'Content-Type': 'application/json; charset=UTF-8',
+    'Accept': 'application/json'
+  }
+});
+
 // 문의사항 삭제 (관리용)
 export const deleteQuestion = (questionSid) => axios({
   method: 'DELETE',

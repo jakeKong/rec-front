@@ -13,32 +13,8 @@ import '../../../styles/ToastEditor.scss';
 import '@vaadin/vaadin-button';
 import '@vaadin/vaadin-text-field';
 
-// import axios from 'axios';
-
-/*
-const addImage = (blob) => axios({
-  method: 'POST',
-  // url: `http://localhost:3001/image/`,
-  url: `http://localhost:8003/bms/image/`,
-  headers: {
-    'Content-Type': 'multipart/form-data; boundary=${data._boundary',
-    // 'Content-Type': undefined
-    // 'Content-Type': 'application/json; charset=UTF-8',
-    // 'Accept': 'application/json'
-  },
-  responseType: 'blob',
-  data: blob
-  // data: JSON.stringify(base64data)
-  // data: JSON.stringify({
-  //   'lastModified': blob.lastModified,
-  //   'lastModifiedDate': blob.lastModifiedDate,
-  //   'name': blob.name,
-  //   'size': blob.size,
-  //   'type': blob.type,
-  //   'webkitRelativePath': blob.webkitRelativePath
-  // })
-});
-*/
+import storage from '../../../common/storage';
+import { addNotice, updateNotice } from '../../api/noticeAxios';
 
 class NoticeRegister extends Component {
 
@@ -55,14 +31,7 @@ class NoticeRegister extends Component {
 
   componentDidMount() {
     const { notice } = this.state;
-    const { noticeDto, registerToListCallback } = this.props;
-
-    // 등록 및 수정 처리를 위한 공지사항 값 초기화 함수
-    const noticeReset = () => {
-      notice.noticeTitle = null;
-      notice.noticeTxt = null;
-      notice.reportingDt = null;
-    }
+    const { noticeDto } = this.props;
 
     // define youtube extension
     Editor.defineExtension('youtube', function() {
@@ -86,87 +55,24 @@ class NoticeRegister extends Component {
       height: 'auto',
       initialEditType: 'wysiwyg', // 'markdown',
       exts: ['colorSyntax', 'chart', 'uml', 'table', 'youtube'],
-      // toolbarItems: [
-      //   'heading',
-      //   'bold',
-      //   'italic',
-      //   'strike',
-      //   'divider',
-      //   'hr',
-      //   'quote',
-      //   'divider',
-      //   'ul',
-      //   'ol',
-      //   'task',
-      //   'indent',
-      //   'outdent',
-      //   'divider',
-      //   'table',
-      //   'image',
-      //   'link',
-      //   'divider',
-      //   'code',
-      //   'codeblock',
-      //   'divider',
-      //   {
-      //     type: 'button',
-      //     options: {
-      //       el: <div class="our-button-class">test<i class="fas fa-briefcase-medical">yrdydr</i></div>,
-      //       name: 'test2',
-      //       className: '',
-      //       command: 'Bold', // you can use "Bold"
-      //       tooltip: 'Bold'
-      //     }
-      //   }
-      // ]
-      // hooks: {
-      //   addImageBlobHook: function(blob, callback) {
-      //     var formData = new FormData();
-      //     formData.append('blob', blob);
-      //     addImage(formData);
-      //     // 60초 대기
-      //     window.setTimeout(60000);
-      //     callback(`http://localhost:3001/image/${formData.get('blob').name}`)
-      //     return false;
-
-      //     /* base64 변환
-      //     var reader = new FileReader();
-      //     reader.readAsDataURL(blob);
-      //     reader.onloadend = function() {
-      //       let base64data = reader.result;
-      //     }
-      //     */
-      //   }
-      // },
     });
 
     toastEditor.on('change', function() {
       notice.noticeTxt = toastEditor.getValue();
     })
 
-    // const toolbar = toastEditor.getUI().getToolbar();
-    // toastEditor.eventManager.addEventType('Event1');
-    // toastEditor.eventManager.listen('Event1', function() {
-    //   window.alert('test');
-    // });
-
-    // toolbar.addButton({
-    //   name: 'customize',
-    //   className: 'fab fa-accessible-icon',
-    //   event: 'Event1',
-    //   tooltip: 'Apple!!!',
-    //   el: <div class="our-button-class"><i class="fab fa-apple"></i></div>
-    // }, 18);
-
     // 공지사항 제목 수정 및 등록에 사용되는 텍스트필드
     const tfTitle = document.querySelector('#tfTitle');
     tfTitle.className = "vaadin-text-field-title"
     tfTitle.placeholder = '제목을 입력하세요.';
     tfTitle.maxlength = '15';
+
     // 텍스트 입력 시 공지사항 제목 값 할당
     tfTitle.addEventListener('input', function() { 
       notice.noticeTitle = tfTitle.value
     });
+
+    const btnRegister = document.querySelector('#btnRegister');
 
     if (noticeDto !== null && noticeDto !== undefined && noticeDto.noticeSid !== null) {
       toastEditor.setValue(noticeDto.noticeTxt);
@@ -174,77 +80,95 @@ class NoticeRegister extends Component {
 
       notice.noticeTxt = noticeDto.noticeTxt
       notice.noticeTitle = noticeDto.noticeTitle;
+
+      // 공지사항 수정 버튼 이벤트
+      btnRegister.textContent = "수정"
+      btnRegister.addEventListener('click', function() {
+        const check = window.confirm('공지사항을 수정 하시겠습니까?');
+        if (check === true) {
+          // 알림팝업 확인버튼을 클릭한 시점의 DATE값을 공지사항 작성일자에 할당
+          notice.reportingDt = new Date();
+          // 공지사항 제목과 내용의 값이 있을 경우
+          // 전달받은 공지사항 값이 존재할 경우 공지사항 수정 이벤트 호출 (sid값이 있을 경우)
+          if (noticeDto !== null && noticeDto !== undefined && notice.noticeTitle !== null && notice.noticeTxt !== null && noticeDto.noticeSid !== null) {
+            updateNotice(noticeDto.noticeSid, storage.get('loggedInfo').email, notice).then(res => {
+              window.alert('수정 완료!');
+              window.location.href = '/bms/notice/manage';
+            }).catch(err => {
+              console.log(err);
+            })
+          // 입력된 값이 없고 전달받은 공지사항 값이 없을 경우 알림 이벤트
+          } else {
+            const nfRegisterFailure = document.createElement('vaadin-notification');
+            nfRegisterFailure.renderer = function(root) {
+              const container = document.createElement('div');
+              const boldText = document.createElement('b');
+              boldText.textContent = '입력되지 않은 항목이 있습니다.'
+              const br = document.createElement('br');
+              const labelText = document.createElement('label');
+              labelText.textContent = '확인 후 다시 시도해주세요.'
+              container.appendChild(boldText);
+              container.appendChild(br);
+              container.appendChild(labelText);
+
+              root.appendChild(container);
+            }
+            document.body.appendChild(nfRegisterFailure);
+            nfRegisterFailure.position = 'middle';
+            nfRegisterFailure.duration = 3000;
+            nfRegisterFailure.opened = true;
+          }
+        }
+      })
     } else {
       tfTitle.value = "";
       notice.noticeTxt = null;
       notice.noticeTitle = null;
-    }
+      // 공지사항 등록 버튼 이벤트
+      btnRegister.textContent = "등록"
+      btnRegister.addEventListener('click', function() {
+        const check = window.confirm('공지사항을 등록 하시겠습니까?');
+        if (check === true) {
+          // 알림팝업 확인버튼을 클릭한 시점의 DATE값을 공지사항 작성일자에 할당
+          notice.reportingDt = new Date();
+          // 공지사항 제목과 내용의 값이 있을 경우
+          // 전달받은 공지사항 값이 존재하지 않을경우 공지사항 등록 이벤트 호출
+          if (notice.noticeTitle !== null && notice.noticeTxt !== null) {
+            addNotice(storage.get('loggedInfo').email, notice).then(res => {
+              window.alert('등록 완료!');
+              window.location.href = '/bms/notice/manage';
+            }).catch(err => {
+              console.log(err);
+            })
+          } else {
+            const nfRegisterFailure = document.createElement('vaadin-notification');
+            nfRegisterFailure.renderer = function(root) {
+              const container = document.createElement('div');
+              const boldText = document.createElement('b');
+              boldText.textContent = '입력되지 않은 항목이 있습니다.'
+              const br = document.createElement('br');
+              const labelText = document.createElement('label');
+              labelText.textContent = '확인 후 다시 시도해주세요.'
+              container.appendChild(boldText);
+              container.appendChild(br);
+              container.appendChild(labelText);
 
-    const { addCallback, updateCallback } = this.props;
-    // 공지사항 등록 버튼 이벤트
-    const btnRegister = document.querySelector('#btnRegister');
-    btnRegister.textContent = "등록"
-    // const getEditorState = this.getEditorState;
-    btnRegister.addEventListener('click', function() {
-      // 공지사항 제목에 텍스트필드에 저장된 값 할당
-      // notice.noticeTitle = tfTitle.value;
-      // 공지사항 내용에 CKEditor에 입력된 값 할당
-      // notice.noticeTxt = textValue;
-      // notice.noticeTxt = textValue.getData();
-      // notice.noticeTxt = getEditorState();
-      // console.log(getEditorState());
-      const check = window.confirm('공지사항을 등록 하시겠습니까?');
-      if (check === true) {
-        // 알림팝업 확인버튼을 클릭한 시점의 DATE값을 공지사항 작성일자에 할당
-        notice.reportingDt = new Date();
-        // 공지사항 제목과 내용의 값이 있을 경우
-        // 전달받은 공지사항 값이 존재하지 않을경우 공지사항 등록 이벤트 호출
-        if (notice.noticeTitle !== null && notice.noticeTxt !== null && noticeDto.noticeSid === null) {
-          addCallback(notice);
-          registerToListCallback();
-          noticeReset();
-        // 전달받은 공지사항 값이 존재할 경우 공지사항 수정 이벤트 호출 (sid값이 있을 경우)
-        } else if (noticeDto !== null && noticeDto !== undefined && notice.noticeTitle !== null && notice.noticeTxt !== null && noticeDto.noticeSid !== null) {
-          updateCallback(noticeDto.noticeSid, notice);
-          registerToListCallback();
-          noticeReset();
-        // 입력된 값이 없고 전달받은 공지사항 값이 없을 경우 알림 이벤트
-        } else {
-          const nfRegisterFailure = document.createElement('vaadin-notification');
-          nfRegisterFailure.renderer = function(root) {
-            const container = document.createElement('div');
-            const boldText = document.createElement('b');
-            boldText.textContent = '입력되지 않은 항목이 있습니다.'
-            const br = document.createElement('br');
-            const labelText = document.createElement('label');
-            labelText.textContent = '확인 후 다시 시도해주세요.'
-            container.appendChild(boldText);
-            container.appendChild(br);
-            container.appendChild(labelText);
-
-            root.appendChild(container);
+              root.appendChild(container);
+            }
+            document.body.appendChild(nfRegisterFailure);
+            nfRegisterFailure.position = 'middle';
+            nfRegisterFailure.duration = 3000;
+            nfRegisterFailure.opened = true;
           }
-          document.body.appendChild(nfRegisterFailure);
-          nfRegisterFailure.position = 'middle';
-          nfRegisterFailure.duration = 3000;
-          nfRegisterFailure.opened = true;
         }
-      }
-    })
+      })
+    }
     
-    const { registerToDetailCallback } = this.props;
     const btnCancle = document.querySelector('#btnCancle');
     btnCancle.textContent = "취소";
-    // 현재 등록된 공지사항 정보를 초기화하고 공지사항 목록화면으로 이동
     btnCancle.addEventListener('click', function() {
-      if (noticeDto !== null && noticeDto !== undefined && noticeDto.noticeSid !== null) {
-        registerToDetailCallback(noticeDto);
-      } else {
-        registerToListCallback();
-      }
-      noticeReset();
+      window.location.href = '/bms/notice/manage';
     })
-
   }
 
   render() {

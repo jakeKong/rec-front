@@ -2,45 +2,46 @@ import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as noticeActions from "../modules/NoticeModule";
-import { NoticeGrid } from "../index";
+import { NoticeDetail } from "../index";
 
-class NoticeContainer extends Component {
+import '@vaadin/vaadin-ordered-layout';
+
+class NoticeDetailContainer extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
 
     }
-    this.detailCallback = this.detailCallback.bind(this);
+  }
+
+  componentWillMount() {
+
   }
 
   componentDidMount() {
-      this.getNoticeList();
+    const { noticeSid } = this.props;
+    this.getNotice(noticeSid);
   }
 
-  // 공지사항 목록 조회 호출
-  getNoticeList = async () => {
+  // 공지사항 조회 호출
+  getNotice = async (noticeSid) => {
     const { NoticeModule } = this.props;
     try {
-      await NoticeModule.getNoticeList()
+      await NoticeModule.getNotice(noticeSid)
     } catch (e) {
       console.log("error log : " + e);
     }
   }
 
-  // 그리드로부터 전달받은 공지사항 값으로 상세조회 화면으로 이동
-  detailCallback = async (noticeDto) => {
-    window.location.href = `/bms/notice/details/${noticeDto.noticeSid}`
-  }
-
   render() {
-    const { noticeList, pending, error, success } = this.props;
+    const { notice, pending, error, success } = this.props;
     return (
       <Fragment>
         <div className="div-main">
           { pending && <div className="boxLoading"/> }
           { error && <h1>Server Error!</h1> }
-          { success && <NoticeGrid noticeList={ noticeList } detailCallback={ this.detailCallback } />}
+          { success && <NoticeDetail notice={notice} /> }
         </div>
       </Fragment>
     );
@@ -49,7 +50,7 @@ class NoticeContainer extends Component {
 
 export default connect(
   state => ({
-    noticeList: state.notice.noticeList,
+    notice: state.notice.notice,
     pending: state.notice.pending,
     error: state.notice.error,
     success: state.notice.success
@@ -57,4 +58,4 @@ export default connect(
   dispatch => ({
     NoticeModule: bindActionCreators(noticeActions, dispatch)
   })
-)(NoticeContainer);
+)(NoticeDetailContainer);

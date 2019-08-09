@@ -1,5 +1,5 @@
 import React from 'react';
-import { PageTemplate } from '../../common';
+import { PageTemplateToManage } from '../../common';
 import { ProductManageContainer } from '../index';
 
 import { Redirect } from 'react-router';
@@ -20,10 +20,10 @@ const ProductManagePage = () => {
   }
   return (
     // <div>
-      <PageTemplate>
+      <PageTemplateToManage>
         <div className="page-description">운영관리 > 상품관리</div>
         <ProductManageContainer />
-      </PageTemplate>
+      </PageTemplateToManage>
     // </div>
   );
 };

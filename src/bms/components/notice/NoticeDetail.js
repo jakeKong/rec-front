@@ -4,6 +4,9 @@ import '@vaadin/vaadin-ordered-layout';
 import '@vaadin/vaadin-button';
 import '../../../styles/ToastEditor.scss';
 
+import storage from '../../../common/storage';
+import { deleteNotice } from '../../api/noticeAxios'
+
 // deps for viewer.
 require('tui-editor/dist/tui-editor-contents.css'); // editor content
 require('highlight.js/styles/github.css'); // code block highlight
@@ -14,11 +17,10 @@ const Viewer = require('tui-editor/dist/tui-editor-Viewer');
 class NoticeDetail extends Component {
 
   componentDidMount() {
-    const { notice, detailToListCallback } = this.props;
+    const { notice } = this.props;
     if (!notice || notice === undefined) {
       return
     }
-
     const lbTitle = document.querySelector('#lbTitle')
     lbTitle.innerHTML = notice.noticeTitle;
     
@@ -31,44 +33,48 @@ class NoticeDetail extends Component {
       initialValue: notice.noticeTxt
     });
 
-    // const dlsTxt = document.querySelector('#dlsTxt')
-    // dlsTxt.className = 'details-board-txt';
-    // dlsTxt.innerHTML = notice.noticeTxt;
-    
     const btnGoList = document.querySelector('#btnGoList');
     btnGoList.textContent = "돌아가기";
-    btnGoList.addEventListener('click', function() {
-      detailToListCallback();
-    })
 
-    const { role } = this.props;
-    if (role === 'ROLE_ADMIN' || role === 'ROLE_SYSADMIN') {
+    if (storage.get('loggedInfo')) {
+      if (storage.get('loggedInfo').assignedRoles.indexOf('ROLE_ADMIN') === -1) {
 
-      const divSub = document.querySelector('#divSub');
-
-      const { registerCallback } = this.props;
-      const btnUpdate = document.createElement('vaadin-button');
-      btnUpdate.textContent = "수정";
-      btnUpdate.addEventListener('click', function() {
-        registerCallback(notice);
-        detailToListCallback();
+      } else {
+        btnGoList.addEventListener('click', function() {
+          window.location.href = '/bms/notice/manage';
+        })
+        const divSub = document.querySelector('#divSub');
+  
+        const btnUpdate = document.createElement('vaadin-button');
+        btnUpdate.textContent = "수정";
+        btnUpdate.addEventListener('click', function() {
+          window.location.href = `/bms/notice/update/${notice.noticeSid}`;
+        })
+  
+        const btnDelete = document.createElement('vaadin-button');
+        btnDelete.setAttribute('style', 'color: var(--lumo-error-text-color)');
+        btnDelete.textContent = "삭제";
+        btnDelete.addEventListener('click', function() {
+          const check = window.confirm('공지사항을 삭제 하시겠습니까?');
+          if (check === true) {
+            deleteNotice(notice.noticeSid).then(res => {
+              window.alert('삭제가 완료되었습니다.');
+              window.location.href = '/bms/notice';
+            }).catch(err => {
+              console.log(err);
+            });
+          }
+        })
+        divSub.appendChild(btnUpdate);
+        divSub.appendChild(btnDelete);
+      }
+    } else {
+      btnGoList.addEventListener('click', function() {
+        window.location.href = '/bms/notice';
       })
-
-      const { deleteCallback } = this.props;
-      const btnDelete = document.createElement('vaadin-button');
-      btnDelete.setAttribute('style', 'color: var(--lumo-error-text-color)');
-      btnDelete.textContent = "삭제";
-      btnDelete.addEventListener('click', function() {
-        const check = window.confirm('공지사항을 삭제 하시겠습니까?');
-        if (check === true) {
-          deleteCallback(notice.noticeSid);
-          detailToListCallback();
-        }
-      })
-      divSub.appendChild(btnUpdate);
-      divSub.appendChild(btnDelete);
     }
   }
+  
 
   render() {
     return (
@@ -80,9 +86,6 @@ class NoticeDetail extends Component {
           <label id="lbReportingDt" />
           <label id="lbNoticeWriter" />
         </div>
-        {/* <div className="div-board-txt">
-          <vaadin-details id="dlsTxt" />
-        </div> */}
         <div id="toastEditor">
           <div id="viewerSection" />
         </div>

@@ -85,7 +85,6 @@ class LoginContainer extends Component {
 
   // 마운트 직후 한번 (rendering 이전 마운트 이후의 작업)
   componentDidMount() {
-    console.log(this.props.email);
     const { email } = this.props;
     if (email !== undefined && email !== null && email !== '') {
       this.NaverLoginAttempt(email);

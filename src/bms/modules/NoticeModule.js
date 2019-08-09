@@ -10,11 +10,9 @@ const GET_NOTICE_LIST_RECEIVED = 'notice/GET_NOTICE_LIST_RECEIVED';
 const GET_NOTICE_LIST_FAILURE = 'notice/GET_NOTICE_LIST_FAILURE';
 
 // getNotice Action Types
-/*
 const GET_NOTICE = 'notice/GET_NOTICE';
 const GET_NOTICE_RECEIVED = 'notice/GET_NOTICE_RECEIVED';
 const GET_NOTICE_FAILURE = 'notice/GET_NOTICE_FAILURE';
-*/
 
 // addNotice Action Types
 const ADD_NOTICE = 'notice/ADD_NOTICE';
@@ -39,7 +37,7 @@ const DELETE_NOTICE_LIST_FAILURE = 'notice/DELETE_NOTICE_LIST_FAILURE';
 // Actions
 // 외부에서 호출하여 입력받아줄 값 ( ex) this.getProductList(search) )
 export const getNoticeList = createAction(GET_NOTICE_LIST);
-// export const getNotice = createAction(GET_NOTICE, noticeSid => noticeSid);
+export const getNotice = createAction(GET_NOTICE, noticeSid => noticeSid);
 export const addNotice = createAction(ADD_NOTICE, (email, dto) => ({email, dto}));
 export const updateNotice = createAction(UPDATE_NOTICE, (noticeSid, email, dto) => ({noticeSid, email, dto}));
 export const deleteNotice = createAction(DELETE_NOTICE, noticeSid => noticeSid);
@@ -66,7 +64,6 @@ function* getNoticeListSaga() {
 }
 
 // getNotice Saga
-/*
 function* getNoticeSaga(action) {
   try {
     const response = yield call(api.getNotice, action.payload);
@@ -75,7 +72,6 @@ function* getNoticeSaga(action) {
     yield put({type: GET_NOTICE_FAILURE, payload: error});
   }
 }
-*/
 
 // addNotice Saga
 function* addNoticeSaga(action) {
@@ -132,7 +128,7 @@ export function* noticeSaga() {
   yield takeLatest(DELETE_NOTICE, deleteNoticeSaga);
   yield takeLatest(DELETE_NOTICE_LIST, deleteNoticeListSaga);
   yield takeEvery(GET_NOTICE_LIST, getNoticeListSaga);
-  // yield takeEvery(GET_NOTICE, getNoticeSaga);
+  yield takeEvery(GET_NOTICE, getNoticeSaga);
 }
 
 // 액션 핸들러 설정
@@ -155,7 +151,6 @@ export default handleActions({
   },
 
   // getNotice Handler
-  /*
   [GET_NOTICE]: (state, action) => {
     console.log('GET_NOTICE onPending')
     return {pending: true, error: false};
@@ -163,7 +158,7 @@ export default handleActions({
   [GET_NOTICE_RECEIVED]: (state, action) => {
     console.log('GET_NOTICE_RECEIVED onReceived')
     const {data: content} = action.payload;
-    return {pending: false, error: false, success: true, notice: fromJS(content)};
+    return {pending: false, error: false, success: true, notice: content};
   },
   [GET_NOTICE_FAILURE]: (state, action) => {
     const {error} = action.payload;
@@ -171,7 +166,6 @@ export default handleActions({
     console.log('ERROR: ' + error)
     return {error: true};
   },
-  */
 
   // addNotice Handler
   [ADD_NOTICE]: (state, action) => {

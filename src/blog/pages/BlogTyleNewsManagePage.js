@@ -1,5 +1,5 @@
 import React from 'react';
-import { PageTemplate } from '../../common';
+import { PageTemplateToManage } from '../../common';
 import { BlogTyleNewsManageContainer } from '../index';
 
 import { Redirect } from 'react-router';
@@ -20,10 +20,10 @@ const BlogTyleNewsManagePage = () => {
   }
   return (
     // <div>
-      <PageTemplate>
+      <PageTemplateToManage>
         <div className="page-description">게시글관리 > 타일뉴스 관리</div>
         <BlogTyleNewsManageContainer />
-      </PageTemplate>
+      </PageTemplateToManage>
     // </div>
   );
 };

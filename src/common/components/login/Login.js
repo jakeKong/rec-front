@@ -3,22 +3,30 @@ import React, { Component, Fragment } from 'react';
 import '@vaadin/vaadin-text-field';
 import '@vaadin/vaadin-text-field/vaadin-password-field';
 import '@vaadin/vaadin-button';
+// import { Checkbox } from 'primereact/checkbox';
+import { ToggleButton } from 'primereact/togglebutton';
 
 class Login extends Component {
   constructor(props) {
     super(props);
     this.state ={
-      // email: null,
+      // id: '',
       // password: null,
       user: {
         email: undefined,
         name: undefined
-      }
+      },
+      checked: false,
     }
+    this.idTextSavedCheckEvent = this.idTextSavedCheckEvent.bind(this);
+    this.idSavedCheck = this.idSavedCheck.bind(this);
+    this.setCookieById = this.setCookieById.bind(this);
+    this.getCookieById = this.getCookieById.bind(this);
   }
 
   componentDidMount() {
-    const { RealEstateCommunityLoginAttempt } = this.props;
+    const getCookieById = this.getCookieById;
+    getCookieById();
 
     document.querySelector('#lbLoginTitle').innerHTML = '로그인';
     document.querySelector('#lbLoginId').innerHTML = '아이디';
@@ -30,17 +38,18 @@ class Login extends Component {
     const tfLoginId = document.querySelector('#tfLoginId');
     tfLoginId.placeholder = 'ID';
     tfLoginId.className = 'vaadin-text-field-id';
-    tfLoginId.addEventListener('input', function() {
+    // tfLoginId.addEventListener('input', function() {
       // 아이디 입력 이벤트
-    })
+    // })
 
     const pfLoginPw = document.querySelector('#pfLoginPw');
     pfLoginPw.placeholder = 'password';
     pfLoginPw.className = 'vaadin-text-field-pw';
-    pfLoginPw.addEventListener('input', function() {
+    // pfLoginPw.addEventListener('input', function() {
       // 비밀번호 입력 이벤트
-    });
+    // });
 
+    const idSavedCheck = this.idSavedCheck;
     const btnLogin = document.querySelector('#btnLogin');
     btnLogin.textContent = '로그인'
     btnLogin.className = 'vaadin-button-login';
@@ -54,8 +63,8 @@ class Login extends Component {
         window.confirm('비밀번호를 입력해주세요');
         return;
       }
-
-      RealEstateCommunityLoginAttempt(tfLoginId.value, pfLoginPw.value)
+      idSavedCheck(tfLoginId.value, pfLoginPw.value)
+      // RealEstateCommunityLoginAttempt(tfLoginId.value, pfLoginPw.value)
     })
 
     let naverLogin = new window.naver.LoginWithNaverId({
@@ -79,6 +88,47 @@ class Login extends Component {
     })
   }
 
+  setCookieById(name, value, expiredays) {
+    let today = new Date();
+    today.setDate(today.getDate() + expiredays);
+    document.cookie = name + "=" + escape(value) + "; path=/; expires="+ today.toGMTString() + ";";
+  }
+
+  getCookieById() {
+    var cook = document.cookie + ';';
+    var idx = cook.indexOf("userid", 0);
+    var val = '';
+    if (idx !== -1) {
+      cook = cook.substring(idx, cook.length);
+      let begin = cook.indexOf("=", 0) + 1;
+      let end = cook.indexOf(";", begin);
+      val = unescape(cook.substring(begin, end));
+    }
+    if (val !== '') {
+      this.setState({checked: true})
+      document.querySelector('#tfLoginId').value = val;
+    }
+  }
+
+  idSavedCheck(id, pw) {
+    const { checked } = this.state;
+    const { RealEstateCommunityLoginAttempt } = this.props;
+    const setCookieById = this.setCookieById;
+    if (checked) {
+      // 아이디 쿠키 저장 추가
+      setCookieById('userid', id, 7);
+      RealEstateCommunityLoginAttempt(id, pw)
+    } else {
+      // 쿠키 삭제
+      setCookieById('userid', id, -1);
+      RealEstateCommunityLoginAttempt(id, pw)
+    }
+  }
+
+  idTextSavedCheckEvent(e) {
+    this.setState({checked: e.value})
+  }
+
   render() {
     return (
       <Fragment>
@@ -94,6 +144,8 @@ class Login extends Component {
                 <label id="lbLoginPw" className="label-login-pw"/>
                 <vaadin-password-field id="pfLoginPw"/>
               </div>
+              {/* <Checkbox checked={this.state.checked} onChange={e => this.idTextSavedCheckEvent(e)} /> */}
+              <ToggleButton checked={this.state.checked} onChange={e => this.idTextSavedCheckEvent(e)} onLabel="아이디 저장" offLabel="아이디 저장" onIcon="pi pi-check" offIcon="pi pi-times" style={{width: '120px'}}></ToggleButton>
             </div>
             <div className="div-login-button-field">
               <vaadin-button id="btnLogin"/>

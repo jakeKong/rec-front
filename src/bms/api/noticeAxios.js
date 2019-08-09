@@ -12,7 +12,6 @@ export const getNoticeList = () => axios({
 });
 
 // 공지사항 단일 항목 조회
-/*
 export const getNotice = (noticeSid) => axios({
   method: 'GET',
   url: `${config.boardService}/notice/${noticeSid}`,
@@ -21,7 +20,6 @@ export const getNotice = (noticeSid) => axios({
     'Accept': 'application/json'
   }
 });
-*/
 
 // 공지사항 등록
 export const addNotice = (email, dto) => axios({
