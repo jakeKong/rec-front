@@ -6,6 +6,8 @@ import 'primereact/resources/themes/nova-light/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 
+import storage from '../../../common/storage';
+
 class QuestionGrid extends Component {
   constructor(props) {
     super(props);
@@ -62,48 +64,49 @@ class QuestionGrid extends Component {
     selectCallback(selectList)
   }
 
-  roleCheckColumnRenderingEvent(role) {
-    if (role === 'ROLE_ADMIN' || role === 'ROLE_SYSADMIN') {
-      return (
-        <Fragment>
-          <DataTable id="table"
-                    value={this.state.gridData} 
-                    paginator={true} 
-                    rows={10} 
-                    rowsPerPageOptions={[5,10,15,20]}  
-                    selection={this.state.selectedItem} 
-                    onSelectionChange={e => this.selectChangedEvent(e)} >
-            <Column selectionMode="multiple"/>
-            <Column field="index" header="번호"/>
-            <Column body={this.questionTitleClickLabelTemplate} header="제목"/>
-            <Column field="questionWriter" header="작성자"/>
-            <Column field="reportingDt" header="작성일자"/>
-          </DataTable>
-        </Fragment>
-      )
-    } else {
-      return (
-        <Fragment>
-          <section className="section-datatable-question">
+  roleCheckColumnRenderingEvent() {
+    if (storage.get('loggedInfo')) {
+      if (storage.get('loggedInfo').assignedRoles.indexOf('ROLE_ADMIN') === -1) {
+        return (
+          <Fragment>
+            <section className="section-datatable-question">
+              <DataTable id="table"
+                        value={this.state.gridData} 
+                        paginator={true} 
+                        rows={10} 
+                        rowsPerPageOptions={[5,10,15,20]} >
+                <Column field="index" header="번호"/>
+                <Column body={this.questionTitleClickLabelTemplate} header="제목"/>
+                <Column field="questionWriter" header="작성자"/>
+                <Column field="reportingDt" header="작성일자"/>
+              </DataTable>
+            </section>
+          </Fragment>
+        );
+      } else {
+        return (
+          <Fragment>
             <DataTable id="table"
                       value={this.state.gridData} 
                       paginator={true} 
                       rows={10} 
-                      rowsPerPageOptions={[5,10,15,20]} >
+                      rowsPerPageOptions={[5,10,15,20]}  
+                      selection={this.state.selectedItem} 
+                      onSelectionChange={e => this.selectChangedEvent(e)} >
+              <Column selectionMode="multiple"/>
               <Column field="index" header="번호"/>
               <Column body={this.questionTitleClickLabelTemplate} header="제목"/>
               <Column field="questionWriter" header="작성자"/>
               <Column field="reportingDt" header="작성일자"/>
             </DataTable>
-          </section>
-        </Fragment>
-      );
+          </Fragment>
+        );
+      }
     }
   }
 
   render() {
-    const { role } = this.props;
-    return this.roleCheckColumnRenderingEvent(role);
+    return this.roleCheckColumnRenderingEvent();
   }
 }
 export default QuestionGrid;

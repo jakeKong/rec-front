@@ -1,11 +1,11 @@
 import React from 'react';
 import { PageTemplateToManage } from '../../common';
-import { ChangePointHistoryContainer } from '../index';
+import { NoticeRegisterContainer } from '../index'
 
 import { Redirect } from 'react-router';
 import storage from '../../common/storage';
 
-const ChangePointHistoryPage = () => {
+const NoticeRegisterPage = () => {
   // 로그인 상태가 아닐 경우
   if (!storage.get('loggedInfo')) {
     return <Redirect to={{
@@ -19,13 +19,11 @@ const ChangePointHistoryPage = () => {
     }} push={true}/>;
   }
   return (
-    // <div>
-      <PageTemplateToManage>
-        <div className="page-description">운영관리 > 포인트 변동내역 관리</div>
-        <ChangePointHistoryContainer />
-      </PageTemplateToManage>
-    // </div>
+    <PageTemplateToManage>
+      <div className="page-description">공지사항 등록</div>
+      <NoticeRegisterContainer/>
+    </PageTemplateToManage>
   );
 };
 
-export default ChangePointHistoryPage;
+export default NoticeRegisterPage;

@@ -7,7 +7,8 @@ import { MainPage, NotFoundPage, LoginPage, RegisterPage, IdPwFindPage, NaverCal
 import { BlogTyleNewsPage, BlogTyleNewsManagePage } from './blog';
 import { UserManagePage, UserDetailPage } from './scm';
 import { OrderHistoryPage, OrderHistoryByEmailPage, /*ReportMakeHistoryPage,*/ ChangePointHistoryPage, ChangePointHistoryByEmailPage, ProductManagePage } from './oms';
-import { NoticePage, NoticeManagePage, QuestionPage, QuestionManagePage } from './bms';
+import { NoticePage, NoticeDetailPage, NoticeRegisterPage, NoticeUpdatePage, NoticeManagePage, 
+         QuestionPage, QuestionDetailPage, QuestionRegisterPage, QuestionUpdatePage, QuestionManagePage } from './bms';
 import { PaymentPage } from './payment';
 import { BrRecapTitleInfoPage, LandInfoViewPage } from './mpa';
 
@@ -107,13 +108,25 @@ class App extends Component {
   
         {/* 공지사항 */}
         <Route exact path="/bms/notice" component={ NoticePage }/>
+        {/* 공지사항 상세조회 */}
+        <Route exact path="/bms/notice/details/:sid" component={ NoticeDetailPage }/>
+        {/* 공지사항 등록 */}
+        <Route exact path="/bms/notice/register" component={ NoticeRegisterPage }/>
+        {/* 공지사항 수정 */}
+        <Route exact path="/bms/notice/update/:sid" component={ NoticeUpdatePage }/>
         {/* 공지사항 관리 */}
         <Route exact path="/bms/notice/manage" component={ NoticeManagePage }/>
         {/* 문의사항 */}
         <Route exact path="/bms/question" component={ QuestionPage }/>
+        {/* 문의사항 상세조회*/}
+        <Route exact path="/bms/question/details/:sid" component={ QuestionDetailPage }/>
+        {/* 문의사항 등록*/}
+        <Route exact path="/bms/question/register" component={ QuestionRegisterPage }/>
+        {/* 문의사항 수정*/}
+        <Route exact path="/bms/question/update/:sid" component={ QuestionUpdatePage }/>
         {/* 문의사항 관리 */}
         <Route exact path="/bms/question/manage" component={ QuestionManagePage }/>
-  
+
         <Route exact path="/bms/notice/list" component={ NoticePage }/>
         <Route exact path="/bms/notice/manage/list" component={ NoticeManagePage }/>
         

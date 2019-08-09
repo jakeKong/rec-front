@@ -2,7 +2,7 @@ import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as questionActions from "../modules/QuestionModule";
-import { QuestionDetail, QuestionGrid, QuestionSearch } from "../index";
+import { QuestionGrid, QuestionSearch } from "../index";
 
 import '@vaadin/vaadin-ordered-layout';
 
@@ -30,7 +30,6 @@ class QuestionManageContainer extends Component {
       selectList: [],
       detailStatus: false
     }
-    this.detailStatusChangeEvent = this.detailStatusChangeEvent.bind(this);
     this.selectedDeleteCheckEvent = this.selectedDeleteCheckEvent.bind(this);
   }
 
@@ -69,18 +68,6 @@ class QuestionManageContainer extends Component {
     }
   }
 
-  // 문의사항 값 초기화
-  resetQuestion() {
-    this.setState({question: {
-      questionSid: null,
-      questionTitle: null,
-      questionTxt: null,
-      questionLevel: null,
-      questionWriter: null,
-      reportingDt: null
-    }})
-  }
-
   searchCallback = async (fromDt, toDt, questionTitle, questionWriter) => {
     let searchValue = {
       fromDt: fromDt,
@@ -91,11 +78,6 @@ class QuestionManageContainer extends Component {
     this.getQuestionList(searchValue);
   }
 
-  // 상세조회 상태로 변경
-  detailStatusChangeEvent() {
-    this.setState({detailStatus: true})
-  }
-
   // 그리드의 체크박스 선택 시 선택한 컬럼의 값을 선택목록에 저장
   selectCallback = async (getSelectList) => {
     this.setState({selectList: getSelectList});
@@ -103,16 +85,7 @@ class QuestionManageContainer extends Component {
 
   // 그리드로부터 전달받은 문의사항 값으로 상세조회 화면으로 변경
   detailCallback = async (questionDto) => {
-    this.setState({question: questionDto});
-    this.detailStatusChangeEvent();
-  }
-
-  // 상세조회 화면에서 돌아가기 버튼 클릭 시 목록조회 화면으로 돌아오는 이벤트
-  detailToListCallback = async () => {
-    this.setState({detailStatus: false})
-    this.resetQuestion();
-    const { search } = this.state;
-    this.getQuestionList(search);
+    window.location.href = `/bms/question/details/${questionDto.questionSid}`;
   }
 
   // 문의사항 목록 조회 호출
@@ -140,13 +113,10 @@ class QuestionManageContainer extends Component {
   }
 
   render() {
-    const { detailStatus, question } = this.state;
     const { questionList, pending, error, success } = this.props;
     const loggedInfo = storage.get('loggedInfo')
-    let email = null;
     let role = 'GUEST';
     if (loggedInfo) {
-      email = loggedInfo.email;
       if (loggedInfo.assignedRoles.indexOf('ROLE_ADMIN') !== -1) {
         role = 'ROLE_ADMIN';
       }
@@ -154,16 +124,15 @@ class QuestionManageContainer extends Component {
     return (
       <Fragment>
         <div>
-          <div className="div-search" hidden={detailStatus}>
+          <div className="div-search" >
             <QuestionSearch searchCallback={ this.searchCallback } role={role} />
           </div>
           <div className="div-main">
             { pending && <div className="boxLoading"/> }
             { error && <h1>Server Error!</h1> }
-            { !detailStatus && success && questionList && <QuestionGrid questionList={ questionList } detailCallback={ this.detailCallback } role={ role } selectCallback={ this.selectCallback } />}
-            { detailStatus && <QuestionDetail question={ question } email={ email } role={ role } detailToListCallback={ this.detailToListCallback } registerCallback={ this.registerCallback } /> }
+            { success && questionList && <QuestionGrid questionList={ questionList } detailCallback={ this.detailCallback } selectCallback={ this.selectCallback } />}
           </div>
-          <div className="div-sub-main" hidden={detailStatus || !success}>
+          <div className="div-sub-main">
             <vaadin-button id="btnSelectDelete" theme="error" />
           </div>
         </div>

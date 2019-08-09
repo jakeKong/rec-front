@@ -74,7 +74,6 @@ class OrderHistoryGrid extends Component {
         pdfFileNm: e.get("pdfFileNm"),
         ordererNm: e.get("ordererNm"),
         activated: e.get("activated"),
-        pnuNo: e.get("pnuNo")
       })
     })    
     this.setState({gridData: list.reverse()});

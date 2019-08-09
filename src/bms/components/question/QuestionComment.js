@@ -657,9 +657,6 @@ class QuestionComment extends Component {
 export default connect(
   state => ({
     questionAnswerList: state.question.questionAnswerList,
-
-    // 임시 설정
-    // email: 'yieon@test.com'
   }),
   dispatch => ({
     QuestionModule: bindActionCreators(questionActions, dispatch)

@@ -1,5 +1,5 @@
 import React from 'react';
-import { PageTemplate } from '../../common';
+import { PageTemplateToManage } from '../../common';
 import { OrderHistoryContainer } from '../index';
 
 import { Redirect } from 'react-router';
@@ -20,10 +20,10 @@ const OrderHistoryPage = () => {
   }
   return (
     // <div>
-      <PageTemplate>
+      <PageTemplateToManage>
         <div className="page-description">운영관리 > 주문내역 관리</div>
         <OrderHistoryContainer />
-      </PageTemplate>
+      </PageTemplateToManage>
     // </div>
   );
 };

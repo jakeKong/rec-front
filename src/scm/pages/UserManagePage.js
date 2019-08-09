@@ -1,5 +1,5 @@
 import React from 'react';
-import { PageTemplate } from '../../common';
+import { PageTemplateToManage } from '../../common';
 import { UserManageContainer } from '../index';
 
 import { Redirect } from 'react-router';
@@ -20,10 +20,10 @@ const UserPage = () => {
   }
   return (
     // <div>
-      <PageTemplate>
+      <PageTemplateToManage>
         <div className="page-description">사용자 관리</div>
         <UserManageContainer />
-      </PageTemplate>
+      </PageTemplateToManage>
     // </div>
   );
 };

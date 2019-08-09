@@ -6,6 +6,7 @@ export { default as Footer } from './components/Footer';
 export { default as Header } from './components/Header';
 export { default as Menu } from './components/Menu';
 export { default as PageTemplate } from './components/PageTemplate';
+export { default as PageTemplateToManage } from './components/PageTemplateToManage';
 
 export { default as MainGrid } from './components/main/MainGrid';
 export { default as MainSearch } from './components/main/MainSearch';
