@@ -32,6 +32,8 @@ class LandInfoViewContainer extends Component {
     }; 
     this.makeLandInfo = this.makeLandInfo.bind(this);    
     this.popupOpenStateEvent = this.popupOpenStateEvent.bind(this);
+    
+    this.enabled = 'none';
   }
   
   popupClose = async (dataClickChild) => {
