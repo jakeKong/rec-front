@@ -1,11 +1,12 @@
 import React from 'react';
 import { PageTemplate } from '../../common';
-import { PaymentContainer } from '../index'
+import { UserDetailContainer } from '../index';
 
 import { Redirect } from 'react-router';
 import storage from '../../common/storage';
 
-const PaymentPage = () => {
+const UserPage = () => {
+  // 로그인 상태가 아닐 경우
   if (!storage.get('loggedInfo')) {
     return <Redirect to={{
       pathname: "/",
@@ -14,11 +15,11 @@ const PaymentPage = () => {
   return (
     // <div>
       <PageTemplate>
-        <div className="page-description">포인트 구매</div>
-        <PaymentContainer />
+        <div className="page-description">회원정보</div>
+        <UserDetailContainer />
       </PageTemplate>
     // </div>
   );
 };
 
-export default PaymentPage;
+export default UserPage;

@@ -138,17 +138,18 @@ class PaymentContainer extends Component {
         //결제 모듈 초기화
         IMP.init(config.iamportpayMemberId);
         // IMP.request_pay(param, callback) 호출
+        const loggedInfo = storage.get('loggedInfo');
         IMP.request_pay({ // param
           pg: "kcp.A52CY",
           pay_method: "card",
           merchant_uid: merchantUid,
           name: itemName,
           amount: productDto.pointCash,
-          buyer_email: "gildong@gmail.com",
-          buyer_name: "홍길동",
-          buyer_tel: "010-4242-4242",
-          buyer_addr: "서울특별시 강남구 신사동",
-          buyer_postcode: "01181",
+          buyer_email: loggedInfo.email,
+          buyer_name: loggedInfo.name,
+          buyer_tel: loggedInfo.tellNo,
+          buyer_addr: loggedInfo.address,
+          buyer_postcode: loggedInfo.addressNo,
           // 가맹점 임의 지정 데이터 : add1. 포인트 정보 
           custom_data: {
             point: productDto.productPoint
@@ -158,7 +159,6 @@ class PaymentContainer extends Component {
             this.setState({successPay: true})
             this.setState({purchaseResult: rsp})
 
-            const loggedInfo = storage.get('loggedInfo');
             const token = storage.get('token');
 
             // 카드사 승인번호 : rsp.apply_num

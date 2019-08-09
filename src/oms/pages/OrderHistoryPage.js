@@ -21,7 +21,7 @@ const OrderHistoryPage = () => {
   return (
     // <div>
       <PageTemplate>
-        <div className="page-description">운영관리 > (관리)구매내역</div>
+        <div className="page-description">운영관리 > 주문내역 관리</div>
         <OrderHistoryContainer />
       </PageTemplate>
     // </div>

@@ -2,6 +2,7 @@ import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as changePointHistoryActions from "../modules/ChangePointHistoryModule";
+import * as userManageActions from "../../scm/modules/UserModule";
 import { ChangePointHistoryGrid, ChangePointHistorySearch } from "../index";
 
 import storage from '../../common/storage';
@@ -72,6 +73,56 @@ class ChangePointHistoryByEmailContainer extends Component {
     }
   }
 
+  changePointCancleCallback = (dto) => {
+    const { search } = this.state;
+    const loggedInfo = storage.get('loggedInfo');
+    if (loggedInfo.balancePoint-dto.changePointOrigin < 0) {
+      window.alert('잔여 포인트가 부족하여 결제취소를 할 수 없습니다.')
+    } else {
+      let changePointDto = {
+        'changeDt': new Date(),
+        'paymentCash': dto.paymentCashOrigin,
+        'changeType': 'PAYMENT_SUB',
+        'changePoint': dto.changePointOrigin,
+        'currentBalPoint': loggedInfo.balancePoint-dto.changePointOrigin,
+        'odrNo': dto.odrNo,
+        'paymentNo': dto.paymentNo,
+        'activated': false
+      }
+      const token = storage.get('token');
+      this.updateChangePointHistoryActivated(dto.changePointSid, false);
+      this.addChangePointHistory(loggedInfo.email, changePointDto, search);
+      this.updateUserByBalancePointDifference(loggedInfo.email, dto.changePointOrigin, token);
+    }
+  }
+
+  addChangePointHistory = async (email, dto, search) => {
+    const { ChangePointHistoryModule } = this.props;
+    try {
+      await ChangePointHistoryModule.addChangePointHistory(email, dto, search)
+    } catch (e) {
+      console.log("error log : " + e);
+    }
+  }
+
+  updateChangePointHistoryActivated = async (changePointSid, chagePPointActivated) => {
+    const { ChangePointHistoryModule } = this.props;
+    try {
+      await ChangePointHistoryModule.updateChangePointHistoryActivated(changePointSid, chagePPointActivated)
+    } catch (e) {
+      console.log("error log : " + e);
+    }
+  }
+
+  updateUserByBalancePointDifference = async (email, differencePoint, token) => {
+    const { UserManageModule } = this.props;
+    try {
+      await UserManageModule.updateUserByBalancePointDifference(email, differencePoint, token)
+    } catch (e) {
+      console.log("error log : " + e);
+    }
+  }
+
   render() {
     const { changePointHistoryList, pending, error, success } = this.props;
     return (
@@ -82,7 +133,7 @@ class ChangePointHistoryByEmailContainer extends Component {
         <div className="div-main">
           { pending && <div className="boxLoading"/> }
           { error && <h1>Server Error!</h1> }
-          { success && <ChangePointHistoryGrid changePointHistoryList={ changePointHistoryList } /> }
+          { success && <ChangePointHistoryGrid changePointHistoryList={ changePointHistoryList } changePointCancleCallback={this.changePointCancleCallback} /> }
         </div>
       </Fragment>
     );
@@ -98,5 +149,6 @@ export default connect(
   }),
   dispatch => ({
     ChangePointHistoryModule: bindActionCreators(changePointHistoryActions, dispatch),
+    UserManageModule: bindActionCreators(userManageActions, dispatch)
   })
 )(ChangePointHistoryByEmailContainer);

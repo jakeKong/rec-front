@@ -38,7 +38,7 @@ class QuestionGrid extends Component {
         questionTxt: e.get("questionTxt"),
         questionLevel: e.get("questionLevel"),
         questionWriter: e.get("questionWriter"),
-        reportingDt: dateFormat(new Date(e.get("reportingDt")), 'yyyy년mm월dd일 HH:MM:ss')
+        reportingDt: dateFormat(new Date(e.get("reportingDt")), 'yyyy년mm월dd일')
       })
     })
     this.setState({gridData: list.reverse()});

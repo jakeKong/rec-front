@@ -68,50 +68,50 @@ class ChangePointHistoryContainer extends Component {
     }
   }
 
-  changePointCancleCallback = (dto) => {
-    const { search } = this.state;
-    let changePointDto = {
-      'changeDt': new Date(),
-      'paymentCash': dto.paymentCashOrigin,
-      'changeType': 'PAYMENT_SUB',
-      'changePoint': dto.changePointOrigin,
-      'currentBalPoint': dto.currentBalPointOrigin,
-      'odrNo': dto.odrNo,
-      'paymentNo': dto.paymentNo,
-      'activated': false
-    }
-    const token = storage.get('token');
-    this.updateChangePointHistoryActivated(dto.changePointSid, false);
-    this.addChangePointHistory(dto.email, changePointDto, search)
-    this.updateUserByBalancePointDifference(dto.email, dto.changePointOrigin, token);
-  }
+  // changePointCancleCallback = (dto) => {
+  //   const { search } = this.state;
+  //   let changePointDto = {
+  //     'changeDt': new Date(),
+  //     'paymentCash': dto.paymentCashOrigin,
+  //     'changeType': 'PAYMENT_SUB',
+  //     'changePoint': dto.changePointOrigin,
+  //     'currentBalPoint': dto.currentBalPointOrigin,
+  //     'odrNo': dto.odrNo,
+  //     'paymentNo': dto.paymentNo,
+  //     'activated': false
+  //   }
+  //   const token = storage.get('token');
+  //   this.updateChangePointHistoryActivated(dto.changePointSid, false);
+  //   this.addChangePointHistory(dto.email, changePointDto, search)
+  //   this.updateUserByBalancePointDifference(dto.email, dto.changePointOrigin, token);
+  // }
 
-  addChangePointHistory = async (email, dto, search) => {
-    const { ChangePointHistoryModule } = this.props;
-    try {
-      await ChangePointHistoryModule.addChangePointHistory(email, dto, search)
-    } catch (e) {
-      console.log("error log : " + e);
-    }
-  }
+  // addChangePointHistory = async (email, dto, search) => {
+  //   const { ChangePointHistoryModule } = this.props;
+  //   try {
+  //     await ChangePointHistoryModule.addChangePointHistory(email, dto, search)
+  //   } catch (e) {
+  //     console.log("error log : " + e);
+  //   }
+  // }
 
-  updateChangePointHistoryActivated = async (changePointSid, chagePPointActivated) => {
-    const { ChangePointHistoryModule } = this.props;
-    try {
-      await ChangePointHistoryModule.updateChangePointHistoryActivated(changePointSid, chagePPointActivated)
-    } catch (e) {
-      console.log("error log : " + e);
-    }
-  }
+  // updateChangePointHistoryActivated = async (changePointSid, chagePPointActivated) => {
+  //   const { ChangePointHistoryModule } = this.props;
+  //   try {
+  //     await ChangePointHistoryModule.updateChangePointHistoryActivated(changePointSid, chagePPointActivated)
+  //   } catch (e) {
+  //     console.log("error log : " + e);
+  //   }
+  // }
 
-  updateUserByBalancePointDifference = async (email, differencePoint, token) => {
-    const { UserManageModule } = this.props;
-    try {
-      await UserManageModule.updateUserByBalancePointDifference(email, differencePoint, token)
-    } catch (e) {
-      console.log("error log : " + e);
-    }
-  }
+  // updateUserByBalancePointDifference = async (email, differencePoint, token) => {
+  //   const { UserManageModule } = this.props;
+  //   try {
+  //     await UserManageModule.updateUserByBalancePointDifference(email, differencePoint, token)
+  //   } catch (e) {
+  //     console.log("error log : " + e);
+  //   }
+  // }
 
   render() {
     const { changePointHistoryList, pending, error, success } = this.props;
@@ -128,7 +128,7 @@ class ChangePointHistoryContainer extends Component {
         <div className="div-main">
           { pending && <div className="boxLoading"/> }
           { error && <h1>Server Error!</h1> }
-          { success && <ChangePointHistoryGrid changePointHistoryList={ changePointHistoryList } role={ role } changePointCancleCallback={this.changePointCancleCallback} /> }
+          { success && <ChangePointHistoryGrid changePointHistoryList={ changePointHistoryList } role={ role } /* changePointCancleCallback={this.changePointCancleCallback} */ /> }
         </div>
       </Fragment>
     );

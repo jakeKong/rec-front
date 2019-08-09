@@ -21,12 +21,12 @@ class RCMenu extends Component {
           <Fragment>
             <Menu onClick={this.handleClick} mode="horizontal" openAnimation="slide-up" style={{ margin: 0 }} className="wrap-nav width-full align-center">
               <MenuItem key="/">홈</MenuItem>
-              <MenuItem key="/bms/notice">공지사항</MenuItem>
+              {/* <MenuItem key="/bms/notice">공지사항</MenuItem> */}
               <SubMenu title={ <span className="submenu-title-wrapper">블로그</span> } key="blog">
                 <MenuItem key="/blog/tyle">타일뉴스</MenuItem> 
               </SubMenu>
-              <SubMenu title={ <span className="submenu-title-wrapper">주택정보</span> } key="housing">
-                <MenuItem key="/mpa">주택정보 조회</MenuItem> 
+              <SubMenu title={ <span className="submenu-title-wrapper">부동산 시세</span> } key="housing">
+                <MenuItem key="/mpa">단독/다가구</MenuItem> 
               </SubMenu>
               <MenuItem key="/bms/question">문의사항</MenuItem>
               <MenuItem key="/payment/product">상품구매</MenuItem>
@@ -51,18 +51,19 @@ class RCMenu extends Component {
           <Fragment>
             <Menu onClick={this.handleClick} mode="horizontal" openAnimation="slide-up" style={{ margin: 0 }} className="wrap-nav width-full align-center">
               <MenuItem key="/">홈</MenuItem>
-              <MenuItem key="/bms/notice">공지사항</MenuItem>
+              {/* <MenuItem key="/bms/notice">공지사항</MenuItem> */}
               <SubMenu title={ <span className="submenu-title-wrapper">블로그</span> } key="blog">
                 <MenuItem key="/blog/tyle">타일뉴스</MenuItem> 
               </SubMenu>
-              <SubMenu title={ <span className="submenu-title-wrapper">주택정보</span> } key="housing">
-                <MenuItem key="/mpa">주택정보 조회</MenuItem> 
+              <SubMenu title={ <span className="submenu-title-wrapper">부동산 시세</span> } key="housing">
+                <MenuItem key="/mpa">단독/다가구</MenuItem> 
               </SubMenu>
               <MenuItem key="/bms/question">문의사항</MenuItem>
               <SubMenu title={ <span className="submenu-title-wrapper">마이페이지</span> } key="mypage">
+                <MenuItem key="/user/details">회원정보</MenuItem>
+                <MenuItem key="/oms/order/history/email">주문내역</MenuItem>
+                <MenuItem key="/oms/changepoint/history/email">포인트 변동내역</MenuItem>
                 <MenuItem key="/payment/product">상품구매</MenuItem>
-                <MenuItem key="/oms/order/history/email">주문내역 조회</MenuItem>
-                <MenuItem key="/oms/changepoint/history/email">포인트 변동내역 조회</MenuItem>
               </SubMenu>
             </Menu>
           </Fragment>
@@ -73,12 +74,12 @@ class RCMenu extends Component {
         <Fragment>
           <Menu onClick={this.handleClick} mode="horizontal" openAnimation="slide-up" style={{ margin: 0 }} className="wrap-nav width-full align-center">
             <MenuItem key="/">홈</MenuItem>
-            <MenuItem key="/bms/notice">공지사항</MenuItem>
+            {/* <MenuItem key="/bms/notice">공지사항</MenuItem> */}
             <SubMenu title={ <span className="submenu-title-wrapper">블로그</span> } key="blog">
               <MenuItem key="/blog/tyle">타일뉴스</MenuItem> 
             </SubMenu>
-            <SubMenu title={ <span className="submenu-title-wrapper">주택정보</span> } key="housing">
-              <MenuItem key="/mpa">주택정보 조회</MenuItem> 
+            <SubMenu title={ <span className="submenu-title-wrapper">부동산 시세</span> } key="housing">
+              <MenuItem key="/mpa">단독/다가구</MenuItem> 
             </SubMenu>
             {/* <MenuItem key="/#/bms/question">문의사항</MenuItem> */}
           </Menu>

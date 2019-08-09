@@ -23,6 +23,10 @@ const UPDATE_ORDER_HISTORY_ACTIVATED = 'orderHistory/UPDATE_ORDER_HISTORY_ACTIVA
 const UPDATE_ORDER_HISTORY_ACTIVATED_RECEIVED = 'orderHistory/UPDATE_ORDER_HISTORY_ACTIVATED_RECEIVED';
 const UPDATE_ORDER_HISTORY_ACTIVATED_FAILURE = 'orderHistory/UPDATE_ORDER_HISTORY_ACTIVATED_FAILURE';
 
+const UPDATE_ORDER_HISTORY_STATUS_ATTEMPT = 'orderHistory/UPDATE_ORDER_HISTORY_STATUS_ATTEMPT';
+const UPDATE_ORDER_HISTORY_STATUS_ATTEMPT_RECEIVED = 'orderHistory/UPDATE_ORDER_HISTORY_STATUS_ATTEMPT_RECEIVED';
+const UPDATE_ORDER_HISTORY_STATUS_ATTEMPT_FAILURE = 'orderHistory/UPDATE_ORDER_HISTORY_STATUS_ATTEMPT_FAILURE';
+
 // updateOrderHistory Action Types
 // const UPDATE_ORDER_HISTORY = 'orderHistory/UPDATE_ORDER_HISTORY';
 
@@ -32,6 +36,7 @@ export const getOrderHistoryList = createAction(GET_ORDER_HISTORY_LIST, search =
 export const getOrderHistoryListByEmail = createAction(GET_ORDER_HISTORY_LIST_BY_EMAIL, (email, search) => ({email, search}));
 export const addOrderHistory = createAction(ADD_ORDER_HISTORY, (email, dto, search) => ({email, dto, search}));
 export const updateOrderHistoryActivated = createAction(UPDATE_ORDER_HISTORY_ACTIVATED, (odrSid, email, orderActivated) => ({odrSid, email, orderActivated}))
+export const updateOrderHistoryCancleAttemptStatus = createAction(UPDATE_ORDER_HISTORY_STATUS_ATTEMPT, (odrSid, email, status, search) => ({odrSid, email, status, search}))
 // export const updateOrderHistory = createAction(UPDATE_ORDER_HISTORY, api.updateOrderHistory);
 
 // 초기 state값 설정
@@ -45,17 +50,25 @@ const initialState = Map({
 
 // getOrderHistoryList Saga
 function* getOrderHistoryListSaga(action) {
-  try {
-    const response = yield call(api.getOrderHistoryList, action.payload);
-    yield put({type: GET_ORDER_HISTORY_LIST_RECEIVED, payload: response});
-  } catch (error) {
-    yield put({type: GET_ORDER_HISTORY_LIST_FAILURE, payload: error});
+  if (action.payload.search !== undefined) {
+    try {
+      const response = yield call(api.getOrderHistoryList, action.payload.search);
+      yield put({type: GET_ORDER_HISTORY_LIST_RECEIVED, payload: response});
+    } catch (error) {
+      yield put({type: GET_ORDER_HISTORY_LIST_FAILURE, payload: error});
+    }
+  } else {
+    try {
+      const response = yield call(api.getOrderHistoryList, action.payload);
+      yield put({type: GET_ORDER_HISTORY_LIST_RECEIVED, payload: response});
+    } catch (error) {
+      yield put({type: GET_ORDER_HISTORY_LIST_FAILURE, payload: error});
+    }
   }
 }
 
 // getOrderHistoryListByEmail Saga
 function* getOrderHistoryListByEmailSaga(action) {
-  console.log(action)
   try {
     const response = yield call(api.getOrderHistoryListByEmail, action.payload.email, action.payload.search);
     yield put({type: GET_ORDER_HISTORY_LIST_BY_EMAIL_RECEIVED, payload: response});
@@ -85,12 +98,28 @@ function* updateOrderHistoryActivatedSaga(action) {
   }
 }
 
+// updateOrderHistoryCancleAttemptStatus Saga
+function* updateOrderHistoryCancleAttemptStatusSaga(action) {
+  try {
+    const response = yield call(api.updateOrderHistoryCancleAttemptStatus, action.payload.odrSid, action.payload.email, action.payload.status);
+    yield put({type: UPDATE_ORDER_HISTORY_STATUS_ATTEMPT_RECEIVED, payload: response});
+    if (action.payload.status === 'TRADE_CANCLE_ATTEMPT') {
+      yield call(getOrderHistoryListByEmailSaga, action);
+    } else if (action.payload.status === 'TRADE_COMPLETE') {
+      yield call(getOrderHistoryListSaga, action);
+    }
+  } catch (error) {
+    yield put({type: UPDATE_ORDER_HISTORY_STATUS_ATTEMPT_FAILURE, payload: error});
+  }
+}
+
 // OrderHistory default root Saga
 export function* orderHistorySaga() {
   yield takeEvery(GET_ORDER_HISTORY_LIST, getOrderHistoryListSaga);
   yield takeEvery(GET_ORDER_HISTORY_LIST_BY_EMAIL, getOrderHistoryListByEmailSaga);
   yield takeLatest(ADD_ORDER_HISTORY, addOrderHistorySaga)
   yield takeLatest(UPDATE_ORDER_HISTORY_ACTIVATED, updateOrderHistoryActivatedSaga)
+  yield takeLatest(UPDATE_ORDER_HISTORY_STATUS_ATTEMPT, updateOrderHistoryCancleAttemptStatusSaga)
 }
 
 // 액션 핸들러 설정
@@ -146,5 +175,15 @@ export default handleActions({
     },
     [UPDATE_ORDER_HISTORY_ACTIVATED_FAILURE]: (state, action) => {
       console.log('UPDATE_ORDER_HISTORY_ACTIVATED_FAILURE onFailure')
+    },
+    // updateOrderHistoryCancleAttemptStatus Handler
+    [UPDATE_ORDER_HISTORY_STATUS_ATTEMPT]: (state, action) => {
+      console.log('UPDATE_ORDER_HISTORY_STATUS_ATTEMPT onPending')
+    },
+    [UPDATE_ORDER_HISTORY_STATUS_ATTEMPT_RECEIVED]: (state, action) => {
+      console.log('UPDATE_ORDER_HISTORY_STATUS_ATTEMPT_RECEIVED onReceived')
+    },
+    [UPDATE_ORDER_HISTORY_STATUS_ATTEMPT_FAILURE]: (state, action) => {
+      console.log('UPDATE_ORDER_HISTORY_STATUS_ATTEMPT_FAILURE onFailure')
     },
 }, initialState);

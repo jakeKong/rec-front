@@ -15,6 +15,9 @@ class Header extends Component {
   componentDidMount() {
     if (storage.get('loggedInfo') !== undefined && storage.get('loggedInfo') !== null) {
       document.querySelector('#name').textContent = storage.get('loggedInfo').name;
+      document.querySelector('#name').addEventListener('click', function() {
+        window.location.href = '/user/details';
+      });
       // document.querySelector('#balancePoint').textContent = storage.get('loggedInfo').balancePoint+'P';
     }
     // document.querySelector('#MyPage').textContent = '마이페이지';

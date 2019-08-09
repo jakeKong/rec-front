@@ -2,7 +2,6 @@ import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as orderHistoryActions from "../modules/OrderHistoryModule";
-import * as userManageActions from "../../scm/modules/UserModule";
 import { OrderHistoryGrid, OrderHistorySearch } from "../index";
 
 import '@vaadin/vaadin-ordered-layout';
@@ -74,34 +73,11 @@ class OrderHistoryByEmailContainer extends Component {
     }
   }
 
-  orderCancleCallback = (dto) => {
+  orderCancleAttemptCallback = (dto) => {
     const { search } =this.state;
     const loggedInfo = storage.get('loggedInfo');
-    let orderDto = {
-      'odrNo': dto.odrNo,
-      'odrDt': new Date(),
-      'marketPrice': dto.marketPriceOrigin,
-      'variationPoint': dto.variationPointOrigin,
-      'realEstateType': dto.realEstateTypeOrigin,
-      'downloadEndDt': dto.downloadEndDtOrigin,
-      'downloadCnt': dto.downloadCnt,
-      'pnuNo': dto.pnuNo,
-      'pdfFileNm': dto.pdfFileNm,
-      'status': 'TRADE_CANCLE',
-      'activated': false
-    };
     this.updateOrderHistoryActivated(dto.odrSid, loggedInfo.email, false);
-    this.addOrderHistory(loggedInfo.email, orderDto, search);
-    this.updateUserByBalancePointIncrease(loggedInfo.email, dto.variationPoint);
-  }
-
-  addOrderHistory = async (email, dto, search) => {
-    const { OrderHistoryModule } = this.props;
-    try {
-      await OrderHistoryModule.addOrderHistory(email, dto, search)
-    } catch (e) {
-      console.log("error log : " + e);
-    }
+    this.updateOrderHistoryCancleAttemptStatus(dto.odrSid, loggedInfo.email, 'TRADE_CANCLE_ATTEMPT', search);
   }
 
   updateOrderHistoryActivated = async (odrSid, email, orderActivated) => {
@@ -113,10 +89,10 @@ class OrderHistoryByEmailContainer extends Component {
     }
   }
 
-  updateUserByBalancePointIncrease = async (email, increasePoint) => {
-    const { UserManageModule } = this.props;
+  updateOrderHistoryCancleAttemptStatus = async (odrSid, email, status, search) => {
+    const { OrderHistoryModule } = this.props;
     try {
-      await UserManageModule.updateUserByBalancePointIncrease(email, increasePoint)
+      await OrderHistoryModule.updateOrderHistoryCancleAttemptStatus(odrSid, email, status, search)
     } catch (e) {
       console.log("error log : " + e);
     }
@@ -132,7 +108,7 @@ class OrderHistoryByEmailContainer extends Component {
         <div className="div-main page-log-purchase">
           { pending && <div className="boxLoading"/> }
           { error && <h1>Server Error!</h1> }
-          { success && <OrderHistoryGrid orderHistoryList={ orderHistoryList } email={ email } orderCancleCallback={this.orderCancleCallback}/>}
+          { success && <OrderHistoryGrid orderHistoryList={ orderHistoryList } email={ email } orderCancleAttemptCallback={this.orderCancleAttemptCallback}/>}
         </div>
       </Fragment>
     );
@@ -147,7 +123,6 @@ export default connect(
     success: state.orderHistory.success,
   }),
   dispatch => ({
-    OrderHistoryModule: bindActionCreators(orderHistoryActions, dispatch),
-    UserManageModule: bindActionCreators(userManageActions, dispatch)
+    OrderHistoryModule: bindActionCreators(orderHistoryActions, dispatch)
   })
 )(OrderHistoryByEmailContainer);

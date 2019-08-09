@@ -21,6 +21,10 @@ class OrderHistoryGrid extends Component {
     super(props);
     this.state = {gridData: [],hiddenCheck: '', calcleCheck: ''}
     this.btnPurchaseCancleTemplate = this.btnPurchaseCancleTemplate.bind(this);
+    this.btnPurchaseCancleAttemptTemplate = this.btnPurchaseCancleAttemptTemplate.bind(this);
+    this.CancleAttemptClickEvent = this.CancleAttemptClickEvent.bind(this);
+    this.CancleClickEvent = this.CancleClickEvent.bind(this);
+    this.CancleAttemptClickToBackEvent = this.CancleAttemptClickToBackEvent.bind(this);
   }
   componentDidMount() {
     const { orderHistoryList } = this.props;
@@ -53,7 +57,7 @@ class OrderHistoryGrid extends Component {
         index: i++,
         email: e.get("email"), 
         odrNo: e.get("odrNo"),
-        odrDt: dateFormat(new Date(e.get("odrDt")), 'yyyy년mm월dd일 HH:MM:ss'),
+        odrDt: dateFormat(new Date(e.get("odrDt")), 'yyyy년mm월dd일'),
         odrDtOrigin: e.get("odrDt"),
         marketPrice: comma(e.get("marketPrice")),
         marketPriceOrigin: e.get("marketPrice"),
@@ -61,7 +65,7 @@ class OrderHistoryGrid extends Component {
         realEstateTypeOrigin: e.get("realEstateType"),
         variationPoint: comma(e.get("variationPoint"))+' P',
         variationPointOrigin: e.get("variationPoint"),
-        downloadEndDt: dateFormat(new Date(e.get("downloadEndDt")), 'yyyy년mm월dd일 HH:MM:ss'),
+        downloadEndDt: dateFormat(new Date(e.get("downloadEndDt")), 'yyyy년mm월dd일'),
         downloadEndDtOrigin: e.get("downloadEndDt"),
         downloadCnt: e.get("downloadCnt"),
         status: status,
@@ -69,7 +73,8 @@ class OrderHistoryGrid extends Component {
         pnuNo: e.get("pnuNo"),
         pdfFileNm: e.get("pdfFileNm"),
         ordererNm: e.get("ordererNm"),
-        activated: e.get("activated")
+        activated: e.get("activated"),
+        pnuNo: e.get("pnuNo")
       })
     })    
     this.setState({gridData: list.reverse()});
@@ -99,29 +104,31 @@ class OrderHistoryGrid extends Component {
         if (check === true) {
           let excelList = [];
           let excelNumber = 1;
-          orderHistoryList.forEach(e => {
+          orderHistoryList.sort((prev, next) => new Date(prev.get('odrDt')).getTime() > new Date(next.get('odrDt')).getTime() ? 1 : -1)
+          .forEach(e => {
             let status = '';
             statusItems.forEach(function(row){
               if (e.get('status') === row.value) {
-                status = row.textContent;
+                status = row.label;
               };
             });
       
-            let realEstateType = '';
-            realEstateTypeItems.forEach(function(row){
-              if (e.get('realEstateType') === row.value) {
-                realEstateType = row.textContent;
-              };
-            });
+            // let realEstateType = '';
+            // realEstateTypeItems.forEach(function(row){
+            //   if (e.get('realEstateType') === row.value) {
+            //     realEstateType = row.textContent;
+            //   };
+            // });
             // push Value type is JSON
             excelList.push({
               번호: excelNumber++,
               주문번호: e.get("odrNo"),
-              주문일자: dateFormat(new Date(e.get("odrDt")), 'yyyy년mm월dd일 HH:MM:ss'),
-              시세가: comma(e.get("marketPrice")),
-              부동산유형: realEstateType,
-              변동포인트: comma(e.get("variationPoint"))+' P',
-              // 다운로드만료기간: e.get("downloadEndDt"),
+              지번: e.get("pnuNo"),
+              주문일자: dateFormat(new Date(e.get("odrDt")), 'yyyy년mm월dd일'),
+              // 시세가: comma(e.get("marketPrice")),
+              // 부동산유형: realEstateType,
+              증감포인트: comma(e.get("variationPoint"))+' P',
+              만료일자: dateFormat(new Date(e.get("downloadEndDt")), 'yyyy년mm월dd일'),
               // 다운로드횟수: e.get("downloadCnt"),
               상태: status,
             })
@@ -135,7 +142,7 @@ class OrderHistoryGrid extends Component {
           XLSX.utils.book_append_sheet(workbook, worksheet, "주문내역");
     
           /* generate an XLSX file */
-          let writeName = dateFormat(new Date(), 'yyyymmdd')+"_SRD_주문내역.xlsx"
+          let writeName = dateFormat(new Date(), 'yyyymmdd')+"_ALGO_주문내역.xlsx"
           XLSX.writeFile(workbook, writeName);
         }
       })
@@ -150,7 +157,7 @@ class OrderHistoryGrid extends Component {
           window.open(config.pdfUrl + rowData.pdfFileNm);
         }
     }
-    if (rowData.status === '구매취소') {
+    if (rowData.status === '주문취소') {
       return '-';
     } else {
       if (new Date(rowData.downloadEndDtOrigin) < new Date()) {
@@ -164,24 +171,84 @@ class OrderHistoryGrid extends Component {
       }
     }
   }
-  
-  btnPurchaseCancleTemplate(rowData, column ) {
-    const { orderCancleCallback } = this.props;
-    function onClickButton() {
-      const check = window.confirm('구매하신 상품에 대한 상품구매 취소를 진행하시겠습니까?');
-      if (check === true) {
-        // 구매취소 버튼 클릭 시 동작 이벤트
-        orderCancleCallback(rowData)
-      }
+
+  CancleAttemptClickEvent(rowData) {
+    const { orderCancleAttemptCallback } = this.props;
+    const check = window.confirm('주문하신 상품에 대한 주문 취소신청을 하시겠습니까?');
+    if (check === true) {
+      // 취소요청 버튼 클릭 시 동작 이벤트
+      orderCancleAttemptCallback(rowData)
     }
-    if (rowData.status === '구매취소') {
+  }
+  
+  btnPurchaseCancleAttemptTemplate(rowData, column ) {
+    const { role } = this.props;
+    const CancleAttemptClickEvent = this.CancleAttemptClickEvent;
+    function onClickButton() {
+      CancleAttemptClickEvent(rowData);
+    }
+    
+    if (rowData.status === '주문취소') {
       return '-';
     } else {
       if (new Date(rowData.downloadEndDtOrigin) < new Date()) {
         return '만료됨';
+      } else if (rowData.status === '취소신청') {
+        return <font style={{color: 'red'}}>취소신청</font>;
       } else {
         if (rowData.activated === true) {
-          return <button id="btnCancel" icon="pi pi-pencil" className="p-button-warning" onClick={onClickButton}>구매취소</button>
+          if (role === 'ROLE_ADMIN') {
+            return '-';
+          } else {
+            return <button id="btnCancel" icon="pi pi-pencil" className="p-button-warning" onClick={onClickButton}>취소신청</button>
+          }
+        } else {
+          return <font style={{color: 'red'}}>취소됨</font>;
+        }
+      }
+    }
+  }
+
+  CancleClickEvent(rowData) {
+    const { orderCancleCallback } = this.props;
+    const check = window.confirm('상품에 대한 주문 취소를 진행하시겠습니까?');
+    if (check === true) {
+      orderCancleCallback(rowData)
+    }
+  }
+
+  CancleAttemptClickToBackEvent(rowData) {
+    const { orderCancleAttemptToBackCallback } = this.props;
+    const check = window.confirm('취소 요청상태를 철회하시겠습니까?');
+    if (check === true) {
+      orderCancleAttemptToBackCallback(rowData)
+    }
+  }
+  
+  btnPurchaseCancleTemplate(rowData, column ) {
+    const CancleClickEvent = this.CancleClickEvent;
+    const CancleAttemptClickToBackEvent = this.CancleAttemptClickToBackEvent;
+    function onClickButton() {
+      CancleClickEvent(rowData);
+    }
+    function statusBack() {
+      CancleAttemptClickToBackEvent(rowData);
+    }
+    if (rowData.status === '주문취소') {
+      return '-';
+    } else {
+      if (new Date(rowData.downloadEndDtOrigin) < new Date()) {
+        return '만료됨';
+      } else if (rowData.status === '취소신청') {
+        return (
+          <Fragment>
+            <button id="btnCancel" icon="pi pi-pencil" className="p-button-warning" onClick={onClickButton}>주문취소</button>
+            <button id="btnCancelStatusBackToComplete" icon="pi pi-pencil" className="p-button-warning" onClick={statusBack}>요청철회</button>
+          </Fragment>
+        );
+      } else {
+        if (rowData.activated === true) {
+          return '-';
         } else {
           return <font style={{color: 'red'}}>취소됨</font>;
         }
@@ -197,15 +264,17 @@ class OrderHistoryGrid extends Component {
                 paginator={true} rows={10} rowsPerPageOptions={[5,10,15,20]} >
                 <Column field="index" header="번호"/>
                 <Column field="odrNo" header="주문 번호"/>
+                <Column field="pnuNo" header="지번"/>
                 <Column field="odrDt" header="주문 일자"/>
-                <Column field="marketPrice" header="시세가"/>
-                <Column field="realEstateType" header="부동산 유형"/>
+                {/* <Column field="marketPrice" header="시세가"/> */}
+                {/* <Column field="realEstateType" header="부동산 유형"/> */}
                 <Column field="variationPoint" header="증감 포인트"/>
-                <Column field="downloadEndDt" header="다운로드 만료기간"/>
-                <Column columnKey="grdBtnDownload" body={this.btnDownloadTemplate} header="다운로드"/>
-                <Column field="downloadCnt" header="다운로드 횟수"/>
+                <Column field="downloadEndDt" header="만료일자"/>
                 <Column field="status" header="상태"/>
-                <Column columnKey="grdBtnPurchaseCancle" body={this.btnPurchaseCancleTemplate} header="구매취소"  style={{ display:this.state.calcleCheck}}/>
+                <Column columnKey="grdBtnDownload" body={this.btnDownloadTemplate} header="다운로드"/>
+                {/* <Column field="downloadCnt" header="다운로드 횟수"/> */}
+                <Column columnKey="grdBtnPurchaseCancleAttempt" body={this.btnPurchaseCancleAttemptTemplate} header="취소요청"/>
+                <Column columnKey="grdBtnPurchaseCancle" body={this.btnPurchaseCancleTemplate} header="주문취소" style={{ display:this.state.hiddenCheck}}/>
                 <Column columnKey="grdOrdererNm" field="ordererNm" header="주문자"  style={{display:this.state.hiddenCheck}}/>
                 <Column columnKey="grdEmail" field="email"  header="아이디" style={{display:this.state.hiddenCheck}}/>
             </DataTable>

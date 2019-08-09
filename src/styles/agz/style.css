@@ -118,7 +118,8 @@ html, body, #root .index {
     box-sizing: border-box;
     height: calc(100% - 80px - 116px);
     min-height: calc(100% - 80px - 116px);
-    overflow: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 .div-inline {
     display: inline-block;
@@ -153,6 +154,7 @@ html, body, #root .index {
     padding-top: 24px;
     padding-bottom: 8px;
     color: rgba(0,0,0,0.8);
+    letter-spacing: -2px;
 }
 /* Page Common END*/
 
@@ -175,13 +177,13 @@ html, body, #root .index {
     padding: 0;
 }
 .header .logo {
-    margin-top: 6px;
-    height: 69px;
-    width: 120px;
+    margin-top: 16px;
+    height: 46px;
+    width: 90px;
     cursor: pointer;
     background: url('./image/agz_logo_header.png');
     box-sizing: border-box;
-    padding-left: 120px;
+    padding-left: 90px;
     background-size: cover;
 }
     /* 헤더 사용자 버튼 */
@@ -290,7 +292,7 @@ html, body, #root .index {
 /* header END */
 
 /* footer */
-.footer{
+/* .footer{
     position: absolute;
     left: 0;
     bottom: 0;
@@ -300,8 +302,8 @@ html, body, #root .index {
     
     text-align: center;
     background: #fff;
-}
-.footer_new .footer-layer1 {
+} */
+/* .footer_new .footer-layer1 {
     padding-top: 0 !important;
     height: 22px !important;
 }
@@ -327,6 +329,57 @@ html, body, #root .index {
     line-height: 16px;
     color: rgba(0,0,0,0.7);
     font-weight: 300;
+    font-size: 11px !important;
+    letter-spacing: 1px;
+} */
+.footer_new{
+    position: absolute;
+
+    left: 0;
+    bottom: 0;
+    
+    width: 100%;
+    
+    text-align: center;
+    background: #333 !important;
+    border-top: none !important;
+    box-sizing: border-box !important;
+    max-height: 116px;
+}
+.footer_new .footer-layer1 {
+    padding-top: 6px !important;
+    height: 22px !important;
+    border-bottom: none !important;
+}
+.footer_new .footer-layer1 a {
+    color: #fff !important;
+}
+.footer_new .footer-layer2 {
+    display: inline-block;
+    box-sizing: border-box;
+    padding-bottom: 0px !important;
+    padding-top: 14px !important;
+    margin: 0 auto !important;
+    text-align: left;
+    max-height: 94px;
+}
+.footer_new .footer-layer2 .footer-content > a > img{
+    display: none !important;
+}
+.footer_new .footer-layer2 .footer-content > a {
+    background: url('./image/agz_logo_footer.png');
+    background-position: 50%;
+    background-size: cover;
+    display: block;
+    float: left;
+    width: 113px;
+    height: 65px;
+    margin-right: 24px;
+}
+.footer_new .footer-layer2 .footer-content address {
+    line-height: 16px;
+    color: #fff;
+    font-weight: 200;
     font-size: 11px !important;
     letter-spacing: 1px;
 }
@@ -444,6 +497,7 @@ html, body, #root .index {
 }
 
 .p-datatable thead tr {
+    background: #fff;
     border-bottom: 1px solid #eee !important;
 }
 .p-datatable thead tr th{
@@ -463,13 +517,11 @@ html, body, #root .index {
     transition: 0.3s;
     background: #fff !important;
 }
-.p-datatable tbody tr:nth-of-type(2n-1),
-.section-table-notice .p-datatable tbody tr:nth-of-type(2n-1) {
+.p-datatable tbody tr:nth-of-type(2n-1) {
     /* 홀수번째 배경색 */
     background: #f7f7f7 !important;
 }
-.p-datatable tbody tr:hover,
-.section-table-notice .p-datatable tbody tr:hover {
+.p-datatable tbody tr:hover {
     /* 마우스 오버 효과 */
     background: #bbeea1 !important;
 }
@@ -782,6 +834,9 @@ html, body, #root .index {
 /* PAGE - land info */
 .wrap-land-info {
     display: inline-block;
+}
+.page-description + div > div.searchbox > div {
+    text-align: right !important;
 }
 
 /* TODO 랜드 인포 페이지 클래스 삽입 필요 */
@@ -1099,13 +1154,13 @@ html, body, #root .index {
 .section-datatable-orderhistory .p-datatable-tbody td:nth-of-type(5) {
     width: 92px;
 }
-.section-datatable-orderhistory .p-datatable-thead th:nth-of-type(6),
+.section-datatable-orderhistory .p-datatable-thead th:nth-of-type(6),   
 .section-datatable-orderhistory .p-datatable-tbody td:nth-of-type(6) {
-    width: 92px;
+    width: 200px;
 }
 .section-datatable-orderhistory .p-datatable-thead th:nth-of-type(7),
 .section-datatable-orderhistory .p-datatable-tbody td:nth-of-type(7) {
-    width: 200px;
+    width: 92px;
 }
 .section-datatable-orderhistory .p-datatable-thead th:nth-of-type(8),
 .section-datatable-orderhistory .p-datatable-tbody td:nth-of-type(8) {
@@ -1205,7 +1260,7 @@ html, body, #root .index {
 }
 .div-login {
     padding: 0 !important;
-    width: 400px;
+    width: 361px;
     box-shadow: 0px 0px 3px 2px rgba(100,100,100,0.1);
     margin: 0 auto;
 }
@@ -1241,14 +1296,15 @@ html, body, #root .index {
 }
 .div-login-card .div-login-button-field vaadin-button {
     margin: 0;
-    height: 52px !important;
-    border-radius: 0;
+    height: 42px !important;
+    border-radius: 4px;
     cursor: pointer;
+    margin: 12px 0 !important;
 }
 .div-login-card .vaadin-button-login,
 .div-login-card .vaadin-button-login-naver {
     margin: 0;
-    font-size: 14px;
+    font-size: 16px;
 }
 .div-login-card .vaadin-button-login {
     border: none !important;
@@ -1285,7 +1341,7 @@ html, body, #root .index {
 /* PAGE-login END */
 /* PAGE-register */
 .div-register {
-    padding: 24px 0 0 0 !important;
+    padding: 24px 0 24px 0 !important;
     margin: 0 !important;
 }
 .div-register-title {
@@ -1305,7 +1361,7 @@ html, body, #root .index {
     border: none !important;
     position: relative;
 }
-.div-register-title > div > label:first-child {
+.div-register-title > label:first-child {
     padding-left: 0;
 }
 .div-register-title > div > label {
@@ -1319,6 +1375,7 @@ html, body, #root .index {
 .div-register-title > div.div-register-title-focus-on {
     /* background-color: #bbeea1 !important; */
     background-color: #47c10a !important;
+
 }
 .div-register-title > div.div-register-title-focus-on label {
     font-size: 18px !important;
@@ -1336,8 +1393,8 @@ html, body, #root .index {
 }
 .div-register-title > div.div-register-title-focus-on:after{
     border-left: 30px solid #47c10a;
-    border-top: 31px solid transparent;
-    border-bottom:31px solid transparent;
+    border-top: 30px solid transparent;
+    border-bottom:30px solid transparent;
 }
 .div-register-title > div.div-register-title-focus-off:after {
     border-left: 30px solid #eee;
@@ -1371,6 +1428,16 @@ html, body, #root .index {
 .div-register .vaadin-text-area-register-agree::before {
     height: 0;
 }
+/* .div-register .div-register-agree .div-register-agree-box vaadin-text-area {
+    display: block !important;
+    min-height: 56px !important;
+    height: 56px;
+    overflow: hidden;
+    transition: 0.3s;
+}
+.div-register .div-register-agree .div-register-agree-box:hover vaadin-text-area{
+    min-height: 240px !important;
+} */
 .div-register .div-register-agree-box-check {
     font-size: 12px;
     margin-top: 6px;
@@ -1393,29 +1460,133 @@ html, body, #root .index {
     padding-top: 14px !important;
 }
 .div-register #btnCommonRegister,
-.div-register #btnNaverRegister{
+.div-register #naverIdLogin{
     border-radius: 0 ;
     height: 50px;
     font-weight: 400;
     border: none;
     cursor: pointer;
+    display: inline-block;
+    vertical-align: middle;
 }
 .div-register #btnCommonRegister {
     background: #4fd81b;
     color: #fff;
 }
-.div-register #btnNaverRegister {
-    background: url('./image/naver-simbol.png');
-    background-size : 36px;
-    background-repeat: no-repeat;
-    background-position-x: 12px;
-    background-position-y: 50%;
-    border: 1px solid #eee !important;
-    color: #999;
-    width: 210px;
-    padding-left: 50px;
+.div-register #naverIdLogin img {
+    height: 50px;
 }
 
+/* 회원정보 입력 */
+.div-register .div-register-input {
+    padding: 20px 300px 0px !important;
+}
+.div-register .div-register-input > div{
+    padding: 0 !important;
+    padding: 6px 0 !important;
+}
+.div-register .div-register-input > div label {
+    color: #666;
+    font-size: 13px;
+}
+.div-register .div-register-input input {
+    height: 36px;
+    vertical-align: bottom;
+    border-color: #ccc !important;
+}
+/* 이메일 */
+.div-register .div-register-input label#lbEmail + div input#itEname,
+.div-register .div-register-input label#lbEmail + div input#itEdomain {
+    width: 35%;
+}
+.div-register .div-register-input label#lbEmail + div input#itEcom {
+    width: 14%;
+}
+.div-register .div-register-input label#lbEmail + div label {
+    display: inline-block;
+    width: 5%;
+    text-align: center;
+    font-size: 20px;
+    line-height: 36px;
+    height: 36px;
+    vertical-align: bottom;
+    margin: 0 1.5%;
+}
+
+/* 생년월일 */
+.div-register .div-register-input #lbBirthDt + div > span {
+    width: calc( 100% - 33px );
+}
+.div-register .div-register-input #lbBirthDt + div > span > input {
+    width: 100%;
+}
+
+/* 전화번호 */
+.div-register .div-register-input #lbTellNo + div input {
+    width: 30%;
+}
+.div-register .div-register-input #lbTellNo + div label {
+    display: inline-block;
+    line-height: 36px;
+    font-size: 20px;
+    text-align: center;
+    width: 5%;
+}
+/* 주소 */
+.div-register .div-register-input #lbAddress + div > input {
+    width: 100%;
+    margin-top: 6px;
+}
+
+/* 100% 넓이 input */
+.div-register .div-register-input #lbPw + div > input,
+.div-register .div-register-input #lbRepw + div > input,
+.div-register .div-register-input #lbNm + div > input {
+    width: 100%;
+}
+
+
+.div-register .div-register-input #btnAddressSearch {
+    border: none;
+    color: #fff;
+    height: 36px;
+    background: #4fd81b;
+    border-radius: 2px;
+    padding: 0 18px;
+    margin-left: 24px;
+    font-size: 13px;
+}
+.div-register .div-register-input #btnAddressSearch:hover {
+    background: #47c10a;
+}
+.div-register .div-register-popup-bottom {
+    width: 100%;
+    margin: 22px auto 0;
+    padding: 0;
+}
+.div-register .div-register-popup-bottom vaadin-button {
+    border-radius: 0 ;
+    height: 40px;
+    font-weight: 400;
+    border: none;
+    cursor: pointer;
+}
+.div-register .div-register-popup-bottom vaadin-button#btnOk {
+    background: #4fd81b;
+    color: #fff;
+}
+
+.div-register .div-register-popup-bottom vaadin-button#btnOk:hover {
+    background: #47c10a;
+}
+.div-register .div-register-popup-bottom vaadin-button#btnCancle {
+    color: #666;
+}
+
+.p-password-panel {
+    min-width: 340px !important;
+}
+/*가입완료*/
 .div-register .div-register-complete {
     margin-top: 50px;
 }

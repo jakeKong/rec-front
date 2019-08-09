@@ -130,13 +130,13 @@ class BlogTyleNewsGrid extends Component {
   render() {
     return (
       <vaadin-grid theme="row-stripes" height-by-rows column-reordering-allowed>
-        <vaadin-grid-column auto-select id="grdSelect" flex-grow="0.1" width="50px" />
+        <vaadin-grid-column auto-select id="grdSelect" flex-grow="0.1" width="70px" />
         <vaadin-grid-sort-column path="index" header="번호" text-align="center" flex-grow="0.1" width="80px"/>
         <vaadin-grid-column path="title" header="제목" text-align="center" flex-grow="4.9" width="400px"/>
         <vaadin-grid-column path="subTitle" header="분류" text-align="center" flex-grow="1" width="100px"/>
         <vaadin-grid-column path="writer" header="작성자" text-align="center" flex-grow="1" width="80px"/>
         <vaadin-grid-column path="writeDt" header="작성일자" text-align="center" flex-grow="3" width="250px"/>
-        <vaadin-grid-column path="visibility" id="grdVisibility" header="공개/비공개" text-align="center" flex-grow="1" width="100px"/>
+        <vaadin-grid-column path="visibility" id="grdVisibility" header="공개/비공개" text-align="center" flex-grow="1" width="150px"/>
       </vaadin-grid>
     );
   }

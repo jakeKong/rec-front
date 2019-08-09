@@ -70,6 +70,17 @@ export const updateOrderHistoryActivated = (odrSid, email, orderActivated) => ax
   },
   data: JSON.stringify(orderActivated)
 });
+
+// 주문내역 취소요청 상태 수정
+export const updateOrderHistoryCancleAttemptStatus = (odrSid, email, status) => axios({
+  method: 'PUT',
+  url: `${config.orderService}/order/history/update/status/${odrSid}/${email}`,
+  headers: {
+    'Content-Type': 'application/json; charset=UTF-8',
+    'Accept': 'application/json'
+  },
+  data: status
+});
 // export const addOrderHistory = (email, productSid, orderDto) => axios.post(`${config.orderService}/order/history/add/${email}/${productSid}`, {orderDto});
 // 주문내역 수정
 // export const updateOrderHistory = (odrSid, email, productSid, orderDto) => axios.put(`${config.orderService}/order/history/update/${odrSid}/${email}/${productSid}`, {orderDto});

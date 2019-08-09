@@ -61,7 +61,7 @@ class NoticeGrid extends Component {
           noticeTitle: e.get("noticeTitle"),
           noticeTxt: e.get("noticeTxt"),
           noticeWriter: e.get("noticeWriter"),
-          reportingDt: dateFormat(new Date(e.get('reportingDt')), 'yyyy년mm월dd일 HH:MM:ss')
+          reportingDt: dateFormat(new Date(e.get('reportingDt')), 'yyyy년mm월dd일')
         })
       })
       this.setState({gridData: list.reverse()});
