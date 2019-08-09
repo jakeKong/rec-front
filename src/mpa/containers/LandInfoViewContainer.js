@@ -55,7 +55,7 @@ class LandInfoViewContainer extends Component {
           mngNo: this.state.search.mngNo,
         }
       });
-      console.log(this.state.search);
+      // console.log(this.state.search);
       this.makeLandInfo(this.state.search);
       //초기화
       this.setState ({
@@ -183,8 +183,12 @@ class LandInfoViewContainer extends Component {
         },
         selectedSuggestion: {selectedSuggestion}
       });
-      
-      this.getLandInfo(this.state.search);
+      const searchKey = {
+        jibunAddr: selectedSuggestion.jibunAddr,
+        roadAddr: selectedSuggestion.roadAddr,
+        pnu: selectedSuggestion.bdMgtSn.substring(0,19)
+      };
+      this.getLandInfo(searchKey);
     }
     //이전 화면에서 넘어온 값이 아닌경우
     else {
