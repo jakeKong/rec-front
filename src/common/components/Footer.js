@@ -92,7 +92,7 @@ class Footer extends Component {
         <div className="footer_new">
           <div className="width-ful">
             <div className="footer-layer1">
-              <a onClick={() => this.infoIntro()}>크로스워크 소개</a>
+              <a onClick={() => this.infoIntro()}>알고집 소개</a>
               <a href="/bms/notice">공지사항</a>
               {/* <a onClick={() => this.infoNotice()}>공지사항</a> */}
               <a onClick={() => this.infoTermsofservice()}>이용약관</a>
@@ -113,7 +113,7 @@ class Footer extends Component {
             </div>
           </div>
         </div>
-        <Dialog header="크로스워크 소개" visible={this.state.intro} onHide={() => this.infoIntroClose()}>
+        <Dialog header="알고집 소개" visible={this.state.intro} onHide={() => this.infoIntroClose()}>
           <textarea id="taInfoIntro" rows="20" cols="100" readOnly />
         </Dialog>
         {/* <Dialog header="공지사항" visible={this.state.notice} onHide={() => this.infoNoticeClose()}>

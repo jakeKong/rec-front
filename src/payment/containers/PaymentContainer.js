@@ -214,7 +214,7 @@ class PaymentContainer extends Component {
     }
     document.querySelector('#lbSelectPayName').innerHTML = "선택금액 : ";
     document.querySelector('#lbSelectPay').innerHTML = "0";
-    document.querySelector('#lbSelectPaySubName').innerHTML = "원 (VAT 별도)";
+    document.querySelector('#lbSelectPaySubName').innerHTML = "원 (VAT 포함)";
 
     document.querySelector('#lbSelectPointName').innerHTML = "선택 포인트 : ";
     document.querySelector('#lbSelectPoint').innerHTML = "0";
