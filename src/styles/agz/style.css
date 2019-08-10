@@ -1750,7 +1750,7 @@ html, body, #root .index {
 /* 회원정보 수정 */
 .p-dialog .p-dialog-content .div-register-input {
     width: 70%;
-    padding-top: 36px;
+    padding-top: 52px;
     margin-left: 15%;
 }
 .p-dialog .p-dialog-content .div-register-input > div {
