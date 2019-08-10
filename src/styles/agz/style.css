@@ -1766,5 +1766,5 @@ REQUESTS
 - 비밀번호 변경 모달 class 추가 -> 최상위 div : class="modal-modify-pw"
 - 회원가입이 자꾸 실패해서 회원가입 완료 페이지를 확인 할 수 없음
 - 로컬에서 부동산 시세 정보조회가 작동하지 않음 504 에러 반환 -> 주문하기 버튼이 동작하지 않음
-- 문의사항 업로드 페이지 접근불가 및 vaadin 프레임워크 인풋 삭제 요청, 해당 section 클래스 추가 요청 : class="section-question-upload"
+- 문의사항 업로드 페이지 접근불가(TypeError: registerStatusChangeEvent is not a function) 및 vaadin 프레임워크 인풋 삭제 요청, 해당 section 클래스 추가 요청 : class="section-question-upload"
 */
