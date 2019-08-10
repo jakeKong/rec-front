@@ -1746,8 +1746,83 @@ html, body, #root .index {
 #doRegister .div-register-popup-board {
     background: #aaa;
 }
+
+/* 회원정보 수정 */
+.p-dialog .p-dialog-content .div-register-input {
+    width: 70%;
+    padding-top: 36px;
+    margin-left: 15%;
+}
+.p-dialog .p-dialog-content .div-register-input > div {
+    padding: 0 0 22px 0;
+}
+.p-dialog .p-dialog-content .div-register-input .default-column label,
+.p-dialog .p-dialog-content .div-register-input .email-column label,
+.p-dialog .p-dialog-content .div-register-input .address-column label  {
+    font-size: 13px;
+    color: #666;
+}
+.p-dialog .p-dialog-content .div-register-input #itNm {
+    width: 100%;
+}
+.p-dialog .p-dialog-content .div-register-input .p-calendar {
+    width: 100%;
+}
+.p-dialog .p-dialog-content .div-register-input .p-calendar input {
+    width: calc(100% - 33px);
+}
+.p-dialog .p-dialog-content .div-register-input #lbUpdateUserTellNo + div input {
+    width: 30%;
+}
+.p-dialog .p-dialog-content .div-register-input #lbUpdateUserTellNo + div label {
+    display: inline-block;
+    text-align: center;
+    width: 5%;
+}
+.p-dialog .p-dialog-content .div-register-input .address-column > div > div {
+    margin-bottom: 6px;
+}
+.p-dialog .p-dialog-content .div-register-input .address-column > div > div button {
+    border: none;
+    color: #fff;
+    height: 33px;
+    background: #4fd81b;
+    border-radius: 2px;
+    padding: 0 18px;
+    margin-left: 12px;
+    font-size: 13px;
+}
+.p-dialog .p-dialog-content .div-register-input .address-column > div > div button:hover {
+    background: #47c10a;
+}
+.p-dialog .p-dialog-content .div-register-input .address-column > div > input {
+    width: 100%;
+}
+.p-dialog .p-dialog-content .div-register-input input {
+    border: 1px solid #bbb;
+    padding-left: 10px;
+}
+.p-dialog .p-dialog-footer {
+    padding-top: 20px !important;
+    padding-bottom: 36px !important;
+}
+.p-dialog .p-dialog-footer > div button {
+    border: none;
+    height: 33px;
+    padding: 0 22px;
+    font-size: 13px;
+}
+.p-dialog .p-dialog-footer > div button:hover{
+    opacity: 0.8;
+}
+.p-dialog .p-dialog-footer > div button:first-child {
+    background: #4fd81b;
+    color: #fff;
+}
 /* Dialog END */ 
 /*
+CANDO
+
 TODO
 문의사항 업로드 페이지(또는 수정) css 적용 방법 논의 ( 클래스 추가 요청 해아함)
 회원정보 페이지 css 적용
