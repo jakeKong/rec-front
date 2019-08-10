@@ -175,13 +175,13 @@ html, body, #root .index {
     padding: 0;
 }
 .header .logo {
-    margin-top: 16px;
-    height: 46px;
-    width: 90px;
+    margin-top: 10px;
+    height: 58px;
+    width: 100px;
     cursor: pointer;
     background: url('./image/agz_logo_header.png');
     box-sizing: border-box;
-    padding-left: 90px;
+    padding-left: 100px;
     background-size: cover;
 }
     /* 헤더 사용자 버튼 */
@@ -350,6 +350,7 @@ html, body, #root .index {
     border-bottom: none !important;
 }
 .footer_new .footer-layer1 a {
+    cursor: pointer;
     color: #fff !important;
 }
 .footer_new .footer-layer2 {
@@ -387,12 +388,12 @@ html, body, #root .index {
 .page-main .illust-main {
     width: 100%;
     height: 280px;
-    margin-top: 100px;
+    padding-top: 100px;
     background: url('./image/main_illu_3x.png');
-    background-size: cover;
+    background-size: 100%;
     background-repeat: no-repeat;
-    background-position: 50%;
-    box-sizing: border-box;
+    background-position: 50% 100%;
+    box-sizing: content-box;
 }
 .page-main .wrap-content-main {
     height: calc(100% - 280px - 100px);
@@ -572,7 +573,6 @@ html, body, #root .index {
 }
 
 /* table width 공지사항 한정 */
-/* TODO 각 페이지마다 셀의 넓이가 다른데 조정을 위해 테이블 wrapper나 페이지에 다른 클래스명을 먹여야 할 것 같습니다. */
 .section-table-notice tbody tr td:nth-of-type(1),
 .section-table-notice thead tr th:nth-of-type(1) {
     width: 6% !important;
@@ -828,7 +828,6 @@ html, body, #root .index {
     text-align: right !important;
 }
 
-/* TODO 랜드 인포 페이지 클래스 삽입 필요 */
 .div-search {
     height: 50px !important;
     box-sizing: content-box !important;
@@ -1053,17 +1052,20 @@ html, body, #root .index {
     border-top: 2px dashed #eee;
     padding-top: 12px;
 }
+.section-datatable-payment {
+    width: 100%;
+}
 .section-datatable-payment .p-datatable-thead th:nth-of-type(1),
 .section-datatable-payment .p-datatable-tbody td:nth-of-type(1){
-    width: 5% !important;
+    width: 10% !important;
 }
 .section-datatable-payment .p-datatable-thead th:nth-of-type(2),
 .section-datatable-payment .p-datatable-tbody td:nth-of-type(2){
-    width: 25% !important;
+    width: 40% !important;
 }
 .section-datatable-payment .p-datatable-thead th:nth-of-type(3),
 .section-datatable-payment .p-datatable-tbody td:nth-of-type(3){
-    width: 30% !important;
+    width: 25% !important;
 }
 .receipt {
     display: inline-block;
@@ -1132,14 +1134,22 @@ html, body, #root .index {
     background: #4fd81b;
     padding: 2px 8px;
     font-size: 12px;
+    border: none;
+}
+.section-datatable-orderhistory .p-button-warning {
+    color: #fff !important;
+    background: #ec8989;
+    padding: 2px 8px;
+    font-size: 12px;
+    border: none;
 }
 .section-datatable-orderhistory .p-datatable-thead th:nth-of-type(1),
 .section-datatable-orderhistory .p-datatable-tbody td:nth-of-type(1) {
-    width: 54px;
+    width: 50px;
 }
 .section-datatable-orderhistory .p-datatable-thead th:nth-of-type(2),
 .section-datatable-orderhistory .p-datatable-tbody td:nth-of-type(2) {
-    width: 180px;
+    width: 150px;
 }
 .section-datatable-orderhistory .p-datatable-thead th:nth-of-type(3),
 .section-datatable-orderhistory .p-datatable-tbody td:nth-of-type(3) {
@@ -1147,7 +1157,7 @@ html, body, #root .index {
 }
 .section-datatable-orderhistory .p-datatable-thead th:nth-of-type(4),
 .section-datatable-orderhistory .p-datatable-tbody td:nth-of-type(4) {
-    width: 180px;
+    width: 130px;
 }
 .section-datatable-orderhistory .p-datatable-thead th:nth-of-type(5),
 .section-datatable-orderhistory .p-datatable-tbody td:nth-of-type(5) {
@@ -1155,19 +1165,19 @@ html, body, #root .index {
 }
 .section-datatable-orderhistory .p-datatable-thead th:nth-of-type(6),   
 .section-datatable-orderhistory .p-datatable-tbody td:nth-of-type(6) {
-    width: 200px;
+    width: 130px;
 }
 .section-datatable-orderhistory .p-datatable-thead th:nth-of-type(7),
 .section-datatable-orderhistory .p-datatable-tbody td:nth-of-type(7) {
-    width: 92px;
+    width: 86px;
 }
 .section-datatable-orderhistory .p-datatable-thead th:nth-of-type(8),
 .section-datatable-orderhistory .p-datatable-tbody td:nth-of-type(8) {
-    width: 100px;
+    width: 86px;
 }
 .section-datatable-orderhistory .p-datatable-thead th:nth-of-type(9),
 .section-datatable-orderhistory .p-datatable-tbody td:nth-of-type(9) {
-    width: 80px;
+    width: 86px;
 }
 .section-datatable-orderhistory .p-datatable-thead th:nth-of-type(10),
 .section-datatable-orderhistory .p-datatable-tbody td:nth-of-type(10) {
@@ -1286,6 +1296,7 @@ html, body, #root .index {
     display: block !important;
     width: 100%;
     margin: 0 auto;
+    text-align: left !important;
 }
 .div-login-card .label-login-title {
     display: none !important;
@@ -1298,9 +1309,55 @@ html, body, #root .index {
 .div-login-card .vaadin-text-field-id::before , .vaadin-text-field-pw::before {
     display: none;
 }
+.div-login-card #lbLoginIdExample {
+    display: none !important;
+    color: #aaa !important;
+    font-size: 13px;
+    font-weight: 300;
+}
+.div-login-card .vaadin-text-field-id[focused] + #lbLoginIdExample {
+    display: block !important;
+}
 .div-login-card .div-login-button-field {
-    margin-top: 32px;
+    margin-top: 22px;
     padding:0 !important;
+}
+.div-login-card .p-togglebutton {
+    display: inline-block !important;
+    width: auto !important;
+    background: transparent;
+    border: none;
+    margin: 2px 0 10px 0;
+    padding: 0;
+    outline: 0 !important;
+    color: #666;
+}
+.div-login-card .p-togglebutton.p-pocus {
+    outline: 0 !important;
+}
+.div-login-card .p-togglebutton.p-highlight {
+    background: transparent;
+    color: #47c10a;
+}
+.div-login-card .p-togglebutton:hover {
+    background: transparent !important;
+}
+.div-login-card .p-togglebutton.p-highlight:hover {
+    color: #4fd81b;
+}
+.div-login-card .p-togglebutton .p-button-icon-left {
+    left: 0;
+}
+.div-login-card .p-togglebutton .pi.pi-check {
+    color: #47c10a;
+}
+.div-login-card .p-togglebutton.p-highlight:hover .pi.pi-check {
+    color: #4fd81b;
+}
+.div-login-card .p-togglebutton .p-unselectable-text {
+    text-align: right;
+    width: 86px;
+    padding: 0 0 0 16px !important;
 }
 .div-login-card .vaadin-text-field-container[part='input-field'] {
     background: #fff !important;
