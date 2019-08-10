@@ -1706,24 +1706,65 @@ html, body, #root .index {
     color: rgba(0,0,0,0.5);
 }
 /* PAGE-register END */
+
+/* Dialog */
+.p-dialog{
+    max-width: 800px;
+    overflow: hidden;
+}
+.p-dialog .p-dialog-titlebar {
+    background: #fff !important;
+    border: none !important;
+    font-size: 40px;
+    padding-bottom: 0 !important;
+}
+.p-dialog .p-dialog-titlebar .p-dialog-title {
+    font-weight: 200 !important;
+    color: #47c10a;
+}
+.p-dialog .p-dialog-titlebar .p-dialog-titlebar-icons {
+    position: absolute;
+    right:12px;
+    top: 12px;
+    font-size: 30px;
+}
+.p-dialog .p-dialog-titlebar .p-dialog-titlebar-icons .p-dialog-titlebar-close-icon {
+    font-size: 30px;
+}
+.p-dialog .p-dialog-content {
+    border: none !important;
+    padding: 0px !important;
+}
+.p-dialog textarea {
+    max-width: 100%;
+    border: none;
+    margin: 0;
+    padding: 40px 40px 60px 40px !important
+}
+
+/* 주문 dialog */
+#doRegister .div-register-popup-board {
+    background: #aaa;
+}
+/* Dialog END */ 
 /*
 TODO
 문의사항 업로드 페이지(또는 수정) css 적용 방법 논의 ( 클래스 추가 요청 해아함)
 회원정보 페이지 css 적용
 각종 modal css 적용
-    - 공통 모달 css 작성
     - 크로스워크 소개 (푸터 서브메뉴)
-    - 이용약관, 개인정보 처리방침, 책임한계와 법적고지, 저작권 정책(푸터 서브메뉴)
     - 비밀번호 변경
     - 회원정보 수정
-주문 내역 페이지 테이블 내부 버튼 확인 필요
-포인트 구매 페이지 버튼 작동여부 확인
-스크롤 가장 상위에서 작동하도록 변경
-회원가입 약관 페이지 스크롤 되도록 변경 (또는 페이지 삭제 : 별다른 이야기 없으면 스크롤)
-주문 내역 페이지 cell double height 되는 부분 수정 (셀 넓이 수정 및 버튼 디자인 적용)
+포인트 구매 페이지 버튼 작동여부 확인 => 확인후 내부페이지 디자인 여부 확인
 휴대폰 인증 페이지 추후 개발완료시 디자인 적용
 가입 완료 페이지 버튼 디자인 변경
-footer submenu cursor 속성 pointer로 변경
 주문버튼 클릭시 팝업되는 모달 디자인
 주문내역 페이지 테이블 내용(순서 및 길이), 디자인 변경되면 확인후 재조정 (스크롤 최대한 생기지 않도록 해본다)
+
+REQUESTS
+- 회원정보 페이지 div class 추가 -> class="section-profile"
+- 비밀번호 변경 모달 class 추가 -> 최상위 div : class="modal-modify-pw"
+- 회원가입이 자꾸 실패해서 회원가입 완료 페이지를 확인 할 수 없음
+- 로컬에서 부동산 시세 정보조회가 작동하지 않음 504 에러 반환 -> 주문하기 버튼이 동작하지 않음
+- 문의사항 업로드 페이지 접근불가 및 vaadin 프레임워크 인풋 삭제 요청, 해당 section 클래스 추가 요청 : class="section-question-upload"
 */
