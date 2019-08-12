@@ -87,17 +87,19 @@ class Login extends Component {
       }
     })
     pfLoginPw.addEventListener('keypress', function(e) {
-      if (tfLoginId.value === null || tfLoginId.value === '' || tfLoginId.value === undefined) {
-        tfLoginId.focus();
-        window.confirm('아이디를 입력해주세요');
-        return;
+      if (e.keyCode === 13) {
+        if (tfLoginId.value === null || tfLoginId.value === '' || tfLoginId.value === undefined) {
+          tfLoginId.focus();
+          window.confirm('아이디를 입력해주세요');
+          return;
+        }
+        if (pfLoginPw.value === null || pfLoginPw.value === '' || pfLoginPw.value === undefined) {
+          pfLoginPw.focus();
+          window.confirm('비밀번호를 입력해주세요');
+          return;
+        }
+        idSavedCheck(tfLoginId.value, pfLoginPw.value)
       }
-      if (pfLoginPw.value === null || pfLoginPw.value === '' || pfLoginPw.value === undefined) {
-        pfLoginPw.focus();
-        window.confirm('비밀번호를 입력해주세요');
-        return;
-      }
-      idSavedCheck(tfLoginId.value, pfLoginPw.value)
     })
 
     let naverLogin = new window.naver.LoginWithNaverId({

@@ -299,9 +299,9 @@ class ChangePointHistorySearch extends Component {
                   options={changeTypeItems} 
                   onChange={e=>this.SearchItemChangeEvent(e)} />
         <label className="label-center" id="lbDate" />
-        <Calendar className="calendar-width-100" locale={calendarLocale} id="dpStart" showIcon={true} dateFormat="yy-mm-dd" value={this.state.fromDt} onChange={(e) => this.setState({fromDt: dateFormat(new Date(e.value), 'yyyy-mm-dd')})}/>
+        <Calendar className="calendar-width-100" readOnlyInput={true} locale={calendarLocale} id="dpStart" showIcon={true} dateFormat="yy-mm-dd" value={this.state.fromDt} onChange={(e) => this.setState({fromDt: dateFormat(new Date(e.value), 'yyyy-mm-dd')})}/>
         <label className="label" id="lbPunct" />
-        <Calendar className="calendar-width-100" locale={calendarLocale} id="dpEnd" showIcon={true} dateFormat="yy-mm-dd" value={this.state.toDt} onChange={(e) => this.setState({toDt: dateFormat(new Date(e.value), 'yyyy-mm-dd')})}/>
+        <Calendar className="calendar-width-100" readOnlyInput={true} locale={calendarLocale} id="dpEnd" showIcon={true} dateFormat="yy-mm-dd" value={this.state.toDt} onChange={(e) => this.setState({toDt: dateFormat(new Date(e.value), 'yyyy-mm-dd')})}/>
 
         <label className="label" id="lbSearch"/>
         {/* 권한체크 스크립트 호출 */}

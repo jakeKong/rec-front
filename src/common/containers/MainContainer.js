@@ -4,6 +4,8 @@ import { bindActionCreators } from "redux";
 import * as mainActions from "../modules/MainModule";
 import { /* MainGrid, MainSearch, */ MainComponent } from "../index";
 
+import * as popup from '../popupUtil';
+
 class MainContainer extends Component {
 
   // state set을 위한 초기 생성자
@@ -29,6 +31,8 @@ class MainContainer extends Component {
     const { homeList } = this.props;
     if (!homeList || homeList === undefined) {
       this.getHomeList();
+      // popup.setCookieAt00('div_betatest_popup', null, 1)
+      popup.openWin('div_betatest_popup');
     }
   }
 

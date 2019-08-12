@@ -3,7 +3,8 @@ import { Switch, Route } from 'react-router-dom';
 import { fromJS } from 'immutable';
 import storage from './common/storage';
 
-import { MainPage, NotFoundPage, LoginPage, RegisterPage, IdPwFindPage, NaverCallbackLogPage, NaverCallbackRegPage } from './common';
+import { MainPage, NotFoundPage, LoginPage, RegisterPage, IdPwFindPage, NaverCallbackLogPage, NaverCallbackRegPage, 
+         Popup_BetaTestNotificationPage } from './common';
 import { BlogTyleNewsPage, BlogTyleNewsManagePage } from './blog';
 import { UserManagePage, UserDetailPage } from './scm';
 import { OrderHistoryPage, OrderHistoryByEmailPage, /*ReportMakeHistoryPage,*/ ChangePointHistoryPage, ChangePointHistoryByEmailPage, ProductManagePage } from './oms';
@@ -133,6 +134,9 @@ class App extends Component {
         <Route exact path="/mpa/recaptitle/list" component={ BrRecapTitleInfoPage }/>
         {/* 상품 구매 */}
         <Route exact path="/payment/product" component={ PaymentPage }/>
+
+        {/* 베타테스트 안내 팝업 */}
+        <Route exact path="/pop/betatest/notification" component={ Popup_BetaTestNotificationPage }/>
   
         <Route component={NotFoundPage}/>
       </Switch>
