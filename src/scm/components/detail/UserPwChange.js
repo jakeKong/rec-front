@@ -82,7 +82,7 @@ class UserPwChange extends Component {
     const { visiblility, popupClose } = this.props;
     return (
       <Dialog header="비밀번호 변경" footer={popupFooter} style={{width: '500px'}} modal={true} visible={ visiblility } onHide={() => popupClose()}>
-        <div>
+        <div className="modal-modify-pw">
           <div>
             <label id="lbBeforePw"/>
             <Password value={this.state.beforepw} onChange={(e) => this.pwResetBeforePWInputEvent(e) }/>

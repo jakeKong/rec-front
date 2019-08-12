@@ -29,7 +29,7 @@ class RCMenu extends Component {
                 <MenuItem key="/mpa">단독/다가구</MenuItem> 
               </SubMenu>
               <MenuItem key="/bms/question">문의사항</MenuItem>
-              <MenuItem key="/payment/product">상품구매</MenuItem>
+              <MenuItem key="/payment/product">포인트구매</MenuItem>
               <SubMenu title={ <span className="submenu-title-wrapper">운영관리</span> } key="operation">
                 <MenuItem key="/oms/order/history">주문내역 관리</MenuItem>
                 <MenuItem key="/oms/changepoint/history">포인트 변동내역 관리</MenuItem>
@@ -63,7 +63,7 @@ class RCMenu extends Component {
                 <MenuItem key="/user/details">회원정보</MenuItem>
                 <MenuItem key="/oms/order/history/email">주문내역</MenuItem>
                 <MenuItem key="/oms/changepoint/history/email">포인트 변동내역</MenuItem>
-                <MenuItem key="/payment/product">상품구매</MenuItem>
+                <MenuItem key="/payment/product">포인트구매</MenuItem>
               </SubMenu>
             </Menu>
           </Fragment>
