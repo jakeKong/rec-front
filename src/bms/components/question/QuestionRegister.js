@@ -11,7 +11,7 @@ import 'tui-color-picker/dist/tui-color-picker.min.css';
 import '../../../styles/ToastEditor.scss';
 
 import '@vaadin/vaadin-button';
-import '@vaadin/vaadin-text-field';
+import {InputText} from 'primereact/inputtext';
 
 import storage from '../../../common/storage';
 import { addQuestion, updateQuestion } from '../../api/questionAxios';
@@ -35,11 +35,11 @@ class QuestionRegister extends Component {
 
     // 문의사항 제목 수정 및 등록에 사용되는 텍스트필드
     const tfTitle = document.querySelector('#tfTitle');
-    tfTitle.className = "vaadin-text-field-title"
+    tfTitle.className = "section-question-upload"
     tfTitle.placeholder = '제목을 입력하세요.';
     tfTitle.maxlength = '15';
 
-    // 텍스트 입력 시 문의사항 제목 값 할당
+    // // 텍스트 입력 시 문의사항 제목 값 할당
     tfTitle.addEventListener('input', function() { 
       question.questionTitle = tfTitle.value
     });
@@ -125,7 +125,7 @@ class QuestionRegister extends Component {
         }
       })
     } else {
-      tfTitle.value = "";
+      tfTitle.value = '';
       question.questionTxt = null;
       question.questionTitle = null;
 
@@ -139,7 +139,7 @@ class QuestionRegister extends Component {
           question.reportingDt = new Date();
           // 문의사항 제목과 내용의 값이 존재하고
           // 전달받은 문의사항 값이 존재하지 않을경우 문의사항 등록 이벤트 호출
-          if (question.questionTitle !== null && question.questionTxt !== null && questionDto.questionSid === null) {
+          if (question.questionTitle !== null && question.questionTxt !== null) {
             addQuestion(storage.get('loggedInfo').email, question).then(res => {
               window.alert('등록 완료!');
               if (storage.get('loggedInfo').assignedRoles.indexOf('ROLE_ADMIN') === -1) {
@@ -189,7 +189,8 @@ class QuestionRegister extends Component {
   render() {
     return (
       <Fragment>
-        <vaadin-text-field id="tfTitle"/>
+        {/* <vaadin-text-field id="tfTitle"/> */}
+        <InputText id="tfTitle"/>
         <div id="toastEditor">
           <div id="editSection" />
         </div>

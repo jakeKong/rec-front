@@ -11,7 +11,7 @@ import 'tui-color-picker/dist/tui-color-picker.min.css';
 import '../../../styles/ToastEditor.scss';
 
 import '@vaadin/vaadin-button';
-import '@vaadin/vaadin-text-field';
+import {InputText} from 'primereact/inputtext';
 
 import storage from '../../../common/storage';
 import { addNotice, updateNotice } from '../../api/noticeAxios';
@@ -63,7 +63,7 @@ class NoticeRegister extends Component {
 
     // 공지사항 제목 수정 및 등록에 사용되는 텍스트필드
     const tfTitle = document.querySelector('#tfTitle');
-    tfTitle.className = "vaadin-text-field-title"
+    tfTitle.className = "section-notice-upload"
     tfTitle.placeholder = '제목을 입력하세요.';
     tfTitle.maxlength = '15';
 
@@ -174,7 +174,8 @@ class NoticeRegister extends Component {
   render() {
     return (
       <Fragment>
-        <vaadin-text-field id="tfTitle"/>
+        {/* <vaadin-text-field id="tfTitle"/> */}
+        <InputText id="tfTitle"/>
         <div id="toastEditor">
           <div id="editSection" />
         </div>

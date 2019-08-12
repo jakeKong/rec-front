@@ -273,7 +273,7 @@ class UserUpdate extends Component {
           <div className="default-column">
             <label id="lbUpdateUserBirthDt" className="label-flex-20-left"/>
             <div className="div-flex-80-left">
-              <Calendar className="calendar-width-100" locale={calendarLocale} showIcon={true} dateFormat="yy-mm-dd" value={this.state.tbirthDt} onChange={(e) => this.changeTBirthDt(e)}/>
+              <Calendar className="calendar-width-100" readOnlyInput={true} locale={calendarLocale} showIcon={true} dateFormat="yy-mm-dd" value={this.state.tbirthDt} onChange={(e) => this.changeTBirthDt(e)}/>
             </div>
           </div>
           <div className="default-column">

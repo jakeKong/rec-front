@@ -38,7 +38,7 @@ class UserDetail extends Component {
   render() {
     return (
       <Fragment>
-        <div>
+        <div className="section-profile">
           <ul>
             <li className="default-column">
               <label className="label-flex-30-left">이메일</label>

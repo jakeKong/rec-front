@@ -41,4 +41,4 @@ export { default as RegisterPage } from './pages/RegisterPage';
 export { default as NaverCallbackLogPage } from './pages/NaverCallbackLogPage';
 export { default as NaverCallbackRegPage } from './pages/NaverCallbackRegPage';
 
-
+export { default as Popup_BetaTestNotificationPage } from './pages/Popup_BetaTestNotificationPage';

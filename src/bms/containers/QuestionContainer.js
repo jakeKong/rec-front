@@ -35,12 +35,11 @@ class QuestionContainer extends Component {
     const loggedInfo = storage.get('loggedInfo')
     this.getQuestionListByEmail(loggedInfo.email, search);
 
-    const registerStatusChangeEvent = this.registerStatusChangeEvent;
     const btnRegister = document.querySelector('#btnRegister');
     btnRegister.className = "btn";
     btnRegister.innerHTML = '등록';
     btnRegister.addEventListener('click', function() {
-      registerStatusChangeEvent();
+      window.location.href = '/bms/question/register';
     });
   }
 
