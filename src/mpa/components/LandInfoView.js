@@ -19,9 +19,15 @@ class LandInfoView extends Component {
     }
   }
   componentDidMount() {
-    const { landInfoData, isSearched } = this.props;
+    const { landInfoData, isSearched, analysisReturnedCallback } = this.props;
+    
     if (!landInfoData || landInfoData === undefined || landInfoData.isEmpty()) {
       return
+    }
+    else {
+      window.setTimeout(function() {
+        analysisReturnedCallback(landInfoData.get("mngNo"));          
+      }, 3000);
     }
     document.querySelector('#tdJibunAddr').innerHTML = landInfoData.get("jibunAddr");
     document.querySelector('#tdRoadAddr').innerHTML = landInfoData.get("roadAddr");

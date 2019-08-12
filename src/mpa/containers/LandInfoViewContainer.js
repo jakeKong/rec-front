@@ -10,8 +10,7 @@ import LandInfoOrderCommentPopup from "../components/LandInfoOrderCommentPopup";
 
 import storage from '../../common/storage';
 
-let enabled = false;
-let searchKey;
+let enabled = 'none';
 let isSearched = false;
 class LandInfoViewContainer extends Component {
 
@@ -26,12 +25,15 @@ class LandInfoViewContainer extends Component {
         comment: '',
         userId: 'user@test.com',
         userNm: '사용자',
+        mngNo: '',
       },
       selectedSuggestion: null,
       popupOpened: false,
-    };
+    }; 
     this.makeLandInfo = this.makeLandInfo.bind(this);    
     this.popupOpenStateEvent = this.popupOpenStateEvent.bind(this);
+    
+    this.enabled = 'none';
   }
   
   popupClose = async (dataClickChild) => {
@@ -42,28 +44,36 @@ class LandInfoViewContainer extends Component {
   }
   
   addCallback = async(comment) => {
-    // searchKey = {
-    //   jibunAddr: this.state.jibunAddr,
-    //   roadAddr: this.state.roadAddr,
-    //   pnu: this.state.pnu,
-    //   comment: comment,
-    //   userId: this.state.userId,
-    //   userNm: this.state.userNm
-    // };
-    //const makeLandInfo = this.makeLandInfo;
     
     if (storage.get('loggedInfo')) {
-      searchKey = {
-        jibunAddr: this.state.search.jibunAddr,
-        roadAddr: this.state.search.roadAddr,
-        pnu: this.state.search.pnu,
-        comment: comment,
-        userId: storage.get('loggedInfo').email,
-        userNm: storage.get('loggedInfo').name,
-      };
-      console.log(searchKey);
-      this.setState({search: {comment: comment}});
-      this.makeLandInfo(searchKey);
+      this.setState ({
+        search: {
+          jibunAddr: this.state.search.jibunAddr,
+          roadAddr: this.state.search.roadAddr,
+          pnu: this.state.search.pnu,
+          comment: comment,
+          userId: storage.get('loggedInfo').email,
+          userNm: storage.get('loggedInfo').name,
+          mngNo: this.state.search.mngNo,
+        }
+      });
+      // console.log(this.state.search);
+      this.makeLandInfo(this.state.search);
+      //초기화
+      this.setState ({
+        search: {
+          jibunAddr: '',
+          roadAddr: '',
+          pnu: '1111111111111111111',
+          comment: '',
+          userId: storage.get('loggedInfo').email,
+          userNm: storage.get('loggedInfo').name,
+          mngNo: '',
+        },
+        selectedSuggestion: null,
+        popupOpened: false,
+      });
+
     }
     else {
       //얼럿
@@ -75,9 +85,20 @@ class LandInfoViewContainer extends Component {
   popupAddAndUpdateCheckOpenEvent(popupOpened) {
     return <LandInfoOrderCommentPopup addCallback={ this.addCallback } popupOpened={ popupOpened } popupClose={ this.popupClose }/>      
   }
-  isDisabled = () => {
-    return enabled;
+  
+  analysisReturnedCallback = (mngNo) =>{    
+    
+    this.setState ({
+      search: {
+        jibunAddr: this.state.search.jibunAddr,
+        roadAddr: this.state.search.roadAddr,
+        pnu: this.state.search.pnu,
+        mngNo: mngNo,
+      }
+    });
+    console.log(this.state.search);
   }
+  
   //우편번호 검색이 끝났을 때 사용자가 선택한 정보를 받아올 콜백함수
   onComplete  = async (selectedSuggestion) => {    
     
@@ -88,22 +109,30 @@ class LandInfoViewContainer extends Component {
         roadAddr: selectedSuggestion.roadAddr,
         pnu: selectedSuggestion.bdMgtSn,
         comment: '',
-        userId: 'user@test.com',
-        userNm: '사용자',
       }
     });
-    this.enabled = false;
+    this.enabled = 'none';
   }
   onSearchClick = async (selectedSuggestion) => { 
+    //로그인 하지 않았으면 PDF 버튼 비활성화
+    if (storage.get('loggedInfo')) {
+      this.enabled = 'inline-block';
+    }else {
+      
+      this.enabled = 'none';
+    }
     this.getLandInfo(this.state.search);
-    this.enabled = true;
+    
   }
 
   getLandInfo = async (search) => {
     const { LandInfoViewModule } = this.props;
     if(search.pnu !== '1111111111111111111') isSearched = true;
     try {
-      await LandInfoViewModule.getLandInfo(search)
+      if (storage.get('loggedInfo')) {
+        this.enabled = 'inline-block';
+      }
+      await LandInfoViewModule.getLandInfo(search);
     } catch (e) {
       console.log("error log : " + e);
     }
@@ -133,10 +162,15 @@ class LandInfoViewContainer extends Component {
     
     const popupOpenStateEvent = this.popupOpenStateEvent;
     const btnMakePdf = document.querySelector('#btnMakePdf');
-    btnMakePdf.innerHTML = '주문'
+    btnMakePdf.innerHTML = '주문';
     btnMakePdf.addEventListener('click', function() {
       popupOpenStateEvent();
-    })
+    });
+
+    //로그인 하지 않았으면 PDF 버튼 비활성화
+    if (!storage.get('loggedInfo')) {
+      this.enabled = 'none';
+    }
     
     //MAIN 화면 혹은 기타 화면으로 부터 넘어온 주소검색 결과가 있는지 확인한여 처리한다.
     if(this.props.postStat !== undefined) {
@@ -148,25 +182,19 @@ class LandInfoViewContainer extends Component {
           roadAddr: selectedSuggestion.roadAddr,
           pnu: selectedSuggestion.bdMgtSn.substring(0,19),
           comment: '',
-          userId: 'user@test.com',
-          userNm: '사용자',
         },
         selectedSuggestion: {selectedSuggestion}
       });
-      
-      searchKey = {
+      const searchKey = {
         jibunAddr: selectedSuggestion.jibunAddr,
         roadAddr: selectedSuggestion.roadAddr,
-        pnu: selectedSuggestion.bdMgtSn.substring(0,19),
-        comment: '',
-        userId: 'user@test.com',
-        userNm: '사용자',
+        pnu: selectedSuggestion.bdMgtSn.substring(0,19)
       };
       this.getLandInfo(searchKey);
     }
     //이전 화면에서 넘어온 값이 아닌경우
     else {
-      this.getLandInfo(this.state.search);
+      if(this.state.search.pnu !== '1111111111111111111') this.getLandInfo(this.state.search);
     }
     
     // const { landInfoData } = this.props;
@@ -177,7 +205,7 @@ class LandInfoViewContainer extends Component {
   }
   
   render() {
-    const { pending, error, success, landInfoData } = this.props;
+    const { pending, error, landInfoData } = this.props;
     const { popupOpened } = this.state;
     return (
       <Fragment>
@@ -188,9 +216,9 @@ class LandInfoViewContainer extends Component {
           <div style={{marginTop:'2px'}}>
             {pending && <div className="boxLoading" />}
             {error && <h1>Server Error!</h1>}
-            {!pending && !error && <LandInfoView landInfoData={landInfoData} isSearched={isSearched}/>}
+            {!pending && !error && <LandInfoView landInfoData={landInfoData} isSearched={isSearched} analysisReturnedCallback={this.analysisReturnedCallback}/>}
           </div>
-          <div style={{ display: 'inline-block', textAlign: 'right', marginLeft: '85%'}}>
+          <div style={{ display: this.enabled, textAlign: 'right', marginLeft: '85%'}}>
             <vaadin-button id="btnMakePdf"/>
           </div>
           { isSearched === true && popupOpened === true &&

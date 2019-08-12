@@ -6,7 +6,7 @@ class NaverCallbackPage extends Component {
     let naverLoginRegister = new window.naver.LoginWithNaverId({
       clientId: "nwXOVGpHJOzfV1oBeUqn",
       // clientSecret = 'hr1p7IcsN7';
-      callbackUrl: "http://localhost:3000/naver/reg/pop",
+      callbackUrl: "http://algozip.co.kr/naver/reg/pop",
       isPopup: false, /* 팝업을 통한 연동처리 여부 */
       callbackHandle: true,
     })

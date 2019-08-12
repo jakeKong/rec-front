@@ -111,6 +111,16 @@ class LandInfoOrderCommentPopup extends Component {
       <Fragment>
         <vaadin-dialog-overlay id="doRegister">
           <div className="div-register-popup-board">
+            <div>
+              <label className="label-flex-20-left">
+                확인 버튼을 클릭하면 보유하신 포인트가 차감됩니다.
+              </label>
+            <div>
+            </div>    
+              <label className="label-flex-20-left">
+                주문하시는 부동산 정보의 메모를 남기려면 아래에 입력하십시오.
+              </label>
+            </div>    
             <div className="default-column">
               <label id="lbLink" className="label-flex-20-left"/>
               <vaadin-text-field id="tfLink" required prevent-invalid-input/>

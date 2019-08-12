@@ -15,8 +15,9 @@ axios({
     'jibunAddr': search.jibunAddr,
     'roadAddr': search.roadAddr,
     'pnu': search.pnu,
-    // 'startDate': search.pnu,
-    // 'endDate': search.pnu,
+    'userId': search.userId,
+    'userNm': search.userNm,
+    'mngNo': search.mngNo,
     })
 });
 
@@ -28,11 +29,13 @@ axios({
         'Content-Type': 'application/json; charset=UTF-8',
         'Accept': 'application/json'
     },
-    data: JSON.stringify({
+    data: JSON.stringify({        
         'jibunAddr': search.jibunAddr,
         'roadAddr': search.roadAddr,
         'pnu': search.pnu,
-        comment: search.comment,
-        userId: search.userId
+        'comment': search.comment,
+        'userId': search.userId,
+        'userNm': search.userNm,
+        'mngNo': search.mngNo,
     })
 });

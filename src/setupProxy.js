@@ -4,49 +4,49 @@ module.exports = function(app) {
 
   app.use(
     proxy('/web/rec/api/scm', { 
-      target: 'http://srd.iptime.org:8001', 
+      target: 'http://algozip.co.kr:8001', 
       changeOrigin: true
     })
   );
   app.use(
     proxy('/web/rec/api/oms', { 
-      target: 'http://srd.iptime.org:8002', 
+      target: 'http://algozip.co.kr:8002', 
       changeOrigin: true
     })
   );
   app.use(
     proxy('/web/rec/api/bms', {
-      target: 'http://srd.iptime.org:8003',
+      target: 'http://algozip.co.kr:8003',
       changeOrigin: true
     })
   );
   app.use(
     proxy('/web/rec/api/mpa', {
-      target: 'http://srd.iptime.org:8004',
+      target: 'http://algozip.co.kr:8004',
       changeOrigin: true
     })
   );
   app.use(
     proxy('/web/rec/api/blog', {
-      target: 'http://srd.iptime.org:8005',
+      target: 'http://algozip.co.kr:8005',
       changeOrigin: true
     })
   );
   app.use(
     proxy('/web/rec/api/file', {
-      target: 'http://srd.iptime.org:8006',
+      target: 'http://algozip.co.kr:8006',
       changeOrigin: true
     })
   );
   app.use(
     proxy('/web/srd/common', {
-      target: 'http://srd.iptime.org:8007',
+      target: 'http://algozip.co.kr:8007',
       changeOrigin: true
     })
   );
   app.use(
     proxy('/uaa', { 
-      target: 'http://srd.iptime.org:8000', 
+      target: 'http://algozip.co.kr:8000', 
       changeOrigin: true
     })
   );
