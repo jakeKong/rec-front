@@ -510,6 +510,9 @@ html, body, #root .index {
     transition: 0.3s;
     background: #fff !important;
 }
+.p-datatable tbody tr td > label {
+    cursor: pointer;
+}
 .p-datatable tbody tr:nth-of-type(2n-1) {
     /* 홀수번째 배경색 */
     background: #f7f7f7 !important;
@@ -745,7 +748,7 @@ html, body, #root .index {
     
     float: right;
     color: #fff;
-    background: #00d80a;
+    background: #4fd81b;
     margin: 0 0 0 20px;
     
     cursor: pointer;
@@ -1045,7 +1048,65 @@ html, body, #root .index {
 }
 /* land info END */
 /* 문의사항 QNA */
+.section-datatable-question th:nth-of-type(1),
+.section-datatable-question td:nth-of-type(1){
+    width: 5%;
+}
+.section-datatable-question th:nth-of-type(2),
+.section-datatable-question td:nth-of-type(2){
+    width: 65%;
+}
+
 /* 문의사항 등록 */
+.section-question-upload {
+    margin-top: 40px;
+}
+.section-question-upload #tfTitle{
+    border: none;
+    font-size: 20px;
+    border-bottom: 2px solid #eee;
+    width: 100%;
+    border-radius: 0;
+    padding-left: 24px;
+}
+.section-question-upload #tfTitle:focus {
+    outline: 0 !important;
+    border-bottom-color: #4fd81b;
+    box-shadow: none !important;
+}
+.section-question-upload #toastEditor {
+    padding: 0 !important;
+}
+.section-question-upload #toastEditor  #editSection {
+    height: 100% !important;
+}
+.section-question-upload #toastEditor .te-mode-switch-section {
+    display: none !important;
+}
+.section-question-upload #toastEditor .tui-editor-defaultUI {
+    border: none ;
+}
+.section-question-upload #toastEditor .tui-editor-contents {
+    min-height: 365px !important;
+}
+.section-question-upload #toastEditor + div {
+    text-align: right;
+    margin-top: 14px;
+}
+.section-question-upload #btnRegister,
+.section-question-upload #btnCancle {
+    margin: 0;
+    border-radius: 0;
+    cursor: pointer;
+}
+.section-question-upload #btnRegister {
+    background: #47c10a;
+    color: #fff;
+    margin-right: 12px;
+}
+.section-question-upload #btnCancle {
+    color: #666;
+}
 /* 문의사항 QNA END */
 /* purchase */
 .page-purchase .agz-bbs {
@@ -1706,11 +1767,54 @@ html, body, #root .index {
     color: rgba(0,0,0,0.5);
 }
 /* PAGE-register END */
+/* PAGE-profile */
+.section-profile {
+    width: 390px;
+    margin: 40px auto;
+    padding: 40px 60px 50px 60px;
+    background: #fff;
+    border: 1px solid #ddd;
+}
+.section-profile ul li {
+    padding: 12px 0;
+}
+.section-profile ul li label {
+    vertical-align: middle;
+    line-height: 22px;
+}
+.section-profile ul li label:first-child {
+    font-size: 14px;
+    font-weight: 300;
+}
+.section-profile ul li label:last-child {
+    font-size: 16px;
+    font-weight: 200;
+    padding-left: 12px;
+    border-left: 1px solid #eee;
+}
+.section-profile ul + div {
+    margin-top: 20px;
+    text-align: left;
+}
+.section-profile ul + div button {
+    border: none;
+    color: #fff;
+    font-size: 13px;
+    background: #4fd81b;
+    padding: 8px 16px;
+    margin-right: 8px;
+    transition: 0.3s;
+}
+.section-profile ul + div button:hover {
+    background: #47c10a;
+}
+/* PAGE-profile END */
 
 /* Dialog */
 .p-dialog{
     max-width: 800px;
     overflow: hidden;
+    border-radius: 7px !important;
 }
 .p-dialog .p-dialog-titlebar {
     background: #fff !important;
@@ -1736,6 +1840,8 @@ html, body, #root .index {
     padding: 0px !important;
 }
 .p-dialog textarea {
+    line-height: 30px;
+    font-weight: 300;
     max-width: 100%;
     border: none;
     margin: 0;
@@ -1802,6 +1908,27 @@ html, body, #root .index {
     border: 1px solid #bbb;
     padding-left: 10px;
 }
+
+/* 비밀번호 변경 */
+.modal-modify-pw {
+    padding: 40px 80px 0 80px;
+}
+.modal-modify-pw > div {
+    width: 100%;
+    padding: 8px 0;
+}
+.modal-modify-pw > div label {
+    display: inline-block;
+    width: 40%;
+    font-weight: 300;
+    color: #555;
+}
+.modal-modify-pw > div input {
+    width: 60%;
+    border-radius: 0;
+}
+/* 비밀번호 변경 END */
+
 .p-dialog .p-dialog-footer {
     padding-top: 20px !important;
     padding-bottom: 36px !important;
@@ -1819,27 +1946,19 @@ html, body, #root .index {
     background: #4fd81b;
     color: #fff;
 }
+
 /* Dialog END */ 
 /*
 CANDO
 
 TODO
-문의사항 업로드 페이지(또는 수정) css 적용 방법 논의 ( 클래스 추가 요청 해아함)
-회원정보 페이지 css 적용
 각종 modal css 적용
-    - 크로스워크 소개 (푸터 서브메뉴)
-    - 비밀번호 변경
-    - 회원정보 수정
+    - 크로스워크 소개 (푸터 서브메뉴) (컨셉 결정되면 디자인 및 적용)
 포인트 구매 페이지 버튼 작동여부 확인 => 확인후 내부페이지 디자인 여부 확인
 휴대폰 인증 페이지 추후 개발완료시 디자인 적용
-가입 완료 페이지 버튼 디자인 변경
-주문버튼 클릭시 팝업되는 모달 디자인
-주문내역 페이지 테이블 내용(순서 및 길이), 디자인 변경되면 확인후 재조정 (스크롤 최대한 생기지 않도록 해본다)
+가입 완료 페이지 버튼 디자인 변경 (현재 가입 불가 현상 발생)
+주문버튼 클릭시 팝업되는 모달 디자인 (주문버튼 클릭후 모달 접근 불가)
 
 REQUESTS
-- 회원정보 페이지 div class 추가 -> class="section-profile"
-- 비밀번호 변경 모달 class 추가 -> 최상위 div : class="modal-modify-pw"
 - 회원가입이 자꾸 실패해서 회원가입 완료 페이지를 확인 할 수 없음
-- 로컬에서 부동산 시세 정보조회가 작동하지 않음 504 에러 반환 -> 주문하기 버튼이 동작하지 않음
-- 문의사항 업로드 페이지 접근불가(TypeError: registerStatusChangeEvent is not a function) 및 vaadin 프레임워크 인풋 삭제 요청, 해당 section 클래스 추가 요청 : class="section-question-upload"
 */
