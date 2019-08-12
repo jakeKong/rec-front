@@ -221,7 +221,7 @@ class PaymentContainer extends Component {
     document.querySelector('#lbSelectPointSubName').innerHTML = "P";
 
     const iamportPayBtn = document.querySelector('#iamportPayBtn');
-    iamportPayBtn.textContent = "Pay 결제하기"
+    iamportPayBtn.textContent = "결제하기"
     iamportPayBtn.type = "smallWhite"    
     
     const openIamPortPay = this.openIamPortPay;

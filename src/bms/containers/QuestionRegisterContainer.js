@@ -17,7 +17,7 @@ class QuestionRegisterContainer extends Component {
   render() {
     return (
       <Fragment>
-        <div>
+        <div className="section-question-upload">
           <div className="div-main">
             <QuestionRegister />
           </div>
