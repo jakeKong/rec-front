@@ -78,6 +78,7 @@ class Comment extends Component {
     liCmtRegister.id = "liCmtRegister";
     const iconCmtRegister = document.createElement('iron-icon');
     iconCmtRegister.setAttribute("icon", "icons:subdirectory-arrow-right")
+    iconCmtRegister.style = '--iron-icon-height: 15px;, --iron-icon-width: 15px;';
     const taCmtRegister = document.createElement('textarea');
     taCmtRegister.placeholder = '댓글을 입력해주세요.'
     taCmtRegister.className = "vaadin-text-area-comment";
@@ -280,6 +281,7 @@ class Comment extends Component {
         liCmt.className = "li-comment-cmt";
         const iconCmt = document.createElement('iron-icon');
         iconCmt.setAttribute("icon", "icons:subdirectory-arrow-right")
+        iconCmt.style = '--iron-icon-height: 15px;, --iron-icon-width: 15px;';
   
         const lbCmtWriter = document.createElement('label');
         lbCmtWriter.className = "label-comment-cmt-writer"
