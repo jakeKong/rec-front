@@ -1850,9 +1850,49 @@ html, body, #root .index {
 
 /* 주문 dialog */
 #doRegister .div-register-popup-board {
-    background: #aaa;
+    text-align: center !important;
 }
+#doRegister .div-register-popup-board > div:first-child {
+    margin-bottom: 18px !important;
+}
+#doRegister .div-register-popup-board > div:first-child label:first-child{
+    color: #444 !important;
+    font-size: 24px !important;
 
+}
+#doRegister .div-register-popup-board > div:first-child label:last-child {
+    color: #666 !important;
+    font-size: 13px !important;
+}
+#doRegister .div-register-popup-board > div:last-child {
+    display: block !important;
+}
+#doRegister .div-register-popup-board > div:last-child > label {
+    width: 100% !important;
+    display: inline-block !important;
+    font-size: 14px !important;
+    font-weight: 300 !important;
+    color: #555 !important;
+}
+#doRegister .div-register-popup-board > div:last-child > #tfLink {
+    width: 100% !important;
+    margin: 0 !important;
+}
+#doRegister .div-register-popup-bottom {
+    padding-top: 24px !important;
+}
+#doRegister .div-register-popup-bottom vaadin-button {
+    border-radius: 0 !important;
+    height: 40px !important;
+    cursor: pointer !important;
+}
+#doRegister .div-register-popup-bottom #btnOk {
+    background: #4fd81b !important;
+    color: #fff !important;
+}
+#doRegister .div-register-popup-bottom #btnCancle {
+    color: #666 !important;
+}
 /* 회원정보 수정 */
 .p-dialog .p-dialog-content .div-register-input {
     width: 70%;
