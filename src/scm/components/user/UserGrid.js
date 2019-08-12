@@ -190,7 +190,7 @@ class UserGrid extends Component {
       <Fragment>
         <div>
           <vaadin-grid theme="column-borders" height-by-rows column-reordering-allowed>
-            <vaadin-grid-column auto-select hidden id="grdSelect" flex-grow="0.1" width="50px" />
+            <vaadin-grid-column auto-select hidden id="grdSelect" flex-grow="0.1" width="70px" />
             {/* <vaadin-grid-sort-column path="index" header="번호" text-align="end" flex-grow="0.2" /> */}
             <vaadin-grid-column path="email" header="이메일" text-align="center" flex-grow="1" width="180px" resizable/>
             <vaadin-grid-column path="name" header="이름" text-align="center" flex-grow="1" width="120px" resizable/>

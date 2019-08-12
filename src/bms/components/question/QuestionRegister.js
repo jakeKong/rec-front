@@ -35,7 +35,7 @@ class QuestionRegister extends Component {
 
     // 문의사항 제목 수정 및 등록에 사용되는 텍스트필드
     const tfTitle = document.querySelector('#tfTitle');
-    tfTitle.className = "section-question-upload"
+    // tfTitle.className = "section-question-upload"
     tfTitle.placeholder = '제목을 입력하세요.';
     tfTitle.maxlength = '15';
 

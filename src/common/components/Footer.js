@@ -92,17 +92,17 @@ class Footer extends Component {
         <div className="footer_new">
           <div className="width-ful">
             <div className="footer-layer1">
-              <a onClick={() => this.infoIntro()}>알고집 소개</a>
+              <a href='#1' onClick={() => this.infoIntro()}>알고집 소개</a>
               <a href="/bms/notice">공지사항</a>
               {/* <a onClick={() => this.infoNotice()}>공지사항</a> */}
-              <a onClick={() => this.infoTermsofservice()}>이용약관</a>
-              <a onClick={() => this.infoPrivacy()}>개인정보 처리방침</a>
-              <a onClick={() => this.infoLiability()}>책임한계와 법적고지</a>
-              <a onClick={() => this.infoCopyright()}>저작권 정책</a>
+              <a href='#3' onClick={() => this.infoTermsofservice()}>이용약관</a>
+              <a href='#4' onClick={() => this.infoPrivacy()}>개인정보 처리방침</a>
+              <a href='#5' onClick={() => this.infoLiability()}>책임한계와 법적고지</a>
+              <a href='#6' onClick={() => this.infoCopyright()}>저작권 정책</a>
             </div>
             <div className="footer-layer2">
               <div className="footer-content">
-                <a href="/"><img src={main_illu} style={{margin:0, display:'inline-block', width:100, height:80}}></img></a>
+                <a href="/"><img src={main_illu} style={{margin:0, display:'inline-block', width:100, height:80}} alt=""></img></a>
                 <address>
                   주식회사 크로스워크 | 대표 : 한창훈 | 주소 : 서울특별시 성동구 성수동1가 685-418<br/>
                   전화 : 070-000-0000 | 팩스 : 0303-000-0000<br/>

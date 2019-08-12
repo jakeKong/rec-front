@@ -18,8 +18,10 @@ class NoticeRegisterContainer extends Component {
   render() {
     return (
       <Fragment>
-        <div className="div-main">
-          <NoticeRegister/>
+        <div className="section-notice-upload">
+          <div className="div-main">
+            <NoticeRegister/>
+          </div>
         </div>
       </Fragment>
     );
