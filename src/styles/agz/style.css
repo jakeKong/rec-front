@@ -1280,6 +1280,9 @@ html, body, #root .index {
 .section-datatable-changehistory .p-datatable .p-button-warning:active {
     background: rgb(236, 160, 160);
 }
+#lbSearch + .p-dropdown {
+    border: none;
+}
 /* log-point END */
 /* PAGE-notice */
 
@@ -1606,7 +1609,85 @@ html, body, #root .index {
 .div-register #naverIdLogin img {
     height: 50px;
 }
-
+/*본인 인증*/
+.div-register .div-register-verify {
+    padding-top: 60px;
+    margin: 0 auto;
+    width: 380px;
+}
+.div-register .div-register-verify > p {
+    padding-bottom: 20px;
+    margin-bottom: 22px;
+    font-size: 24px;
+    text-align: left;
+}
+.div-register .div-register-verify > div {
+    width: 90%;
+    margin-left: 5%;
+    margin-bottom: 24px;
+}
+.div-register .div-register-verify > div > p {
+    text-align: left;
+    font-size: 14px;
+    color: #666;
+    font-weight: 300;
+}
+.div-register .div-register-verify > div > .p-inputtext {
+    width: 100%;
+    height: 40px;
+    margin-top: 8px;
+    border: none;
+    border-radius: 0;
+    border-bottom: 1px solid #ccc;
+    text-align: center;
+}
+.div-register .div-register-verify > div > .p-inputtext:focus {
+    box-shadow: none;
+}
+.div-register .div-register-verify > div:nth-of-type(2) > .p-inputtext {
+    width: 20%;
+}
+.div-register .div-register-verify > div:nth-of-type(2) > label {
+    display: inline-block;
+    width: 5%;
+    text-align: center;
+}
+.div-register .div-register-verify > div:nth-of-type(2) > button,
+.div-register .div-register-verify > div:nth-of-type(3) > button {
+    width: 28%;
+    height: 40px;
+    margin-left: 2%;
+    border: none;
+    border: 1px solid #4fd81b;
+    background: #fff;
+    color: #4fd81b;
+    font-size: 14px;
+    font-weight: 300;
+    transition: 0.3s;
+    letter-spacing: -1px;
+}
+.div-register .div-register-verify > div:nth-of-type(2) > button:hover,
+.div-register .div-register-verify > div:nth-of-type(3) > button:hover {
+    font-weight: 300;
+    background: #47c10a;
+    color: #fff;
+}
+.div-register .div-register-verify > div:nth-of-type(3) > .p-inputtext {
+    width: 70%;
+}
+.div-register .div-register-verify #btnAuthCheck {
+    margin-top: 20px;
+    float: right;
+    background: #4fd81b;
+    color: #fff;
+    height: 40px;
+    border-radius: 4px;
+    width: 80px;
+    border: none;
+} 
+.div-register .div-register-verify #btnAuthCheck:hover {
+    background: #47c10a;
+}
 /* 회원정보 입력 */
 .div-register .div-register-input {
     padding: 20px 300px 0px !important;
@@ -1997,8 +2078,11 @@ TODO
 포인트 구매 페이지 버튼 작동여부 확인 => 확인후 내부페이지 디자인 여부 확인
 휴대폰 인증 페이지 추후 개발완료시 디자인 적용
 가입 완료 페이지 버튼 디자인 변경 (현재 가입 불가 현상 발생)
-주문버튼 클릭시 팝업되는 모달 디자인 (주문버튼 클릭후 모달 접근 불가)
+주문버튼 클릭시 팝업되는 모달 디자인 (라이브 서버 변경 확인)
 
 REQUESTS
 - 회원가입이 자꾸 실패해서 회원가입 완료 페이지를 확인 할 수 없음
+- ID/PW 찾기 페이지 상단에 버튼 감싸고 있는 div 클래스 추가 wrap-btn-findAcnt
+- ID/PW 찾기 페이지 div에 클래스 추가 section-findAcnt
+- 휴대폰 인증 페이지 감싸고 있는 div 클래스 추가 div-register-verify
 */
