@@ -4,8 +4,7 @@ import { RegisterAgree, RegisterAuth, RegisterInput, RegisterComplete } from "..
 import storage from '../storage';
 import { oauth_web } from '../../OAuth2Config'
 
-import { createUser, checkRecommendCode, updateUserByBalancePointIncrease, getUser } from '../../scm/api/userAxios';
-
+import { createUser, checkRecommendCode, updateUserByBalancePointIncrease, getUser, checkUserByTellNo } from '../../scm/api/userAxios';
 class RegisterContainer extends Component {
 
   // state set을 위한 초기 생성자
@@ -84,9 +83,36 @@ class RegisterContainer extends Component {
                    isRegisterAuth: true});
   }
 
-  goAuthRegisterCallback() {
+  goAuthRegisterCallback(name, phone) {
 
-    /* 인증 수단 결정 완료 후 진행 예정 -- 2019-08-06
+    try {
+      oauth_web.owner.getToken('guest@test.com', 'test123').then((result) => {
+        this.setState({token: result.accessToken});
+        storage.set('token', result.accessToken)
+        checkUserByTellNo(phone, result.accessToken).then(res => {
+          if (res.data !== '' && res.data === true) {
+            window.alert('가입된 회원이 존재합니다.')
+            window.location.href='/login';
+          } else {
+            console.log(res.data)
+            this.setState({userinfo: {
+                                      name: name,
+                                      tellNo: phone
+            }})
+            this.setState({isRegisterAuth: false, 
+                           isRegisterInput: true});
+          }
+        }).catch(err => {
+          console.log(err);
+          window.confirm('요청 실패');
+        })
+      })
+    } catch(error) {
+      console.log(error);
+      window.confirm('토큰 발급에 실패하였습니다.\n새로고침 혹은 브라우저 재실행 후 다시 시도해주세요.');
+    }
+
+    /* IMP 휴대폰 인증 예제 - 미사용
     let IMP = window.IMP;
     IMP.init(config.iamportpayMemberId)
     // IMP.certification(param, callback) 호출
@@ -104,8 +130,7 @@ class RegisterContainer extends Component {
     });
     */
 
-    this.setState({isRegisterAuth: false, 
-                   isRegisterInput: true});
+
   }
 
   addCallback = (getDto) => {

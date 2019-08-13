@@ -39,6 +39,17 @@ export const getUserByNameAndTell = (name, phone, token) => axios({
   }
 });
 
+// 전화번호로 가입된 사용자 정보 존재 여부 체크
+export const checkUserByTellNo = (phone, token) => axios({
+  method: 'GET',
+  url: `${config.systemService}/user/check/user/${phone}`,
+  headers: {
+    'Content-Type': 'application/json; charset=UTF-8',
+    'Accept': 'application/json',
+    'Authorization': `Bearer ${token}`
+  }
+});
+
 // 사용자 등록 (관리)
 export const addUser = (userDto, token) => axios({
   method: 'POST',

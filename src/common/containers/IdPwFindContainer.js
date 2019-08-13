@@ -6,7 +6,7 @@ import * as userActions from "../../scm/modules/UserModule";
 import { IdFindByAuth, IdFindByResult, PwFindById, PwFindByAuth, PwFindByReset, PwFindByResult } from "../index";
 
 import { oauth_web } from '../../OAuth2Config'
-import { getUser, getUserByNameAndTell, resetUserPwByEmailAndPassword } from '../../scm/api/userAxios';
+import { getUser, getUserByNameAndTell, resetUserPwByEmailAndPassword, checkUserByTellNo } from '../../scm/api/userAxios';
 
 class IdPwFindContainer extends Component {
 
@@ -28,7 +28,7 @@ class IdPwFindContainer extends Component {
       pwResetStatus: false,
       pwResultStatus: false,
 
-      resultCode: undefined
+      resultCode: undefined,
     }
     this.findComponentRenderEvent = this.findComponentRenderEvent.bind(this);
     this.resetStateToIdCall = this.resetStateToIdCall.bind(this);
@@ -94,9 +94,7 @@ class IdPwFindContainer extends Component {
 
   // 특정 조건(이름, 전화번호) 사용자 목록 조회 호출
   getUserByNameAndTellEvent = (name, phone, token) => {
-    getUserByNameAndTell(name, phone, token).then(e => {
-      this.setState({userInfo: e.data});
-    })
+    
   }
 
   RealEstateCommunityAccessToken = async(email, password) => {
@@ -114,8 +112,25 @@ class IdPwFindContainer extends Component {
 
   // 아이디 찾기 - 1. 인증 후 status 전환 이벤트
   focusIdAuthStatusToChangeEvent(name, phone) {
-    this.getUserByNameAndTellEvent(name, phone, this.state.token)
-    this.setState({idAuthStatus: false, idResultStatus: true});
+    const { token } = this.state;
+    checkUserByTellNo(phone, token).then(res => {
+      if (res.data !== '' && res.data === true) {
+        getUserByNameAndTell(name, phone, token).then(res => {
+          this.setState({userInfo: res.data});
+          this.setState({idAuthStatus: false, idResultStatus: true});
+        }).catch(err => {
+          console.log(err)
+          window.confirm('요청 실패');
+        })
+      } else {
+        console.log(res.data)
+        window.confirm('회원정보가 존재하지 않습니다.');
+        window.location.href="/user/findhelp";
+      }
+    }).catch(err => {
+      console.log(err);
+      window.confirm('요청 실패');
+    })
   }
 
   // 아이디 찾기 - 2. 아이디 찾기 결과 Callback
@@ -139,9 +154,28 @@ class IdPwFindContainer extends Component {
   }
 
   // 비밀번호 찾기 - 2. 인증 후 status 전환 이벤트
-  focusPwAuthStatusToChangeEvent() {
-    this.setState({pwAuthStatus: false, 
-                   pwResetStatus: true});
+  // 인증 후 입력된 전화번호로 사용자정보 존재여부 확인 -- 비밀번호를 조회하고자 하는 아이디와 전화번호 인증으로 확인한 사용자 정보가 일치하는지 확인
+  focusPwAuthStatusToChangeEvent(name, phone) {
+    const { token } = this.state;
+    checkUserByTellNo(phone, token).then(res => {
+      if (res.data !== '' && res.data === true) {
+        getUserByNameAndTell(name, phone, token).then(res => {
+          this.setState({userInfo: res.data});
+          this.setState({pwAuthStatus: false, 
+                         pwResetStatus: true});
+        }).catch(err => {
+          console.log(err)
+          window.confirm('요청 실패');
+        })
+      } else {
+        console.log(res.data)
+        window.confirm('회원정보가 존재하지 않습니다.');
+        window.location.href="/user/findhelp";
+      }
+    }).catch(err => {
+      console.log(err);
+      window.confirm('요청 실패');
+    })
   }
 
   // 비밀번호 찾기 - 3. 비밀번호 리셋 요청 Callback
@@ -155,18 +189,6 @@ class IdPwFindContainer extends Component {
       window.alert('비밀번호를 다시 확인해주세요.');
     })
   }
-
-  // 비밀번호 찾기 - 3. 비밀번호 변경 요청 Callback
-  // PwResetCallbackEvent(email, beforepw, afterpw) {
-  //   updateUserPwByEmailAndPassword(email, beforepw, afterpw, this.state.token).then(res => {
-  //     this.setState({pwResetStatus: false, 
-  //                    pwResultStatus: true});
-  //     this.setState({resultCode: 'complete'})
-  //   }).catch(error => {
-  //     console.log(error)
-  //     window.alert('비밀번호를 다시 확인해주세요.');
-  //   })
-  // }
 
   findComponentRenderEvent(focusId, focusPw, userInfo, resultCode) {
     if (focusId === true) {

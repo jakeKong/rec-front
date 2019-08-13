@@ -84,16 +84,31 @@ class RegisterInput extends Component {
     const changeTEmailDomain = this.changeTEmailDomain;
     const changeTEmailCom = this.changeTEmailCom;
     const changeTName = this.changeTName;
+    const changeTTellStation = this.changeTTellStation;
+    const changeTTellByNumber = this.changeTTellByNumber;
+    const changeTTellNumberByNumber = this.changeTTellNumberByNumber;
+
     if (userinfo !== null && userinfo !== '' && userinfo !== undefined) {
       console.log(userinfo);
-      let emailName = userinfo.email.substring(0, userinfo.email.indexOf('@'));
-      let emailDomain = userinfo.email.substring(userinfo.email.indexOf('@')+1, userinfo.email.indexOf('.'));
-      let emailCom = userinfo.email.substring(userinfo.email.indexOf('.')+1, userinfo.email.length);
-      changeTEmailName(emailName);
-      changeTEmailDomain(emailDomain);
-      changeTEmailCom(emailCom);
-      // email 추출
-      changeTName(userinfo.name)
+      if(userinfo.email !== null && userinfo.email !== undefined && userinfo.email !== '') {
+        // email 추출
+        let emailName = userinfo.email.substring(0, userinfo.email.indexOf('@'));
+        let emailDomain = userinfo.email.substring(userinfo.email.indexOf('@')+1, userinfo.email.indexOf('.'));
+        let emailCom = userinfo.email.substring(userinfo.email.indexOf('.')+1, userinfo.email.length);
+        changeTEmailName(emailName);
+        changeTEmailDomain(emailDomain);
+        changeTEmailCom(emailCom);
+        changeTName(userinfo.name)
+      }
+      if(userinfo.tellNo !== null && userinfo.tellNo !== undefined && userinfo.tellNo !== '') {
+        let tfTellStation = userinfo.tellNo.substr(0, userinfo.tellNo.indexOf("-"));
+        let tfTellByNumber = userinfo.tellNo.substr(userinfo.tellNo.indexOf("-")+1, userinfo.tellNo.lastIndexOf("-")-userinfo.tellNo.indexOf("-")-1);
+        let tfTellNumberByNumber = userinfo.tellNo.substr(userinfo.tellNo.lastIndexOf("-")+1, userinfo.tellNo.lastIndexOf("-"));
+        changeTTellStation(tfTellStation)
+        changeTTellByNumber(tfTellByNumber)
+        changeTTellNumberByNumber(tfTellNumberByNumber)
+        changeTName(userinfo.name)
+      }
     }
 
     const itdetailAddress = document.querySelector('#itdetailAddress');
@@ -261,9 +276,30 @@ class RegisterInput extends Component {
     }
   }
 
-  changeTTellStation(e) { this.setState({tTellStation: e.target.value}) }
-  changeTTellByNumber(e) { this.setState({tTellByNumber: e.target.value}) }
-  changeTTellNumberByNumber(e) { this.setState({tTellNumberByNumber: e.target.value}) }
+  changeTTellStation(e) { 
+    if (e.target === undefined || e.target === null) {
+      this.setState({tTellStation: e})
+      document.querySelector('#itTellStation').readOnly = true;
+    } else {
+      this.setState({tTellStation: e.target.value})
+    }
+  }
+  changeTTellByNumber(e) { 
+    if (e.target === undefined || e.target === null) {
+      this.setState({tTellByNumber: e})
+      document.querySelector('#itTellByNumber').readOnly = true;
+    } else {
+      this.setState({tTellByNumber: e.target.value}) 
+    }
+  }
+  changeTTellNumberByNumber(e) { 
+    if (e.target === undefined || e.target === null) {
+      this.setState({tTellNumberByNumber: e})
+      document.querySelector('#itTellNumberByNumber').readOnly = true;
+    } else {
+      this.setState({tTellNumberByNumber: e.target.value}) 
+    }
+  }
 
   changeTAddressNo(res) { this.setState({tAddressNo: res}) }
   changeTAddress(res) { this.setState({tAddress: res}) }
@@ -272,7 +308,6 @@ class RegisterInput extends Component {
   changeTRecommendCode(e) { this.setState({recommendCode: e.target.value}) }
 
   render() {
-    console.log(this.state.tbirthDt)
     return (
       <Fragment>
         <div className="div-register-input">
@@ -313,11 +348,11 @@ class RegisterInput extends Component {
           <div className="default-column">
             <label id="lbTellNo" className="label-flex-20-left"/>
             <div className="div-flex-80-left">
-              <InputText keyfilter="pint" maxLength="3" value={this.state.tTellStation} onChange={e=>this.changeTTellStation(e)}/>
+              <InputText id="itTellStation" keyfilter="pint" maxLength="3" value={this.state.tTellStation} onChange={e=>this.changeTTellStation(e)}/>
               <label id="lbTellNoHyphen"/>
-              <InputText keyfilter="pint" maxLength="4" value={this.state.tTellByNumber} onChange={e=>this.changeTTellByNumber(e)}/>
+              <InputText id="itTellByNumber" keyfilter="pint" maxLength="4" value={this.state.tTellByNumber} onChange={e=>this.changeTTellByNumber(e)}/>
               <label id="lbTellNoHyphenTo"/>
-              <InputText keyfilter="pint" maxLength="4" value={this.state.tTellNumberByNumber} onChange={e=>this.changeTTellNumberByNumber(e)}/>
+              <InputText id="itTellNumberByNumber" keyfilter="pint" maxLength="4" value={this.state.tTellNumberByNumber} onChange={e=>this.changeTTellNumberByNumber(e)}/>
             </div>
           </div>
           <div className="address-column">

@@ -23,3 +23,37 @@ export let calendarLocale = {
     dateFormat: 'yyyy/mm/dd',
     weekHeader: 'Sm'
   };
+
+// 30초 표시
+export function CountDownTimer(id, btn) {
+  let end = new Date();
+  end.setSeconds(end.getSeconds()+30);
+  
+  let _second = 1000;
+  let _minute = _second * 60;
+  // var _hour = _minute * 60;
+  let timer;
+
+  function showRemaining() {
+    if(document.querySelector(id) === undefined || document.querySelector(id) === null) {
+      clearInterval(timer);
+      return;
+    }
+    let now = new Date();
+    let distance = end - now;
+    if (distance < 0) {
+      clearInterval(timer);
+      document.querySelector(id).innerHTML = '';
+      document.querySelector(btn).disabled = false;
+
+      return false;
+    }
+    // let minutes = Math.floor((distance % _hour) / _minute);
+    let seconds = Math.floor((distance % _minute) / _second);
+    
+    document.querySelector(id).innerHTML = seconds + '초';
+    document.querySelector(btn).disabled = true;
+  }
+
+  timer = setInterval(showRemaining, 1000);
+}  

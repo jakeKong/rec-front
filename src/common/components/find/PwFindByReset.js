@@ -21,23 +21,26 @@ class PwFindByReset extends Component {
     const { afterpw, reafterpw } = this.state;
     if (afterpw === '') {
       window.alert('새로운 비밀번호를 입력해주세요.')
+      return;
     }
     if (reafterpw === '') {
       window.alert('새로운 비밀번호를 입력해주세요.')
+      return;
     }
     if (afterpw !== reafterpw) {
       window.alert('변경 비밀번호가 일치하지 않습니다.\n확인 후 다시 시도해주세요')
+      return;
     } else {
       PwResetCallbackEvent(email, afterpw);
     }
   }
 
   pwResetAfterPWInputEvent(e) {
-    this.setState({beforepw: e.target.value})
+    this.setState({afterpw: e.target.value})
   }
 
   pwResetAfterRePWInputEvent(e) {
-    this.setState({rebeforepw: e.target.value})
+    this.setState({reafterpw: e.target.value})
   }
 
   render() {

@@ -12,7 +12,7 @@ class PwFindById extends Component {
   }
 
   componentDidMount() {
-
+    document.querySelector('#lbFindById').innerHTML = 'ID';
   }
   
   pwFindNextClickEvent() {
@@ -34,11 +34,14 @@ class PwFindById extends Component {
     return (
       <Fragment>
         <div>
-          <label id=""/>
-          <InputText id="itEmailCheck" value={this.state.email} onChange={(e) => this.pwFindByIdEmailCheckInputEvent(e) }/>
-        </div>
-        <div>
-          <button id="btnPwFindNext" onClick={this.pwFindNextClickEvent}>다음</button>
+        <p>비밀번호 찾기</p>
+          <div>
+            <label id="lbFindById"/>
+            <InputText id="itEmailCheck" value={this.state.email} onChange={(e) => this.pwFindByIdEmailCheckInputEvent(e) }/>
+          </div>
+          <div>
+            <button id="btnPwFindNext" onClick={this.pwFindNextClickEvent}>다음</button>
+          </div>
         </div>
       </Fragment>
     );
