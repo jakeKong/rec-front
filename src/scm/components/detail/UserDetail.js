@@ -1,6 +1,8 @@
 import React, { Component, Fragment } from 'react';
 import storage from '../../../common/storage';
 
+import { comma } from '../../../common/utils';
+
 class UserDetail extends Component {
 
   constructor(props) {
@@ -22,7 +24,7 @@ class UserDetail extends Component {
     // document.querySelector('#lbAddressNo').innerHTML = loggedInfo.addressNo;
     document.querySelector('#lbAddress').innerHTML = loggedInfo.address;
 
-    document.querySelector('#lbBalancePoint').innerHTML = loggedInfo.balancePoint+'P';
+    document.querySelector('#lbBalancePoint').innerHTML = comma(loggedInfo.balancePoint)+'P';
     document.querySelector('#lbRecommendCode').innerHTML = loggedInfo.recommendCode;
     
     document.querySelector('#btnUserUpdate').innerHTML = '회원정보 수정'
