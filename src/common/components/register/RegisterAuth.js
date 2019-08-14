@@ -154,7 +154,7 @@ class RegisterAuth extends Component {
   render() {
     return (
       <Fragment>
-        <div>
+        <div className="div-register-verify">
           <p>본인확인</p>
           <div>
             <p>이름</p>

@@ -4,8 +4,8 @@ class NaverCallbackPage extends Component {
 
   componentDidMount() {
     let naverLogin = new window.naver.LoginWithNaverId({
-      clientId: "nwXOVGpHJOzfV1oBeUqn",
-      // clientSecret = 'hr1p7IcsN7';
+      clientId: "1iW5r3Qytlk4tte3X_UX",
+      // clientSecret = 'jdC9xJas1b';
       callbackUrl: "http://algozip.co.kr/naver/log/pop",
       // callbackUrl: "http://localhost:3000/login",
       // callbackUrl: "http://localhost:3000/login",

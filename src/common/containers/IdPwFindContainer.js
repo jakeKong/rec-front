@@ -242,7 +242,7 @@ class IdPwFindContainer extends Component {
     
     return (
       <Fragment>
-        <div>
+        <div className="wrap-btn-findAcnt">
           <ul>
             <li>
               <button id="btnFindIdGo"/>
@@ -250,7 +250,7 @@ class IdPwFindContainer extends Component {
             </li>
           </ul>
         </div>
-        <div className="div-main">
+        <div className="div-main section-findAcnt">
           {this.findComponentRenderEvent(focusId, focusPw, userInfo, resultCode)}
         </div>
       </Fragment>
