@@ -11,12 +11,12 @@ class PwFindByResult extends Component {
   componentDidMount() {
     
     const btnIdResultToLoginGo = document.querySelector('#btnIdResultToLoginGo');
-    btnIdResultToLoginGo.innerHTML = '로그인 화면으로';
+    btnIdResultToLoginGo.innerHTML = '로그인';
     btnIdResultToLoginGo.addEventListener('click', function() {
       window.location.href = '/login';
     })
     const btnIdResultToHomeGo = document.querySelector('#btnIdResultToHomeGo');
-    btnIdResultToHomeGo.innerHTML = '홈으로';
+    btnIdResultToHomeGo.innerHTML = '홈';
     btnIdResultToHomeGo.addEventListener('click', function() {
       window.location.href = '/';
     })
