@@ -45,6 +45,7 @@ class OrderHistorySearch extends Component {
     this.SearchRealEstateTypeItemChangeEvent = this.SearchRealEstateTypeItemChangeEvent.bind(this);
     this.SearchItemByOrderNumberInputEvent = this.SearchItemByOrderNumberInputEvent.bind(this);
     this.SearchItemByOrdererNameInputEvent = this.SearchItemByOrdererNameInputEvent.bind(this);
+    this.SearchItemByEmailInputEvent = this.SearchItemByEmailInputEvent.bind(this);
     this.SearchOrderCheckItemChangeEvent = this.SearchOrderCheckItemChangeEvent.bind(this);
     this.orderItemCheckFieldRendering = this.orderItemCheckFieldRendering.bind(this);
     this.roleCheckFieldRendering = this.roleCheckFieldRendering.bind(this);
@@ -77,7 +78,9 @@ class OrderHistorySearch extends Component {
   resetState() {
     this.setState({
       odrNo: '',
-      ordererNm: ''
+      ordererNm: '',
+      email: '',
+      inputCheck: false
     })
   }
 
@@ -129,11 +132,22 @@ class OrderHistorySearch extends Component {
     this.setState({ordererNm: e.target.value})
   }
 
+  // (관리) 아이디 입력 텍스트필드 이벤트
+  SearchItemByEmailInputEvent(e) {
+    if (e.target.value === '') {
+      this.setState({inputCheck: false})
+    } else {
+      this.setState({inputCheck: true})
+    }
+    this.setState({email: e.target.value})
+  }
+
   // (관리) 주문 텍스트필드 입력조건 항목 선택 이벤트 - 주문번호 / 주문자 선택
   SearchOrderCheckItemChangeEvent(e) {
     this.setState({searchOrderCheckItemValue: e.value})
     this.setState({odrNo: '',
-                   ordererNm: ''})
+                   ordererNm: '',
+                   email: ''})
   }
 
   // (관리)선택 컬럼항목에 따르는 입력 텍스트필드 반환 - 주문번호 / 주문자 선택
@@ -143,6 +157,8 @@ class OrderHistorySearch extends Component {
       return <InputText value={this.state.odrNo} onChange={(e) => this.SearchItemByOrderNumberInputEvent(e)} />
     } else if (searchOrderCheckItemValue === 'ordererNm') {
       return <InputText value={this.state.ordererNm} onChange={(e) => this.SearchItemByOrdererNameInputEvent(e)} />
+    } else if (searchOrderCheckItemValue === 'email') {
+      return <InputText value={this.state.email} onChange={(e) => this.SearchItemByEmailInputEvent(e)} />
     } else {
       return null;
     }
@@ -152,7 +168,8 @@ class OrderHistorySearch extends Component {
     if (role === 'ROLE_ADMIN' || role === 'ROLE_SYSADMIN') {
       const orderCheckItems = [
         {label: '주문번호', value: 'odrNo'},
-        {label: '주문자', value: 'ordererNm'}
+        {label: '주문자', value: 'ordererNm'},
+        {label: '아이디', value: 'email'}
       ]
       return (
         <Fragment>

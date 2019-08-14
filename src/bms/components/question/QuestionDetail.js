@@ -21,11 +21,12 @@ class QuestionDetail extends Component {
     if (!question || question === undefined) {
       return
     }
+    let dateFormat = require('dateformat');
 
     const lbTitle = document.querySelector('#lbTitle')
     lbTitle.innerHTML = question.questionTitle;
     
-    document.querySelector('#lbReportingDt').innerHTML = '작성일 : '+question.reportingDt+'&nbsp&nbsp';
+    document.querySelector('#lbReportingDt').innerHTML = '작성일 : '+dateFormat(new Date(question.reportingDt), 'yyyy년mm월dd일')+'&nbsp&nbsp';
     document.querySelector('#lbQuestionWriter').innerHTML = '작성자 : '+question.questionWriter;
 
     this.toastEditor = new Viewer({

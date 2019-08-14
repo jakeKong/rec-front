@@ -2,9 +2,11 @@ import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as noticeActions from "../modules/NoticeModule";
-import { NoticeGrid } from "../index";
+import { NoticeGrid, NoticeSearch } from "../index";
 
 import '@vaadin/vaadin-button';
+
+import storage from '../../common/storage';
 
 class NoticeManageContainer extends Component {
 
@@ -12,11 +14,16 @@ class NoticeManageContainer extends Component {
     super(props);
     this.state = {
       selectList: [],
+      search: {
+        fromDt: null,
+        toDt: null,
+        noticeTitle: null
+      }
     }
   }
 
   componentDidMount() {
-    this.getNoticeList();
+    this.getNoticeListBySpec(this.state.search);
 
     const selectedDeleteCheckEvent = this.selectedDeleteCheckEvent;
     const btnSelectDelete = document.querySelector('#btnSelectDelete');
@@ -56,11 +63,20 @@ class NoticeManageContainer extends Component {
     }
   }
 
+  searchCallback = async (fromDt, toDt, noticeTitle) => {
+    let searchValue = {
+      fromDt: fromDt,
+      toDt: toDt,
+      noticeTitle: noticeTitle,
+    };
+    this.getNoticeListBySpec(searchValue);
+  }
+
   // 공지사항 목록 조회 호출
-  getNoticeList = async () => {
+  getNoticeListBySpec = async (search) => {
     const { NoticeModule } = this.props;
     try {
-      await NoticeModule.getNoticeList()
+      await NoticeModule.getNoticeListBySpec(search)
     } catch (e) {
       console.log("error log : " + e);
     }
@@ -90,17 +106,26 @@ class NoticeManageContainer extends Component {
   }
 
   render() {
-    const { detailStatus, registerStatus } = this.state;
     const { noticeList, pending, error, success } = this.props;
+    const loggedInfo = storage.get('loggedInfo')
+    let role = 'GUEST';
+    if (loggedInfo) {
+      if (loggedInfo.assignedRoles.indexOf('ROLE_ADMIN') !== -1) {
+        role = 'ROLE_ADMIN';
+      }
+    }
     return (
       <Fragment>
         <div>
+          <div className="div-search" >
+            <NoticeSearch searchCallback={ this.searchCallback } role={role} />
+          </div>
           <div className="div-main">
             { pending && <div className="boxLoading"/> }
             { error && <h1>Server Error!</h1> }
             { success && <NoticeGrid noticeList={ noticeList } detailCallback={ this.detailCallback } selectCallback={ this.selectCallback } />}
           </div>
-          <div className="div-sub-main" hidden={registerStatus || detailStatus || !success}>
+          <div className="div-sub-main">
             <vaadin-button id="btnSelectDelete" theme="error" />
             <vaadin-button id="btnRegister" />
           </div>

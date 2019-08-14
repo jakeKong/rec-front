@@ -1,5 +1,5 @@
 // BMS - api
-export { getNoticeList, getNotice, addNotice, updateNotice, deleteNotice, deleteNoticeList } from './api/noticeAxios';
+export { getNoticeList, getNoticeListBySpec, getNotice, addNotice, updateNotice, deleteNotice, deleteNoticeList } from './api/noticeAxios';
 export { getQuestionList, getQuestion, deleteQuestion, deleteQuestionByList,
          getQuestionListByEmail, getQuestionAnswerList, /*getQuestionAnswerCmtList,*/
          addQuestion, addQuestionAnswer, addQuestionAnswerCmt,
@@ -9,6 +9,7 @@ export { getQuestionList, getQuestion, deleteQuestion, deleteQuestionByList,
 // BMS - component
 export { default as NoticeGrid } from './components/notice/NoticeGrid';
 export { default as NoticeDetail } from './components/notice/NoticeDetail';
+export { default as NoticeSearch } from './components/notice/NoticeSearch';
 export { default as NoticeRegister } from './components/notice/NoticeRegister';
 
 export { default as QuestionDetail } from './components/question/QuestionDetail';

@@ -16,7 +16,8 @@ export const getOrderHistoryList = (search) => axios({
     'fromDt': search.fromDt,
     'toDt': search.toDt,
     'realEstateType': search.realEstateType,
-    'status': search.status
+    'status': search.status,
+    'email' : search.email
   })
 });
 // 사용자기준 조건별 주문내역 조회

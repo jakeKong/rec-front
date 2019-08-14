@@ -11,6 +11,21 @@ export const getNoticeList = () => axios({
   }
 });
 
+// 공지사항 조건별 목록 조회
+export const getNoticeListBySpec = (search) => axios({
+  method: 'POST',
+  url: `${config.boardService}/notice/listbyspec`,
+  headers: {
+    'Content-Type': 'application/json; charset=UTF-8',
+    'Accept': 'application/json'
+  },
+  data: JSON.stringify({
+    'fromDt': search.fromDt,
+    'toDt': search.toDt,
+    'noticeTitle': search.noticeTitle,
+  })
+});
+
 // 공지사항 단일 항목 조회
 export const getNotice = (noticeSid) => axios({
   method: 'GET',

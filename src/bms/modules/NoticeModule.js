@@ -9,6 +9,11 @@ const GET_NOTICE_LIST = 'notice/GET_NOTICE_LIST';
 const GET_NOTICE_LIST_RECEIVED = 'notice/GET_NOTICE_LIST_RECEIVED';
 const GET_NOTICE_LIST_FAILURE = 'notice/GET_NOTICE_LIST_FAILURE';
 
+// getNoticeListBySpec Action Types
+const GET_NOTICE_LIST_BY_SPEC = 'notice/GET_NOTICE_LIST_BY_SPEC';
+const GET_NOTICE_LIST_BY_SPEC_RECEIVED = 'notice/GET_NOTICE_LIST_BY_SPEC_RECEIVED';
+const GET_NOTICE_LIST_BY_SPEC_FAILURE = 'notice/GET_NOTICE_LIST_BY_SPEC_FAILURE';
+
 // getNotice Action Types
 const GET_NOTICE = 'notice/GET_NOTICE';
 const GET_NOTICE_RECEIVED = 'notice/GET_NOTICE_RECEIVED';
@@ -37,6 +42,7 @@ const DELETE_NOTICE_LIST_FAILURE = 'notice/DELETE_NOTICE_LIST_FAILURE';
 // Actions
 // 외부에서 호출하여 입력받아줄 값 ( ex) this.getProductList(search) )
 export const getNoticeList = createAction(GET_NOTICE_LIST);
+export const getNoticeListBySpec = createAction(GET_NOTICE_LIST_BY_SPEC, search => search);
 export const getNotice = createAction(GET_NOTICE, noticeSid => noticeSid);
 export const addNotice = createAction(ADD_NOTICE, (email, dto) => ({email, dto}));
 export const updateNotice = createAction(UPDATE_NOTICE, (noticeSid, email, dto) => ({noticeSid, email, dto}));
@@ -60,6 +66,16 @@ function* getNoticeListSaga() {
     yield put({type: GET_NOTICE_LIST_RECEIVED, payload: response});
   } catch (error) {
     yield put({type: GET_NOTICE_LIST_FAILURE, payload: error});
+  }
+}
+
+// getNoticeListBySpec Saga
+function* getNoticeListBySpecSaga(action) {
+  try {
+    const response = yield call(api.getNoticeListBySpec, action.payload);
+    yield put({type: GET_NOTICE_LIST_BY_SPEC_RECEIVED, payload: response});
+  } catch (error) {
+    yield put({type: GET_NOTICE_LIST_BY_SPEC_FAILURE, payload: error});
   }
 }
 
@@ -129,6 +145,7 @@ export function* noticeSaga() {
   yield takeLatest(DELETE_NOTICE_LIST, deleteNoticeListSaga);
   yield takeEvery(GET_NOTICE_LIST, getNoticeListSaga);
   yield takeEvery(GET_NOTICE, getNoticeSaga);
+  yield takeEvery(GET_NOTICE_LIST_BY_SPEC, getNoticeListBySpecSaga);
 }
 
 // 액션 핸들러 설정
@@ -146,6 +163,22 @@ export default handleActions({
   [GET_NOTICE_LIST_FAILURE]: (state, action) => {
     const {error} = action.payload;
     console.log('GET_NOTICE_LIST_FAILURE onFailure')
+    console.log('ERROR: ' + error)
+    return {error: true};
+  },
+
+  [GET_NOTICE_LIST_BY_SPEC]: (state, action) => {
+    console.log('GET_NOTICE_LIST_BY_SPEC onPending')
+    return {pending: true, error: false};
+  },
+  [GET_NOTICE_LIST_BY_SPEC_RECEIVED]: (state, action) => {
+    console.log('GET_NOTICE_LIST_BY_SPEC_RECEIVED onReceived')
+    const {data: content} = action.payload;
+    return {pending: false, error: false, success: true, noticeList: fromJS(content)};
+  },
+  [GET_NOTICE_LIST_BY_SPEC_FAILURE]: (state, action) => {
+    const {error} = action.payload;
+    console.log('GET_NOTICE_LIST_BY_SPEC_FAILURE onFailure')
     console.log('ERROR: ' + error)
     return {error: true};
   },

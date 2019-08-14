@@ -279,7 +279,7 @@ class OrderHistoryGrid extends Component {
             </DataTable>
           </section>
           <div className="align-right-text">
-            <vaadin-button id="btnExcel"/>
+            <vaadin-button id="btnExcel" hidden/>
           </div>
       </Fragment>
     );

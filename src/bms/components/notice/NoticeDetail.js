@@ -21,10 +21,12 @@ class NoticeDetail extends Component {
     if (!notice || notice === undefined) {
       return
     }
+    let dateFormat = require('dateformat');
+
     const lbTitle = document.querySelector('#lbTitle')
     lbTitle.innerHTML = notice.noticeTitle;
     
-    document.querySelector('#lbReportingDt').innerHTML = '작성일 : '+notice.reportingDt+'&nbsp&nbsp';
+    document.querySelector('#lbReportingDt').innerHTML = '작성일 : '+dateFormat(new Date(notice.reportingDt), 'yyyy년mm월dd일')+'&nbsp&nbsp';
     document.querySelector('#lbNoticeWriter').innerHTML = '작성자 : '+notice.noticeWriter;
 
     this.toastEditor = new Viewer({

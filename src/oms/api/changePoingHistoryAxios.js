@@ -15,7 +15,8 @@ export const getChangePointHistoryList = (search) => axios({
     'paymentNo': search.paymentNo,
     'fromDt': search.fromDt,
     'toDt': search.toDt,
-    'changeType': search.changeType
+    'changeType': search.changeType,
+    'email': search.email
   })
 });
 

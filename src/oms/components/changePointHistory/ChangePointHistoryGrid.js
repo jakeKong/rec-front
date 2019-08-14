@@ -161,7 +161,7 @@ class ChangePointHistoryGrid extends Component {
           </DataTable>
         </section>
         <div className="div-sub-top-right">
-          <vaadin-button id="btnExcel" />
+          <vaadin-button id="btnExcel" hidden/>
         </div>
       </Fragment>
     );

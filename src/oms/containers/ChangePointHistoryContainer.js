@@ -19,7 +19,8 @@ class ChangePointHistoryContainer extends Component {
         paymentNo: null,
         fromDt: null,
         toDt: null,
-        changeType: null
+        changeType: null,
+        email: null
       },
     }
   }
@@ -41,7 +42,8 @@ class ChangePointHistoryContainer extends Component {
       paymentNo: null,
       fromDt: null,
       toDt: null,
-      changeType: null
+      changeType: null,
+      email: null
     }});
   }
 
