@@ -62,6 +62,7 @@ class IdFindByAuth extends Component {
           // 인증번호 일치 ==> 인증 완료
           window.alert('인증 완료');
           this.setState({authStatus: true});
+          document.querySelector('#lbTimer').hidden = true;
         } else {
           window.alert('인증번호가 일치하지 않습니다.')
           return;
