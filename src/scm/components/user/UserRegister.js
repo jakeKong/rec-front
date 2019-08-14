@@ -161,7 +161,6 @@ class UserRegister extends Component {
       const resetDto = () => {
         tfEmailName.value = null;
         tfEmailDomain.value = null;
-        tfEmailCom.value = null;
         tfNm.value = null;
         tfTellStation.value = null;
         tfTellByNumber.value = null;
@@ -191,7 +190,6 @@ class UserRegister extends Component {
 
       document.querySelector('#lbEmail').innerHTML = "이메일";
       document.querySelector('#lbEmailCommercial').innerHTML = " @ ";
-      document.querySelector('#lbEmailPeriod').innerHTML = " . ";
       
       document.querySelector('#lbNm').innerHTML = "이름";
 
@@ -209,8 +207,6 @@ class UserRegister extends Component {
       // tfEmailName.placeholder = '이메일을 입력해주세요.';
       const tfEmailDomain = document.querySelector('#tfEmailDomain');
       tfEmailDomain.className = 'vaadin-text-field-width-100';
-      const tfEmailCom = document.querySelector('#tfEmailCom');
-      tfEmailCom.className = 'vaadin-text-field-width-70';
 
       // 이름 입력필드
       const tfNm = document.querySelector('#tfNm');
@@ -350,8 +346,11 @@ class UserRegister extends Component {
         if (user.email !== null) {
           dto.email = user.email;
           tfEmailName.value = user.email.substr(0, user.email.indexOf("@"));
-          tfEmailDomain.value = user.email.substr(user.email.indexOf("@")+1, user.email.indexOf(".")-user.email.indexOf("@")-1);
-          tfEmailCom.value = user.email.substr(user.email.indexOf(".")+1, user.email.indexOf("."));
+          tfEmailDomain.value = user.email.substr(user.email.indexOf("@")+1, user.email.length);
+          tfEmailName.disabled = true;
+          tfEmailDomain.disabled = true;
+          // tfEmailDomain.value = user.email.substr(user.email.indexOf("@")+1, user.email.indexOf(".")-user.email.indexOf("@")-1);
+          // tfEmailCom.value = user.email.substr(user.email.indexOf(".")+1, user.email.indexOf("."));
         }
         if (user.name !== null) {
           dto.name = user.name;
@@ -401,8 +400,8 @@ class UserRegister extends Component {
       const btnOk = document.querySelector('#btnOk');
       btnOk.innerHTML = "확인";
       btnOk.addEventListener('click', function() {
-        if (tfEmailName.value !== '' && tfEmailDomain.value !== '' && tfEmailCom.value !== '') {
-          dto.email = tfEmailName.value+'@'+tfEmailDomain.value+'.'+tfEmailCom.value;
+        if (tfEmailName.value !== '' && tfEmailDomain.value !== '') {
+          dto.email = tfEmailName.value+'@'+tfEmailDomain.value;
         }
         if (tfTellStation.value !== '' && tfTellByNumber.value !== '' && tfTellNumberByNumber.value !== '') {
           dto.tellNo = tfTellStation.value+'-'+tfTellByNumber.value+'-'+tfTellNumberByNumber.value;
@@ -477,14 +476,13 @@ class UserRegister extends Component {
       <Fragment>
         <vaadin-dialog-overlay id="doRegister">
           <div className="div-register-popup-board">
+            <label hidden />
             <div className="email-column">
               <label id="lbEmail" className="label-flex-20-left"/>
               <div className="div-flex-80-left">
                 <vaadin-text-field id="tfEmailName" required prevent-invalid-input pattern="([a-zA-Zㄱ-ㅎ가-힣0-9]+?)"/>
                 <label id="lbEmailCommercial"/>
                 <vaadin-text-field id="tfEmailDomain" required prevent-invalid-input pattern="([a-zA-Zㄱ-ㅎ가-힣0-9]+?)"/>
-                <label id="lbEmailPeriod"/>
-                <vaadin-text-field id="tfEmailCom" required prevent-invalid-input pattern="([a-zA-Zㄱ-ㅎ가-힣0-9]+?)"/>
               </div>
             </div>
             <div className="default-column">
@@ -511,7 +509,7 @@ class UserRegister extends Component {
               <label id="lbBirthDt" className="label-flex-20-left"/>
               <vaadin-date-picker id="dpBirthDt"/>
             </div>
-            <div className="list-box-column">
+            <span className="list-box-column">
               <vaadin-list-box id="lsbBeforeAssignedRoles"/>
               <div className="list-box-button">
                 <vaadin-button id="btnGoToAfter">
@@ -522,7 +520,7 @@ class UserRegister extends Component {
                 </vaadin-button>
               </div>
               <vaadin-list-box id="lsbAfterAssignedRoles"/>
-            </div>
+            </span>
           </div>
           <div className="div-register-popup-bottom">
               <vaadin-button id="btnOk"/>

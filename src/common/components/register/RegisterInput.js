@@ -25,7 +25,6 @@ class RegisterInput extends Component {
       },
       tEmailName: '',
       tEmailDomain: '',
-      tEmailCom: '',
       tPassword: '',
       tRePassword: '',
       tName: '',
@@ -43,7 +42,6 @@ class RegisterInput extends Component {
 
     this.changeTEmailName = this.changeTEmailName.bind(this);
     this.changeTEmailDomain = this.changeTEmailDomain.bind(this);
-    this.changeTEmailCom = this.changeTEmailCom.bind(this);
 
     this.changeTPassword = this.changeTPassword.bind(this);
     this.changeTRePassword = this.changeTRePassword.bind(this);
@@ -62,7 +60,6 @@ class RegisterInput extends Component {
   componentDidMount() {
     document.querySelector('#lbEmail').innerHTML = "이메일";
     document.querySelector('#lbEmailCommercial').innerHTML = " @ ";
-    document.querySelector('#lbEmailPeriod').innerHTML = " . ";
     
     document.querySelector('#lbPw').innerHTML = '비밀번호';
     document.querySelector('#lbRepw').innerHTML = '비밀번호 확인';
@@ -82,22 +79,20 @@ class RegisterInput extends Component {
 
     const changeTEmailName = this.changeTEmailName;
     const changeTEmailDomain = this.changeTEmailDomain;
-    const changeTEmailCom = this.changeTEmailCom;
     const changeTName = this.changeTName;
     const changeTTellStation = this.changeTTellStation;
     const changeTTellByNumber = this.changeTTellByNumber;
     const changeTTellNumberByNumber = this.changeTTellNumberByNumber;
 
     if (userinfo !== null && userinfo !== '' && userinfo !== undefined) {
-      console.log(userinfo);
       if(userinfo.email !== null && userinfo.email !== undefined && userinfo.email !== '') {
         // email 추출
         let emailName = userinfo.email.substring(0, userinfo.email.indexOf('@'));
-        let emailDomain = userinfo.email.substring(userinfo.email.indexOf('@')+1, userinfo.email.indexOf('.'));
-        let emailCom = userinfo.email.substring(userinfo.email.indexOf('.')+1, userinfo.email.length);
+        let emailDomain = userinfo.email.substring(userinfo.email.indexOf('@')+1, userinfo.email.length);
+        // let emailDomain = userinfo.email.substring(userinfo.email.indexOf('@')+1, userinfo.email.indexOf('.'));
+        // let emailCom = userinfo.email.substring(userinfo.email.indexOf('.')+1, userinfo.email.length);
         changeTEmailName(emailName);
         changeTEmailDomain(emailDomain);
-        changeTEmailCom(emailCom);
         changeTName(userinfo.name)
       }
       if(userinfo.tellNo !== null && userinfo.tellNo !== undefined && userinfo.tellNo !== '') {
@@ -151,7 +146,7 @@ class RegisterInput extends Component {
     const { addCallback, addRecommendToAddCallback } = this.props;
 
     const { dto } = this.state;
-    const { tEmailName, tEmailDomain, tEmailCom, 
+    const { tEmailName, tEmailDomain, 
             tPassword, tRePassword, 
             tName, 
             tTellStation, tTellByNumber, tTellNumberByNumber, 
@@ -159,16 +154,16 @@ class RegisterInput extends Component {
             tAddressNo, tAddress, tAddressTo,
             recommendCode } = this.state;
 
-    if (tEmailName !== '' && tEmailDomain !== '' && tEmailCom !== '') {
+    if (tEmailName !== '' && tEmailDomain !== '') {
       if (tEmailName.length < 3) {
         window.alert('아이디가 너무 짧습니다.')
         return;
       }
-      if (tEmailDomain.length < 3 || tEmailCom.length < 2) {
+      if (tEmailDomain.length < 3 ) {
         window.alert('이메일 주소를 다시 확인해주세요.')
         return;
       }
-      dto.email = tEmailName+'@'+tEmailDomain+'.'+tEmailCom;
+      dto.email = tEmailName+'@'+tEmailDomain;
     } else {
       window.alert('이메일을 입력해주세요.')
       return;
@@ -255,14 +250,6 @@ class RegisterInput extends Component {
       this.setState({tEmailDomain: e.target.value}) 
     }
   }
-  changeTEmailCom(e) { 
-    if (e.target === undefined || e.target === null) {
-      this.setState({tEmailCom: e})
-      document.querySelector('#itEcom').readOnly = true;
-    } else {
-      this.setState({tEmailCom: e.target.value}) 
-    }
-  }
 
   changeTPassword(e) { this.setState({tPassword: e.target.value}) }
   changeTRePassword(e) { this.setState({tRePassword: e.target.value}) }
@@ -316,9 +303,7 @@ class RegisterInput extends Component {
             <div className="div-flex-80-left">
               <InputText id="itEname" maxLength="15" value={this.state.tEmailName} onChange={e=>this.changeTEmailName(e)}/>
               <label id="lbEmailCommercial"/>
-              <InputText id="itEdomain" maxLength="10" value={this.state.tEmailDomain} onChange={e=>this.changeTEmailDomain(e)}/>
-              <label id="lbEmailPeriod"/>
-              <InputText id="itEcom" maxLength="15" value={this.state.tEmailCom} onChange={e=>this.changeTEmailCom(e)}/>
+              <InputText id="itEdomain" maxLength="15" value={this.state.tEmailDomain} onChange={e=>this.changeTEmailDomain(e)}/>
             </div>
           </div>
           <div className="default-column">
