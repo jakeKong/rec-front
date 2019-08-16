@@ -101,7 +101,8 @@ class UserManageContainer extends Component {
     this.setState({search: dataSearchChild});
 
     const { search } = this.state;
-    this.getUserList(search);
+    const token = storage.get('token');
+    this.getUserList(search, token);
     // state.search 값 초기화
     this.setState({search: {
       email: null,

@@ -74,6 +74,15 @@ class ChangePointHistorySearch extends Component {
     })
   }
 
+  keyPressEvent(e) {
+    const searchCallEvent = this.searchCallEvent;
+    const resetState = this.resetState;
+    if (e.charCode === 13) {
+      searchCallEvent();
+      resetState();
+    }
+  }
+
   resetState() {
     this.setState({
       odrNo: '',
@@ -129,9 +138,9 @@ class ChangePointHistorySearch extends Component {
   allEmailItemCheckFieldRendering() {
     const { searchAllItemValue } = this.state;
     if (searchAllItemValue === 'odrNo') {
-      return <InputText value={this.state.odrNo} onChange={(e) => this.SearchItemByPurchaseInputEvent(e)} />
+      return <InputText value={this.state.odrNo} onChange={(e) => this.SearchItemByPurchaseInputEvent(e)} onKeyPress={e => this.keyPressEvent(e)}/>
     } else if (searchAllItemValue === 'paymentNo') {
-      return <InputText value={this.state.paymentNo} onChange={(e) => this.SearchItemByPaymentInputEvent(e)} />
+      return <InputText value={this.state.paymentNo} onChange={(e) => this.SearchItemByPaymentInputEvent(e)} onKeyPress={e => this.keyPressEvent(e)} />
     } else {
       return null;
     }
@@ -185,13 +194,13 @@ class ChangePointHistorySearch extends Component {
   allItemCheckFieldRendering() {
     const { searchAllItemValue } = this.state;
     if (searchAllItemValue === 'odrNo') {
-      return <InputText value={this.state.odrNo} onChange={(e) => this.SearchItemByPurchaseInputEvent(e)} />
+      return <InputText value={this.state.odrNo} onChange={(e) => this.SearchItemByPurchaseInputEvent(e)} onKeyPress={e => this.keyPressEvent(e)} />
     } else if (searchAllItemValue === 'paymentNo') {
-      return <InputText value={this.state.paymentNo} onChange={(e) => this.SearchItemByPaymentInputEvent(e)} />
+      return <InputText value={this.state.paymentNo} onChange={(e) => this.SearchItemByPaymentInputEvent(e)} onKeyPress={e => this.keyPressEvent(e)} />
     } else if (searchAllItemValue === 'userNm') {
-      return <InputText value={this.state.userNm} onChange={(e) => this.SearchItemByUserNameInputEvent(e)} />
+      return <InputText value={this.state.userNm} onChange={(e) => this.SearchItemByUserNameInputEvent(e)} onKeyPress={e => this.keyPressEvent(e)} />
     } else if (searchAllItemValue === 'email') {
-      return <InputText value={this.state.email} onChange={(e) => this.SearchItemByEmailInputEvent(e)} />
+      return <InputText value={this.state.email} onChange={(e) => this.SearchItemByEmailInputEvent(e)} onKeyPress={e => this.keyPressEvent(e)} />
     } else {
       return null;
     }
@@ -201,11 +210,11 @@ class ChangePointHistorySearch extends Component {
   paymentItemCheckFieldRendering() {
     const { searchPaymentItemValue } = this.state;
     if (searchPaymentItemValue === 'paymentNo') {
-      return <InputText value={this.state.paymentNo} onChange={(e) => this.SearchItemByPaymentInputEvent(e)} />
+      return <InputText value={this.state.paymentNo} onChange={(e) => this.SearchItemByPaymentInputEvent(e)} onKeyPress={e => this.keyPressEvent(e)} />
     } else if (searchPaymentItemValue === 'userNm') {
-      return <InputText value={this.state.userNm} onChange={(e) => this.SearchItemByUserNameInputEvent(e)} />
+      return <InputText value={this.state.userNm} onChange={(e) => this.SearchItemByUserNameInputEvent(e)} onKeyPress={e => this.keyPressEvent(e)} />
     } else if (searchPaymentItemValue === 'email') {
-      return <InputText value={this.state.email} onChange={(e) => this.SearchItemByEmailInputEvent(e)} />
+      return <InputText value={this.state.email} onChange={(e) => this.SearchItemByEmailInputEvent(e)} onKeyPress={e => this.keyPressEvent(e)} />
     } else {
       return null;
     }
@@ -215,11 +224,11 @@ class ChangePointHistorySearch extends Component {
   purchaseItemCheckFieldRendering() {
     const { searchPurchaseItemValue } = this.state;
     if (searchPurchaseItemValue === 'odrNo') {
-      return <InputText value={this.state.odrNo} onChange={(e) => this.SearchItemByPurchaseInputEvent(e)} />
+      return <InputText value={this.state.odrNo} onChange={(e) => this.SearchItemByPurchaseInputEvent(e)} onKeyPress={e => this.keyPressEvent(e)} />
     } else if (searchPurchaseItemValue === 'userNm') {
-      return <InputText value={this.state.userNm} onChange={(e) => this.SearchItemByUserNameInputEvent(e)} />
+      return <InputText value={this.state.userNm} onChange={(e) => this.SearchItemByUserNameInputEvent(e)} onKeyPress={e => this.keyPressEvent(e)} />
     } else if (searchPurchaseItemValue === 'email') {
-      return <InputText value={this.state.email} onChange={(e) => this.SearchItemByEmailInputEvent(e)} />
+      return <InputText value={this.state.email} onChange={(e) => this.SearchItemByEmailInputEvent(e)} onKeyPress={e => this.keyPressEvent(e)} />
     } else {
       return null;
     }
@@ -281,7 +290,7 @@ class ChangePointHistorySearch extends Component {
         );
       } else {
         // 권한이 없는 일반 사용자일 경우 결제번호 입력텍스트 컴포넌트만 리턴
-        return <InputText value={this.state.paymentNo} onChange={(e) => this.SearchItemByPaymentInputEvent(e)} />
+        return <InputText value={this.state.paymentNo} onChange={(e) => this.SearchItemByPaymentInputEvent(e)} onKeyPress={e => this.keyPressEvent(e)} />
       }
     } 
     // 구매(주문) 관련 컬럼 선택 시 
@@ -304,7 +313,7 @@ class ChangePointHistorySearch extends Component {
         );
       } else {
         // 권한이 없는 일반 사용자일 경우 구매번호 입력텍스트 컴포넌트만 리턴
-        return <InputText value={this.state.odrNo} onChange={(e) => this.SearchItemByPurchaseInputEvent(e)} />
+        return <InputText value={this.state.odrNo} onChange={(e) => this.SearchItemByPurchaseInputEvent(e)} onKeyPress={e => this.keyPressEvent(e)} />
       }
     } else {
       return null;

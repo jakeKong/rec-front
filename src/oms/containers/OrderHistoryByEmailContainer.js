@@ -15,8 +15,8 @@ class OrderHistoryByEmailContainer extends Component {
     super(props);
     this.state = {
       search: {
-        ordererNm: null,
-        odrNo: null,
+        ordererNm: '',
+        odrNo: '',
         fromDt: null,
         toDt: null,
         realEstateType: null,
@@ -31,20 +31,8 @@ class OrderHistoryByEmailContainer extends Component {
        -> 호출 후 state.search값 초기화
   */
   searchCallback = async (dataSearchChild) => {
-    this.setState({search: dataSearchChild});
-
-    const { search } = this.state;
     const loggedInfo = storage.get('loggedInfo');
-    this.getOrderHistoryListByEmail(loggedInfo.email, search);
-    // state.search 값 초기화
-    this.setState({search: {
-      ordererNm: null,
-      odrNo: null,
-      fromDt: null,
-      toDt: null,
-      realEstateType: null,
-      status: null
-    }});
+    this.getOrderHistoryListByEmail(loggedInfo.email, dataSearchChild);
   }
 
   // 마운트 이전 권한 체크

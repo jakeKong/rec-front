@@ -125,8 +125,14 @@ class BlogTyleNewsSearch extends Component {
       }
     })
 
-    // Search button set
     const { searchCallback } = this.props;
+    tfSearch.addEventListener('keypress', function(e) {
+      if (e.keyCode === 13) {
+        searchCallback(search);
+      }
+    })
+
+    // Search button set
     const btnSearch = document.querySelector('#btnSearch')
     btnSearch.innerHTML = '조회';
     btnSearch.addEventListener('click', function() {

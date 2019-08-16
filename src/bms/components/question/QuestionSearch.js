@@ -52,6 +52,7 @@ class QuestionSearch extends Component {
     const btnSearch = document.querySelector('#btnSearch')
     btnSearch.innerHTML = '조회';
     btnSearch.className = 'btn';
+
   }
 
   // 콤보박스 값 변경 이벤트
@@ -72,7 +73,7 @@ class QuestionSearch extends Component {
   }
 
   // 버튼 클릭 이벤트
-  searchClick(e) {
+  searchClick() {
     const { searchCallback } = this.props;
     const { fromDt, toDt, questionTitle, questionWriter } = this.state;
     if (fromDt === null || fromDt === undefined) {
@@ -82,6 +83,12 @@ class QuestionSearch extends Component {
       return;
     }
     searchCallback(fromDt, toDt, questionTitle, questionWriter);
+  }
+
+  keyPressEvent(e) {
+    if (e.charCode === 13) {
+      this.searchClick();
+    }
   }
 
   render() {
@@ -104,11 +111,11 @@ class QuestionSearch extends Component {
                   onChange={e=>this.SearchItemChangeEvent(e)} />
         <label className="label" id="lbSearch"/>
         { this.state.searchItemValue === 'title' &&
-          <InputText id="itSearch" value={this.state.questionTitle} onChange={(e) => this.SearchItemByTitleInputEvent(e)} /> }
+          <InputText id="itSearch" value={this.state.questionTitle} onChange={(e) => this.SearchItemByTitleInputEvent(e)} onKeyPress={e => this.keyPressEvent(e)}/> }
         { this.state.searchItemValue === 'name' &&
-          <InputText id="itSearch" value={this.state.questionWriter} onChange={(e) => this.SearchItemByNameInputEvent(e)} /> }
+          <InputText id="itSearch" value={this.state.questionWriter} onChange={(e) => this.SearchItemByNameInputEvent(e)} onKeyPress={e => this.keyPressEvent(e)}/> }
 
-        <vaadin-button id="btnSearch" onClick={e => this.searchClick(e)}/>
+        <vaadin-button id="btnSearch" onClick={() => this.searchClick()}/>
       </Fragment>
     );
   }

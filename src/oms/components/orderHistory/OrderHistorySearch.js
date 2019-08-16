@@ -27,7 +27,7 @@ class OrderHistorySearch extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: null,
+      email: '',
       ordererNm: '',
       odrNo: '',
       fromDt: null,
@@ -64,8 +64,8 @@ class OrderHistorySearch extends Component {
     this.setState({toDt: dateFormat(new Date(currentDate), 'yyyy-mm-dd')});
 
     // Search button set
-    const resetState = this.resetState;
     const searchCallEvent = this.searchCallEvent;
+    const resetState = this.resetState;
     const btnSearch = document.querySelector('#btnSearch')
     btnSearch.innerHTML = '조회';
     btnSearch.className = "btn"
@@ -82,6 +82,15 @@ class OrderHistorySearch extends Component {
       email: '',
       inputCheck: false
     })
+  }
+
+  keyPressEvent(e) {
+    const searchCallEvent = this.searchCallEvent;
+    const resetState = this.resetState;
+    if (e.charCode === 13) {
+      searchCallEvent();
+      resetState();
+    }
   }
 
   searchCallEvent() {
@@ -154,11 +163,11 @@ class OrderHistorySearch extends Component {
   orderItemCheckFieldRendering() {
     const { searchOrderCheckItemValue } = this.state;
     if (searchOrderCheckItemValue === 'odrNo') {
-      return <InputText value={this.state.odrNo} onChange={(e) => this.SearchItemByOrderNumberInputEvent(e)} />
+      return <InputText value={this.state.odrNo} onChange={(e) => this.SearchItemByOrderNumberInputEvent(e)} onKeyPress={e => this.keyPressEvent(e)}/>
     } else if (searchOrderCheckItemValue === 'ordererNm') {
-      return <InputText value={this.state.ordererNm} onChange={(e) => this.SearchItemByOrdererNameInputEvent(e)} />
+      return <InputText value={this.state.ordererNm} onChange={(e) => this.SearchItemByOrdererNameInputEvent(e)} onKeyPress={e => this.keyPressEvent(e)} />
     } else if (searchOrderCheckItemValue === 'email') {
-      return <InputText value={this.state.email} onChange={(e) => this.SearchItemByEmailInputEvent(e)} />
+      return <InputText value={this.state.email} onChange={(e) => this.SearchItemByEmailInputEvent(e)} onKeyPress={e => this.keyPressEvent(e)} />
     } else {
       return null;
     }
@@ -185,7 +194,7 @@ class OrderHistorySearch extends Component {
       return (
         <Fragment>
           <label> 주문번호 </label>
-          <InputText value={this.state.odrNo} onChange={(e) => this.SearchItemByOrderNumberInputEvent(e)} />
+          <InputText value={this.state.odrNo} onChange={(e) => this.SearchItemByOrderNumberInputEvent(e)} onKeyPress={e => this.keyPressEvent(e)} />
         </Fragment>
       )
     }

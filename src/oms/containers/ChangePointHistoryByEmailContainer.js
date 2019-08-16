@@ -14,9 +14,9 @@ class ChangePointHistoryByEmailContainer extends Component {
     super(props);
     this.state = {
       search: {
-        userNm: null,
-        odrNo: null,
-        paymentNo: null,
+        userNm: '',
+        odrNo: '',
+        paymentNo: '',
         fromDt: null,
         toDt: null,
         changeType: null
@@ -30,20 +30,8 @@ class ChangePointHistoryByEmailContainer extends Component {
        -> 호출 후 state.search값 초기화
   */
   searchCallback = async (dataSearchChild) => {
-    this.setState({search: dataSearchChild});
-
-    const { search } = this.state;
     const loggedInfo = storage.get('loggedInfo');
-    this.getChangePointHistoryListByEmail(loggedInfo.email, search);
-    // state.search 값 초기화
-    this.setState({search: {
-      userNm: null,
-      odrNo: null,
-      paymentNo: null,
-      fromDt: null,
-      toDt: null,
-      changeType: null
-    }});
+    this.getChangePointHistoryListByEmail(loggedInfo.email, dataSearchChild);
   }
 
   // 마운트 이전 권한 체크

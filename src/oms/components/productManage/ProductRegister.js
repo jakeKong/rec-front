@@ -128,7 +128,7 @@ class ProductRegister extends Component {
       // 상품 코드 텍스트필드
       const tfProductCd = document.querySelector('#tfCd');
       tfProductCd.maxlength = '10';
-      
+      tfProductCd.className = 'vaadin-text-field-width-200-flex-80';
       tfProductCd.addEventListener('input', function() {
         dto.productCd = tfProductCd.value;
       });
@@ -136,17 +136,21 @@ class ProductRegister extends Component {
       // 상품 명 텍스트필드
       const tfProductNm = document.querySelector('#tfNm');
       tfProductNm.maxlength = '15';
+      tfProductNm.className = 'vaadin-text-field-width-200-flex-80';
       tfProductNm.addEventListener('input', function() {
         dto.productNm = tfProductNm.value;
       });
       // 상품 포인트 텍스트필드 (숫자 체크 필요)
       const tfProductPoint = document.querySelector('#tfPoint');
       tfProductPoint.maxlength = '5';
+      tfProductPoint.className = 'vaadin-text-field-width-200-flex-80';
       tfProductPoint.addEventListener('input', function() {
         dto.productPoint = tfProductPoint.value;
       });
 
       const tfPointCash = document.querySelector('#tfPointCash');
+      tfPointCash.maxlength = '5';
+      tfPointCash.className = 'vaadin-text-field-width-200-flex-80';
       tfPointCash.addEventListener('input', function() {
         dto.pointCash = tfPointCash.value;
       });
@@ -245,24 +249,26 @@ class ProductRegister extends Component {
       <Fragment>
         <vaadin-dialog-overlay id="doRegister">
           <div className="div-register-popup-board">
+            <label hidden/>
             <div className="default-column">
-              <label id="lbCd"/>
+              <label className="label-flex-20-left" id="lbCd"/>
               <vaadin-text-field id="tfCd" required prevent-invalid-input pattern="([a-zA-Zㄱ-ㅎ가-힣0-9]+?)"/>
             </div>
             <div className="default-column">
-              <label id="lbNm"/>
-              <vaadin-text-field id="tfNm" required prevent-invalid-input pattern="^([a-zA-Zㄱ-ㅎ가-힣0-9\s]+$)"/>
+              <label className="label-flex-20-left" id="lbNm"/>
+              <vaadin-text-field id="tfNm" required prevent-invalid-input pattern="^([a-zA-Zㄱ-ㅎ가-힣0-9\s,]+$)"/>
             </div>
             <div className="default-column">
-              <label id="lbPoint"/>
+              <label className="label-flex-20-left" id="lbPoint"/>
               <vaadin-text-field id="tfPoint" required prevent-invalid-input pattern="[0-9]*"/>
             </div>
             <div className="default-column">
               {/* <label id="lbCashRatio"/> */}
               {/* <vaadin-text-field id="tfCashRatio" required prevent-invalid-input pattern="^(\d{1,1}([.]\d{0,2})?)?$"/> */}
-              <label id="lbPointCash"/>
+              <label className="label-flex-20-left" id="lbPointCash"/>
               <vaadin-text-field id="tfPointCash" required prevent-invalid-input pattern="[0-9]*"/>
             </div>
+            <label hidden/>
           </div>
           <div className="div-register-popup-bottom">
             <vaadin-button id="btnOk"/>

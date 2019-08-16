@@ -241,6 +241,7 @@ class BlogTyleNewsRegister extends Component {
       <Fragment>
         <vaadin-dialog-overlay id="doRegister">
           <div className="div-register-popup-board">
+            <label hidden/>
             <div className="default-column">
               <label id="lbTitle" className="label-flex-20-left"/>
               <vaadin-text-field id="tfTitle" required prevent-invalid-input pattern="^([a-zA-Zㄱ-ㅎ가-힣0-9\s]+$)"/>
@@ -261,6 +262,7 @@ class BlogTyleNewsRegister extends Component {
               <label id="lbImageTo" className="label-flex-20-left" />
               <vaadin-text-field id="tfImage" required prevent-invalid-input/>
             </div>
+            <label hidden/>
           </div>
           <div className="div-register-popup-bottom">
             <vaadin-button id="btnOk"/>
