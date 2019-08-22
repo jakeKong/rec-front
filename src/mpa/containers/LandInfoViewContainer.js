@@ -10,7 +10,9 @@ import LandInfoOrderCommentPopup from "../components/LandInfoOrderCommentPopup";
 
 import storage from '../../common/storage';
 
+//해당 주소의 주문 버튼 visible 속성 제어
 let enabled = 'none';
+//현재는 큰 의미 없는 값이며, 원래 목적은 메인화면에서 주소검색을 한건지, 현재 화면에서 한건지 여부를 판별하기 위해서 사용한 필드
 let isSearched = false;
 class LandInfoViewContainer extends Component {
 
@@ -43,7 +45,7 @@ class LandInfoViewContainer extends Component {
     this.setState({popupOpened: true});
   }
   
-  addCallback = async(comment) => {
+  popupCallback = async(comment) => {
     
     if (storage.get('loggedInfo')) {
       this.setState ({
@@ -83,11 +85,12 @@ class LandInfoViewContainer extends Component {
   }
   
   popupAddAndUpdateCheckOpenEvent(popupOpened) {
-    return <LandInfoOrderCommentPopup addCallback={ this.addCallback } popupOpened={ popupOpened } popupClose={ this.popupClose }/>      
+    return <LandInfoOrderCommentPopup popupCallback={ this.popupCallback } popupOpened={ popupOpened } popupClose={ this.popupClose }/>      
   }
   
+  //주문번호를 state에 기록해 놓기 위해서 VIEW 화면에서 주문번호 MNGNO를 넘겨 받았음
   analysisReturnedCallback = (mngNo) =>{    
-    
+    //setState에 mngNo만 넣으니, 나머지 값이 다 날라가더라.
     this.setState ({
       search: {
         jibunAddr: this.state.search.jibunAddr,
@@ -96,7 +99,7 @@ class LandInfoViewContainer extends Component {
         mngNo: mngNo,
       }
     });
-    console.log(this.state.search);
+    //console.log(this.state.search);
   }
   
   //우편번호 검색이 끝났을 때 사용자가 선택한 정보를 받아올 콜백함수
@@ -114,21 +117,26 @@ class LandInfoViewContainer extends Component {
     this.enabled = 'none';
   }
   onSearchClick = async (selectedSuggestion) => { 
-    //로그인 하지 않았으면 PDF 버튼 비활성화
+    //로그인 하지 않았으면 PDF 주문 버튼 활성화
     if (storage.get('loggedInfo')) {
       this.enabled = 'inline-block';
-    }else {
+    }
+    //로그인 하지 않았으면 PDF 주문 버튼 비활성화
+    else {
       
       this.enabled = 'none';
     }
+    //부동산 정보 검색 API 호출
     this.getLandInfo(this.state.search);
     
   }
 
+  //부동산 정보 검색 API 호출 함수
   getLandInfo = async (search) => {
     const { LandInfoViewModule } = this.props;
     if(search.pnu !== '1111111111111111111') isSearched = true;
     try {
+      //
       if (storage.get('loggedInfo')) {
         this.enabled = 'inline-block';
       }
@@ -137,6 +145,7 @@ class LandInfoViewContainer extends Component {
       console.log("error log : " + e);
     }
   }
+  //PDF 주문 API 호출 함수
   makeLandInfo = async (search) => {
     const { LandInfoViewModule } = this.props;
     try {
@@ -145,16 +154,6 @@ class LandInfoViewContainer extends Component {
       console.log("error log : " + e);
     }
   }
-
-// 마운트 이전 권한 체크
-
-// componentDidMount() {
-//   const { search } = this.state;
-//   const { landInfo } = this.props;
-//     if(!landInfo || landInfo === undefined || landInfo.isEmpty()) {
-//       this.getLandInfo(search);
-//     }
-// }
 
 // 마운트 직후 한번 (rendering 이전, 마운트 이후의 작업)
   componentDidMount() {
@@ -170,6 +169,9 @@ class LandInfoViewContainer extends Component {
     //로그인 하지 않았으면 PDF 버튼 비활성화
     if (!storage.get('loggedInfo')) {
       this.enabled = 'none';
+    }
+    else {
+      this.enabled = 'inline-block';
     }
     
     //MAIN 화면 혹은 기타 화면으로 부터 넘어온 주소검색 결과가 있는지 확인한여 처리한다.
@@ -196,12 +198,7 @@ class LandInfoViewContainer extends Component {
     else {
       if(this.state.search.pnu !== '1111111111111111111') this.getLandInfo(this.state.search);
     }
-    
-    // const { landInfoData } = this.props;
-    // if(!landInfoData || landInfoData === undefined || landInfoData.isEmpty()) {
-    //   this.getLandInfo(search);
-    // }
-    
+       
   }
   
   render() {
