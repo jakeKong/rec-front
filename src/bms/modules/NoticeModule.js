@@ -47,7 +47,7 @@ export const getNotice = createAction(GET_NOTICE, noticeSid => noticeSid);
 export const addNotice = createAction(ADD_NOTICE, (email, dto) => ({email, dto}));
 export const updateNotice = createAction(UPDATE_NOTICE, (noticeSid, email, dto) => ({noticeSid, email, dto}));
 export const deleteNotice = createAction(DELETE_NOTICE, noticeSid => noticeSid);
-export const deleteNoticeList = createAction(DELETE_NOTICE_LIST, selectList => selectList);
+export const deleteNoticeList = createAction(DELETE_NOTICE_LIST, (selectList, search) => ({selectList, search}));
 
 // 초기 state값 설정
 const initialState = Map({
@@ -71,11 +71,20 @@ function* getNoticeListSaga() {
 
 // getNoticeListBySpec Saga
 function* getNoticeListBySpecSaga(action) {
-  try {
-    const response = yield call(api.getNoticeListBySpec, action.payload);
-    yield put({type: GET_NOTICE_LIST_BY_SPEC_RECEIVED, payload: response});
-  } catch (error) {
-    yield put({type: GET_NOTICE_LIST_BY_SPEC_FAILURE, payload: error});
+  if (action.payload.search !== undefined) {
+    try {
+      const response = yield call(api.getNoticeListBySpec, action.payload.search);
+      yield put({type: GET_NOTICE_LIST_BY_SPEC_RECEIVED, payload: response});
+    } catch (error) {
+      yield put({type: GET_NOTICE_LIST_BY_SPEC_FAILURE, payload: error});
+    }
+  } else {
+    try {
+      const response = yield call(api.getNoticeListBySpec, action.payload);
+      yield put({type: GET_NOTICE_LIST_BY_SPEC_RECEIVED, payload: response});
+    } catch (error) {
+      yield put({type: GET_NOTICE_LIST_BY_SPEC_FAILURE, payload: error});
+    }
   }
 }
 
@@ -128,10 +137,11 @@ function* deleteNoticeSaga(action) {
 // deleteNoticeList Saga
 function* deleteNoticeListSaga(action) {
   try {
-    const response = yield call(api.deleteNoticeList, action.payload);
+    const response = yield call(api.deleteNoticeList, action.payload.selectList);
     yield put({type: DELETE_NOTICE_LIST_RECEIVED, payload: response})
     // 삭제완료 이후 목록 갱신 호출
-    yield call(getNoticeListSaga);
+    // yield call(getNoticeListSaga);
+    yield call(getNoticeListBySpecSaga, action);
   } catch (error) {
     yield put({type: DELETE_NOTICE_LIST_FAILURE, payload: error});
   }

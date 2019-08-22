@@ -6,6 +6,8 @@ import 'primereact/resources/themes/nova-light/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 
+import storage from '../../../common/storage';
+
 class NoticeGrid extends Component {
   constructor(props) {
     super(props);
@@ -17,55 +19,28 @@ class NoticeGrid extends Component {
     this.roleCheckColumnRenderingEvent = this.roleCheckColumnRenderingEvent.bind(this);
     this.selectChangedEvent = this.selectChangedEvent.bind(this);
   }
+  
   componentDidMount() {
     const { noticeList } = this.props;
     if (!noticeList || noticeList === undefined || noticeList.isEmpty()) {
       return
     }
-
-    const { role } = this.props;
-    if (role !== 'ROLE_ADMIN' || role !== 'ROLE_SYSADMIN') {
-      //  const { selectCallback, deselectCallback } = this.props;
-      
-      let moment = require('moment')
-      // 그리드 컬럼 인덱스를 위한 변수
-      let i=1;
-      let list =[];
-      // noticeList.map(e => ({
-      //   ...e, 
-      //   noticeSid: e.get('noticeSid'),
-      //   noticeTitle: e.get("noticeTitle"),
-      //   noticeTxt: e.get("noticeTxt"),
-      //   noticeWriter: e.get("noticeWriter"),
-      //   date: new Date(e.get('reportingDt')).getTime() 
-      // }))
-      // .sort((prev, next) => prev.date > next.date ? 1 : -1)
-      // // .sort((prev, next) => prev.date - next.date)
-      // .forEach(v => {
-      //   list.push({
-      //     index: i++,
-      //     noticeSid: v.noticeSid,
-      //     noticeTitle: v.noticeTitle,
-      //     noticeTxt: v.noticeTxt,
-      //     noticeWriter: v.noticeWriter,
-      //     reportingDt: dateFormat(v.date, 'yyyy년mm월dd일 HH:MM:ss')
-      //   })
-      // })
-
-      noticeList.sort((prev, next) => moment(prev.get('reportingDt')) > moment(next.get('reportingDt')) ? 1 : -1)
-      // .sort((prev, next) => prev.date - next.date)
-      .forEach(e => {
-        list.push({
-          index: i++,
-          noticeSid: e.get('noticeSid'),
-          noticeTitle: e.get("noticeTitle"),
-          noticeTxt: e.get("noticeTxt"),
-          noticeWriter: e.get("noticeWriter"),
-          reportingDt: moment(e.get('reportingDt')).format('YYYY년MM월DD일')
-        })
+    let moment = require('moment')
+    // 그리드 컬럼 인덱스를 위한 변수
+    let i=1;
+    let list =[];
+    noticeList.sort((prev, next) => moment(prev.get('reportingDt')) > moment(next.get('reportingDt')) ? 1 : -1)
+    .forEach(e => {
+      list.push({
+        index: i++,
+        noticeSid: e.get('noticeSid'),
+        noticeTitle: e.get("noticeTitle"),
+        noticeTxt: e.get("noticeTxt"),
+        noticeWriter: e.get("noticeWriter"),
+        reportingDt: moment(e.get('reportingDt')).format('YYYY년MM월DD일')
       })
-      this.setState({gridData: list.reverse()});
-    }
+    })
+    this.setState({gridData: list.reverse()});
   }
 
   noticeTitleClickLabelTemplate(rowData, column) {
@@ -86,48 +61,49 @@ class NoticeGrid extends Component {
     selectCallback(selectList)
   }
 
-  roleCheckColumnRenderingEvent(role) {
-    if (role === 'ROLE_ADMIN' || role === 'ROLE_SYSADMIN') {
-      return (
-        // 관리자 (공통된 스타일로 사용)
-        <Fragment>
-          <DataTable id="table" 
-                    value={this.state.gridData} 
-                    paginator={true} 
-                    rows={10} 
-                    rowsPerPageOptions={[5,10,15,20]}  
-                    selection={this.state.selectedItem} 
-                    onSelectionChange={e => this.selectChangedEvent(e)} >
-            <Column selectionMode="multiple"/>
-            <Column field="index" header="번호"/>
-            <Column body={this.noticeTitleClickLabelTemplate} header="제목"/>
-            <Column field="reportingDt" header="작성일자"/>
-          </DataTable>
-        </Fragment>
-      )
-    } else {
-      return (
-        // 사용자 (기능별 스타일 적용에 필요한 section 추가)
-        <Fragment>
-          <section className="section-table-notice">
+  roleCheckColumnRenderingEvent() {
+    if (storage.get('loggedInfo')) {
+      if (storage.get('loggedInfo').assignedRoles.indexOf('ROLE_ADMIN') === -1) {
+        return (
+          // 사용자 (기능별 스타일 적용에 필요한 section 추가)
+          <Fragment>
+            <section className="section-table-notice">
+              <DataTable id="table" 
+                        value={this.state.gridData} 
+                        paginator={true} 
+                        rows={10} 
+                        rowsPerPageOptions={[5,10,15,20]} >
+                <Column field="index" header="번호"/>
+                <Column body={this.noticeTitleClickLabelTemplate} header="제목"/>
+                <Column field="reportingDt" header="작성일자"/>
+              </DataTable>
+            </section>
+          </Fragment>
+        );
+      } else {
+        return (
+          // 관리자 (공통된 스타일로 사용)
+          <Fragment>
             <DataTable id="table" 
                       value={this.state.gridData} 
                       paginator={true} 
                       rows={10} 
-                      rowsPerPageOptions={[5,10,15,20]} >
+                      rowsPerPageOptions={[5,10,15,20]}  
+                      selection={this.state.selectedItem} 
+                      onSelectionChange={e => this.selectChangedEvent(e)} >
+              <Column selectionMode="multiple"/>
               <Column field="index" header="번호"/>
               <Column body={this.noticeTitleClickLabelTemplate} header="제목"/>
               <Column field="reportingDt" header="작성일자"/>
             </DataTable>
-          </section>
-        </Fragment>
-      );
+          </Fragment>
+        )
+      }
     }
   }
 
   render() {
-    const { role } = this.props;
-    return this.roleCheckColumnRenderingEvent(role);
+    return this.roleCheckColumnRenderingEvent();
   }
 }
 export default NoticeGrid;

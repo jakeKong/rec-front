@@ -20,6 +20,7 @@ class NoticeManageContainer extends Component {
         noticeTitle: null
       }
     }
+    this.selectedDeleteCheckEvent = this.selectedDeleteCheckEvent.bind(this);
   }
 
   componentDidMount() {
@@ -46,7 +47,7 @@ class NoticeManageContainer extends Component {
     if (selectList.length > 0) {
       const check = window.confirm('선택한 항목을 삭제 하시겠습니까?');
       if (check === true) {
-        deleteNoticeList(selectList);
+        deleteNoticeList(selectList, this.state.search);
       }
     } else {
       const nfNotfoundSelectColumn = document.createElement('vaadin-notification');
@@ -93,10 +94,10 @@ class NoticeManageContainer extends Component {
   }
 
   // 공지사항 선택삭제 API 호출 이벤트
-  deleteNoticeList = async (list) => {
+  deleteNoticeList = async (list, search) => {
     const { NoticeModule } = this.props;
     try {
-      await NoticeModule.deleteNoticeList(list)
+      await NoticeModule.deleteNoticeList(list, search)
     } catch (e) {
       console.log("error log : " + e);
     }
@@ -117,7 +118,7 @@ class NoticeManageContainer extends Component {
     return (
       <Fragment>
         <div>
-          <div className="div-search" >
+          <div className="wrap-search">
             <NoticeSearch searchCallback={ this.searchCallback } role={role} />
           </div>
           <div className="div-main">
