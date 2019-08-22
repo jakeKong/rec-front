@@ -26,6 +26,7 @@ class LandInfoView extends Component {
     }
     else {
       window.setTimeout(function() {
+        //주문번호를 container에 알려주기
         analysisReturnedCallback(landInfoData.get("mngNo"));          
       }, 3000);
     }
@@ -50,10 +51,10 @@ class LandInfoView extends Component {
     }
     //토지대장
     {	
-      document.querySelector('#tdPosesnSeCodeNm').innerHTML = landInfoData.get("posesnSeCodeNm");
-      document.querySelector('#tdOwnshipChgCauseCodeNm').innerHTML = landInfoData.get("ownshipChgCauseCodeNm");
-      document.querySelector('#tdOwnshipChgDe').innerHTML = landInfoData.get("ownshipChgDe");
-      document.querySelector('#tdCnrsPsnCo').innerHTML = landInfoData.get("cnrsPsnCo");
+      document.querySelector('#tdPosesnSeCodeNm').innerHTML = landInfoData.get("posesnSeCodeNm");//소유구분
+      document.querySelector('#tdOwnshipChgCauseCodeNm').innerHTML = landInfoData.get("ownshipChgCauseCodeNm");//소유변경원인
+      document.querySelector('#tdOwnshipChgDe').innerHTML = landInfoData.get("ownshipChgDe");//소유권변경일자
+      document.querySelector('#tdCnrsPsnCo').innerHTML = landInfoData.get("cnrsPsnCo");//공유 인원수
       // const cnrsPsnCo = landInfoData.get("mnnmSlno");//지번
       // const pnu = landInfoData.get("pnu");//pnu
     }
@@ -71,7 +72,7 @@ class LandInfoView extends Component {
     {
       const analysisTradeInfo = landInfoData.get("analysisTradeInfo");
       
-      console.log(isSearched);
+      // console.log(isSearched);
       const tradList = analysisTradeInfo.get("trade");
       // console.log(tradList);
       // console.log(tradList.get(0));

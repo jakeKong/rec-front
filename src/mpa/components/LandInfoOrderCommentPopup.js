@@ -75,13 +75,13 @@ class LandInfoOrderCommentPopup extends Component {
       });
 
       // eslint-disable-next-line
-      const { addCallback } = this.props;
+      const { popupCallback } = this.props;
       const btnOk = document.querySelector('#btnOk');
       btnOk.innerHTML = "확인";
       btnOk.addEventListener('click', function() {
         window.setTimeout(function() {
           // console.log("//////"+comment);
-          addCallback(comment);          
+          popupCallback(comment);          
         }, 3000);
 
         popupClose(clicked);

@@ -21,6 +21,7 @@ axios({
     })
 });
 
+//주문으로 PDF 생성
 export const makeLandInfoView = (search) => 
 axios({
     method: 'POST',
