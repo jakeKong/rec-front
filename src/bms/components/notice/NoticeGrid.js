@@ -27,7 +27,7 @@ class NoticeGrid extends Component {
     if (role !== 'ROLE_ADMIN' || role !== 'ROLE_SYSADMIN') {
       //  const { selectCallback, deselectCallback } = this.props;
       
-      let dateFormat = require('dateformat');
+      let moment = require('moment')
       // 그리드 컬럼 인덱스를 위한 변수
       let i=1;
       let list =[];
@@ -52,7 +52,7 @@ class NoticeGrid extends Component {
       //   })
       // })
 
-      noticeList.sort((prev, next) => new Date(prev.get('reportingDt')).getTime() > new Date(next.get('reportingDt')).getTime() ? 1 : -1)
+      noticeList.sort((prev, next) => moment(prev.get('reportingDt')) > moment(next.get('reportingDt')) ? 1 : -1)
       // .sort((prev, next) => prev.date - next.date)
       .forEach(e => {
         list.push({
@@ -61,7 +61,7 @@ class NoticeGrid extends Component {
           noticeTitle: e.get("noticeTitle"),
           noticeTxt: e.get("noticeTxt"),
           noticeWriter: e.get("noticeWriter"),
-          reportingDt: dateFormat(new Date(e.get('reportingDt')), 'yyyy년mm월dd일')
+          reportingDt: moment(e.get('reportingDt')).format('YYYY년MM월DD일')
         })
       })
       this.setState({gridData: list.reverse()});

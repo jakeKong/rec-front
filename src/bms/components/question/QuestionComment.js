@@ -5,8 +5,8 @@ import * as questionActions from "../../modules/QuestionModule";
 
 import '@vaadin/vaadin-button';
 import '@vaadin/vaadin-text-field/vaadin-text-area';
-import '@polymer/iron-icons';
 
+let moment = require('moment');
 // 문의사항 댓글 컴포넌트
 class Comment extends Component {
 
@@ -67,7 +67,7 @@ class Comment extends Component {
         nfNotfoundAnswerTxt.opened = true;
       } else {
         answer.answerLevel = 2;
-        answer.reportingDt = new Date();
+        answer.reportingDt = moment();
         // 댓글 등록 이벤트 호출
         addAnswerCallback(question.questionSid, answer)
       }
@@ -76,9 +76,12 @@ class Comment extends Component {
     const liCmtRegister = document.createElement('li');
     liCmtRegister.className = 'li-comment-cmt-register';
     liCmtRegister.id = "liCmtRegister";
-    const iconCmtRegister = document.createElement('iron-icon');
-    iconCmtRegister.setAttribute("icon", "icons:subdirectory-arrow-right")
-    iconCmtRegister.style = '--iron-icon-height: 15px;, --iron-icon-width: 15px;';
+    const lbReply = document.createElement('label');
+    lbReply.innerHTML = '└';
+    lbReply.className = 'label-reply';
+    // const iconCmtRegister = document.createElement('iron-icon');
+    // iconCmtRegister.setAttribute("icon", "icons:subdirectory-arrow-right")
+    // iconCmtRegister.style = '--iron-icon-height: 15px;, --iron-icon-width: 15px;';
     const taCmtRegister = document.createElement('textarea');
     taCmtRegister.placeholder = '댓글을 입력해주세요.'
     taCmtRegister.className = "vaadin-text-area-comment";
@@ -87,10 +90,10 @@ class Comment extends Component {
       cmt.cmtTxt = taCmtRegister.value;
     })
     
-    liCmtRegister.appendChild(iconCmtRegister);
+    // liCmtRegister.appendChild(iconCmtRegister);
+    liCmtRegister.appendChild(lbReply);
     liCmtRegister.appendChild(taCmtRegister);
 
-    let dateFormat = require('dateformat');
     // 답변 목록 컴포넌트
     const ulComment = document.querySelector('#ulComment');
     let index = 0;
@@ -116,7 +119,7 @@ class Comment extends Component {
             nfNotfoundAnswerTxt.opened = true;
           } else {
             cmt.cmtLevel = 3;
-            cmt.reportingDt = new Date();
+            cmt.reportingDt = moment();
             // 답변 코멘트 등록 이벤트 호출
             addCmtCallback(e.get('questionAnswerSid'), cmt)
           }
@@ -128,7 +131,7 @@ class Comment extends Component {
       lbAnswerWriter.innerHTML = e.get('answerWriter')+'&nbsp&nbsp&nbsp';
       const lbReportingDt = document.createElement('label');
       lbReportingDt.className = "label-comment-answer-dt";
-      lbReportingDt.innerHTML = dateFormat(new Date(e.get("reportingDt")), 'yyyy년mm월dd일 HH:MM:ss');
+      lbReportingDt.innerHTML = moment(e.get("reportingDt")).format('YYYY년MM월DD일 HH:mm:ss');
 
       const btnAnswerCmtRegister = document.createElement('button');
       btnAnswerCmtRegister.id = "btnAnswerCmtRegister";
@@ -279,16 +282,19 @@ class Comment extends Component {
         this.cmtListIndex++
         const liCmt = document.createElement('li');
         liCmt.className = "li-comment-cmt";
-        const iconCmt = document.createElement('iron-icon');
-        iconCmt.setAttribute("icon", "icons:subdirectory-arrow-right")
-        iconCmt.style = '--iron-icon-height: 15px;, --iron-icon-width: 15px;';
+        const lbCommentReply = document.createElement('label');
+        lbCommentReply.innerHTML = '└';
+        lbCommentReply.className = 'label-reply';
+        // const iconCmt = document.createElement('iron-icon');
+        // iconCmt.setAttribute("icon", "icons:subdirectory-arrow-right")
+        // iconCmt.style = '--iron-icon-height: 15px;, --iron-icon-width: 15px;';
   
         const lbCmtWriter = document.createElement('label');
         lbCmtWriter.className = "label-comment-cmt-writer"
         lbCmtWriter.innerHTML = answerCmt.get('cmtWriter')+'&nbsp&nbsp&nbsp';
         const lbCmtReportingDt = document.createElement('label');
         lbCmtReportingDt.className = "label-comment-cmt-dt";
-        lbCmtReportingDt.innerHTML = dateFormat(new Date(answerCmt.get("reportingDt")), 'yyyy년mm월dd일 HH:MM:ss');
+        lbCmtReportingDt.innerHTML = moment(answerCmt.get("reportingDt")).format('YYYY년MM월DD일 HH:mm:ss');
   
         const brCmt = document.createElement('br');
 
@@ -312,7 +318,7 @@ class Comment extends Component {
               nfNotfoundAnswerTxt.opened = true;
             } else {
               cmt.cmtLevel = 4;
-              cmt.reportingDt = new Date();
+              cmt.reportingDt = moment();
               // 답변 코멘트 등록 이벤트 호출
               addCmtCallback(e.get('questionAnswerSid'), cmt)
             }
@@ -435,7 +441,8 @@ class Comment extends Component {
           }
         })
   
-        liCmt.appendChild(iconCmt)
+        // liCmt.appendChild(iconCmt)
+        liCmt.appendChild(lbCommentReply);
         liCmt.appendChild(lbCmtWriter)
         liCmt.appendChild(lbCmtReportingDt)
         /** 코멘트에 답글 작성시 구분에 필요한 컬럼이 없어 비활성화 처리 (level만으로는 구분 힘듬) - 2019-05-21 */

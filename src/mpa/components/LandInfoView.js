@@ -1,6 +1,5 @@
 import React, { Component, Fragment } from 'react';
 //import NumberFormat from 'react-number-format';
-const dateFormat = require('dateformat');
 
 const curruncyFormat = (value) => new Intl.NumberFormat('en-IN', {style: 'currency',currency: 'KRW'}).format(value);
 const commaFormat = (value) => new Intl.NumberFormat('en-IN', {maximumSignificantDigits: 3}).format(value);

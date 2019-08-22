@@ -49,10 +49,10 @@ class BlogTyleNewsGrid extends Component {
     };
     
 
-    let dateFormat = require('dateformat');
+    let moment = require('moment')
     let list = [];
     let i=1;
-    blogTyleNewsList.sort((prev, next) => new Date(prev.get('tylenewsWriteDt')).getTime() > new Date(next.get('tylenewsWriteDt')).getTime() ? 1 : -1)
+    blogTyleNewsList.sort((prev, next) => moment(prev.get('tylenewsWriteDt')) > moment(next.get('tylenewsWriteDt')) ? 1 : -1)
     .forEach(e => {
       list.push({
         index: i++,
@@ -62,7 +62,7 @@ class BlogTyleNewsGrid extends Component {
         title: e.get('tylenewsTitle'),
         subTitle: e.get('tylenewsSubtitle'),
         writer: e.get('tylenewsWriter'),
-        writeDt: dateFormat(new Date(e.get("tylenewsWriteDt")), 'yyyy년mm월dd일 HH:MM:ss'),
+        writeDt: moment(e.get("tylenewsWriteDt")).format('YYYY년MM월DD일'),
         visibility: e.get('tylenewsVisibility')
       });
     });

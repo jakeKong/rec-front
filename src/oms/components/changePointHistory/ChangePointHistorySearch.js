@@ -18,7 +18,7 @@ import { InputText } from 'primereact/inputtext';
 import { changeTypeItems } from '../../items';
 import { monthBeforeDate, currentDate, calendarLocale } from '../../../common/items';
 
-let dateFormat = require('dateformat');
+let moment = require('moment');
 class ChangePointHistorySearch extends Component {
 
   constructor(props) {
@@ -58,9 +58,9 @@ class ChangePointHistorySearch extends Component {
     document.querySelector('#lbPunct').innerHTML = '~';
     
     // default before Week date set
-    this.setState({fromDt: dateFormat(new Date(monthBeforeDate), 'yyyy-mm-dd')});
+    this.setState({fromDt: moment(monthBeforeDate).format('YYYY-MM-DD')});
     // default today
-    this.setState({toDt: dateFormat(new Date(currentDate), 'yyyy-mm-dd')});
+    this.setState({toDt: moment(currentDate).format('YYYY-MM-DD')});
 
     // Search button set
     const resetState = this.resetState;
@@ -331,9 +331,9 @@ class ChangePointHistorySearch extends Component {
                   options={changeTypeItems} 
                   onChange={e=>this.SearchItemChangeEvent(e)} />
         <label className="label-center" id="lbDate" />
-        <Calendar className="calendar-width-100" readOnlyInput={true} locale={calendarLocale} id="dpStart" showIcon={true} dateFormat="yy-mm-dd" value={this.state.fromDt} onChange={(e) => this.setState({fromDt: dateFormat(new Date(e.value), 'yyyy-mm-dd')})}/>
+        <Calendar className="calendar-width-100" readOnlyInput={true} locale={calendarLocale} id="dpStart" showIcon={true} value={this.state.fromDt} onChange={(e) => this.setState({fromDt: moment(e.value).format('YYYY-MM-DD')})}/>
         <label className="label" id="lbPunct" />
-        <Calendar className="calendar-width-100" readOnlyInput={true} locale={calendarLocale} id="dpEnd" showIcon={true} dateFormat="yy-mm-dd" value={this.state.toDt} onChange={(e) => this.setState({toDt: dateFormat(new Date(e.value), 'yyyy-mm-dd')})}/>
+        <Calendar className="calendar-width-100" readOnlyInput={true} locale={calendarLocale} id="dpEnd" showIcon={true} value={this.state.toDt} onChange={(e) => this.setState({toDt: moment(e.value).format('YYYY-MM-DD')})}/>
 
         <label className="label" id="lbSearch"/>
         {/* 권한체크 스크립트 호출 */}

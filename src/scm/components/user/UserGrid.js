@@ -45,7 +45,7 @@ class UserGrid extends Component {
       checkbox.checked = inverted !== rowData.selected;
     };
 
-    let dateFormat = require('dateformat');
+    let moment = require('moment');
     let list =[];
     // 그리드 컬럼 인덱스를 위한 변수
     let i=1;
@@ -60,7 +60,7 @@ class UserGrid extends Component {
         addressNo: e.get("addressNo"),
         birthDt: e.get("birthDt"),
         createdUser: e.get("createdUser"),
-        createdDt: dateFormat(new Date(e.get("createdDt")), 'yyyy년mm월dd일 HH:MM:ss'),
+        createdDt: moment(e.get("createdDt")).format('YYYY년MM월DD일'),
         balancePoint: e.get("balancePoint"),
         assignedRoles: e.get("assignedRoles"),
       })

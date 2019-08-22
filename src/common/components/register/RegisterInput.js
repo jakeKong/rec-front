@@ -7,7 +7,7 @@ import { Calendar } from 'primereact/calendar';
 
 import { calendarLocale } from '../../items';
 import '@vaadin/vaadin-button'
-let dateFormat = require('dateformat');
+let moment = require('moment');
 class RegisterInput extends Component {
   constructor(props) {
     super(props);
@@ -327,7 +327,7 @@ class RegisterInput extends Component {
           <div className="default-column">
             <label id="lbBirthDt" className="label-flex-20-left"/>
             <div className="div-flex-80-left">
-              <Calendar className="calendar-width-100" readOnlyInput={true} locale={calendarLocale} showIcon={true} dateFormat="yy-mm-dd" value={this.state.tbirthDt} onChange={(e) => this.setState({tbirthDt: dateFormat(new Date(e.value), 'yyyy-mm-dd')})}/>
+              <Calendar className="calendar-width-100" readOnlyInput={true} locale={calendarLocale} showIcon={true} value={this.state.tbirthDt} onChange={(e) => this.setState({tbirthDt: moment(e.value).format('YYYY-MM-DD')})}/>
             </div>
           </div>
           <div className="default-column">

@@ -15,8 +15,8 @@ import config from '../../../config';
 import * as XLSX from 'xlsx';
 // if(typeof XLSX == 'undefined') XLSX = require('xlsx');
 
+let moment = require('moment');
 class OrderHistoryGrid extends Component {
-
   constructor(props) {
     super(props);
     this.state = {gridData: [],hiddenCheck: '', calcleCheck: ''}
@@ -32,10 +32,9 @@ class OrderHistoryGrid extends Component {
       return
     }
     
-    let dateFormat = require('dateformat');
     let list = [];
     let i=1;
-    orderHistoryList.sort((prev, next) => new Date(prev.get('odrDt')).getTime() > new Date(next.get('odrDt')).getTime() ? 1 : -1)
+    orderHistoryList.sort((prev, next) => moment(prev.get('odrDt')) > moment(next.get('odrDt')) ? 1 : -1)
     .forEach(e => {
       let status = '';
       statusItems.forEach(function(row){
@@ -57,7 +56,7 @@ class OrderHistoryGrid extends Component {
         index: i++,
         email: e.get("email"), 
         odrNo: e.get("odrNo"),
-        odrDt: dateFormat(new Date(e.get("odrDt")), 'yyyy년mm월dd일'),
+        odrDt: moment(e.get("odrDt")).format('YYYY년MM월DD일'),
         odrDtOrigin: e.get("odrDt"),
         marketPrice: comma(e.get("marketPrice")),
         marketPriceOrigin: e.get("marketPrice"),
@@ -65,7 +64,7 @@ class OrderHistoryGrid extends Component {
         realEstateTypeOrigin: e.get("realEstateType"),
         variationPoint: comma(e.get("variationPoint"))+' P',
         variationPointOrigin: e.get("variationPoint"),
-        downloadEndDt: dateFormat(new Date(e.get("downloadEndDt")), 'yyyy년mm월dd일'),
+        downloadEndDt: moment(e.get("downloadEndDt")).format('YYYY년MM월DD일'),
         downloadEndDtOrigin: e.get("downloadEndDt"),
         downloadCnt: e.get("downloadCnt"),
         status: status,
@@ -103,7 +102,7 @@ class OrderHistoryGrid extends Component {
         if (check === true) {
           let excelList = [];
           let excelNumber = 1;
-          orderHistoryList.sort((prev, next) => new Date(prev.get('odrDt')).getTime() > new Date(next.get('odrDt')).getTime() ? 1 : -1)
+          orderHistoryList.sort((prev, next) => moment(prev.get('odrDt')) > moment(next.get('odrDt')) ? 1 : -1)
           .forEach(e => {
             let status = '';
             statusItems.forEach(function(row){
@@ -123,11 +122,11 @@ class OrderHistoryGrid extends Component {
               번호: excelNumber++,
               주문번호: e.get("odrNo"),
               지번: e.get("pnuNo"),
-              주문일자: dateFormat(new Date(e.get("odrDt")), 'yyyy년mm월dd일'),
+              주문일자: moment(e.get("odrDt")).format('YYYY년MM월DD일'),
               // 시세가: comma(e.get("marketPrice")),
               // 부동산유형: realEstateType,
               증감포인트: comma(e.get("variationPoint"))+' P',
-              만료일자: dateFormat(new Date(e.get("downloadEndDt")), 'yyyy년mm월dd일'),
+              만료일자: moment(e.get("downloadEndDt")).format('YYYY년MM월DD일'),
               // 다운로드횟수: e.get("downloadCnt"),
               상태: status,
             })
@@ -141,7 +140,7 @@ class OrderHistoryGrid extends Component {
           XLSX.utils.book_append_sheet(workbook, worksheet, "주문내역");
     
           /* generate an XLSX file */
-          let writeName = dateFormat(new Date(), 'yyyymmdd')+"_ALGO_주문내역.xlsx"
+          let writeName = moment().format('yyyymmdd')+"_ALGO_주문내역.xlsx"
           XLSX.writeFile(workbook, writeName);
         }
       })
@@ -159,7 +158,7 @@ class OrderHistoryGrid extends Component {
     if (rowData.status === '주문취소') {
       return '-';
     } else {
-      if (new Date(rowData.downloadEndDtOrigin) < new Date()) {
+      if (moment(rowData.downloadEndDtOrigin) < moment()) {
         return '만료됨';
       } else {
         if (rowData.activated === true) {
@@ -190,7 +189,7 @@ class OrderHistoryGrid extends Component {
     if (rowData.status === '주문취소') {
       return '-';
     } else {
-      if (new Date(rowData.downloadEndDtOrigin) < new Date()) {
+      if (moment(rowData.downloadEndDtOrigin) < moment()) {
         return '만료됨';
       } else if (rowData.status === '취소신청') {
         return <font style={{color: 'red'}}>취소신청</font>;
@@ -236,7 +235,7 @@ class OrderHistoryGrid extends Component {
     if (rowData.status === '주문취소') {
       return '-';
     } else {
-      if (new Date(rowData.downloadEndDtOrigin) < new Date()) {
+      if (moment(rowData.downloadEndDtOrigin) < moment()) {
         return '만료됨';
       } else if (rowData.status === '취소신청') {
         return (

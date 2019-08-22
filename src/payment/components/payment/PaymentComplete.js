@@ -12,7 +12,7 @@ class PaymentComplete extends Component {
       return
     } else {
 
-      let dateFormat = require('dateformat');
+      let moment = require('moment');
 
       document.querySelector('#lbPaymentCompleteNotification').innerHTML = "포인트 구매가 정상적으로 처리되었습니다."
 
@@ -21,7 +21,8 @@ class PaymentComplete extends Component {
       document.querySelector('#lbTotalPayAmount').innerHTML = "총 결제금액 : ";
       document.querySelector('#lbTotalPayAmountResult').innerHTML = comma(purchaseResult.paid_amount)+' 원';
       document.querySelector('#lbTradeConfirmYmdt').innerHTML = "구매일자 : ";
-      document.querySelector('#lbTradeConfirmYmdtResult').innerHTML = dateFormat(new Date(purchaseResult.paid_at*1000), 'yyyy년 mm월 dd일 HH:MM:ss');
+      // document.querySelector('#lbTradeConfirmYmdtResult').innerHTML = dateFormat(new Date(purchaseResult.paid_at*1000), 'yyyy년 mm월 dd일 HH:MM:ss');
+      document.querySelector('#lbTradeConfirmYmdtResult').innerHTML = moment(purchaseResult.paid_at*1000).format('YYYY년 MM월 DD일 HH:mm:ss');
       document.querySelector('#lbPurchasePoint').innerHTML = "구매포인트 : ";
       document.querySelector('#lbPurchasePointResult').innerHTML = purchaseResult.custom_data.point+' P';
 

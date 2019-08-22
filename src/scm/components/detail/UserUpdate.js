@@ -7,7 +7,7 @@ import { Calendar } from 'primereact/calendar';
 import storage from '../../../common/storage';
 import { calendarLocale } from '../../../common/items';
 
-let dateFormat = require('dateformat');
+let moment = require('moment');
 class UserUpdate extends Component {
 
   constructor(props) {
@@ -195,9 +195,9 @@ class UserUpdate extends Component {
 
   changeTBirthDt(e) {
     if (e.value !== '' && e.value !== null && e.value !== undefined) {
-      this.setState({tbirthDt: dateFormat(new Date(e.value), 'yyyy-mm-dd')})
+      this.setState({tbirthDt: moment(e.value).format('YYYY-MM-DD')})
     } else {
-      this.setState({tbirthDt: dateFormat(new Date(e), 'yyyy-mm-dd')})
+      this.setState({tbirthDt: moment(e).format('YYYY-MM-DD')})
     }
   }
 
@@ -273,7 +273,7 @@ class UserUpdate extends Component {
           <div className="default-column">
             <label id="lbUpdateUserBirthDt" className="label-flex-20-left"/>
             <div className="div-flex-80-left">
-              <Calendar className="calendar-width-100" readOnlyInput={true} locale={calendarLocale} showIcon={true} dateFormat="yy-mm-dd" value={this.state.tbirthDt} onChange={(e) => this.changeTBirthDt(e)}/>
+              <Calendar className="calendar-width-100" readOnlyInput={true} locale={calendarLocale} showIcon={true} value={this.state.tbirthDt} onChange={(e) => this.changeTBirthDt(e)}/>
             </div>
           </div>
           <div className="default-column">

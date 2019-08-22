@@ -26,9 +26,9 @@ class ChangePointHistoryGrid extends Component {
       return
     }
     
-    let dateFormat = require('dateformat');
+    let moment = require('moment');
     let list = [];
-    changePointHistoryList.sort((prev, next) => new Date(prev.get('changeDt')).getTime() > new Date(next.get('changeDt')).getTime() ? 1 : -1)
+    changePointHistoryList.sort((prev, next) => moment(prev.get('changeDt')) > moment(next.get('changeDt')) ? 1 : -1)
     .forEach(e => {
       let changeType = '';
       changeTypeItems.forEach(function(row){
@@ -40,7 +40,7 @@ class ChangePointHistoryGrid extends Component {
       list.push({
         changePointSid: e.get("changeSid"),
         email: e.get("email"), 
-        changeDt: dateFormat(new Date(e.get("changeDt")), 'yyyy년mm월dd일 HH:MM:ss'),
+        changeDt: moment(e.get("changeDt")).format('YYYY년MM월DD일 HH:MM:ss'),
         odrPaymentNo: e.get("odrNo") ? e.get("odrNo") : e.get("paymentNo"),
         odrNo: e.get("odrNo"),
         paymentNo: e.get("paymentNo"),
@@ -77,7 +77,7 @@ class ChangePointHistoryGrid extends Component {
         if (check === true) {
           let excelList = [];
           // let excelNumber = 1;
-          changePointHistoryList.sort((prev, next) => new Date(prev.get('changeDt')).getTime() > new Date(next.get('changeDt')).getTime() ? 1 : -1)
+          changePointHistoryList.sort((prev, next) => moment(prev.get('changeDt')) > moment(next.get('changeDt')) ? 1 : -1)
           .forEach(e => {
             let changeType = '';
             changeTypeItems.forEach(function(row){
@@ -88,7 +88,7 @@ class ChangePointHistoryGrid extends Component {
             // push Value type is JSON
             excelList.push({
               // 번호: excelNumber++,
-              변동일자: dateFormat(new Date(e.get("changeDt")), 'yyyy년mm월dd일 HH:MM:ss'),
+              변동일자: moment(e.get("changeDt")).format('YYYY년MM월DD일 HH:MM:ss'),
               '결제(주문)번호': e.get("odrNo") ? e.get("odrNo") : e.get("paymentNo"),
               // 결제번호: e.get("paymentNo"),
               // 주문번호: e.get("odrNo"),
@@ -107,7 +107,7 @@ class ChangePointHistoryGrid extends Component {
           XLSX.utils.book_append_sheet(workbook, worksheet, "포인트_변동내역");
     
           /* generate an XLSX file */
-          let writeName = dateFormat(new Date(), 'yyyymmdd')+"_ALGO_포인트_변동내역.xlsx"
+          let writeName = moment().format('yyyymmdd')+"_ALGO_포인트_변동내역.xlsx"
           XLSX.writeFile(workbook, writeName);
         }
       })

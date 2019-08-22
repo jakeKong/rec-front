@@ -26,11 +26,11 @@ class QuestionGrid extends Component {
       return
     }
 
-    let dateFormat = require('dateformat');
+    let moment = require('moment');
     // 그리드 컬럼 인덱스를 위한 변수
     let i=1;
     let list =[];
-    questionList.sort((prev, next) => new Date(prev.get('reportingDt')).getTime() > new Date(next.get('reportingDt')).getTime() ? 1 : -1)
+    questionList.sort((prev, next) => moment(prev.get('reportingDt')) > moment(next.get('reportingDt')) ? 1 : -1)
     .forEach(e => {
       // push Value type is JSON
       list.push({
@@ -40,7 +40,7 @@ class QuestionGrid extends Component {
         questionTxt: e.get("questionTxt"),
         questionLevel: e.get("questionLevel"),
         questionWriter: e.get("questionWriter"),
-        reportingDt: dateFormat(new Date(e.get("reportingDt")), 'yyyy년mm월dd일')
+        reportingDt: moment(e.get("reportingDt")).format('YYYY년MM월DD일')
       })
     })
     this.setState({gridData: list.reverse()});

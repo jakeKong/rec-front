@@ -21,12 +21,12 @@ class NoticeDetail extends Component {
     if (!notice || notice === undefined) {
       return
     }
-    let dateFormat = require('dateformat');
+    let moment = require('moment');
 
     const lbTitle = document.querySelector('#lbTitle')
     lbTitle.innerHTML = notice.noticeTitle;
     
-    document.querySelector('#lbReportingDt').innerHTML = '작성일 : '+dateFormat(new Date(notice.reportingDt), 'yyyy년mm월dd일')+'&nbsp&nbsp';
+    document.querySelector('#lbReportingDt').innerHTML = '작성일 : '+moment(notice.reportingDt).format('YYYY년MM월DD')+'&nbsp&nbsp';
     document.querySelector('#lbNoticeWriter').innerHTML = '작성자 : '+notice.noticeWriter;
 
     this.toastEditor = new Viewer({
@@ -40,7 +40,9 @@ class NoticeDetail extends Component {
 
     if (storage.get('loggedInfo')) {
       if (storage.get('loggedInfo').assignedRoles.indexOf('ROLE_ADMIN') === -1) {
-
+        btnGoList.addEventListener('click', function() {
+          window.location.href = '/bms/notice';
+        })
       } else {
         btnGoList.addEventListener('click', function() {
           window.location.href = '/bms/notice/manage';

@@ -8,7 +8,7 @@ import 'primeicons/primeicons.css';
 
 import { comma } from '../../../common/utils';
 
-let dateFormat = require('dateformat');
+let moment = require('moment');
 class PaymentHistoryGrid extends Component {
   constructor(props) {
     super(props);
@@ -28,7 +28,7 @@ class PaymentHistoryGrid extends Component {
         paymentId: e.paymentId,
         productName: e.productName,
         totalPayAmount: comma(e.totalPayAmount)+' 원',
-        tradeConfirmYmdt: dateFormat(new Date(dateStringValue), 'yyyy년mm월dd일 HH:MM:ss'),
+        tradeConfirmYmdt: moment(dateStringValue).format('YYYY년MM월DD일'),
         primaryPayMeans: e.primaryPayMeans
       })
     })

@@ -9,7 +9,7 @@ import { InputText } from 'primereact/inputtext';
 
 import { monthBeforeDate, currentDate, calendarLocale } from '../../../common/items';
 
-let dateFormat = require('dateformat');
+let moment = require('moment');
 class QuestionSearch extends Component {
 
   constructor(props) {
@@ -35,9 +35,9 @@ class QuestionSearch extends Component {
     
     
     // default before Week date set
-    this.setState({fromDt: dateFormat(new Date(monthBeforeDate), 'yyyy-mm-dd')});
+    this.setState({fromDt: moment(monthBeforeDate).format('YYYY-MM-DD')});
     // default today
-    this.setState({toDt: dateFormat(new Date(currentDate), 'yyyy-mm-dd')});
+    this.setState({toDt: moment(currentDate).format('YYYY-MM-DD')});
 
     const drSearch = document.querySelector('#drSearch');
     if (role === 'ROLE_ADMIN') {
@@ -100,9 +100,9 @@ class QuestionSearch extends Component {
     return (
       <Fragment>
         <label className="label" id="lbDate" />
-        <Calendar className="calendar-width-100" readOnlyInput={true} locale={calendarLocale} id="dpStart" showIcon={true} dateFormat="yy-mm-dd" value={this.state.fromDt} onChange={(e) => this.setState({fromDt: dateFormat(new Date(e.value), 'yyyy-mm-dd')})}/>
+        <Calendar className="calendar-width-100" readOnlyInput={true} locale={calendarLocale} id="dpStart" showIcon={true} value={this.state.fromDt} onChange={(e) => this.setState({fromDt: moment(e.value).format('YYYY-MM-DD')})}/>
         <label className="label" id="lbPunct" />
-        <Calendar className="calendar-width-100" readOnlyInput={true} locale={calendarLocale} id="dpEnd" showIcon={true} dateFormat="yy-mm-dd" value={this.state.toDt} onChange={(e) => this.setState({toDt: dateFormat(new Date(e.value), 'yyyy-mm-dd')})}/>
+        <Calendar className="calendar-width-100" readOnlyInput={true} locale={calendarLocale} id="dpEnd" showIcon={true} value={this.state.toDt} onChange={(e) => this.setState({toDt: moment(e.value).format('YYYY-MM-DD')})}/>
 
         <Dropdown id="drSearch" 
                   className="dropdown-width-100"

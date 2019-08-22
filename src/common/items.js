@@ -1,14 +1,18 @@
 // Aate Util
+let moment = require('moment')
 
-export const currentDate = new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate();
+// export const currentDate = new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate();
+export const currentDate = moment();
 
-let weekBefore = new Date();
-weekBefore.setDate(weekBefore.getDate()-7);
-export const weekBeforeDate = weekBefore.getFullYear() + '-' + (weekBefore.getMonth() + 1) + '-' + weekBefore.getDate();
+// let weekBefore = new Date();
+// weekBefore.setDate(weekBefore.getDate()-7);
+// export const weekBeforeDate = weekBefore.getFullYear() + '-' + (weekBefore.getMonth() + 1) + '-' + weekBefore.getDate();
+export const weekBeforeDate = moment().add(-7, 'days');
 
-let monthBefore = new Date();
-monthBefore.setMonth(monthBefore.getMonth()-1);
-export const monthBeforeDate = monthBefore.getFullYear() + '-' + (monthBefore.getMonth() + 1) + '-' + monthBefore.getDate();
+// let monthBefore = new Date();
+// monthBefore.setMonth(monthBefore.getMonth()-1);
+// export const monthBeforeDate = monthBefore.getFullYear() + '-' + (monthBefore.getMonth() + 1) + '-' + monthBefore.getDate();
+export const monthBeforeDate = moment().add(-1, 'months');
 
 
 export let calendarLocale = {
@@ -26,8 +30,10 @@ export let calendarLocale = {
 
 // 30초 표시
 export function CountDownTimer(id, btn) {
-  let end = new Date();
-  end.setSeconds(end.getSeconds()+30);
+  // let end = new Date();
+  // end.setSeconds(end.getSeconds()+30);
+  let end = moment();
+  end.add(30, 'seconds');
   
   let _second = 1000;
   let _minute = _second * 60;
@@ -39,7 +45,8 @@ export function CountDownTimer(id, btn) {
       clearInterval(timer);
       return;
     }
-    let now = new Date();
+    // let now = new Date();
+    let now = moment();
     let distance = end - now;
     if (distance < 0) {
       clearInterval(timer);
