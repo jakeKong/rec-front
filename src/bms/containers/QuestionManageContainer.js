@@ -124,7 +124,7 @@ class QuestionManageContainer extends Component {
     return (
       <Fragment>
         <div>
-          <div className="div-search" >
+          <div className="wrap-search">
             <QuestionSearch searchCallback={ this.searchCallback } role={role} />
           </div>
           <div className="div-main">
