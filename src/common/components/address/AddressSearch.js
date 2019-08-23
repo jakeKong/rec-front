@@ -11,8 +11,8 @@ const getSuggestionValue = suggestion => suggestion.jibunAddr;
 //선택대상 목록을 표출하는 형태 정의 하나의 아이템이 여러줄로 나오는 형태로 변경 가능함
 function renderSuggestion(suggestion) {
   return (
-    <div>도로명 : {suggestion.roadAddr} <br/>
-    지번명 : {suggestion.jibunAddr}</div>
+    <div>지번명 : {suggestion.jibunAddr} <br/>
+         도로명 : {suggestion.roadAddr} </div>
   );
 }
 
@@ -68,7 +68,7 @@ class AddressSearch extends Component {
 
   componentDidMount() {
       const btnSearch = document.querySelector('#btnSearch');
-      btnSearch.innerHTML = '정보조회';
+      btnSearch.innerHTML = '시세조회';
       const {btnClassName} = this.props;
       btnSearch.className = btnClassName;
 
@@ -118,7 +118,7 @@ class AddressSearch extends Component {
   
   render() {
     const { value, suggestions } = this.state;
-    const showButton = this.prop;
+    // const showButton = this.prop;
 
     // Autosuggest will pass through all these props to the input.
     const inputProps = {

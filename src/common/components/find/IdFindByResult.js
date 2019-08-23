@@ -28,11 +28,11 @@ class IdFindByResult extends Component {
   render() {
     return (
       <Fragment>
-        <div>
+        <div className="id-find-result-field">
           <label id="lbFindIdResultTag"/>
           <label id="lbFindIdResult"/>
         </div>
-        <div>
+        <div className="id-find-result-btn-field">
           <button id="btnIdResultToLoginGo"/>
           <button id="btnIdResultToHomeGo"/>
         </div>

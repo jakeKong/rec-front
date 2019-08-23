@@ -34,6 +34,8 @@ class UserManageContainer extends Component {
       popupOpened: false
     }
     this.popupOpenStateEvent = this.popupOpenStateEvent.bind(this);
+    this.activatedChangeCallback = this.activatedChangeCallback.bind(this);
+    this.disabledChangeCallback = this.disabledChangeCallback.bind(this);
   }
 
   componentWillMount() {
@@ -242,6 +244,36 @@ class UserManageContainer extends Component {
     }
   }
 
+  activatedChangeCallback(email, boolean) {
+    const token = storage.get('token');
+    this.changedActivated(email, boolean, token)
+  }
+
+  disabledChangeCallback(email, boolean) {
+    const token = storage.get('token');
+    this.changedDisabled(email, boolean, token)
+  }
+
+  // 사용자 사용여부 수정 API 호출 이벤트
+  changedActivated = async (email, boolean, token) => {
+    const { UserModule } = this.props;
+    try {
+      await UserModule.changedActivated(email, boolean, token)
+    } catch (e) {
+      console.log("error log : " + e);
+    }
+  }
+
+  // 사용자 탈퇴여부 수정 API 호출 이벤트
+  changedDisabled = async (email, boolean, token) => {
+    const { UserModule } = this.props;
+    try {
+      await UserModule.changedDisabled(email, boolean, token)
+    } catch (e) {
+      console.log("error log : " + e);
+    }
+  }
+
   render() {
     const { user, popupOpened } = this.state;
     const { userList, pending, error, success } = this.props;
@@ -259,7 +291,7 @@ class UserManageContainer extends Component {
           <div className="div-main">
             { pending && <div className="boxLoading"/> }
             { error && <h1>Server Error!</h1> }
-            { success && <UserGrid userList={ userList } userDtoCallback={ this.userDtoCallback } detailCallback={ this.detailCallback } role={ role } selectCallback={ this.selectCallback } deselectCallback={ this.deselectCallback }  registerCallback={ this.registerCallback } />}
+            { success && <UserGrid userList={ userList } userDtoCallback={ this.userDtoCallback } detailCallback={ this.detailCallback } role={ role } selectCallback={ this.selectCallback } deselectCallback={ this.deselectCallback }  registerCallback={ this.registerCallback } activatedChangeCallback={this.activatedChangeCallback} disabledChangeCallback={this.disabledChangeCallback}/>}
           </div>
           <div className="div-sub-main" hidden={!success}>
             <vaadin-button id="btnSelectDelete" theme="error" />

@@ -194,7 +194,7 @@ class IdPwFindContainer extends Component {
     if (focusId === true) {
       const { idAuthStatus, idResultStatus } = this.state;
       if (idAuthStatus === true) {
-        return (<IdFindByAuth focusIdAuthStatusToChangeEvent={this.focusIdAuthStatusToChangeEvent}/>);
+        return (<IdFindByAuth token={this.state.token} focusIdAuthStatusToChangeEvent={this.focusIdAuthStatusToChangeEvent}/>);
       } else if (idResultStatus === true) {
         if (userInfo !== undefined) {
           return (<IdFindByResult email={userInfo.email}/>);
@@ -213,7 +213,7 @@ class IdPwFindContainer extends Component {
         return (<PwFindById focusPwIdStatusToChangeEvent={this.focusPwIdStatusToChangeEvent}/>);
       } else if (pwAuthStatus === true) {
         if (userInfo !== undefined) {
-          return (<PwFindByAuth focusPwAuthStatusToChangeEvent={this.focusPwAuthStatusToChangeEvent}/>);
+          return (<PwFindByAuth token={this.state.token} focusPwAuthStatusToChangeEvent={this.focusPwAuthStatusToChangeEvent}/>);
         } else {
           return null;
         }

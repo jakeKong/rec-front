@@ -1,8 +1,5 @@
 import React, { Component, Fragment } from 'react';
 
-import axios from 'axios';
-import config from '../../config';
-
 // layout
 import '@vaadin/vaadin-ordered-layout';
 
@@ -12,6 +9,8 @@ import '@vaadin/vaadin-dialog';
 import '@vaadin/vaadin-button';
 import '@vaadin/vaadin-text-field';
 import '@vaadin/vaadin-text-field/vaadin-number-field';
+
+import storage from '../../common/storage';
 
 let comment = '';
 class LandInfoOrderCommentPopup extends Component {
@@ -64,6 +63,21 @@ class LandInfoOrderCommentPopup extends Component {
       document.querySelector('#doRegister').addEventListener('vaadin-overlay-outside-click', this._handleOutsideClick.bind(this));
       document.querySelector('#doRegister').addEventListener('vaadin-overlay-escape-press', this._handleEscPress.bind(this));
 
+      document.querySelector('#lbEstate').innerHTML = "부동산";
+      document.querySelector('#lbMngNo').innerHTML = "주문번호";
+      document.querySelector('#lbUsedPoint').innerHTML = "차감포인트";
+      document.querySelector('#lbBalancePoint').innerHTML = "차감 후 잔여포인트";
+
+      const { result } = this.props;
+      if (result !== undefined) {
+        if (storage.get('loggedInfo')) {
+          document.querySelector('#lbEstateResult').innerHTML = result.jibunAddr;
+          document.querySelector('#lbMngNoResult').innerHTML = result.mngNo;
+          document.querySelector('#lbUsedPointResult').innerHTML = 900+'P';
+          document.querySelector('#lbBalancePointResult').innerHTML = storage.get('loggedInfo').balancePoint-900;
+        }
+      }
+    
       document.querySelector('#lbLink').innerHTML = "구매 코멘트";
       const tfLink = document.querySelector('#tfLink');
       tfLink.placeholder = "구매하신 제품에 대하여 기록할 내용을 자유롭게 입력하세요.";
@@ -122,7 +136,23 @@ class LandInfoOrderCommentPopup extends Component {
               </label>
             </div>    
             <div className="default-column">
-              <label id="lbLink" className="label-flex-20-left"/>
+              <label id="lbEstate" className="label-flex-30-left"/>
+              <label id="lbEstateResult" className="label-flex-70-left"/>
+            </div>
+            <div className="default-column">
+              <label id="lbMngNo" className="label-flex-30-left"/>
+              <label id="lbMngNoResult" className="label-flex-70-left"/>
+            </div>
+            <div className="default-column">
+              <label id="lbUsedPoint" className="label-flex-30-left"/>
+              <label id="lbUsedPointResult" className="label-flex-70-left"/>
+            </div>
+            <div className="default-column">
+              <label id="lbBalancePoint" className="label-flex-30-left"/>
+              <label id="lbBalancePointResult" className="label-flex-70-left"/>
+            </div>
+            <div className="default-column">
+              <label id="lbLink" className="label-flex-30-left"/>
               <vaadin-text-field id="tfLink" required prevent-invalid-input/>
             </div>      
           </div>

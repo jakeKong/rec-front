@@ -15,6 +15,8 @@ import '@vaadin/vaadin-notification';
 import storage from '../../common/storage';
 import { removeComma } from '../../common/utils';
 
+import { checkInfo } from '../../common/loggedInfoCheck'
+
 //ImPort 페이결제 라이브러리
 let IMP = null;
 class PaymentContainer extends Component {
@@ -235,6 +237,7 @@ class PaymentContainer extends Component {
     const { successPay, purchaseResult } = this.state;
     const { productList, pending, error, success } = this.props;
     
+    checkInfo();
     return (
       <Fragment>
         {successPay === false ? 

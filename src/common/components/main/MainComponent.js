@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import {Redirect} from 'react-router';
 import CountUp from 'react-countup';
 import { AddressSearch } from '../../../common';
-import customTheme from '../../../styles/agz/main_suggest_thema.css';
+// import customTheme from '../../../styles/agz/main_suggest_thema.css';
 
 import config from '../../../config';
 const duration=5;
@@ -24,13 +24,18 @@ class MainComponent extends Component {
     // state.search 값 초기화
     this.setState({
       selectedSuggestion: selectedSuggestion,
-      isRedirect: false,
+      isRedirect: true,
+      // isRedirect: false,
     });
   }
   onSearchClick = async (selectedSuggestion) => { 
-    this.setState({
-      isRedirect: true,
-    });
+    if (this.state.selectedSuggestion !== null && selectedSuggestion !== undefined) {
+      this.setState({
+        isRedirect: true,
+      });
+    } else {
+      window.alert('시세 조회를 원하는 주소를 입력해주세요.')
+    }
   }
 
   componentDidMount() {

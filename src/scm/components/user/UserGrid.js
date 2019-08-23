@@ -63,6 +63,8 @@ class UserGrid extends Component {
         createdDt: moment(e.get("createdDt")).format('YYYY년MM월DD일'),
         balancePoint: e.get("balancePoint"),
         assignedRoles: e.get("assignedRoles"),
+        activated: e.get("activated"),
+        disabled: e.get("disabled")
       })
     })
         
@@ -174,6 +176,68 @@ class UserGrid extends Component {
       }
     }
 
+    const { activatedChangeCallback } = this.props;
+    document.querySelector('#grdBtnActivated').renderer = function(root, column, rowData) {
+      if (rowData.item.activated === true) {
+        root.innerHTML = ''
+        const btnActivatedChange = document.createElement('vaadin-button');
+        btnActivatedChange.className = 'button-user-activated-changed-gofalse';
+        btnActivatedChange.textContent = '사용정지'
+        btnActivatedChange.addEventListener('click', function() {
+          const revalue = window.confirm('해당 사용자를 사용정지 하시겠습니까?')
+          if (revalue === true) {
+            // 사용정지 이벤트 함수 call (axios 사용) or saga 사용
+            activatedChangeCallback(rowData.item.email, false)
+          }
+        })
+        root.appendChild(btnActivatedChange);
+      } else {
+        root.innerHTML = ''
+        const btnActivatedChange = document.createElement('vaadin-button');
+        btnActivatedChange.className = 'button-user-activated-changed-gotrue';
+        btnActivatedChange.textContent = '정지해제'
+        btnActivatedChange.addEventListener('click', function() {
+          const revalue = window.confirm('해당 사용자를 정지해제 하시겠습니까?')
+          if (revalue === true) {
+            // 사용정지 이벤트 함수 call (axios 사용) or saga 사용
+            activatedChangeCallback(rowData.item.email, true)
+          }
+        })
+        root.appendChild(btnActivatedChange);
+      }
+    }
+
+    const { disabledChangeCallback } = this.props;
+    document.querySelector('#grdBtnDisabled').renderer = function(root, column, rowData) {
+      if (rowData.item.disabled === true) {
+        root.innerHTML = ''
+        const btnDisabledChange = document.createElement('vaadin-button');
+        btnDisabledChange.className = 'button-user-disabled-changed-gofalse';
+        btnDisabledChange.textContent = '회원탈퇴'
+        btnDisabledChange.addEventListener('click', function() {
+          const revalue = window.confirm('해당 사용자를 탈퇴처리 하시겠습니까?')
+          if (revalue === true) {
+            // 사용정지 이벤트 함수 call (axios 사용) or saga 사용
+            disabledChangeCallback(rowData.item.email, false)
+          }
+        })
+        root.appendChild(btnDisabledChange);
+      } else {
+        root.innerHTML = ''
+        const btnDisabledChange = document.createElement('vaadin-button');
+        btnDisabledChange.className = 'button-user-disabled-changed-gotrue';
+        btnDisabledChange.textContent = '탈퇴철회'
+        btnDisabledChange.addEventListener('click', function() {
+          const revalue = window.confirm('해당 사용자에 대한 탈퇴 철회를 진행 하시겠습니까?')
+          if (revalue === true) {
+            // 사용정지 이벤트 함수 call (axios 사용) or saga 사용
+            disabledChangeCallback(rowData.item.email, true)
+          }
+        })
+        root.appendChild(btnDisabledChange);
+      }
+    }
+
     // grid.addEventListener('active-item-changed', function(event) {
     //   const item = event.detail.value;
     //   grid.selectedItems = item ? [item] : [];
@@ -203,6 +267,8 @@ class UserGrid extends Component {
             <vaadin-grid-column path="balancePoint" header="잔여 포인트" text-align="center" flex-grow="0.3" width="150px" resizable/>
             <vaadin-grid-column id="grdAssignedRoles" header="권한그룹" text-align="center" flex-grow="1" width="180px" resizable/>
             <vaadin-grid-column id="grdAssignedRolesName" header="권한그룹명" text-align="center" flex-grow="1" width="150px" resizable/>
+            <vaadin-grid-column id="grdBtnActivated" header="사용상태" text-align="center" flex-grow="10" width="130px" resizable/>
+            <vaadin-grid-column id="grdBtnDisabled" header="탈퇴상태" text-align="center" flex-grow="10" width="130px" resizable/>
           </vaadin-grid>
           <div id="pages" style={{textAlign: 'center'}}/>
         </div>

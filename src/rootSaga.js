@@ -40,7 +40,7 @@ import landInfo, { landInfoViewSaga, makelandInfoViewSaga } from './mpa/modules/
 //import landUse, { landUseSaga } from './mpa/modules/LandUseModule';
 
 //common
-import address, { addressSaga } from './bms/modules/QuestionModule';
+// import address, { addressSaga } from './bms/modules/QuestionModule';
 
 // rootSaga 설정
 export function* rootSaga() {

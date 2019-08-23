@@ -78,6 +78,7 @@ class ChangePointHistoryByEmailContainer extends Component {
         'activated': false
       }
       const token = storage.get('token');
+      // 실제 결제 취소 내용 추가 필요 (or 관리자의 결제 취소로 재변경)
       this.updateChangePointHistoryActivated(dto.changePointSid, false);
       this.addChangePointHistory(loggedInfo.email, changePointDto, search);
       this.updateUserByBalancePointDifference(loggedInfo.email, dto.changePointOrigin, token);

@@ -182,6 +182,7 @@ class ChangePointHistorySearch extends Component {
   }
 
   // (관리) 전체 컬럼 항목 선택 이벤트 - 결제번호 / 구매번호 / 사용자 선택
+  // eslint-disable-next-line no-dupe-class-members
   SearchAllItemChangeEvent(e) {
     this.setState({searchAllItemValue: e.value})
     this.setState({paymentNo: '',

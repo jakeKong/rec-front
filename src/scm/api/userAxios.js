@@ -204,3 +204,27 @@ export const checkRecommendCode = (recommendCode, token) => axios({
     'Authorization': `Bearer ${token}`
   }
 });
+
+// 사용자 사용여부 수정
+export const changedActivated = (email, boolean, token) => axios({
+  method: 'PUT',
+  url: `${config.systemService}/user/changed/activated/${email}`,
+  headers: {
+    'Content-Type': 'application/json; charset=UTF-8',
+    'Accept': 'application/json',
+    'Authorization': `Bearer ${token}`
+  },
+  data: JSON.stringify(boolean)
+});
+
+// 사용자 탈퇴여부 수정
+export const changedDisabled = (email, boolean, token) => axios({
+  method: 'PUT',
+  url: `${config.systemService}/user/changed/disabled/${email}`,
+  headers: {
+    'Content-Type': 'application/json; charset=UTF-8',
+    'Accept': 'application/json',
+    'Authorization': `Bearer ${token}`
+  },
+  data: JSON.stringify(boolean)
+});

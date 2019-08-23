@@ -599,6 +599,7 @@ export default class Autosuggest extends Component {
       onKeyDown: (event, data) => {
         const { keyCode } = event;
 
+        // eslint-disable-next-line default-case
         switch (keyCode) {
           case 40: // ArrowDown
           case 38: // ArrowUp

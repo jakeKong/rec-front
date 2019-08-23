@@ -1,19 +1,27 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import LandInfoViewModule, * as landInfoViewActions from "../modules/LandInfoViewModule";
+import * as landInfoViewActions from "../modules/LandInfoViewModule";
 import { LandInfoView } from "../index";
 import { AddressSearch } from '../../common';
 import '@vaadin/vaadin-button';
 import customTheme from '../../styles/agz/landInfo_suggest_thema.css';
 import LandInfoOrderCommentPopup from "../components/LandInfoOrderCommentPopup";
+import LandInfoResultPop from '../components/LandInfoResultPop';
 
 import storage from '../../common/storage';
 
+import axios from 'axios';
+import config from '../../config';
+
+import { checkInfo } from '../../common/loggedInfoCheck'
+
 //해당 주소의 주문 버튼 visible 속성 제어
-let enabled = 'none';
+// let enabled = 'none';
 //현재는 큰 의미 없는 값이며, 원래 목적은 메인화면에서 주소검색을 한건지, 현재 화면에서 한건지 여부를 판별하기 위해서 사용한 필드
 let isSearched = false;
+let visibility = false;
+let result = undefined;
 class LandInfoViewContainer extends Component {
 
   // state set을 위한 초기 생성자
@@ -27,13 +35,14 @@ class LandInfoViewContainer extends Component {
         comment: '',
         userId: 'user@test.com',
         userNm: '사용자',
-        mngNo: '',
       },
+      mngNo: '',
       selectedSuggestion: null,
       popupOpened: false,
     }; 
     this.makeLandInfo = this.makeLandInfo.bind(this);    
     this.popupOpenStateEvent = this.popupOpenStateEvent.bind(this);
+    this.makePdfResultCheckEvent = this.makePdfResultCheckEvent.bind(this);
     
     this.enabled = 'none';
   }
@@ -46,36 +55,27 @@ class LandInfoViewContainer extends Component {
   }
   
   popupCallback = async(comment) => {
-    
+    // 팝업창에서 코멘트 값 받아온 뒤 PDF 파일 생성
     if (storage.get('loggedInfo')) {
-      this.setState ({
-        search: {
+      // 팝업창에서 다운로드 버튼 클릭 시 PDF URL호출 (새창)
+      // 포인트 잔액 확인 -> pdf 생성 호출 -> 결과 리턴 -> 차감 -> 포인트 변동내역 추가 -> 결과 팝업 -> 다운로드 기능
+      if (storage.get('loggedInfo').balancePoint-900 <= 0) {
+        window.alert('포인트가 부족합니다.\n포인트 충전 후 이용해주세요.')
+        return;
+      }
+      // 주문번호 존재여부 재확인
+      if (this.state.mngNo !== '' && this.state.mngNo !== undefined) {
+        let makeLandIndexValue = {
           jibunAddr: this.state.search.jibunAddr,
           roadAddr: this.state.search.roadAddr,
           pnu: this.state.search.pnu,
           comment: comment,
           userId: storage.get('loggedInfo').email,
           userNm: storage.get('loggedInfo').name,
-          mngNo: this.state.search.mngNo,
+          mngNo: this.state.mngNo,
         }
-      });
-      // console.log(this.state.search);
-      this.makeLandInfo(this.state.search);
-      //초기화
-      this.setState ({
-        search: {
-          jibunAddr: '',
-          roadAddr: '',
-          pnu: '1111111111111111111',
-          comment: '',
-          userId: storage.get('loggedInfo').email,
-          userNm: storage.get('loggedInfo').name,
-          mngNo: '',
-        },
-        selectedSuggestion: null,
-        popupOpened: false,
-      });
-
+        this.makeLandInfo(makeLandIndexValue);
+      }
     }
     else {
       //얼럿
@@ -85,26 +85,34 @@ class LandInfoViewContainer extends Component {
   }
   
   popupAddAndUpdateCheckOpenEvent(popupOpened) {
-    return <LandInfoOrderCommentPopup popupCallback={ this.popupCallback } popupOpened={ popupOpened } popupClose={ this.popupClose }/>      
+    const { search, mngNo } = this.state;
+    if (mngNo !== '' && mngNo !== undefined) {
+      let result = {
+        jibunAddr: search.jibunAddr,
+        roadAddr: search.roadAddr,
+        pnu: search.pnu,
+        comment: search.comment,
+        userId: search.userId,
+        userNm: search.userNm,
+        mngNo: mngNo
+      }
+      return <LandInfoOrderCommentPopup popupCallback={ this.popupCallback } popupOpened={ popupOpened } popupClose={ this.popupClose } result={result}/>      
+    } else {
+      window.alert('주문에 대한 시세조회가 정상적으로 처리되지 않았습니다.\n확인 후 다시 시도해주세요.')
+      return;
+    }
   }
   
   //주문번호를 state에 기록해 놓기 위해서 VIEW 화면에서 주문번호 MNGNO를 넘겨 받았음
   analysisReturnedCallback = (mngNo) =>{    
-    //setState에 mngNo만 넣으니, 나머지 값이 다 날라가더라.
-    this.setState ({
-      search: {
-        jibunAddr: this.state.search.jibunAddr,
-        roadAddr: this.state.search.roadAddr,
-        pnu: this.state.search.pnu,
-        mngNo: mngNo,
-      }
-    });
-    //console.log(this.state.search);
+    this.setState ({mngNo: mngNo});
   }
   
   //우편번호 검색이 끝났을 때 사용자가 선택한 정보를 받아올 콜백함수
   onComplete  = async (selectedSuggestion) => {    
-    
+    // 선택이 되면 들어오는 함수
+    // console.log(selectedSuggestion);
+
     // state.search 값 초기화
     this.setState({
       search: {
@@ -114,7 +122,18 @@ class LandInfoViewContainer extends Component {
         comment: '',
       }
     });
+    if (selectedSuggestion !== undefined) {
+      let nowCallSearchValue = {
+        jibunAddr: selectedSuggestion.jibunAddr,
+        roadAddr: selectedSuggestion.roadAddr,
+        pnu: selectedSuggestion.bdMgtSn,
+        comment: '',
+      }
+      this.getLandInfo(nowCallSearchValue);
+    }
+  
     this.enabled = 'none';
+    
   }
   onSearchClick = async (selectedSuggestion) => { 
     //로그인 하지 않았으면 PDF 주문 버튼 활성화
@@ -158,20 +177,24 @@ class LandInfoViewContainer extends Component {
 // 마운트 직후 한번 (rendering 이전, 마운트 이후의 작업)
   componentDidMount() {
     //주문버튼 설정
-    
     const popupOpenStateEvent = this.popupOpenStateEvent;
     const btnMakePdf = document.querySelector('#btnMakePdf');
     btnMakePdf.innerHTML = '주문';
-    btnMakePdf.addEventListener('click', function() {
-      popupOpenStateEvent();
-    });
 
     //로그인 하지 않았으면 PDF 버튼 비활성화
     if (!storage.get('loggedInfo')) {
       this.enabled = 'none';
+      btnMakePdf.className = "btn-make-pdf-disabled"
+      btnMakePdf.addEventListener('click', function() {
+        window.alert('로그인 이후 시세 주문이 가능합니다.')
+      });
     }
     else {
+      btnMakePdf.className = "btn-make-pdf-abled"
       this.enabled = 'inline-block';
+      btnMakePdf.addEventListener('click', function() {
+        popupOpenStateEvent();
+      });
     }
     
     //MAIN 화면 혹은 기타 화면으로 부터 넘어온 주소검색 결과가 있는지 확인한여 처리한다.
@@ -200,10 +223,82 @@ class LandInfoViewContainer extends Component {
     }
        
   }
-  
+
+  makePdfResultCheckEvent(makeResult) {
+    
+    if (makeResult !== undefined) {
+      console.log(makeResult);
+      if (makeResult === '파일 생성 실패') {
+        window.alert('파일 생성에 실패하였습니다.\n관리자에게 문의해주세요.');
+      } else {
+        const token = storage.get('token');
+        // 실제 결제 취소 내용 추가 필요 (or 관리자의 결제 취소로 재변경)
+        // this.updateChangePointHistoryActivated(dto.changePointSid, false);
+        // addOrderHistory = mpa api에서 처리
+        axios({
+          method: 'PUT',
+          url: `${config.systemService}/user/${storage.get('loggedInfo').email}/update/balancepoint/difference`,
+          headers: {
+            'Content-Type': 'application/json; charset=UTF-8',
+            'Accept': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          data: JSON.stringify(900)
+        }).then(res => {
+          console.log(res)
+          axios({
+            method: 'POST',
+            url: `${config.orderService}/changepoint/history/add/${storage.get('loggedInfo').email}`,
+            headers: {
+              'Content-Type': 'application/json; charset=UTF-8',
+              'Accept': 'application/json'
+            },
+            data: JSON.stringify({
+              'changeDt': new Date(),
+              'paymentCash': null,
+              'changeType': 'PURCHASE_ADD',
+              'changePoint': 900,
+              'currentBalPoint': storage.get('loggedInfo').balancePoint-900,
+              'odrNo': this.state.mngNo,
+              'paymentNo': null,
+              'activated': true
+            })
+          }).then(res => {
+            console.log(res)
+            // window.alert('주문 완료!')
+            visibility = true;
+            result = {
+              jibunAddr: this.state.search.jibunAddr,
+              mngNo: this.state.mngNo,
+              usedPoint: 900+'P',
+              balancePoint: storage.get('loggedInfo').balancePoint-900+'P',
+              comment: this.state.comment,
+              downloadPdfUrl: makeResult
+            }
+          }).catch(err => {
+            console.log(err)
+          window.alert('주문에 실패하였습니다. 확인 후 다시 시도해주세요.')
+          })
+        }).catch(err => {
+          console.log(err)
+          window.alert('주문에 실패하였습니다. 확인 후 다시 시도해주세요.')
+        })
+      }
+    }
+  }
+
+  popupClose() {
+    // this.setState({visibility: false});
+    visibility = false;
+  }
+
   render() {
     const { pending, error, landInfoData } = this.props;
     const { popupOpened } = this.state;
+    const { makeResult } = this.props;
+
+    checkInfo();
+
     return (
       <Fragment>
         <div >
@@ -215,7 +310,7 @@ class LandInfoViewContainer extends Component {
             {error && <h1>Server Error!</h1>}
             {!pending && !error && <LandInfoView landInfoData={landInfoData} isSearched={isSearched} analysisReturnedCallback={this.analysisReturnedCallback}/>}
           </div>
-          <div style={{ display: this.enabled, textAlign: 'right', marginLeft: '85%'}}>
+          <div style={{textAlign: 'right', marginLeft: '85%'}}>
             <vaadin-button id="btnMakePdf"/>
           </div>
           { isSearched === true && popupOpened === true &&
@@ -223,6 +318,8 @@ class LandInfoViewContainer extends Component {
               {this.popupAddAndUpdateCheckOpenEvent(popupOpened)};
             </script>
           }
+          { this.makePdfResultCheckEvent(makeResult) }
+          { result !== undefined && result !== null && <LandInfoResultPop result={result} visibility={visibility} popupClose={this.popupClose}/> }
         </div>
       </Fragment>
     );
@@ -235,7 +332,8 @@ export default connect(
     pending: state.landInfo.pending,
     error: state.landInfo.error,
     success: state.landInfo.success,
-    complete: state.landInfo.complete
+    complete: state.landInfo.complete,
+    makeResult: state.landInfo.makeResult
   }),
   dispatch => ({
     LandInfoViewModule: bindActionCreators(landInfoViewActions, dispatch)

@@ -1,8 +1,8 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 //import NumberFormat from 'react-number-format';
 
 const curruncyFormat = (value) => new Intl.NumberFormat('en-IN', {style: 'currency',currency: 'KRW'}).format(value);
-const commaFormat = (value) => new Intl.NumberFormat('en-IN', {maximumSignificantDigits: 3}).format(value);
+// const commaFormat = (value) => new Intl.NumberFormat('en-IN', {maximumSignificantDigits: 3}).format(value);
 class LandInfoView extends Component {
   constructor(props) {
     super(props);
@@ -32,6 +32,7 @@ class LandInfoView extends Component {
     document.querySelector('#tdJibunAddr').innerHTML = landInfoData.get("jibunAddr");
     document.querySelector('#tdRoadAddr').innerHTML = landInfoData.get("roadAddr");
     //건축물표제부
+    // eslint-disable-next-line no-lone-blocks
     {
       document.querySelector('#tdBldNm').innerHTML = landInfoData.get("bldNm");//건물명
       document.querySelector('#tdMainPurpsCdNm').innerHTML = landInfoData.get("mainPurpsCdNm");//주용도코드명
@@ -49,6 +50,7 @@ class LandInfoView extends Component {
       // document.querySelector('#tdUseAprDay').innerHTML = dateFormat(new Date(landInfoData.get("useAprDay")), 'yyyy년mm월dd일');//사용승인일
     }
     //토지대장
+    // eslint-disable-next-line no-lone-blocks
     {	
       document.querySelector('#tdPosesnSeCodeNm').innerHTML = landInfoData.get("posesnSeCodeNm");//소유구분
       document.querySelector('#tdOwnshipChgCauseCodeNm').innerHTML = landInfoData.get("ownshipChgCauseCodeNm");//소유변경원인
@@ -58,6 +60,7 @@ class LandInfoView extends Component {
       // const pnu = landInfoData.get("pnu");//pnu
     }
     //대지속성 
+    // eslint-disable-next-line no-lone-blocks
     {
       document.querySelector('#tdLndcgrCodeNm').innerHTML = landInfoData.get("lndcgrCodeNm");//지목
       document.querySelector('#tdLndpclAr').innerHTML = landInfoData.get("lndpclAr");//면적
@@ -77,7 +80,7 @@ class LandInfoView extends Component {
       // console.log(tradList.get(0));
       // console.log(tradList.get(0).get("지번주소"));
       // console.log(tradList.get(0).get("거래건축가격"));
-      if(tradList == null || tradList.size ==0) {
+      if(tradList === null || tradList.size === 0) {
         //화면 로딩시에 바로 얼럿이 나오는 것을 막아주기
         if(isSearched) {
           //분석결과 정보가 없으면 얼럿을 띄워준다.
@@ -277,7 +280,7 @@ class LandInfoView extends Component {
 
             <ul className="div-land-info-item right">
               <li>
-                  <img id="imgMap" className="map" />
+                <img id="imgMap" className="map" alt=""/>
               </li>
               <li>
                 <table className="tbl-info-04">

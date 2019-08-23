@@ -6,6 +6,8 @@ import axios from 'axios';
 import config from '../../../config';
 import { CountDownTimer } from '../../items';
 
+import { checkUserByTellNo } from '../../../scm/api/userAxios';
+
 class IdFindByAuth extends Component {
   constructor(props) {
     super(props);
@@ -90,6 +92,7 @@ class IdFindByAuth extends Component {
   solapiCall() {
     const { tellName, tellStation, tellByNumber, tellNumberByNumber } = this.state;
     let phoneNumber;
+    
     if (tellName === null || tellName === '') {
       window.alert('이름을 입력해주세요.')
       return;
@@ -102,36 +105,45 @@ class IdFindByAuth extends Component {
       window.alert('전화번호를 입력해주세요.')
       return;
     }
-
     document.querySelector('#btnMessageCall').innerHTML = '재전송';
 
-    axios({
-      method: 'GET',
-      // url: `${config.solapiService}/solapi/simple/send/${this.state.tellNo}`,
-      url: `${config.solapiService}/solapi/simple/send/${phoneNumber}`,
-      headers: {
-        'Content-Type': 'application/json; charset=UTF-8',
-        'Accept': 'application/json',
-      }
-    }).then(res => {
-      console.log(res);
-      if (res.data !== '') {
-        if (res.data.errorCode !== '' && res.data.errorCode !== undefined && res.data.errorCode !== null) {
-          console.log(res.data.errorCode)
-          window.alert(res.data.errorMessage);
-        } else if (res.data === '연결실패'){
-          window.alert(res.data);
-        } else {
-          // 문자 발송 성공 인증번호 4자리 코드 발급
-          this.setState({responseAuthNumber: JSON.stringify(res.data)})
-          // 인증번호 발급 후 30초 이후 폐기
-          setTimeout(() => this.setState({responseAuthNumber: null}), 30000)
-          CountDownTimer('#lbTimer', '#btnMessageCall');
-        }
+    checkUserByTellNo(tellStation+'-'+tellByNumber+'-'+tellNumberByNumber, this.props.token).then(res => {
+      if (res.data !== '' && res.data === true) {
+        axios({
+          method: 'GET',
+          // url: `${config.solapiService}/solapi/simple/send/${this.state.tellNo}`,
+          url: `${config.solapiService}/solapi/simple/send/${phoneNumber}`,
+          headers: {
+            'Content-Type': 'application/json; charset=UTF-8',
+            'Accept': 'application/json',
+          }
+        }).then(res => {
+          console.log(res);
+          if (res.data !== '') {
+            if (res.data.errorCode !== '' && res.data.errorCode !== undefined && res.data.errorCode !== null) {
+              console.log(res.data.errorCode)
+              window.alert(res.data.errorMessage);
+            } else if (res.data === '연결실패'){
+              window.alert(res.data);
+            } else {
+              // 문자 발송 성공 인증번호 4자리 코드 발급
+              this.setState({responseAuthNumber: JSON.stringify(res.data)})
+              // 인증번호 발급 후 30초 이후 폐기
+              setTimeout(() => this.setState({responseAuthNumber: null}), 30000)
+              CountDownTimer('#lbTimer', '#btnMessageCall');
+            }
+          }
+        }).catch(err => {
+          window.alert('인증번호 요청에 실패하였습니다.')
+          console.log(err);
+        })
+      } else {
+        console.log(res.data)
+        window.confirm('해당 번호로 가입된 회원이 존재하지 않습니다.');
       }
     }).catch(err => {
-      window.alert('인증번호 요청에 실패하였습니다.')
       console.log(err);
+      window.confirm('요청 실패');
     })
   }
 

@@ -12,8 +12,17 @@ class PwFindByReset extends Component {
   }
 
   componentDidMount() {
-    document.querySelector('#lbAfterPw').innerHTML = '새로운 비밀번호';
-    document.querySelector('#lbAfterRePw').innerHTML = '재입력';
+    
+    const { email } = this.props;
+
+    if (email !== undefined && email !== null) {
+      document.querySelector('#lbID').innerHTML = '변경할 아이디';
+    
+      document.querySelector('#lbAfterPw').innerHTML = '새로운 비밀번호';
+      document.querySelector('#lbAfterRePw').innerHTML = '재입력';
+
+      document.querySelector('#lbIDResult').innerHTML = email;
+    }
   }
 
   passwordResetEvent() {
@@ -49,12 +58,16 @@ class PwFindByReset extends Component {
       <Fragment>
         <div>
           <div>
+            <label id="lbID"/>
+            <label id="lbIDResult"/>
+          </div>
+          <div>
             <label id="lbAfterPw"/>
-            <Password value={this.state.afterpw} onChange={(e) => this.pwResetAfterPWInputEvent(e) }/>
+            <Password id="pwAfterPw" value={this.state.afterpw} onChange={(e) => this.pwResetAfterPWInputEvent(e) }/>
           </div>
           <div>
             <label id="lbAfterRePw"/>
-            <Password value={this.state.reafterpw} onChange={(e) => this.pwResetAfterRePWInputEvent(e) }/>
+            <Password id="pwAfterRePw"value={this.state.reafterpw} onChange={(e) => this.pwResetAfterRePWInputEvent(e) }/>
           </div>
           <div>
             <button onClick={this.passwordResetEvent}>변경하기</button>

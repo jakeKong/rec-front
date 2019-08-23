@@ -3,6 +3,7 @@ import React, { Component, Fragment } from "react";
 import { UserDetail, UserPwChange, UserUpdate, 
          updateUser, updateUserPwByEmailAndPassword } from "../index";
 import storage from '../../common/storage';
+import { checkInfo } from '../../common/loggedInfoCheck'
 
 class UserManageContainer extends Component {
 
@@ -66,6 +67,7 @@ class UserManageContainer extends Component {
   }
 
   render() {
+    checkInfo();
     return (
       <Fragment>
         <UserDetail userUpdatePopupOpen={this.userUpdatePopupOpen} passwordResetPopupOpen={this.passwordResetPopupOpen}/>

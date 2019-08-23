@@ -49,6 +49,16 @@ const UPDATE_USER_BY_BALANCE_POINT_DIFFERENCE = 'user/UPDATE_USER_BY_BALANCE_POI
 const UPDATE_USER_BY_BALANCE_POINT_DIFFERENCE_RECEIVED = 'user/UPDATE_USER_BY_BALANCE_POINT_DIFFERENCE_RECEIVED';
 const UPDATE_USER_BY_BALANCE_POINT_DIFFERENCE_FAILURE = 'user/UPDATE_USER_BY_BALANCE_POINT_DIFFERENCE_FAILURE';
 
+// changedActivated Action Types
+const CHANGED_ACTIVATED = 'user/CHANGED_ACTIVATED';
+const CHANGED_ACTIVATED_RECEIVED = 'user/CHANGED_ACTIVATED_RECEIVED';
+const CHANGED_ACTIVATED_FAILURE = 'user/CHANGED_ACTIVATED_FAILURE';
+
+// changedDisabled Action Types
+const CHANGED_DISABLED = 'user/CHANGED_DISABLED';
+const CHANGED_DISABLED_RECEIVED = 'user/CHANGED_DISABLED_RECEIVED';
+const CHANGED_DISABLED_FAILURE = 'user/CHANGED_DISABLED_FAILURE';
+
 // Actions
 export const getUserList = createAction(GET_USER_LIST, (search, token) => ({search, token}));
 export const getUser = createAction(GET_USER, (email, token) => ({email, token}));
@@ -59,6 +69,8 @@ export const deleteUsers = createAction(DELETE_USERS, (emails, search, token) =>
 export const updateUserByBalancePoint = createAction(UPDATE_USER_BY_BALANCE_POINT, (email, balancePoint, token) => ({email, balancePoint, token}));
 export const updateUserByBalancePointIncrease = createAction(UPDATE_USER_BY_BALANCE_POINT_INCREASE, (email, increasePoint, token) => ({email, increasePoint, token}));
 export const updateUserByBalancePointDifference = createAction(UPDATE_USER_BY_BALANCE_POINT_DIFFERENCE, (email, differencePoint, token) => ({email, differencePoint, token}));
+export const changedActivated = createAction(CHANGED_ACTIVATED, (email, boolean, token) => ({email, boolean, token}));
+export const changedDisabled = createAction(CHANGED_DISABLED, (email, boolean, token) => ({email, boolean, token}));
 
 // 초기 state값 설정
 const initialState = Map({
@@ -73,6 +85,7 @@ const initialState = Map({
 // getUserList Saga
 function* getUserListSaga(action) {
   if (action.payload.search !== undefined) {
+    console.log(action)
     try {
       const response = yield call(api.getUserList, action.payload.search, action.payload.token);
       yield put({type: GET_USER_LIST_RECEIVED, payload: response});
@@ -80,8 +93,13 @@ function* getUserListSaga(action) {
       yield put({type: GET_USER_LIST_FAILURE, payload: error});
     }
   } else {
+    let search = {
+      email: null,
+      name: null,
+      roleCode: null
+    }
     try {
-      const response = yield call(api.getUserList, action.payload.search, action.payload.token);
+      const response = yield call(api.getUserList, search, action.payload.token);
       yield put({type: GET_USER_LIST_RECEIVED, payload: response});
     } catch (error) {
       yield put({type: GET_USER_LIST_FAILURE, payload: error});
@@ -177,6 +195,28 @@ function* updateUserByBalancePointDifferenceSaga(action) {
   }
 }
 
+// changedActivated Saga
+function* changedActivatedSaga(action) {
+  try {
+    const response = yield call(api.changedActivated, action.payload.email, action.payload.boolean, action.payload.token);
+    yield put({type: CHANGED_ACTIVATED_RECEIVED, payload: response})
+    yield call(getUserListSaga, action);
+  } catch (error) {
+    yield put({type: CHANGED_ACTIVATED_FAILURE, payload: error});
+  }
+}
+
+// changedDisabled Saga
+function* changedDisabledSaga(action) {
+  try {
+    const response = yield call(api.changedDisabled, action.payload.email, action.payload.boolean, action.payload.token);
+    yield put({type: CHANGED_DISABLED_RECEIVED, payload: response})
+    yield call(getUserListSaga, action);
+  } catch (error) {
+    yield put({type: CHANGED_DISABLED_FAILURE, payload: error});
+  }
+}
+
 // User default root Saga
 export function* userSaga() {
   yield takeLatest(ADD_USER, addUserSaga);
@@ -186,6 +226,8 @@ export function* userSaga() {
   yield takeLatest(UPDATE_USER_BY_BALANCE_POINT_DIFFERENCE, updateUserByBalancePointDifferenceSaga);
   yield takeLatest(DELETE_USER, deleteUserSaga);
   yield takeLatest(DELETE_USERS, deleteUsersSaga);
+  yield takeLatest(CHANGED_ACTIVATED, changedActivatedSaga);
+  yield takeLatest(CHANGED_DISABLED, changedDisabledSaga);
   yield takeEvery(GET_USER_LIST, getUserListSaga);
   yield takeEvery(GET_USER, getUserSaga);
 }
@@ -217,7 +259,7 @@ export default handleActions({
   [GET_USER_RECEIVED]: (state, action) => {
     console.log('GET_USER_RECEIVED onReceived')
     const {data: content} = action.payload;
-    return {pending: false, error: false, success: true, user: fromJS(content)};
+    return {pending: false, error: false, success: true, user: content};
   },
   [GET_USER_FAILURE]: (state, action) => {
     const {error} = action.payload;
@@ -314,5 +356,27 @@ export default handleActions({
   [UPDATE_USER_BY_BALANCE_POINT_DIFFERENCE_FAILURE]: (state, action) => {
     console.log('UPDATE_USER_BY_BALANCE_POINT_DIFFERENCE_FAILURE onFailure')
     // return {complete: false};
+  },
+
+  // changedActivated Handler
+  [CHANGED_ACTIVATED]: (state, action) => {
+    console.log('CHANGED_ACTIVATED onPending')
+  },
+  [CHANGED_ACTIVATED_RECEIVED]: (state, action) => {
+    console.log('CHANGED_ACTIVATED_RECEIVED onReceived')
+  },
+  [CHANGED_ACTIVATED_FAILURE]: (state, action) => {
+    console.log('CHANGED_ACTIVATED_FAILURE onFailure')
+  },
+
+  // changedDisabled Handler
+  [CHANGED_DISABLED]: (state, action) => {
+    console.log('CHANGED_DISABLED onPending')
+  },
+  [CHANGED_DISABLED_RECEIVED]: (state, action) => {
+    console.log('CHANGED_DISABLED_RECEIVED onReceived')
+  },
+  [CHANGED_DISABLED_FAILURE]: (state, action) => {
+    console.log('CHANGED_DISABLED_FAILURE onFailure')
   },
 }, initialState);

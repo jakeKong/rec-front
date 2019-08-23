@@ -17,6 +17,7 @@ export const defaultTheme = {
 export const mapToAutowhateverTheme = theme => {
   let result = {};
 
+  // eslint-disable-next-line no-unused-vars
   for (const key in theme) {
     switch (key) {
       case 'suggestionsContainer':

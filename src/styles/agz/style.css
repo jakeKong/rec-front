@@ -1027,7 +1027,7 @@ html, body, #root .index {
     padding: 12px 0;
     width: 100%;
 }
-#btnMakePdf {
+.btn-make-pdf-abled {
     display: inline-block;
     margin: 0;
     border-radius: 0;
@@ -1038,13 +1038,32 @@ html, body, #root .index {
     cursor: pointer;
     transition: 0.3s;
 }
-#btnMakePdf:hover {
+.btn-make-pdf-abled:hover {
     background-color: #3fc80b;
 }
-#btnMakePdf:active {
+.btn-make-pdf-abled:active {
     background-color: #fff;
     border: 1px solid #3fc80b;
     color: #4fd81b;
+}
+.btn-make-pdf-disabled {
+  display: inline-block;
+  margin: 0;
+  border-radius: 0;
+  width: 128px;
+  height: 42px;
+  color: #fff;
+  background-color: #aaa;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.btn-make-pdf-disabled:hover {
+  background-color: #aaa;
+}
+.btn-make-pdf-disabled:active {
+  background-color: #fff;
+  border: 1px solid #aaa;
+  color: #aaa;
 }
 /* land info END */
 /* 문의사항 QNA */
@@ -1525,13 +1544,14 @@ html, body, #root .index {
 .section-findAcnt > div > div > p + input:focus {
     box-shadow: none !important;
 }
+
 .section-findAcnt > div > div:nth-of-type(2) > input { 
-    width: 20%;
+  width: 20%;
 }
 .section-findAcnt > div > div:nth-of-type(2) > label { 
-    display: inline-block;
-    color: #888;
-    width: 5%;
+  display: inline-block;
+  color: #888;
+  width: 5%;
 }
 .section-findAcnt > div > div:nth-of-type(2) > button,
 .section-findAcnt > div > div:nth-of-type(3) > button {
@@ -1805,11 +1825,11 @@ html, body, #root .index {
 /* 이메일 */
 .div-register .div-register-input label#lbEmail + div input#itEname,
 .div-register .div-register-input label#lbEmail + div input#itEdomain {
-    width: 35%;
+    width: 46%;
 }
-.div-register .div-register-input label#lbEmail + div input#itEcom {
+/* .div-register .div-register-input label#lbEmail + div input#itEcom {
     width: 14%;
-}
+} */
 .div-register .div-register-input label#lbEmail + div label {
     display: inline-block;
     width: 5%;
@@ -1845,12 +1865,14 @@ html, body, #root .index {
     width: 100%;
     margin-top: 6px;
 }
-
+.div-register .div-register-input #lbRecommendCode + div > input {
+  width: 50%;
+}
 /* 100% 넓이 input */
 .div-register .div-register-input #lbPw + div > input,
 .div-register .div-register-input #lbRepw + div > input,
-.div-register .div-register-input #lbNm + div > input {
-    width: 100%;
+.div-register .div-register-input #lbNm + div > input{
+  width: 100%;
 }
 
 
@@ -2180,3 +2202,124 @@ TODO
 REQUESTS
 - 회원가입이 자꾸 실패해서 회원가입 완료 페이지를 확인 할 수 없음
 */
+
+.id-find-result-field {
+  text-align: center;
+  margin-top: 10px;
+  height: 50px;
+  display: flex;
+}
+.id-find-result-btn-field {
+  text-align: center;
+  height: 50px;
+}
+.label-find-pw-complete {
+  text-align: center;
+  font-size: 14px;
+  color: #666;
+  margin-left: 65px;
+}
+#lbFindIdResultTag {
+  text-align: center;
+  flex: 40;
+  font-size: 14px;
+  color: #666;
+}
+#lbFindIdResult {
+  text-align: center;
+  flex: 60;
+  font-size: 14px;
+  color: #666;
+}
+#btnIdResultToLoginGo {
+  /* height: 46px; */
+  margin: 0em 1em 0em 4em;
+  float: left;
+  background: #4fd81b;
+  color: #fff;
+  height: 40px;
+  border-radius: 4px;
+  width: 80px;
+  border: none;
+}
+#btnIdResultToLoginGo:hover {
+  background: #47c10a;
+}
+#btnIdResultToHomeGo {
+  margin: 0em 4em 0em 1em;
+  float: right;
+  background: #4fd81b;
+  color: #fff;
+  height: 40px;
+  border-radius: 4px;
+  width: 80px;
+  border: none;
+}
+#btnIdResultToHomeGo:hover {
+  background: #47c10a;
+}
+
+#lbAfterPw {
+  color: #888;
+  width: 100%;
+}
+#pwAfterPw {
+  width: 100%;
+}
+#lbAfterRePw {
+  color: #888;
+  width: 100%;
+}
+#pwAfterRePw {
+  width: 100%;
+}
+
+.button-user-activated-changed-gofalse {
+  width: 64px !important;
+  height: 20px !important;
+  color: #fff !important;
+  background: #ec8989;
+  padding: 2px 8px;
+  font-size: 12px;
+  border: none;
+}
+.button-user-activated-changed-gofalse:hover {
+  background: #e97171;
+}
+.button-user-disabled-changed-gofalse {
+  width: 64px !important;
+  height: 20px !important;
+  color: #fff !important;
+  background: #888;
+  padding: 2px 8px;
+  font-size: 12px;
+  border: none;
+}
+.button-user-disabled-changed-gofalse:hover {
+  background: rgb(95, 95, 95);;
+}
+
+.button-user-activated-changed-gotrue {
+  width: 64px !important;
+  height: 20px !important;
+  color: #fff !important;
+  background: #4fd81b;
+  padding: 2px 8px;
+  font-size: 12px;
+  border: none;
+}
+.button-user-activated-changed-gotrue:hover {
+  background: #47c10a;
+}
+.button-user-disabled-changed-gotrue {
+  width: 64px !important;
+  height: 20px !important;
+  color: #fff !important;
+  background: rgb(119, 194, 255);
+  padding: 2px 8px;
+  font-size: 12px;
+  border: none;
+}
+.button-user-disabled-changed-gotrue:hover {
+  background: rgb(56, 86, 255);;
+}

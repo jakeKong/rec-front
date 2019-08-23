@@ -11,7 +11,6 @@ import storage from '../storage';
 import { oauth_web } from '../../OAuth2Config'
 
 import { getUser } from '../../scm/api/userAxios';
-import { fromJS } from 'immutable';
 
 class LoginContainer extends Component {
 
@@ -66,7 +65,7 @@ class LoginContainer extends Component {
             storage.remove('token');
             window.location.href="/register";
           } else {
-            this.setState({userInfo: fromJS(e.data)});
+            this.setState({userInfo: e.data});
           }
         }).catch(err => {
           console.log(err);
@@ -97,16 +96,34 @@ class LoginContainer extends Component {
     // token redirect
     if (token !== null && token !== undefined && token !== '') {
       if (loggedInfo !== undefined && loggedInfo !== null && loggedInfo !== '') {
+        if (loggedInfo.activated === false) {
+          window.alert('이용이 정지된 회원입니다.')
+          // storage.remove('loggedInfo');
+          return window.location.href = '/login';
+        }
+        if (loggedInfo.disabled === false) {
+          window.alert('탈퇴한 회원입니다.')
+          // storage.remove('loggedInfo');
+          return window.location.href = '/login';
+        }
         storage.set('loggedInfo', loggedInfo)
         return <Redirect to={{
           pathname: "/",
-          // state: { session : session }
         }} push={true}/>;
       } else if (userInfo !== undefined && userInfo !== null && userInfo !== '') {
+        if (userInfo.activated === false) {
+          window.alert('이용이 정지된 회원입니다.')
+          // storage.remove('loggedInfo');
+          return window.location.href = '/login';
+        }
+        if (userInfo.disabled === false) {
+          window.alert('탈퇴한 회원입니다.')
+          // storage.remove('loggedInfo');
+          return window.location.href = '/login';
+        }
         storage.set('loggedInfo', userInfo)
         return <Redirect to={{
           pathname: "/",
-          // state: { session : session }
         }} push={true}/>;
       } else return (
         <div className="div-login">

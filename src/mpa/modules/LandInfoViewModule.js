@@ -27,7 +27,8 @@ const initialState = Map({
   success: false,
   complete: false,
   titleList: List(),
-  title: Map({})
+  title: Map({}),
+  makeResult: ''
 });
 
 // getProductList Saga
