@@ -45,7 +45,7 @@ class Comment extends Component {
     // 하단 댓글등록 컴포넌트
     const {answer, cmt} = this.state;
     const taAnswerRegister = document.querySelector('#taAnswerRegister');
-    taAnswerRegister.className = "vaadin-text-area-answer";
+    taAnswerRegister.className = "question-text-area-answer";
     // taAnswerRegister.shadowRoot.querySelector('div').querySelector('div').style = "background: lightgray; padding: 0; font-size: 16px; color: red;";
     taAnswerRegister.placeholder = '댓글을 입력해주세요.'
     taAnswerRegister.addEventListener('input', function() {
@@ -55,6 +55,7 @@ class Comment extends Component {
     const { addAnswerCallback } = this.props;
     const btnAnswerRegister = document.querySelector('#btnAnswerRegister');
     btnAnswerRegister.textContent = '등록';
+    btnAnswerRegister.className = "button-question-answer-add-ntb"
     btnAnswerRegister.addEventListener('click', function() {
       if (answer.answerTxt === null || answer.answerTxt === undefined) {
         const nfNotfoundAnswerTxt = document.createElement('vaadin-notification');
@@ -84,7 +85,7 @@ class Comment extends Component {
     // iconCmtRegister.style = '--iron-icon-height: 15px;, --iron-icon-width: 15px;';
     const taCmtRegister = document.createElement('textarea');
     taCmtRegister.placeholder = '댓글을 입력해주세요.'
-    taCmtRegister.className = "vaadin-text-area-comment";
+    taCmtRegister.className = "question-text-area-comment";
     taCmtRegister.id = "taCmtRegister";
     taCmtRegister.addEventListener('input', function() {
       cmt.cmtTxt = taCmtRegister.value;
@@ -106,6 +107,7 @@ class Comment extends Component {
       const btnCmtAdd = document.createElement('vaadin-button');
       btnCmtAdd.id = "btnCmtAdd";
       btnCmtAdd.textContent = '등록';
+      btnCmtAdd.className = "button-question-comment-add-ntb"
       btnCmtAdd.addEventListener('click', function() {
         if (ulComment.querySelector('#liCmtRegister').previousElementSibling === btnCmtAdd.parentElement.previousElementSibling) {
           if (cmt.cmtTxt === null || cmt.cmtTxt === undefined) {
@@ -138,6 +140,11 @@ class Comment extends Component {
       btnAnswerCmtRegister.className = 'button-cmt-register-onoff'
       btnAnswerCmtRegister.textContent = '답글'
 
+      const btnAnswerUpdate = document.createElement('button');
+      btnAnswerUpdate.id = 'btnAnswerUpdate';
+      btnAnswerUpdate.className = 'button-cmt-update-onoff'
+      btnAnswerUpdate.textContent = '수정'
+      
       // 답글 버튼 클릭에 따르는 댓글 입력폼 컨트롤 이벤트
       btnAnswerCmtRegister.addEventListener('click', function() {
         // 이미 입력폼이 존재하며, 입력폼 이전의 컴포넌트가 존재할 경우(상속받을 부모 컴포넌트의 존재유무 체크)
@@ -149,17 +156,26 @@ class Comment extends Component {
             taCmtRegister.placeholder = '';
             liCmtRegister.removeChild(btnCmtAdd);
             ulComment.removeChild(liCmtRegister);
+            if (btnAnswerCmtRegister.textContent === '답글') {
+              btnAnswerUpdate.hidden = false;
+            }
             return;
           }
           // 2. 클릭 이전 입력폼 컴포넌트의 클래스명이 답변(댓글) 컴포넌트에 해당하는 경우 이전 입력폼의 textContent 값을 초기상태로 전환
           if (ulComment.querySelector('#liCmtRegister').previousElementSibling.className === 'li-comment-answer') {
             ulComment.querySelector('#liCmtRegister').previousElementSibling.querySelector('#btnAnswerCmtRegister').textContent = '답글'
             ulComment.querySelector('#liCmtRegister').removeChild(ulComment.querySelector('#liCmtRegister').querySelector('#btnCmtAdd'));
+            if (ulComment.querySelector('#liCmtRegister').previousElementSibling.querySelector('#btnAnswerCmtRegister').textContent === '답글') {
+              ulComment.querySelector('#liCmtRegister').previousElementSibling.querySelector('#btnAnswerUpdate').hidden = false;
+            }
           }
           // 3. 클릭 이전 입력폼 컴포넌트의 클래스명이 코멘트 컴포넌트에 해당하는 경우 이전 입력폼의 textContent 값을 초기상태로 전환
           if (ulComment.querySelector('#liCmtRegister').previousElementSibling.className === 'li-comment-cmt') {
             ulComment.querySelector('#liCmtRegister').previousElementSibling.querySelector('#btnCmtCmtRegister').textContent = '답글'
             ulComment.querySelector('#liCmtRegister').removeChild(ulComment.querySelector('#liCmtRegister').querySelector('#btnCmtCmtAdd'));
+            if (ulComment.querySelector('#liCmtRegister').previousElementSibling.querySelector('#btnCmtCmtRegister').textContent === '답글') {
+              ulComment.querySelector('#liCmtRegister').previousElementSibling.querySelector('#btnAnswerUpdate').hidden = false
+            }
           }
           ulComment.querySelector('#liCmtRegister').querySelector('#taCmtRegister').value = '';
           ulComment.removeChild(ulComment.querySelector('#liCmtRegister'));
@@ -179,14 +195,14 @@ class Comment extends Component {
           liAnswer.insertAdjacentElement('afterend', liCmtRegister);
           // taCmtRegister.shadowRoot.querySelector('div').querySelector('div').style = "background: lightgray; padding: 0;";
         }
+        if (btnAnswerCmtRegister.textContent === '답글취소') {
+          btnAnswerUpdate.hidden = true;
+        }
       })
 
-      const btnAnswerUpdate = document.createElement('button');
-      btnAnswerUpdate.className = 'button-cmt-update-onoff'
-      btnAnswerUpdate.textContent = '수정'
       let updateOnoff = false;
       const taAnswerTxt = document.createElement('textarea');
-      taAnswerTxt.className = 'vaadin-text-area-answer';
+      taAnswerTxt.className = 'question-text-area-answer';
       taAnswerTxt.value = e.get('answerTxt');
       taAnswerTxt.addEventListener('input', function() {
         answer.answerTxt = taAnswerTxt.value;
@@ -194,6 +210,7 @@ class Comment extends Component {
       const {updateAnswerCallback} = this.props;
       const btnAnswerUpdateComplete = document.createElement('vaadin-button');
       btnAnswerUpdateComplete.textContent = "수정";
+      btnAnswerUpdateComplete.className = 'button-question-comment-update-ntb'
       btnAnswerUpdateComplete.addEventListener('click', function() {
         if (answer.answerTxt === null || answer.answerTxt === '') {
           const nfNotfoundAnswerTxt = document.createElement('vaadin-notification');
@@ -305,6 +322,7 @@ class Comment extends Component {
         const btnCmtCmtAdd = document.createElement('vaadin-button');
         btnCmtCmtAdd.id = "btnCmtCmtAdd";
         btnCmtCmtAdd.textContent = '등록';
+        btnCmtCmtAdd.className = 'button-question-comment-to-add-ntb'
         btnCmtCmtAdd.addEventListener('click', function() {
           if (ulComment.querySelector('#liCmtRegister').previousElementSibling === btnCmtCmtAdd.parentElement.previousElementSibling) {
             if (cmt.cmtTxt === null || cmt.cmtTxt === undefined) {
@@ -369,7 +387,7 @@ class Comment extends Component {
         btnCmtCmtUpdate.textContent = '수정'
         let updateCmtOnoff = false;
         const taCmtTxt = document.createElement('textarea');
-        taCmtTxt.className = 'vaadin-text-area-cmt';
+        taCmtTxt.className = 'question-text-area-cmt';
         taCmtTxt.value = answerCmt.get('cmtTxt');
         taCmtTxt.addEventListener('input', function() {
           cmt.cmtTxt = taCmtTxt.value;
@@ -377,6 +395,7 @@ class Comment extends Component {
         const {updateCmtCallback} = this.props;
         const btnCmtUpdateComplete = document.createElement('vaadin-button');
         btnCmtUpdateComplete.textContent = "수정";
+        btnCmtUpdateComplete.className = 'button-question-comment-update-ntb';
         btnCmtUpdateComplete.addEventListener('click', function() {
           if (cmt.cmtTxt === null || cmt.cmtTxt === '') {
             const nfNotfoundAnswerTxt = document.createElement('vaadin-notification');

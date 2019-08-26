@@ -63,11 +63,11 @@ class PwFindByReset extends Component {
           </div>
           <div>
             <label id="lbAfterPw"/>
-            <Password id="pwAfterPw" value={this.state.afterpw} onChange={(e) => this.pwResetAfterPWInputEvent(e) }/>
+            <Password feedback={false} id="pwAfterPw" value={this.state.afterpw} onChange={(e) => this.pwResetAfterPWInputEvent(e) }/>
           </div>
           <div>
             <label id="lbAfterRePw"/>
-            <Password id="pwAfterRePw"value={this.state.reafterpw} onChange={(e) => this.pwResetAfterRePWInputEvent(e) }/>
+            <Password feedback={false} id="pwAfterRePw"value={this.state.reafterpw} onChange={(e) => this.pwResetAfterRePWInputEvent(e) }/>
           </div>
           <div>
             <button onClick={this.passwordResetEvent}>변경하기</button>

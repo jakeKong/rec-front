@@ -112,7 +112,7 @@ class ChangePointHistorySearch extends Component {
     this.setState({paymentNo: e.target.value})
   }
   
-  // 구매번호 입력 텍스트필드 이벤트
+  // 주문번호 입력 텍스트필드 이벤트
   SearchItemByPurchaseInputEvent(e) {
     this.setState({odrNo: e.target.value})
   }
@@ -127,14 +127,14 @@ class ChangePointHistorySearch extends Component {
     this.setState({email: e.target.value})
   }
 
-  // 전체 컬럼 항목 선택 이벤트 - 결제번호 / 구매번호
+  // 전체 컬럼 항목 선택 이벤트 - 결제번호 / 주문번호
   SearchEmailAllItemChangeEvent(e) {
     this.setState({searchAllItemValue: e.value})
     this.setState({paymentNo: '',
                    odrNo: ''})
   }
   
-  // 전체 컬럼 항목에 따르는 입력 텍스트필드 반환 - 결제번호 / 구매번호
+  // 전체 컬럼 항목에 따르는 입력 텍스트필드 반환 - 결제번호 / 주문번호
   allEmailItemCheckFieldRendering() {
     const { searchAllItemValue } = this.state;
     if (searchAllItemValue === 'odrNo') {
@@ -146,7 +146,7 @@ class ChangePointHistorySearch extends Component {
     }
   }
 
-  // (관리) 전체 컬럼 항목 선택 이벤트 - 결제번호 / 구매번호 / 사용자 선택
+  // (관리) 전체 컬럼 항목 선택 이벤트 - 결제번호 / 주문번호 / 사용자 선택
   SearchAllItemChangeEvent(e) {
     this.setState({searchPaymentItemValue: e.value})
     this.setState({paymentNo: '',
@@ -155,7 +155,7 @@ class ChangePointHistorySearch extends Component {
                    email: ''})
   }
 
-  // 변동 유형 컬럼 항목 선택 이벤트 - 전체/결제/결제취소/구매/구매취소/이벤트지급/이벤트지급취소 선택
+  // 변동 유형 컬럼 항목 선택 이벤트 - 전체/결제/결제취소/주문/주문취소/이벤트지급/이벤트지급취소 선택
   SearchItemChangeEvent(e) {
     this.setState({searchItemValue: e.value})
     this.setState({changeType: e.value})
@@ -173,7 +173,7 @@ class ChangePointHistorySearch extends Component {
                    email: ''})
   }
 
-  // (관리) 구매번호 컬럼 항목 선택 이벤트 - 구매번호 / 사용자 선택
+  // (관리) 주문번호 컬럼 항목 선택 이벤트 - 주문번호 / 사용자 선택
   SearchPurchaseItemChangeEvent(e) {
     this.setState({searchPurchaseItemValue: e.value})
     this.setState({odrNo: '',
@@ -181,7 +181,7 @@ class ChangePointHistorySearch extends Component {
                    email: ''})
   }
 
-  // (관리) 전체 컬럼 항목 선택 이벤트 - 결제번호 / 구매번호 / 사용자 선택
+  // (관리) 전체 컬럼 항목 선택 이벤트 - 결제번호 / 주문번호 / 사용자 선택
   // eslint-disable-next-line no-dupe-class-members
   SearchAllItemChangeEvent(e) {
     this.setState({searchAllItemValue: e.value})
@@ -191,7 +191,7 @@ class ChangePointHistorySearch extends Component {
                    email: ''})
   }
   
-  // (관리) 전체 컬럼 항목에 따르는 입력 텍스트필드 반환 - 결제번호 / 구매번호 / 사용자 선택
+  // (관리) 전체 컬럼 항목에 따르는 입력 텍스트필드 반환 - 결제번호 / 주문번호 / 사용자 선택
   allItemCheckFieldRendering() {
     const { searchAllItemValue } = this.state;
     if (searchAllItemValue === 'odrNo') {
@@ -221,7 +221,7 @@ class ChangePointHistorySearch extends Component {
     }
   }
 
-  // (관리) 구매번호 컬럼 항목에 따르는 입력 텍스트필드 반환 - 구매번호 / 사용자 선택
+  // (관리) 주문번호 컬럼 항목에 따르는 입력 텍스트필드 반환 - 주문번호 / 사용자 선택
   purchaseItemCheckFieldRendering() {
     const { searchPurchaseItemValue } = this.state;
     if (searchPurchaseItemValue === 'odrNo') {
@@ -242,7 +242,7 @@ class ChangePointHistorySearch extends Component {
       if (role === 'ROLE_ADMIN' || role === 'ROLE_SYSADMIN') {
         const drSearchAllItems = [
           {label: '결제번호', value: 'paymentNo'},
-          {label: '구매번호', value: 'odrNo'},
+          {label: '주문번호', value: 'odrNo'},
           {label: '사용자', value: 'userNm'},
           {label: '아이디', value: 'email'}
         ]
@@ -258,7 +258,7 @@ class ChangePointHistorySearch extends Component {
       } else {
         const drSearchAllItems = [
           {label: '결제번호', value: 'paymentNo'},
-          {label: '구매번호', value: 'odrNo'},
+          {label: '주문번호', value: 'odrNo'},
         ]
         return (
           <Fragment>
@@ -294,12 +294,12 @@ class ChangePointHistorySearch extends Component {
         return <InputText value={this.state.paymentNo} onChange={(e) => this.SearchItemByPaymentInputEvent(e)} onKeyPress={e => this.keyPressEvent(e)} />
       }
     } 
-    // 구매(주문) 관련 컬럼 선택 시 
+    // 주문(주문) 관련 컬럼 선택 시 
     else if (searchItemValue === 'PURCHASE_ADD' || searchItemValue === 'PURCHASE_SUB') {
       // 권한 체크
       if (role === 'ROLE_ADMIN' || role === 'ROLE_SYSADMIN') {
         const drSearchPurchaseItems = [
-          {label: '구매번호', value: 'odrNo'},
+          {label: '주문번호', value: 'odrNo'},
           {label: '사용자', value: 'userNm'},
           {label: '아이디', value: 'email'}
         ]
@@ -313,7 +313,7 @@ class ChangePointHistorySearch extends Component {
           </Fragment>
         );
       } else {
-        // 권한이 없는 일반 사용자일 경우 구매번호 입력텍스트 컴포넌트만 리턴
+        // 권한이 없는 일반 사용자일 경우 주문번호 입력텍스트 컴포넌트만 리턴
         return <InputText value={this.state.odrNo} onChange={(e) => this.SearchItemByPurchaseInputEvent(e)} onKeyPress={e => this.keyPressEvent(e)} />
       }
     } else {

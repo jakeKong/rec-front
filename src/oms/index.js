@@ -1,7 +1,7 @@
 // OMS - api
 export { getOrderHistoryList, getOrderHistoryListByEmail, addOrderHistory, updateOrderHistoryActivated, updateOrderHistoryCancleAttemptStatus } from './api/orderHistoryAxios';
 // export { getReportMakeHistoryList } from './api/reportMakeHistoryAxios';
-export { getChangePointHistoryList, getChangePointHistoryListByEmail, addChangePointHistory, updateChangePointHistoryActivated } from './api/changePoingHistoryAxios';
+export { getChangePointHistoryList, getChangePointHistoryListByEmail, addChangePointHistory, updateChangePointHistoryActivated, updateChangePointHistoryChangeType } from './api/changePoingHistoryAxios';
 // export { getPurchaseHistoryList } from './api/purchaseHistoryAxios';
 export { getProductList, addProduct, updateProduct, deleteProduct } from './api/productManageAxios';
 

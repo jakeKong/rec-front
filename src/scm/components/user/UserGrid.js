@@ -182,11 +182,11 @@ class UserGrid extends Component {
         root.innerHTML = ''
         const btnActivatedChange = document.createElement('vaadin-button');
         btnActivatedChange.className = 'button-user-activated-changed-gofalse';
-        btnActivatedChange.textContent = '사용정지'
+        btnActivatedChange.textContent = '사용중지'
         btnActivatedChange.addEventListener('click', function() {
-          const revalue = window.confirm('해당 사용자를 사용정지 하시겠습니까?')
+          const revalue = window.confirm('해당 사용자를 사용중지 하시겠습니까?')
           if (revalue === true) {
-            // 사용정지 이벤트 함수 call (axios 사용) or saga 사용
+            // 사용중지 이벤트 함수 call (axios 사용) or saga 사용
             activatedChangeCallback(rowData.item.email, false)
           }
         })
@@ -195,11 +195,11 @@ class UserGrid extends Component {
         root.innerHTML = ''
         const btnActivatedChange = document.createElement('vaadin-button');
         btnActivatedChange.className = 'button-user-activated-changed-gotrue';
-        btnActivatedChange.textContent = '정지해제'
+        btnActivatedChange.textContent = '중지해제'
         btnActivatedChange.addEventListener('click', function() {
-          const revalue = window.confirm('해당 사용자를 정지해제 하시겠습니까?')
+          const revalue = window.confirm('해당 사용자를 중지해제 하시겠습니까?')
           if (revalue === true) {
-            // 사용정지 이벤트 함수 call (axios 사용) or saga 사용
+            // 사용중지 이벤트 함수 call (axios 사용) or saga 사용
             activatedChangeCallback(rowData.item.email, true)
           }
         })
@@ -217,7 +217,6 @@ class UserGrid extends Component {
         btnDisabledChange.addEventListener('click', function() {
           const revalue = window.confirm('해당 사용자를 탈퇴처리 하시겠습니까?')
           if (revalue === true) {
-            // 사용정지 이벤트 함수 call (axios 사용) or saga 사용
             disabledChangeCallback(rowData.item.email, false)
           }
         })
@@ -230,7 +229,6 @@ class UserGrid extends Component {
         btnDisabledChange.addEventListener('click', function() {
           const revalue = window.confirm('해당 사용자에 대한 탈퇴 철회를 진행 하시겠습니까?')
           if (revalue === true) {
-            // 사용정지 이벤트 함수 call (axios 사용) or saga 사용
             disabledChangeCallback(rowData.item.email, true)
           }
         })

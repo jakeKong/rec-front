@@ -12,11 +12,14 @@ import * as XLSX from 'xlsx';
 
 import { comma } from '../../../common/utils';
 
+let moment = require('moment');
 class ChangePointHistoryGrid extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {gridData: [],hiddenCheck: ''}
+    this.state = {gridData: [],hiddenCheck: '', toCheck: ''}
+    this.cancelAttemptTemplate = this.cancelAttemptTemplate.bind(this);
+    this.cancelReCompleteTemplate = this.cancelReCompleteTemplate.bind(this);
     this.cancelTemplate = this.cancelTemplate.bind(this);
   }
 
@@ -26,7 +29,7 @@ class ChangePointHistoryGrid extends Component {
       return
     }
     
-    let moment = require('moment');
+    
     let list = [];
     changePointHistoryList.sort((prev, next) => moment(prev.get('changeDt')) > moment(next.get('changeDt')) ? 1 : -1)
     .forEach(e => {
@@ -41,6 +44,7 @@ class ChangePointHistoryGrid extends Component {
         changePointSid: e.get("changeSid"),
         email: e.get("email"), 
         changeDt: moment(e.get("changeDt")).format('YYYY년MM월DD일 HH:MM:ss'),
+        changeDtOrigin: moment(e.get("changeDt")),
         odrPaymentNo: e.get("odrNo") ? e.get("odrNo") : e.get("paymentNo"),
         odrNo: e.get("odrNo"),
         paymentNo: e.get("paymentNo"),
@@ -60,10 +64,13 @@ class ChangePointHistoryGrid extends Component {
     const {role} = this.props;
 
     let hiddenCheck = '';
+    let toCheck = 'none'
     if (role !== 'ROLE_ADMIN') {
       hiddenCheck = 'none';
+      toCheck = '';
     }
     this.setState({hiddenCheck: hiddenCheck});
+    this.setState({toCheck: toCheck});
 
     const btnExcel = document.querySelector('#btnExcel');
     if (role === 'ROLE_ADMIN') {
@@ -115,11 +122,96 @@ class ChangePointHistoryGrid extends Component {
     
   }
 
-  cancelTemplate(rowData, column) {
+  // 취소요청
+  cancelAttemptTemplate(rowData, column) {
+    const { changePointCancleAttmeptCallback } = this.props;
+    function onClickButton() {
+      const check = window.confirm('결제하신 포인트상품에 대한 포인트결제 취소요청을 하시겠습니까?');
+      if (check === true) {
+        changePointCancleAttmeptCallback(rowData);
+      }
+    }
+    if (moment().add(-6, 'months').format() < rowData.changeDtOrigin.format()) {
+      // console.log(rowData.changeDtOrigin.format());
+      // console.log(moment().add(-6, 'months').format());
+      if (rowData.changeType === '결제' || rowData.changeType === '결제취소') {
+        if (rowData.changeType === '결제취소') {
+          return '-';
+        } 
+        if (rowData.changeType === '결제') {
+          if (rowData.activated === true) {
+            return <button id="btnCancleAttempt" icon="pi pi-pencil" className="p-button-warning" onClick={onClickButton}>취소요청</button>
+          } else {
+            return <font style={{color: 'red'}}>취소됨</font>;
+          }
+        }
+      }
+      if (rowData.changeType === '결제취소요청') {
+        if (rowData.activated === true) {
+          return '-'
+        } else {
+          return <label>취소요청</label>
+        }
+      }
+    } else {
+      if (rowData.changeType === '결제' || rowData.changeType === '결제취소') {
+        if (rowData.changeType === '결제취소') {
+          return '-';
+        } 
+        if (rowData.changeType === '결제') {
+          if (rowData.activated === true) {
+            return '-';
+          } else {
+            return <font style={{color: 'red'}}>취소됨</font>;
+          }
+        }
+      }
+      if (rowData.changeType === '결제취소요청') {
+        if (rowData.activated === true) {
+          return '-'
+        } else {
+          return <label>취소요청</label>
+        }
+      }
+    }
 
+  }
+
+  // 취소요청 철회
+  cancelReCompleteTemplate(rowData, column) {
+    const { changePointCancleReCompleteCallback } = this.props;
+    function onClickButton() {
+      const check = window.confirm('취소요청에 대한 승인을 하시겠습니까?');
+      if (check === true) {
+        changePointCancleReCompleteCallback(rowData);
+      }
+    }
+    if (rowData.changeType === '결제' || rowData.changeType === '결제취소') {
+      if (rowData.changeType === '결제취소') {
+        return '-';
+      } 
+      if (rowData.changeType === '결제') {
+        if (rowData.activated === true) {
+          return '-';
+        } else {
+          return <font style={{color: 'red'}}>취소됨</font>;
+        }
+      }
+    }
+    if (rowData.changeType === '결제취소요청') {
+      if (rowData.activated === true) {
+        return '-'
+      } else {
+        return <button id="btnCancleReComplete" icon="pi pi-pencil" className="p-button-warning" onClick={onClickButton}>취소철회</button>
+      }
+    }
+  }
+
+  // 취소요청 승인
+  cancelTemplate(rowData, column) {
     const { changePointCancleCallback } = this.props;
     function onClickButton() {
-      const check = window.confirm('결제하신 포인트상품에 대한 포인트결제 취소를 진행하시겠습니까?');
+      const check = window.confirm('취소요청에 대한 승인을 하시겠습니까?');
       if (check === true) {
         changePointCancleCallback(rowData);
       }
@@ -130,10 +222,17 @@ class ChangePointHistoryGrid extends Component {
       } 
       if (rowData.changeType === '결제') {
         if (rowData.activated === true) {
-          return <button id="btnDownload" icon="pi pi-pencil" className="p-button-warning" onClick={onClickButton}>결제취소</button>
+          return '-';
         } else {
           return <font style={{color: 'red'}}>취소됨</font>;
         }
+      }
+    }
+    if (rowData.changeType === '결제취소요청') {
+      if (rowData.activated === true) {
+        return '-'
+      } else {
+        return <button id="btnCancle" icon="pi pi-pencil" className="p-button-warning" onClick={onClickButton}>취소승인</button>
       }
     }
   }
@@ -157,7 +256,9 @@ class ChangePointHistoryGrid extends Component {
             <Column field="currentBalPoint" header="남은 포인트"/>
             <Column columnKey="grdUserNm" field="userNm" header="주문자"  style={{display:this.state.hiddenCheck}}/>
             <Column columnKey="grdEmail" field="email" header="아이디"  style={{display:this.state.hiddenCheck}}/>
-            <Column columnKey="grdBtnPaymentCancle" body={this.cancelTemplate} style={{display:!this.state.hiddenCheck}} />
+            <Column columnKey="grdBtnPaymentAttemptCancle" body={this.cancelAttemptTemplate} style={{display:this.state.toCheck}} />
+            <Column columnKey="grdBtnPaymentCancleReComplete" body={this.cancelReCompleteTemplate} style={{display:this.state.hiddenCheck}} />
+            <Column columnKey="grdBtnPaymentCancle" body={this.cancelTemplate} style={{display:this.state.hiddenCheck}} />
           </DataTable>
         </section>
         <div className="div-sub-top-right">

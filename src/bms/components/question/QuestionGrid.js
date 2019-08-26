@@ -13,7 +13,7 @@ class QuestionGrid extends Component {
     super(props);
     this.state = {
       gridData: [],
-      selectedItem: null
+      selectedItem: null,
     }
     this.questionTitleClickLabelTemplate = this.questionTitleClickLabelTemplate.bind(this);
     this.roleCheckColumnRenderingEvent = this.roleCheckColumnRenderingEvent.bind(this);
@@ -27,6 +27,7 @@ class QuestionGrid extends Component {
     }
 
     let moment = require('moment');
+
     // 그리드 컬럼 인덱스를 위한 변수
     let i=1;
     let list =[];
@@ -36,13 +37,14 @@ class QuestionGrid extends Component {
       list.push({
         index: i++,
         questionSid: e.get("questionSid"),
-        questionTitle: e.get("questionTitle"),
-        questionTxt: e.get("questionTxt"),
+        questionTitle: e.get("questionTitle")+' ['+e.get('answers')+']',
         questionLevel: e.get("questionLevel"),
         questionWriter: e.get("questionWriter"),
-        reportingDt: moment(e.get("reportingDt")).format('YYYY년MM월DD일')
+        reportingDt: moment(e.get("reportingDt")).format('YYYY년MM월DD일'),
       })
+
     })
+    console.log(list)
     this.setState({gridData: list.reverse()});
   }
 

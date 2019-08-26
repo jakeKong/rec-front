@@ -213,7 +213,7 @@ class IdPwFindContainer extends Component {
         return (<PwFindById focusPwIdStatusToChangeEvent={this.focusPwIdStatusToChangeEvent}/>);
       } else if (pwAuthStatus === true) {
         if (userInfo !== undefined) {
-          return (<PwFindByAuth token={this.state.token} focusPwAuthStatusToChangeEvent={this.focusPwAuthStatusToChangeEvent}/>);
+          return (<PwFindByAuth email={userInfo.email} token={this.state.token} focusPwAuthStatusToChangeEvent={this.focusPwAuthStatusToChangeEvent}/>);
         } else {
           return null;
         }

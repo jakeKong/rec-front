@@ -9,6 +9,9 @@ import '@vaadin/vaadin-ordered-layout';
 
 import storage from '../../common/storage';
 
+import { addChangePointHistory } from '../api/changePoingHistoryAxios'
+import { updateOrderHistoryActivated, updateOrderHistoryCancleAttemptStatus } from '../api/orderHistoryAxios'
+
 class OrderHistoryContainer extends Component {
 
   // state set을 위한 초기 생성자
@@ -61,33 +64,71 @@ class OrderHistoryContainer extends Component {
   }
 
   orderCancleAttemptToBackCallback = (dto) => {
+    // this.updateOrderHistoryActivated(dto.odrSid, dto.email, true);
+    // this.updateOrderHistoryCancleAttemptStatus(dto.odrSid, dto.email, 'TRADE_COMPLETE', search);
     const { search } =this.state;
-    // const loggedInfo = storage.get('loggedInfo');
-    this.updateOrderHistoryActivated(dto.odrSid, dto.email, true);
-    this.updateOrderHistoryCancleAttemptStatus(dto.odrSid, dto.email, 'TRADE_COMPLETE', search);
+    updateOrderHistoryActivated(dto.odrSid, dto.email, true).then(res => {
+      updateOrderHistoryCancleAttemptStatus(dto.odrSid, dto.email, 'TRADE_COMPLETE').then(res => {
+        this.getOrderHistoryList(search);
+      }).catch(err => {
+        console.log(err)
+      })
+    }).catch(err => {
+      console.log(err)
+    })
   }
 
   orderCancleCallback = (dto) => {
     const { search } =this.state;
     // const loggedInfo = storage.get('loggedInfo');
     const token = storage.get('token');
-    let orderDto = {
+    // let orderDto = {
+    //   'odrNo': dto.odrNo,
+    //   'odrDt': new Date(),
+    //   'marketPrice': dto.marketPriceOrigin,
+    //   'variationPoint': dto.variationPointOrigin,
+    //   'realEstateType': dto.realEstateTypeOrigin,
+    //   'downloadEndDt': dto.downloadEndDtOrigin,
+    //   'downloadCnt': dto.downloadCnt,
+    //   'pnuNo': dto.pnuNo,
+    //   'pdfFileNm': dto.pdfFileNm,
+    //   'status': 'TRADE_CANCLE',
+    //   'activated': false
+    // };
+    let changePointDto = {
+      'changeDt': new Date(),
+      'paymentCash': null,
+      'changeType': 'PURCHASE_SUB',
+      'changePoint': dto.variationPointOrigin,
+      'currentBalPoint': null,
       'odrNo': dto.odrNo,
-      'odrDt': new Date(),
-      'marketPrice': dto.marketPriceOrigin,
-      'variationPoint': dto.variationPointOrigin,
-      'realEstateType': dto.realEstateTypeOrigin,
-      'downloadEndDt': dto.downloadEndDtOrigin,
-      'downloadCnt': dto.downloadCnt,
-      'pnuNo': dto.pnuNo,
-      'pdfFileNm': dto.pdfFileNm,
-      'status': 'TRADE_CANCLE',
+      'paymentNo': null,
       'activated': false
-    };
-    this.updateOrderHistoryActivated(dto.odrSid, dto.email, false);
-    this.updateOrderHistoryCancleAttemptStatus(dto.odrSid, dto.email, 'TRADE_COMPLETE', search);
-    this.addOrderHistory(dto.email, orderDto, search);
-    this.updateUserByBalancePointIncrease(dto.email, dto.variationPointOrigin, token);
+    }
+    updateOrderHistoryActivated(dto.odrSid, dto.email, false).then(res => {
+      updateOrderHistoryCancleAttemptStatus(dto.odrSid, dto.email, 'TRADE_CANCLE').then(res => {
+        addChangePointHistory(dto.email, changePointDto).then(res => {
+          this.updateUserByBalancePointIncrease(dto.email, dto.variationPointOrigin, token);
+          this.getOrderHistoryList(search);
+        }).catch(err => {
+          console.log(err)
+        })
+      }).catch(err => {
+        console.log(err)
+      })
+    }).catch(err => {
+      console.log(err)
+    })
+
+    // this.updateOrderHistoryActivated(dto.odrSid, dto.email, false);
+    // this.updateOrderHistoryCancleAttemptStatus(dto.odrSid, dto.email, 'TRADE_CANCLE', search);
+    // // this.addOrderHistory(dto.email, orderDto, search);
+    // this.updateUserByBalancePointIncrease(dto.email, dto.variationPointOrigin, token);
+    // addChangePointHistory(dto.email, changePointDto).then(res => {
+    //   this.getOrderHistoryList(search);
+    // }).catch(err => {
+    //   console.log(err)
+    // })
   }
 
   addOrderHistory = async (email, dto, search) => {

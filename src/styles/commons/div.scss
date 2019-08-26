@@ -374,8 +374,9 @@
   // min-height: 100px;
   text-align: center;
   background-color: #F9F9F9;
-  width: 100%;
-  // padding: 1em;
+  // width: 100%;
+  margin: 0 2em 0 2em;
+  // padding: 3em;
   // min-height: 300px;;
   // text-align: center;
 }
@@ -386,8 +387,10 @@
   // padding-right: 1em;
   line-height: 18px;
   height: 25px;
-  width: 100%;
+  // width: 100%;
+  margin: 0 2em 0 2em;
   text-align: left;
+  border-top: 2px solid #ddd;
 }
 
 .div-register-popup-board {

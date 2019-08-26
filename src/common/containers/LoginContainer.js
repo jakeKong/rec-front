@@ -97,7 +97,7 @@ class LoginContainer extends Component {
     if (token !== null && token !== undefined && token !== '') {
       if (loggedInfo !== undefined && loggedInfo !== null && loggedInfo !== '') {
         if (loggedInfo.activated === false) {
-          window.alert('이용이 정지된 회원입니다.')
+          window.alert('이용이 중지된 회원입니다.')
           // storage.remove('loggedInfo');
           return window.location.href = '/login';
         }
@@ -112,7 +112,7 @@ class LoginContainer extends Component {
         }} push={true}/>;
       } else if (userInfo !== undefined && userInfo !== null && userInfo !== '') {
         if (userInfo.activated === false) {
-          window.alert('이용이 정지된 회원입니다.')
+          window.alert('이용이 중지된 회원입니다.')
           // storage.remove('loggedInfo');
           return window.location.href = '/login';
         }

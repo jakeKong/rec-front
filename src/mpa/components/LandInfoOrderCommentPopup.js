@@ -11,6 +11,7 @@ import '@vaadin/vaadin-text-field';
 import '@vaadin/vaadin-text-field/vaadin-number-field';
 
 import storage from '../../common/storage';
+import { comma } from '../../common/utils';
 
 let comment = '';
 class LandInfoOrderCommentPopup extends Component {
@@ -74,11 +75,11 @@ class LandInfoOrderCommentPopup extends Component {
           document.querySelector('#lbEstateResult').innerHTML = result.jibunAddr;
           document.querySelector('#lbMngNoResult').innerHTML = result.mngNo;
           document.querySelector('#lbUsedPointResult').innerHTML = 900+'P';
-          document.querySelector('#lbBalancePointResult').innerHTML = storage.get('loggedInfo').balancePoint-900;
+          document.querySelector('#lbBalancePointResult').innerHTML = comma(storage.get('loggedInfo').balancePoint-900)+'P';
         }
       }
     
-      document.querySelector('#lbLink').innerHTML = "구매 코멘트";
+      document.querySelector('#lbLink').innerHTML = '메모';
       const tfLink = document.querySelector('#tfLink');
       tfLink.placeholder = "구매하신 제품에 대하여 기록할 내용을 자유롭게 입력하세요.";
       tfLink.className = 'vaadin-text-field-width-200-flex-80';

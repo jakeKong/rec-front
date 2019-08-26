@@ -85,15 +85,15 @@ class UserPwChange extends Component {
         <div className="modal-modify-pw">
           <div>
             <label id="lbBeforePw"/>
-            <Password value={this.state.beforepw} onChange={(e) => this.pwResetBeforePWInputEvent(e) }/>
+            <Password feedback={false} value={this.state.beforepw} onChange={(e) => this.pwResetBeforePWInputEvent(e) }/>
           </div>
           <div>
             <label id="lbAfterPw"/>
-            <Password value={this.state.afterpw} onChange={(e) => this.pwResetAfterPWInputEvent(e) }/>
+            <Password feedback={false} value={this.state.afterpw} onChange={(e) => this.pwResetAfterPWInputEvent(e) }/>
           </div>
           <div>
             <label id="lbAfterRePw"/>
-            <Password value={this.state.reafterpw} onChange={(e) => this.pwResetAfterRePWInputEvent(e) }/>
+            <Password feedback={false} value={this.state.reafterpw} onChange={(e) => this.pwResetAfterRePWInputEvent(e) }/>
           </div>
         </div>
       </Dialog>

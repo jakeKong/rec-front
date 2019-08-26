@@ -2,8 +2,9 @@ import React, { Component, Fragment } from 'react';
 
 import { monthBeforeDate, currentDate } from '../../common/items';
 
-import Sugar from 'sugar';
-import 'sugar/locales/ko';
+// import Sugar from 'sugar';
+// import 'sugar/locales/ko';
+
 
 // component
 import '@vaadin/vaadin-button';
@@ -16,6 +17,7 @@ import '@vaadin/vaadin-select'
 import '@vaadin/vaadin-list-box'
 import '@vaadin/vaadin-item'
 
+let moment = require('moment')
 class BlogTyleNewsSearch extends Component {
 
   constructor(props) {
@@ -35,7 +37,6 @@ class BlogTyleNewsSearch extends Component {
   componentDidMount() {
     // search parameter default setting
     const { search } = this.state;
-
     const cbVisibility = document.querySelector('#cbVisibility')
     cbVisibility.value = '전체';
     cbVisibility.items = ['전체', '공개', '비공개'];
@@ -52,7 +53,7 @@ class BlogTyleNewsSearch extends Component {
     // Start date-picker set
     const dpStart = document.querySelector('#dpStart')
     // default before Week date set
-    dpStart.value = monthBeforeDate;
+    dpStart.value = monthBeforeDate.format('YYYY-MM-DD');
     search.fromDt = dpStart.value;
     dpStart.i18n = {
       today: '오늘',
@@ -63,7 +64,7 @@ class BlogTyleNewsSearch extends Component {
       weekdays: '일요일_월요일_화요일_수요일_목요일_금요일_토요일'.split('_'),
       weekdaysShort: '일_월_화_수_목_금_토'.split('_'),
       formatDate: function(date) {
-        return Sugar.Date.format(Sugar.Date.create(date), '{yyyy}년{MM}월{dd}일');
+        return moment(date).format('YYYY년MM월DD일');
       },
       formatTitle: function(monthName, fullYear) {
         return fullYear + '년 ' + monthName;
@@ -76,7 +77,7 @@ class BlogTyleNewsSearch extends Component {
     // End date-picker set
     const dpEnd = document.querySelector('#dpEnd')
     // default today
-    dpEnd.value = currentDate;
+    dpEnd.value = currentDate.format('YYYY-MM-DD');
     search.toDt = dpEnd.value;
     dpEnd.i18n = {
       today: '오늘',
@@ -87,7 +88,7 @@ class BlogTyleNewsSearch extends Component {
       weekdays: '일요일_월요일_화요일_수요일_목요일_금요일_토요일'.split('_'),
       weekdaysShort: '일_월_화_수_목_금_토'.split('_'),
       formatDate: function(date) {
-        return Sugar.Date.format(Sugar.Date.create(date), '{yyyy}년{MM}월{dd}일');
+        return moment(date).format('YYYY년MM월DD일');
       },
       formatTitle: function(monthName, fullYear) {
         return fullYear + '년 ' + monthName;

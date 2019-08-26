@@ -7,6 +7,8 @@ import { ChangePointHistoryGrid, ChangePointHistorySearch } from "../index";
 
 import storage from '../../common/storage';
 
+import { updateChangePointHistoryActivated, updateChangePointHistoryChangeType, addChangePointHistory } from '../api/changePoingHistoryAxios'
+
 class ChangePointHistoryContainer extends Component {
 
   // state set을 위한 초기 생성자
@@ -57,23 +59,46 @@ class ChangePointHistoryContainer extends Component {
     }
   }
 
-  // changePointCancleCallback = (dto) => {
-  //   const { search } = this.state;
-  //   let changePointDto = {
-  //     'changeDt': new Date(),
-  //     'paymentCash': dto.paymentCashOrigin,
-  //     'changeType': 'PAYMENT_SUB',
-  //     'changePoint': dto.changePointOrigin,
-  //     'currentBalPoint': dto.currentBalPointOrigin,
-  //     'odrNo': dto.odrNo,
-  //     'paymentNo': dto.paymentNo,
-  //     'activated': false
-  //   }
-  //   const token = storage.get('token');
-  //   this.updateChangePointHistoryActivated(dto.changePointSid, false);
-  //   this.addChangePointHistory(dto.email, changePointDto, search)
-  //   this.updateUserByBalancePointDifference(dto.email, dto.changePointOrigin, token);
-  // }
+  changePointCancleReCompleteCallback = (dto) => {
+    const { search } = this.state;
+    updateChangePointHistoryActivated(dto.changePointSid, dto.email, true).then(res => {
+      updateChangePointHistoryChangeType(dto.changePointSid, dto.email, 'PAYMENT_ADD').then(res => {
+        this.getChangePointHistoryList(search);
+      }).catch(err => {
+        console.log(err)
+      })
+    }).catch(err => {
+      console.log(err)
+    })
+  }
+
+  changePointCancleCallback = (dto) => {
+    const { search } = this.state;
+    let changePointDto = {
+      'changeDt': new Date(),
+      'paymentCash': dto.paymentCashOrigin,
+      'changeType': 'PAYMENT_SUB',
+      'changePoint': dto.changePointOrigin,
+      'currentBalPoint': dto.currentBalPointOrigin,
+      'odrNo': dto.odrNo,
+      'paymentNo': dto.paymentNo,
+      'activated': false
+    }
+    const token = storage.get('token');
+    // this.updateChangePointHistoryChangeType(dto.changePointSid, dto.email, 'PAYMENT_SUB');
+    updateChangePointHistoryChangeType(dto.changePointSid, dto.email, 'PAYMENT_ADD').then(res => {
+      addChangePointHistory(dto.email, changePointDto).then(res => {
+        this.getChangePointHistoryList(search);
+        this.updateUserByBalancePointDifference(dto.email, dto.changePointOrigin, token);
+      }).catch(err => {
+        console.log(err)
+      })
+    }).catch(err => {
+      console.log(err)
+    })
+    // this.addChangePointHistory(dto.email, changePointDto, search)
+    
+  }
 
   // addChangePointHistory = async (email, dto, search) => {
   //   const { ChangePointHistoryModule } = this.props;
@@ -93,14 +118,14 @@ class ChangePointHistoryContainer extends Component {
   //   }
   // }
 
-  // updateUserByBalancePointDifference = async (email, differencePoint, token) => {
-  //   const { UserManageModule } = this.props;
-  //   try {
-  //     await UserManageModule.updateUserByBalancePointDifference(email, differencePoint, token)
-  //   } catch (e) {
-  //     console.log("error log : " + e);
-  //   }
-  // }
+  updateUserByBalancePointDifference = async (email, differencePoint, token) => {
+    const { UserManageModule } = this.props;
+    try {
+      await UserManageModule.updateUserByBalancePointDifference(email, differencePoint, token)
+    } catch (e) {
+      console.log("error log : " + e);
+    }
+  }
 
   render() {
     const { changePointHistoryList, pending, error, success } = this.props;
@@ -117,7 +142,7 @@ class ChangePointHistoryContainer extends Component {
         <div className="div-main">
           { pending && <div className="boxLoading"/> }
           { error && <h1>Server Error!</h1> }
-          { success && <ChangePointHistoryGrid changePointHistoryList={ changePointHistoryList } role={ role } /* changePointCancleCallback={this.changePointCancleCallback} */ /> }
+          { success && <ChangePointHistoryGrid changePointHistoryList={ changePointHistoryList } role={ role } changePointCancleReCompleteCallback={this.changePointCancleReCompleteCallback} changePointCancleCallback={this.changePointCancleCallback} /* changePointCancleCallback={this.changePointCancleCallback} */ /> }
         </div>
       </Fragment>
     );
