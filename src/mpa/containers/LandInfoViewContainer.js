@@ -15,13 +15,13 @@ import axios from 'axios';
 import config from '../../config';
 
 import { checkInfo } from '../../common/loggedInfoCheck'
+import '@vaadin/vaadin-notification';
 
 //해당 주소의 주문 버튼 visible 속성 제어
 // let enabled = 'none';
 //현재는 큰 의미 없는 값이며, 원래 목적은 메인화면에서 주소검색을 한건지, 현재 화면에서 한건지 여부를 판별하기 위해서 사용한 필드
 let isSearched = false;
-let visibility = false;
-let result = undefined;
+// let result = null;
 class LandInfoViewContainer extends Component {
 
   // state set을 위한 초기 생성자
@@ -36,9 +36,11 @@ class LandInfoViewContainer extends Component {
         userId: 'user@test.com',
         userNm: '사용자',
       },
+      commentRes: '',
       mngNo: '',
       selectedSuggestion: null,
       popupOpened: false,
+      purchaseResult: undefined
     }; 
     this.makeLandInfo = this.makeLandInfo.bind(this);    
     this.popupOpenStateEvent = this.popupOpenStateEvent.bind(this);
@@ -51,7 +53,25 @@ class LandInfoViewContainer extends Component {
     this.setState({popupOpened: dataClickChild});
   }
   popupOpenStateEvent() {
-    this.setState({popupOpened: true});
+    const { mngNo } = this.state;
+    // const btnMakePdf = document.querySelector('#btnMakePdf');
+    if (mngNo !== '' && mngNo !== undefined) {
+      // btnMakePdf.className = "btn-make-pdf-abled"
+      this.setState({popupOpened: true});
+    } else {
+      const nfLoadingData = document.createElement('vaadin-notification');
+      nfLoadingData.renderer = function(root) {
+        root.textContent = '주문정보가 존재하지 않습니다.';
+      }
+      document.body.appendChild(nfLoadingData);
+      nfLoadingData.position = 'middle';
+      nfLoadingData.duration = 2000;
+      nfLoadingData.opened = true;
+      window.setTimeout(function() {
+        nfLoadingData.remove();
+      }, 2000)
+      // btnMakePdf.className = "btn-make-pdf-disabled"
+    }
   }
   
   popupCallback = async(comment) => {
@@ -59,7 +79,7 @@ class LandInfoViewContainer extends Component {
     if (storage.get('loggedInfo')) {
       // 팝업창에서 다운로드 버튼 클릭 시 PDF URL호출 (새창)
       // 포인트 잔액 확인 -> pdf 생성 호출 -> 결과 리턴 -> 차감 -> 포인트 변동내역 추가 -> 결과 팝업 -> 다운로드 기능
-      if (storage.get('loggedInfo').balancePoint-900 <= 0) {
+      if (storage.get('loggedInfo').balancePoint-900 < 0) {
         window.alert('포인트가 부족합니다.\n포인트 충전 후 이용해주세요.')
         return;
       }
@@ -74,6 +94,7 @@ class LandInfoViewContainer extends Component {
           userNm: storage.get('loggedInfo').name,
           mngNo: this.state.mngNo,
         }
+        this.setState({commentRes: comment})
         this.makeLandInfo(makeLandIndexValue);
       }
     }
@@ -265,19 +286,18 @@ class LandInfoViewContainer extends Component {
             })
           }).then(res => {
             console.log(res)
-            // window.alert('주문 완료!')
-            visibility = true;
-            result = {
+            let result = {
               jibunAddr: this.state.search.jibunAddr,
               mngNo: this.state.mngNo,
               usedPoint: 900+'P',
-              balancePoint: storage.get('loggedInfo').balancePoint-900+'P',
-              comment: this.state.comment,
+              balancePoint: storage.get('loggedInfo').balancePoint-900,
+              comment: this.state.commentRes,
               downloadPdfUrl: makeResult
             }
+            this.setState({purchaseResult: result})
           }).catch(err => {
             console.log(err)
-          window.alert('주문에 실패하였습니다. 확인 후 다시 시도해주세요.')
+            window.alert('주문에 실패하였습니다. 확인 후 다시 시도해주세요.')
           })
         }).catch(err => {
           console.log(err)
@@ -287,14 +307,9 @@ class LandInfoViewContainer extends Component {
     }
   }
 
-  popupClose() {
-    // this.setState({visibility: false});
-    visibility = false;
-  }
-
   render() {
     const { pending, error, landInfoData } = this.props;
-    const { popupOpened } = this.state;
+    const { popupOpened, purchaseResult } = this.state;
     const { makeResult } = this.props;
 
     checkInfo();
@@ -318,9 +333,9 @@ class LandInfoViewContainer extends Component {
               {this.popupAddAndUpdateCheckOpenEvent(popupOpened)};
             </script>
           }
-          { this.makePdfResultCheckEvent(makeResult) }
-          { result !== undefined && result !== null && <LandInfoResultPop result={result} visibility={visibility} popupClose={this.popupClose}/> }
+          { purchaseResult === undefined && makeResult !== null && makeResult !== undefined && this.makePdfResultCheckEvent(makeResult) }
         </div>
+        { purchaseResult !== undefined && <LandInfoResultPop result={purchaseResult} />}
       </Fragment>
     );
   }

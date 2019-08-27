@@ -123,9 +123,9 @@ html, body, #root .index {
     display: inline-block;
 }
 
-.agz-scroll {
+/* .agz-scroll { */
 	/* overflow-y: scroll; */
-}
+/* } */
 .agz-scroll::-webkit-scrollbar-track
 {
 	background-color: transparent;
@@ -1127,6 +1127,58 @@ html, body, #root .index {
     color: #666;
 }
 /* 문의사항 QNA END */
+
+/* 공지사항 */
+.section-notice-upload {
+  margin-top: 40px;
+}
+.section-notice-upload #tfTitle{
+  border: none;
+  font-size: 20px;
+  border-bottom: 2px solid #eee;
+  width: 100%;
+  border-radius: 0;
+  padding-left: 24px;
+}
+.section-notice-upload #tfTitle:focus {
+  outline: 0 !important;
+  border-bottom-color: #4fd81b;
+  box-shadow: none !important;
+}
+.section-notice-upload #toastEditor {
+  padding: 0 !important;
+}
+.section-notice-upload #toastEditor  #editSection {
+  height: 100% !important;
+}
+.section-notice-upload #toastEditor .te-mode-switch-section {
+  display: none !important;
+}
+.section-notice-upload #toastEditor .tui-editor-defaultUI {
+  border: none ;
+}
+.section-notice-upload #toastEditor .tui-editor-contents {
+  min-height: 365px !important;
+}
+.section-notice-upload #toastEditor + div {
+  text-align: right;
+  margin-top: 14px;
+}
+.section-notice-upload #btnRegister,
+.section-notice-upload #btnCancle {
+  margin: 0;
+  border-radius: 0;
+  cursor: pointer;
+}
+.section-notice-upload #btnRegister {
+  background: #47c10a;
+  color: #fff;
+  margin-right: 12px;
+}
+.section-notice-upload #btnCancle {
+  color: #666;
+}
+
 /* purchase */
 .page-purchase .agz-bbs {
     border-top: 2px dashed #eee;
@@ -2625,4 +2677,37 @@ margin-left: 70px;
   margin-right: 5px;
   vertical-align: top;
   display: inline-flex;
+}
+.button-mpa-result-pdf-download {
+  border: none;
+  /* flex: 70; */
+  /* height: 55px; */
+  width: 80px;
+  font-size: 15px;
+  color: #4fd81b;
+  background: #fff;
+  border-radius: 0;
+  cursor: pointer;
+  margin-top: 7px;
+  margin-left: 0px;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+  border: 1px solid lightgray;
+}
+.button-mpa-result-pdf-download:hover {
+  color: #fff;
+  background: #4fd81b;
+}
+.div-mpa-download-btn-layout {
+  flex: 70;
+  text-align: right;
+}
+.div-mpa-result-popup-board {
+  /* width: 500px; */
+  /* height: 100%; */
+  padding: 1em 1em 1em 4em;
+}
+
+.div-mpa-result-popup-board div label:last-child{
+  text-align: right;
 }
