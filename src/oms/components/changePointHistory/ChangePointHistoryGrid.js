@@ -94,7 +94,7 @@ class ChangePointHistoryGrid extends Component {
         XLSX.utils.book_append_sheet(workbook, worksheet, "포인트_변동내역");
   
         /* generate an XLSX file */
-        let writeName = moment().format('yyyymmdd')+"_ALGO_포인트_변동내역.xlsx"
+        let writeName = moment().format('YYYYMMDD')+"_ALGO_포인트_변동내역.xlsx"
         XLSX.writeFile(workbook, writeName);
       }
     })

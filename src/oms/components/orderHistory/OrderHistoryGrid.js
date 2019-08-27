@@ -112,7 +112,7 @@ class OrderHistoryGrid extends Component {
         XLSX.utils.book_append_sheet(workbook, worksheet, "주문내역");
   
         /* generate an XLSX file */
-        let writeName = moment().format('yyyymmdd')+"_ALGO_주문내역.xlsx"
+        let writeName = moment().format('YYYYMMDD')+"_ALGO_주문내역.xlsx"
         XLSX.writeFile(workbook, writeName);
       }
     })
