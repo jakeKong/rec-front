@@ -199,7 +199,7 @@ class RegisterContainer extends Component {
                       updateUserByBalancePointIncrease(getDto.email, 1000, result.accessToken).then(res => {
                         let changePointDto = {
                           'changeDt': new Date(),
-                          'paymentCash': '',
+                          'paymentCash': 0,
                           'changeType': 'EVENT_ADD',
                           'changePoint': 1000,
                           'currentBalPoint': 1000,
