@@ -8,18 +8,11 @@ fork 완료: Saga는 오직 다음의 사건에만 종료됩니다.
 */
 import { fork } from 'redux-saga/effects';
 
-// COMMON
-import main, { mainSaga } from './common/modules/MainModule';
-/* import files, { fileSaga } from './common/modules/FileLoadModule'; */
-
-// COMMON
+// BLOG
 import blog, { blogSaga } from './blog/modules/BlogTyleNewsModule';
 
 // SCM
 import user, { userSaga } from './scm/modules/UserModule';
-
-// PAYMENT
-import payment, { paymentSaga } from './payment/modules/PaymentModule';
 
 // OMS
 import orderHistory, { orderHistorySaga } from './oms/modules/OrderHistoryModule';
@@ -44,15 +37,10 @@ import landInfo, { landInfoViewSaga, makelandInfoViewSaga } from './mpa/modules/
 
 // rootSaga 설정
 export function* rootSaga() {
-  // COMMON
-  yield fork(mainSaga);
-  /* yield fork(fileSaga); */
   // BLOG
   yield fork(blogSaga);
   // SCM
   yield fork(userSaga);
-  // PAYMENT
-  yield fork(paymentSaga);
   // OMS
   yield fork(orderHistorySaga);
   // yield fork(reportMakeHistorySaga);
@@ -74,14 +62,10 @@ export function* rootSaga() {
 
 // 통합 reducer
 export default combineReducers({
-  // COMMON
-  main, /* files, */
   // BLOG
   blog,
   // SCM
   user,
-  // PAYMENT
-  payment,
   // OMS
   orderHistory, /* reportMakeHistory, */ changePointHistory, /* purchaseHistory, */ product,
   // MPA

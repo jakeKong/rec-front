@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as productManageActions from "../../oms/modules/ProductManageModule";
 import * as changePointHistoryActions from "../../oms/modules/ChangePointHistoryModule";
-import * as paymentActions from "../modules/PaymentModule";
 import * as userManageActions from "../../scm/modules/UserModule";
 import { PaymentProductListGrid, PaymentComplete } from "../index";
 
@@ -290,7 +289,6 @@ export default connect(
   dispatch => ({
     ProductManageModule: bindActionCreators(productManageActions, dispatch),
     ChangePointHistoryModule: bindActionCreators(changePointHistoryActions, dispatch),
-    PaymentModule: bindActionCreators(paymentActions, dispatch),
     UserManageModule: bindActionCreators(userManageActions, dispatch)
   })
 )(PaymentContainer);

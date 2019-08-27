@@ -63,43 +63,23 @@ class NoticeGrid extends Component {
 
   roleCheckColumnRenderingEvent() {
     if (storage.get('loggedInfo')) {
-      if (storage.get('loggedInfo').assignedRoles.indexOf('ROLE_ADMIN') === -1) {
-        return (
-          // 사용자 (기능별 스타일 적용에 필요한 section 추가)
-          <Fragment>
-            <section className="section-table-notice">
-              <DataTable id="table" 
-                        value={this.state.gridData} 
-                        paginator={true} 
-                        rows={10} 
-                        rowsPerPageOptions={[5,10,15,20]} >
-                <Column field="index" header="번호"/>
-                <Column body={this.noticeTitleClickLabelTemplate} header="제목"/>
-                <Column field="reportingDt" header="작성일자"/>
-              </DataTable>
-            </section>
-          </Fragment>
-        );
-      } else {
-        return (
-          // 관리자 (공통된 스타일로 사용)
-          <Fragment>
+      return (
+        // 사용자 (기능별 스타일 적용에 필요한 section 추가)
+        <Fragment>
+          <section className="section-table-notice">
             <DataTable id="table" 
                       value={this.state.gridData} 
                       paginator={true} 
                       rows={10} 
-                      rowsPerPageOptions={[5,10,15,20]}  
-                      selection={this.state.selectedItem} 
-                      onSelectionChange={e => this.selectChangedEvent(e)} >
-              <Column selectionMode="multiple"/>
+                      rowsPerPageOptions={[5,10,15,20]} >
               <Column field="index" header="번호"/>
               <Column body={this.noticeTitleClickLabelTemplate} header="제목"/>
               <Column field="reportingDt" header="작성일자"/>
             </DataTable>
-          </Fragment>
-        )
-      }
-    }
+          </section>
+        </Fragment>
+      );
+    } 
   }
 
   render() {

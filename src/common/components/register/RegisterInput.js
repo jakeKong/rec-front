@@ -309,13 +309,13 @@ class RegisterInput extends Component {
           <div className="default-column">
             <label id="lbPw" className="label-flex-20-left"/>
             <div className="div-flex-80-left">
-              <Password maxLength="15" value={this.state.tPassword} onChange={e=>this.changeTPassword(e)}/>
+              <Password feedback={false} maxLength="15" value={this.state.tPassword} onChange={e=>this.changeTPassword(e)}/>
             </div>
           </div>
           <div className="default-column">
             <label id="lbRepw" className="label-flex-20-left"/>
             <div className="div-flex-80-left">
-              <Password maxLength="15" value={this.state.tRePassword} onChange={e=>this.changeTRePassword(e)}/>
+              <Password feedback={false} maxLength="15" value={this.state.tRePassword} onChange={e=>this.changeTRePassword(e)}/>
             </div>
           </div>
           <div className="default-column">

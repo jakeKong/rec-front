@@ -7,6 +7,9 @@ import { OrderHistoryGrid, OrderHistorySearch } from "../index";
 import '@vaadin/vaadin-ordered-layout';
 
 import storage from '../../common/storage';
+import { checkInfo } from '../../common/loggedInfoCheck'
+
+import { updateOrderHistoryActivated, updateOrderHistoryCancleAttemptStatus } from '../api/orderHistoryAxios'
 
 class OrderHistoryByEmailContainer extends Component {
 
@@ -64,30 +67,38 @@ class OrderHistoryByEmailContainer extends Component {
   orderCancleAttemptCallback = (dto) => {
     const { search } =this.state;
     const loggedInfo = storage.get('loggedInfo');
-    this.updateOrderHistoryActivated(dto.odrSid, loggedInfo.email, false);
-    this.updateOrderHistoryCancleAttemptStatus(dto.odrSid, loggedInfo.email, 'TRADE_CANCLE_ATTEMPT', search);
+    updateOrderHistoryActivated(dto.odrSid, loggedInfo.email, false).then(res => {
+      updateOrderHistoryCancleAttemptStatus(dto.odrSid, loggedInfo.email, 'TRADE_CANCLE_ATTEMPT').then(res => {
+        this.getOrderHistoryListByEmail(loggedInfo.email, search);
+      }).catch(err => {
+        console.log(err)
+      })
+    }).catch(err => {
+      console.log(err)
+    })
   }
 
-  updateOrderHistoryActivated = async (odrSid, email, orderActivated) => {
-    const { OrderHistoryModule } = this.props;
-    try {
-      await OrderHistoryModule.updateOrderHistoryActivated(odrSid, email, orderActivated)
-    } catch (e) {
-      console.log("error log : " + e);
-    }
-  }
+  // updateOrderHistoryActivated = async (odrSid, email, orderActivated) => {
+  //   const { OrderHistoryModule } = this.props;
+  //   try {
+  //     await OrderHistoryModule.updateOrderHistoryActivated(odrSid, email, orderActivated)
+  //   } catch (e) {
+  //     console.log("error log : " + e);
+  //   }
+  // }
 
-  updateOrderHistoryCancleAttemptStatus = async (odrSid, email, status, search) => {
-    const { OrderHistoryModule } = this.props;
-    try {
-      await OrderHistoryModule.updateOrderHistoryCancleAttemptStatus(odrSid, email, status, search)
-    } catch (e) {
-      console.log("error log : " + e);
-    }
-  }
+  // updateOrderHistoryCancleAttemptStatus = async (odrSid, email, status, search) => {
+  //   const { OrderHistoryModule } = this.props;
+  //   try {
+  //     await OrderHistoryModule.updateOrderHistoryCancleAttemptStatus(odrSid, email, status, search)
+  //   } catch (e) {
+  //     console.log("error log : " + e);
+  //   }
+  // }
 
   render() {
     const { email, orderHistoryList, pending, error, success } = this.props;
+    checkInfo();
     return (
       <Fragment>
         <div className="wrap-search">

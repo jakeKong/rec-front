@@ -1,15 +1,18 @@
 import React, { Component } from 'react';
 
 import { Dialog } from 'primereact/dialog';
+import {InputTextarea} from 'primereact/inputtextarea';
 import storage from '../../common/storage';
+import { comma } from '../../common/utils';
 
 class LandInfoResultPop extends Component {
 
   constructor(props) {
     super(props);
     this.state ={
-
+      mpaPopVisiblility: false
     }
+    this.mpaClose = this.mpaClose.bind(this);
   }
 
   componentDidMount() {
@@ -21,15 +24,18 @@ class LandInfoResultPop extends Component {
     document.querySelector('#lbDownload').innerHTML = "다운로드";
 
     const { result } = this.props;
-    if (result !== undefined) {
+    if (result !== undefined && result !== null) {
+      this.setState({mpaPopVisiblility : true});
       if (storage.get('loggedInfo')) {
         document.querySelector('#lbEstateResult').innerHTML = result.jibunAddr;
         document.querySelector('#lbMngNoResult').innerHTML = result.mngNo;
         document.querySelector('#lbUsedPointResult').innerHTML = result.usedPoint;
-        document.querySelector('#lbBalancePointResult').innerHTML = result.balancePoint;
-        document.querySelector('#lbComment').innerHTML = result.comment;
+        document.querySelector('#lbBalancePointResult').innerHTML = comma(result.balancePoint)+'P';
+        // document.querySelector('#lbCommentResult').innerHTML = result.comment;
+        document.querySelector('#taCommentResult').value = result.comment;
         
-        document.querySelector('#lbDownload').addEventListener('click', function() {
+        document.querySelector('#btnDownloadPdf').textContent = 'PDF 다운';
+        document.querySelector('#btnDownloadPdf').addEventListener('click', function() {
           // result.downloadPdfUrl
           window.open(result.downloadPdfUrl);
         })
@@ -37,26 +43,23 @@ class LandInfoResultPop extends Component {
     }
   }
 
-  close() {
-    const { popupClose } = this.props;
-    popupClose();
+  mpaClose() {
+    // const { mpaPopupClose } = this.props;
+    // mpaPopupClose();
+    this.setState({mpaPopVisiblility: false});
   }
 
   render() {
 
-    const popupFooter = (
+    const mpaPopupFooter = (
       <div>
-        <button onClick={() => this.close()}>확인</button>
+        <button onClick={() => this.mpaClose()}>확인</button>
       </div>
     );
 
-    const { visiblility, popupClose } = this.props;
-    console.log('test');
-    console.log(visiblility);
-    
     return (
-      <Dialog header="조회 결과" footer={popupFooter} style={{width: '500px'}} modal={true} visible={ visiblility } onHide={() => popupClose()}>
-        <div className="div-register-popup-board">
+      <Dialog header="조회 결과" footer={mpaPopupFooter} style={{width: '500px'}} visible={ this.state.mpaPopVisiblility } onHide={() => this.mpaClose()}>
+        <div className="div-mpa-result-popup-board">
           <div className="default-column">
             <label id="lbEstate" className="label-flex-30-left"/>
             <label id="lbEstateResult" className="label-flex-70-left"/>
@@ -74,12 +77,16 @@ class LandInfoResultPop extends Component {
             <label id="lbBalancePointResult" className="label-flex-70-left"/>
           </div>
           <div className="default-column">
-            <label id="lbComment" className="label-flex-30-left"/>
-            <label id="lbCommentResult" className="label-flex-70-left"/>
+            <label id="lbComment"/>
+          </div>
+          <div className="default-column">
+            <InputTextarea readOnly autoResize={true} id="taCommentResult"/>
           </div>
           <div className="default-column">
             <label id="lbDownload" className="label-flex-30-left"/>
-            <button id="btnDownloadPdf"/>
+            <div className='div-mpa-download-btn-layout'>
+              <button id="btnDownloadPdf" className='button-mpa-result-pdf-download'/>
+            </div>
           </div>
         </div>
       </Dialog>

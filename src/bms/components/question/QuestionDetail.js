@@ -5,7 +5,7 @@ import '@vaadin/vaadin-button';
 
 import { QuestionComment } from "../../index";
 import storage from '../../../common/storage';
-import { deleteQuestion, deleteQuestionAnswerByEmail } from '../../api/questionAxios'
+import { deleteQuestion, deleteQuestionByEmail } from '../../api/questionAxios'
 
 // deps for viewer.
 require('tui-editor/dist/tui-editor-contents.css'); // editor content
@@ -61,7 +61,7 @@ class QuestionDetail extends Component {
         btnDelete.addEventListener('click', function() {
           const check = window.confirm('문의사항을 삭제 하시겠습니까?');
           if (check === true) {
-            deleteQuestionAnswerByEmail(question.questionSid, storage.get('loggedInfo').email).then(res => {
+            deleteQuestionByEmail(question.questionSid, storage.get('loggedInfo').email).then(res => {
               window.alert('삭제 완료')
               window.location.href = '/bms/question'
             }).catch(err => {
@@ -109,7 +109,7 @@ class QuestionDetail extends Component {
             </div>
             <QuestionComment question={question} email={email} />
           </div>
-          <div>
+          <div className="div-question-button-layout">
             <vaadin-button id="btnGoList" />
             <vaadin-button id="btnUpdate" />
             <vaadin-button id="btnDelete" theme="error" />

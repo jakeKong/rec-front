@@ -21,12 +21,17 @@ const UPDATE_CHANGE_POINT_HISTORY_ACTIVATED = 'changePointHistory/UPDATE_CHANGE_
 const UPDATE_CHANGE_POINT_HISTORY_ACTIVATED_RECEIVED = 'changePointHistory/UPDATE_CHANGE_POINT_HISTORY_ACTIVATED_RECEIVED';
 const UPDATE_CHANGE_POINT_HISTORY_ACTIVATED_FAILURE = 'changePointHistory/UPDATE_CHANGE_POINT_HISTORY_ACTIVATED_FAILURE';
 
+const UPDATE_CHANGE_POINT_HISTORY_TYPE = 'changePointHistory/UPDATE_CHANGE_POINT_HISTORY_TYPE';
+const UPDATE_CHANGE_POINT_HISTORY_TYPE_RECEIVED = 'changePointHistory/UPDATE_CHANGE_POINT_HISTORY_TYPE_RECEIVED';
+const UPDATE_CHANGE_POINT_HISTORY_TYPE_FAILURE = 'changePointHistory/UPDATE_CHANGE_POINT_HISTORY_TYPE_FAILURE';
+
 // Actions
 // 외부에서 호출하여 입력받아줄 값 ( ex) this.getChangePointHistoryListByEmail(search) )
 export const getChangePointHistoryList = createAction(GET_CHANGE_POINT_HISTORY_LIST, search => search);
 export const getChangePointHistoryListByEmail = createAction(GET_CHANGE_POINT_HISTORY_LIST_BY_EMAIL, (email, search) => ({email, search}));
 export const addChangePointHistory = createAction(ADD_CHANGE_POINT_HISTORY, (email, dto, search) => ({email, dto, search}));
-export const updateChangePointHistoryActivated = createAction(UPDATE_CHANGE_POINT_HISTORY_ACTIVATED, (changePointSid, changePointActivated) => ({changePointSid, changePointActivated}))
+export const updateChangePointHistoryActivated = createAction(UPDATE_CHANGE_POINT_HISTORY_ACTIVATED, (changePointSid, email, changePointActivated) => ({changePointSid, email, changePointActivated}))
+export const updateChangePointHistoryChangeType = createAction(UPDATE_CHANGE_POINT_HISTORY_TYPE, (changePointSid, email, changePointActivated) => ({changePointSid, email, changePointActivated}))
 
 // 초기 state값 설정
 const initialState = Map({
@@ -81,10 +86,20 @@ function* addChangePointHistorySaga(action) {
 // updateChangePointHistoryActivated Saga
 function* updateChangePointHistoryActivatedSaga(action) {
   try {
-    const response = yield call(api.updateChangePointHistoryActivated, action.payload.changePointSid, action.payload.changePointActivated);
+    const response = yield call(api.updateChangePointHistoryActivated, action.payload.changePointSid, action.payload.email, action.payload.changePointActivated);
     yield put({type: UPDATE_CHANGE_POINT_HISTORY_ACTIVATED_RECEIVED, payload: response});
   } catch (error) {
     yield put({type: UPDATE_CHANGE_POINT_HISTORY_ACTIVATED_FAILURE, payload: error});
+  }
+}
+
+// updateChangePointHistoryType Saga
+function* updateChangePointHistoryTypeSaga(action) {
+  try {
+    const response = yield call(api.updateChangePointHistoryChangeType, action.payload.changePointSid, action.payload.email, action.payload.changePointActivated);
+    yield put({type: UPDATE_CHANGE_POINT_HISTORY_TYPE_RECEIVED, payload: response});
+  } catch (error) {
+    yield put({type: UPDATE_CHANGE_POINT_HISTORY_TYPE_FAILURE, payload: error});
   }
 }
 
@@ -94,6 +109,7 @@ export function* changePointHistorySaga() {
   yield takeEvery(GET_CHANGE_POINT_HISTORY_LIST_BY_EMAIL, getChangePointHistoryListByEmailSaga);
   yield takeLatest(ADD_CHANGE_POINT_HISTORY, addChangePointHistorySaga);
   yield takeLatest(UPDATE_CHANGE_POINT_HISTORY_ACTIVATED, updateChangePointHistoryActivatedSaga);
+  yield takeLatest(UPDATE_CHANGE_POINT_HISTORY_TYPE, updateChangePointHistoryTypeSaga);
 }
 
 // 액션 핸들러 설정
@@ -149,5 +165,15 @@ export default handleActions({
     },
     [UPDATE_CHANGE_POINT_HISTORY_ACTIVATED_FAILURE]: (state, action) => {
       console.log('UPDATE_CHANGE_POINT_HISTORY_ACTIVATED_FAILURE onFailure')
+    },
+
+    [UPDATE_CHANGE_POINT_HISTORY_TYPE]: (state, action) => {
+      console.log('UPDATE_CHANGE_POINT_HISTORY_TYPE onPending')
+    },
+    [UPDATE_CHANGE_POINT_HISTORY_TYPE_RECEIVED]: (state, action) => {
+      console.log('UPDATE_CHANGE_POINT_HISTORY_TYPE_RECEIVED onReceived')
+    },
+    [UPDATE_CHANGE_POINT_HISTORY_TYPE_FAILURE]: (state, action) => {
+      console.log('UPDATE_CHANGE_POINT_HISTORY_TYPE_FAILURE onFailure')
     },
 }, initialState);

@@ -27,19 +27,19 @@ class PaymentComplete extends Component {
       document.querySelector('#lbPurchasePointResult').innerHTML = purchaseResult.custom_data.point+' P';
 
       const btnGoProduct = document.querySelector('#btnGoProduct');
-      btnGoProduct.className = "vaadin-button-large";
+      // btnGoProduct.className = "vaadin-button-large";
       btnGoProduct.addEventListener('click', function() {
         window.location.href = "/payment/product/";
       })
 
       const btnGoHome = document.querySelector('#btnGoHome');
-      btnGoHome.className = "vaadin-button-large";
+      // btnGoHome.className = "vaadin-button-large";
       btnGoHome.addEventListener('click', function() {
         window.location.href = "/";
       });
 
       const btnGoPaymentHistory = document.querySelector('#btnGoPaymentHistory');
-      btnGoPaymentHistory.className = "vaadin-button-large";
+      // btnGoPaymentHistory.className = "vaadin-button-large";
       btnGoPaymentHistory.addEventListener('click', function() {
         window.location.href = "/oms/changepoint/history/email";
       });
@@ -51,29 +51,29 @@ class PaymentComplete extends Component {
   render() {
     return (
       <Fragment>
-        <div>
-          <div className="div-center">
-            <label id="lbPaymentCompleteNotification" className="label-title"/>
+        <div className="div-payment-complete-layout">
+          <div className="div-complete-result-title-card">
+            <label id="lbPaymentCompleteNotification"/>
           </div>
-          <div className="div-layout-card">
+          <div className="div-complete-result-card">
             <div className="div-layout-card-column">
-              <label id="lbPaymentId" className="label-flex-30-right"/>
-              <label id="lbPaymentIdResult" className="label-flex-70-center"/>
+              <label id="lbPaymentId" />
+              <label id="lbPaymentIdResult" />
             </div>
             <div className="div-layout-card-column">
-              <label id="lbTotalPayAmount" className="label-flex-30-right"/>
-              <label id="lbTotalPayAmountResult" className="label-flex-70-center"/>
+              <label id="lbTotalPayAmount" />
+              <label id="lbTotalPayAmountResult" />
             </div>
             <div className="div-layout-card-column">
-              <label id="lbTradeConfirmYmdt" className="label-flex-30-right"/>
-              <label id="lbTradeConfirmYmdtResult" className="label-flex-70-center"/>
+              <label id="lbTradeConfirmYmdt" />
+              <label id="lbTradeConfirmYmdtResult" />
             </div>
             <div className="div-layout-card-column">
-              <label id="lbPurchasePoint" className="label-flex-30-right"/>
-              <label id="lbPurchasePointResult" className="label-flex-70-center"/>
+              <label id="lbPurchasePoint" />
+              <label id="lbPurchasePointResult" />
             </div>
           </div>
-          <div>
+          <div className="div-payment-complete-button-layout">
             <vaadin-button id="btnGoProduct">
               <iron-icon icon="vaadin:angle-left" slot="prefix" />
               상품구매
@@ -84,7 +84,7 @@ class PaymentComplete extends Component {
             </vaadin-button>
             <vaadin-button id="btnGoPaymentHistory">
               <iron-icon icon="vaadin:angle-right" slot="suffix" />
-              포인트 변동내역
+              내역조회
             </vaadin-button>
           </div>
         </div>

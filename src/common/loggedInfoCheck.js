@@ -24,7 +24,7 @@ export function checkInfo() {
   if(!loggedInfo) return; // 로그인 정보가 없다면 여기서 멈춥니다.
   // 회원 상태 재확인
   if (loggedInfo.activated === false) {
-    window.alert('이용이 정지된 회원입니다.')
+    window.alert('이용이 중지된 회원입니다.')
     storage.remove('loggedInfo');
     return window.location.reload();
   }

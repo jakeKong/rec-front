@@ -30,8 +30,9 @@ export const changeTypeItems = [
   {value: 'ALL', label: '전체'},
   {value: 'PAYMENT_ADD', label: '결제'},
   {value: 'PAYMENT_SUB', label: '결제취소'},
-  {value: 'PURCHASE_ADD', label: '구매'},
-  {value: 'PURCHASE_SUB', label: '구매취소'},
+  {value: 'PAYMENT_SUB_ATTEMPT', label: '결제취소요청'},
+  {value: 'PURCHASE_ADD', label: '주문'},
+  {value: 'PURCHASE_SUB', label: '주문취소'},
   {value: 'EVENT_ADD', label: '이벤트지급'},
   {value: 'EVENT_SUB', label: '이벤트지급취소'}
 ];

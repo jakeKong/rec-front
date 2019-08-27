@@ -3,11 +3,11 @@ import { Switch, Route } from 'react-router-dom';
 
 import { MainPage, NotFoundPage, LoginPage, RegisterPage, IdPwFindPage, NaverCallbackLogPage, NaverCallbackRegPage, 
          Popup_BetaTestNotificationPage } from './common';
-import { BlogTyleNewsPage, BlogTyleNewsManagePage } from './blog';
-import { UserManagePage, UserDetailPage } from './scm';
-import { OrderHistoryPage, OrderHistoryByEmailPage, /*ReportMakeHistoryPage,*/ ChangePointHistoryPage, ChangePointHistoryByEmailPage, ProductManagePage } from './oms';
-import { NoticePage, NoticeDetailPage, NoticeRegisterPage, NoticeUpdatePage, NoticeManagePage, 
-         QuestionPage, QuestionDetailPage, QuestionRegisterPage, QuestionUpdatePage, QuestionManagePage } from './bms';
+import { BlogTyleNewsPage } from './blog';
+import { UserDetailPage } from './scm';
+import { OrderHistoryByEmailPage, ChangePointHistoryByEmailPage } from './oms';
+import { NoticePage, NoticeDetailPage,
+         QuestionPage, QuestionDetailPage, QuestionRegisterPage, QuestionUpdatePage } from './bms';
 import { PaymentPage } from './payment';
 import { BrRecapTitleInfoPage, LandInfoViewPage } from './mpa';
 
@@ -42,41 +42,22 @@ class App extends Component {
         
         {/* 블로그 */}
         <Route exact path="/blog/tyle" component={BlogTyleNewsPage} />
-        {/* 블로그 관리 */}
-        <Route exact path="/blog/tyle/manage" component={BlogTyleNewsManagePage} />
   
         {/* 주택정보 조회 */}
         <Route exact path="/mpa" component={LandInfoViewPage} />
   
-        {/* 사용자 관리 */}
-        <Route exact path="/scm/user/manage" component={ UserManagePage }/>
         {/* 회원정보 */}
         <Route exact path="/user/details" component={ UserDetailPage }/>
   
         {/* 주문내역 조회(고객) */}
         <Route exact path="/oms/order/history/email" component={ OrderHistoryByEmailPage }/>
-        {/* 주문내역 관리(관리자) */}
-        <Route exact path="/oms/order/history" component={ OrderHistoryPage }/>
-        {/* 보고서 생성이력 조회(관리자) */}
-        {/* <Route exact path="/oms/reportmake/history" component={ ReportMakeHistoryPage }/> */}
         {/* 포인트 변동내역 조회(고객) */}
         <Route exact path="/oms/changepoint/history/email" component={ ChangePointHistoryByEmailPage }/>
-        {/* 포인트 변동내역 관리(관리자) */}
-        <Route exact path="/oms/changepoint/history" component={ ChangePointHistoryPage }/>
-  
-        {/* 상품 관리 */}
-        <Route exact path="/oms/product" component={ ProductManagePage }/>
   
         {/* 공지사항 */}
         <Route exact path="/bms/notice" component={ NoticePage }/>
         {/* 공지사항 상세조회 */}
         <Route exact path="/bms/notice/details/:sid" component={ NoticeDetailPage }/>
-        {/* 공지사항 등록 */}
-        <Route exact path="/bms/notice/register" component={ NoticeRegisterPage }/>
-        {/* 공지사항 수정 */}
-        <Route exact path="/bms/notice/update/:sid" component={ NoticeUpdatePage }/>
-        {/* 공지사항 관리 */}
-        <Route exact path="/bms/notice/manage" component={ NoticeManagePage }/>
         {/* 문의사항 */}
         <Route exact path="/bms/question" component={ QuestionPage }/>
         {/* 문의사항 상세조회*/}
@@ -85,11 +66,8 @@ class App extends Component {
         <Route exact path="/bms/question/register" component={ QuestionRegisterPage }/>
         {/* 문의사항 수정*/}
         <Route exact path="/bms/question/update/:sid" component={ QuestionUpdatePage }/>
-        {/* 문의사항 관리 */}
-        <Route exact path="/bms/question/manage" component={ QuestionManagePage }/>
 
         <Route exact path="/bms/notice/list" component={ NoticePage }/>
-        <Route exact path="/bms/notice/manage/list" component={ NoticeManagePage }/>
         
         <Route exact path="/mpa/recaptitle/list" component={ BrRecapTitleInfoPage }/>
         {/* 상품 구매 */}
