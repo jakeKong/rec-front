@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import { Dialog } from 'primereact/dialog';
+import {InputTextarea} from 'primereact/inputtextarea';
 import storage from '../../common/storage';
 import { comma } from '../../common/utils';
 
@@ -30,7 +31,8 @@ class LandInfoResultPop extends Component {
         document.querySelector('#lbMngNoResult').innerHTML = result.mngNo;
         document.querySelector('#lbUsedPointResult').innerHTML = result.usedPoint;
         document.querySelector('#lbBalancePointResult').innerHTML = comma(result.balancePoint)+'P';
-        document.querySelector('#lbCommentResult').innerHTML = result.comment;
+        // document.querySelector('#lbCommentResult').innerHTML = result.comment;
+        document.querySelector('#taCommentResult').value = result.comment;
         
         document.querySelector('#btnDownloadPdf').textContent = 'PDF 다운';
         document.querySelector('#btnDownloadPdf').addEventListener('click', function() {
@@ -75,8 +77,10 @@ class LandInfoResultPop extends Component {
             <label id="lbBalancePointResult" className="label-flex-70-left"/>
           </div>
           <div className="default-column">
-            <label id="lbComment" className="label-flex-30-left"/>
-            <label id="lbCommentResult" className="label-flex-70-left"/>
+            <label id="lbComment"/>
+          </div>
+          <div className="default-column">
+            <InputTextarea readOnly autoResize={true} id="taCommentResult"/>
           </div>
           <div className="default-column">
             <label id="lbDownload" className="label-flex-30-left"/>

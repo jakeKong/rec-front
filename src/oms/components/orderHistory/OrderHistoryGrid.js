@@ -19,7 +19,7 @@ let moment = require('moment');
 class OrderHistoryGrid extends Component {
   constructor(props) {
     super(props);
-    this.state = {gridData: [],hiddenCheck: '', calcleCheck: ''}
+    this.state = {gridData: []}
     this.btnPurchaseCancleAttemptTemplate = this.btnPurchaseCancleAttemptTemplate.bind(this);
     this.CancleAttemptClickEvent = this.CancleAttemptClickEvent.bind(this);
   }
@@ -75,6 +75,7 @@ class OrderHistoryGrid extends Component {
     this.setState({gridData: list.reverse()});
     
     const btnExcel = document.querySelector('#btnExcel');
+    btnExcel.hidden = false;
     btnExcel.textContent = 'EXCEL';
     btnExcel.className="btn down-excel"
     btnExcel.addEventListener('click', function() {
@@ -193,7 +194,7 @@ class OrderHistoryGrid extends Component {
           </DataTable>
         </section>
         <div className="align-right-text">
-          <vaadin-button id="btnExcel"/>
+          <vaadin-button id="btnExcel" hidden/>
         </div>
       </Fragment>
     );

@@ -17,7 +17,7 @@ class ChangePointHistoryGrid extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {gridData: [],hiddenCheck: '', toCheck: ''}
+    this.state = {gridData: []}
     this.cancelAttemptTemplate = this.cancelAttemptTemplate.bind(this);
   }
 
@@ -59,6 +59,7 @@ class ChangePointHistoryGrid extends Component {
     this.setState({gridData: list.reverse()});
 
     const btnExcel = document.querySelector('#btnExcel');
+    btnExcel.hidden = false;
     btnExcel.textContent = 'EXCEL';
     btnExcel.className="btn down-excel"
     btnExcel.addEventListener('click', function() {

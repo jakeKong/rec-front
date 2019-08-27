@@ -132,23 +132,23 @@ class LandInfoViewContainer extends Component {
   //우편번호 검색이 끝났을 때 사용자가 선택한 정보를 받아올 콜백함수
   onComplete  = async (selectedSuggestion) => {    
     // 선택이 되면 들어오는 함수
-    // console.log(selectedSuggestion);
-
+    this.setState({selectedSuggestion: selectedSuggestion})
     // state.search 값 초기화
     this.setState({
       search: {
         jibunAddr: selectedSuggestion.jibunAddr,
         roadAddr: selectedSuggestion.roadAddr,
         pnu: selectedSuggestion.bdMgtSn,
-        comment: '',
+        // comment: '',
       }
     });
     if (selectedSuggestion !== undefined) {
       let nowCallSearchValue = {
         jibunAddr: selectedSuggestion.jibunAddr,
         roadAddr: selectedSuggestion.roadAddr,
-        pnu: selectedSuggestion.bdMgtSn,
-        comment: '',
+        pnu: selectedSuggestion.bdMgtSn.substring(0,19),
+        userId: storage.get('loggedInfo') ? storage.get('loggedInfo').email : null,
+        userNm: storage.get('loggedInfo') ? storage.get('loggedInfo').name : null,
       }
       this.getLandInfo(nowCallSearchValue);
     }
@@ -157,18 +157,19 @@ class LandInfoViewContainer extends Component {
     
   }
   onSearchClick = async (selectedSuggestion) => { 
-    //로그인 하지 않았으면 PDF 주문 버튼 활성화
-    if (storage.get('loggedInfo')) {
-      this.enabled = 'inline-block';
+    if (this.state.selectedSuggestion !== null && selectedSuggestion !== undefined) {
+      let searchValue = {
+        jibunAddr: this.state.selectedSuggestion.jibunAddr,
+        roadAddr: this.state.selectedSuggestion.roadAddr,
+        pnu: this.state.selectedSuggestion.pnu.substring(0,19),
+        userId: storage.get('loggedInfo') ? storage.get('loggedInfo').email : null,
+        userNm: storage.get('loggedInfo') ? storage.get('loggedInfo').name : null,
+      }
+      //부동산 정보 검색 API 호출
+      this.getLandInfo(searchValue);
+    } else {
+      window.alert('시세 조회를 원하는 주소를 입력해주세요.')
     }
-    //로그인 하지 않았으면 PDF 주문 버튼 비활성화
-    else {
-      
-      this.enabled = 'none';
-    }
-    //부동산 정보 검색 API 호출
-    this.getLandInfo(this.state.search);
-    
   }
 
   //부동산 정보 검색 API 호출 함수
@@ -234,7 +235,9 @@ class LandInfoViewContainer extends Component {
       const searchKey = {
         jibunAddr: selectedSuggestion.jibunAddr,
         roadAddr: selectedSuggestion.roadAddr,
-        pnu: selectedSuggestion.bdMgtSn.substring(0,19)
+        pnu: selectedSuggestion.bdMgtSn.substring(0,19),
+        userId: storage.get('loggedInfo') ? storage.get('loggedInfo').email : null,
+        userNm: storage.get('loggedInfo') ? storage.get('loggedInfo').name : null,
       };
       this.getLandInfo(searchKey);
     }

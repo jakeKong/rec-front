@@ -2711,3 +2711,16 @@ margin-left: 70px;
 .div-mpa-result-popup-board div label:last-child{
   text-align: right;
 }
+#lbComment {
+  display: block;
+  /* width: 100%; */
+}
+.div-mpa-result-popup-board div textarea {
+  /* line-height: 30px; */
+  font-weight: 300;
+  /* display: inline; */
+  width: 100%;
+  border: none;
+  margin: 0;
+  padding: 0 !important;
+}

@@ -5,6 +5,7 @@ import storage from '../storage';
 import { oauth_web } from '../../OAuth2Config'
 
 import { createUser, checkRecommendCode, updateUserByBalancePointIncrease, getUser, checkUserByTellNo } from '../../scm/api/userAxios';
+import { addChangePointHistory } from '../../oms/api/changePoingHistoryAxios';
 class RegisterContainer extends Component {
 
   // state set을 위한 초기 생성자
@@ -194,9 +195,26 @@ class RegisterContainer extends Component {
                     } else {
                       this.setState({isRegisterInput: false, 
                                     isRegisterComplete: true});
-                      updateUserByBalancePointIncrease(getDto.email, 1000, result.accessToken).then(e => {
-                        console.log(e)
+                      // 이벤트성 포인트 지급
+                      updateUserByBalancePointIncrease(getDto.email, 1000, result.accessToken).then(res => {
+                        let changePointDto = {
+                          'changeDt': new Date(),
+                          'paymentCash': '',
+                          'changeType': 'EVENT_ADD',
+                          'changePoint': 1000,
+                          'currentBalPoint': 1000,
+                          'odrNo': '',
+                          'paymentNo': '',
+                          'activated': true
+                        }
+                        addChangePointHistory(getDto.email, changePointDto).then(res => {
+                          // 완료
+                        }).catch(err => {
+                          console.log(err)
+                          throw err;
+                        })
                       }).catch(err => {
+                        console.log(err)
                         throw err;
                       })
                     }
