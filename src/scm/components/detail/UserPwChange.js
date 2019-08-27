@@ -18,9 +18,9 @@ class UserPwChange extends Component {
   }
 
   componentDidMount() {
-    document.querySelector('#lbBeforePw').innerHTML = '기존 비밀번호';
-    document.querySelector('#lbAfterPw').innerHTML = '새로운 비밀번호';
-    document.querySelector('#lbAfterRePw').innerHTML = '재입력';
+    document.querySelector('#lbBeforePwUser').innerHTML = '기존 비밀번호';
+    document.querySelector('#lbAfterPwUser').innerHTML = '새로운 비밀번호';
+    document.querySelector('#lbAfterRePwUser').innerHTML = '재입력';
   }
 
   pwResetBeforePWInputEvent(e) {
@@ -84,15 +84,15 @@ class UserPwChange extends Component {
       <Dialog header="비밀번호 변경" footer={popupFooter} style={{width: '500px'}} modal={true} visible={ visiblility } onHide={() => popupClose()}>
         <div className="modal-modify-pw">
           <div>
-            <label id="lbBeforePw"/>
+            <label id="lbBeforePwUser"/>
             <Password feedback={false} value={this.state.beforepw} onChange={(e) => this.pwResetBeforePWInputEvent(e) }/>
           </div>
           <div>
-            <label id="lbAfterPw"/>
+            <label id="lbAfterPwUser"/>
             <Password feedback={false} value={this.state.afterpw} onChange={(e) => this.pwResetAfterPWInputEvent(e) }/>
           </div>
           <div>
-            <label id="lbAfterRePw"/>
+            <label id="lbAfterRePwUser"/>
             <Password feedback={false} value={this.state.reafterpw} onChange={(e) => this.pwResetAfterRePWInputEvent(e) }/>
           </div>
         </div>

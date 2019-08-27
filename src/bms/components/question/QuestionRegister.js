@@ -93,11 +93,9 @@ class QuestionRegister extends Component {
           if (questionDto !== null && questionDto !== undefined && question.questionTitle !== null && question.questionTxt !== null && questionDto.questionSid !== null) {
             updateQuestion(questionDto.questionSid, storage.get('loggedInfo').email, question).then(res => {
               window.alert('수정 완료!');
-              if (storage.get('loggedInfo').assignedRoles.indexOf('ROLE_ADMIN') === -1) {
+              // if (storage.get('loggedInfo').assignedRoles.indexOf('ROLE_ADMIN') === -1) {
                 window.location.href = '/bms/question';
-              } else {
-                window.location.href = '/bms/question/manage';
-              }
+              // }
             }).catch(err => {
               console.log(err);
             })
@@ -142,11 +140,9 @@ class QuestionRegister extends Component {
           if (question.questionTitle !== null && question.questionTxt !== null) {
             addQuestion(storage.get('loggedInfo').email, question).then(res => {
               window.alert('등록 완료!');
-              if (storage.get('loggedInfo').assignedRoles.indexOf('ROLE_ADMIN') === -1) {
+              // if (storage.get('loggedInfo').assignedRoles.indexOf('ROLE_ADMIN') === -1) {
                 window.location.href = '/bms/question';
-              } else {
-                window.location.href = '/bms/question/manage';
-              }
+              // }
             }).catch(err => {
               console.log(err);
             })
@@ -178,11 +174,9 @@ class QuestionRegister extends Component {
     const btnCancle = document.querySelector('#btnCancle');
     btnCancle.textContent = "취소";
     btnCancle.addEventListener('click', function() {
-      if (storage.get('loggedInfo').assignedRoles.indexOf('ROLE_ADMIN') === -1) {
+      // if (storage.get('loggedInfo').assignedRoles.indexOf('ROLE_ADMIN') === -1) {
         window.location.href = '/bms/question';
-      } else {
-        window.location.href = '/bms/question/manage';
-      }
+      // }
     })
   }
 

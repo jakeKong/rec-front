@@ -44,7 +44,6 @@ class QuestionGrid extends Component {
       })
 
     })
-    console.log(list)
     this.setState({gridData: list.reverse()});
   }
 
@@ -68,42 +67,22 @@ class QuestionGrid extends Component {
 
   roleCheckColumnRenderingEvent() {
     if (storage.get('loggedInfo')) {
-      if (storage.get('loggedInfo').assignedRoles.indexOf('ROLE_ADMIN') === -1) {
-        return (
-          <Fragment>
-            <section className="section-datatable-question">
-              <DataTable id="table"
-                        value={this.state.gridData} 
-                        paginator={true} 
-                        rows={10} 
-                        rowsPerPageOptions={[5,10,15,20]} >
-                <Column field="index" header="번호"/>
-                <Column body={this.questionTitleClickLabelTemplate} header="제목"/>
-                <Column field="questionWriter" header="작성자"/>
-                <Column field="reportingDt" header="작성일자"/>
-              </DataTable>
-            </section>
-          </Fragment>
-        );
-      } else {
-        return (
-          <Fragment>
+      return (
+        <Fragment>
+          <section className="section-datatable-question">
             <DataTable id="table"
                       value={this.state.gridData} 
                       paginator={true} 
                       rows={10} 
-                      rowsPerPageOptions={[5,10,15,20]}  
-                      selection={this.state.selectedItem} 
-                      onSelectionChange={e => this.selectChangedEvent(e)} >
-              <Column selectionMode="multiple"/>
+                      rowsPerPageOptions={[5,10,15,20]} >
               <Column field="index" header="번호"/>
               <Column body={this.questionTitleClickLabelTemplate} header="제목"/>
               <Column field="questionWriter" header="작성자"/>
               <Column field="reportingDt" header="작성일자"/>
             </DataTable>
-          </Fragment>
-        );
-      }
+          </section>
+        </Fragment>
+      );
     }
   }
 

@@ -45,7 +45,6 @@
     "redux-saga": "^1.0.3",
     "script-loader": "^0.7.2",
     "shallow-equal": "^1.2.0",
-    "sugar": "^2.0.6",
     "tui-color-picker": "^2.2.3",
     "tui-editor": "^1.4.4-alpha.0",
     "vendor-copy": "^2.0.0",

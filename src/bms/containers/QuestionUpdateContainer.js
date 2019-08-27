@@ -44,7 +44,7 @@ class QuestionUpdateContainer extends Component {
 
     return (
       <Fragment>
-        <div>
+        <div className="section-question-upload">
           <div className="div-main">
           { pending && <div className="boxLoading"/> }
           { error && <h1>Server Error!</h1> }

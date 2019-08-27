@@ -13,12 +13,10 @@ const QuestionPage = () => {
     }} push={true}/>;
   }
   return (
-    // <div>
-      <PageTemplate>
-        <div className="page-description">문의사항</div>
-        <QuestionContainer />
-      </PageTemplate>
-    // </div>
+    <PageTemplate>
+      <div className="page-description">문의사항</div>
+      <QuestionContainer />
+    </PageTemplate>
   );
 };
 

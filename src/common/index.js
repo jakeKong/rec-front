@@ -1,15 +1,9 @@
-// COMMON - api
-/* export { uploadFile } from './api/Unused_FileLoadAxios'; */
-
 // COMMON - component
 export { default as Footer } from './components/Footer';
 export { default as Header } from './components/Header';
 export { default as Menu } from './components/Menu';
 export { default as PageTemplate } from './components/PageTemplate';
-export { default as PageTemplateToManage } from './components/PageTemplateToManage';
 
-export { default as MainGrid } from './components/main/MainGrid';
-export { default as MainSearch } from './components/main/MainSearch';
 export { default as MainComponent } from './components/main/MainComponent';
 export { default as Login } from './components/login/Login';
 export { default as IdFindByAuth } from './components/find/IdFindByAuth';

@@ -19,8 +19,6 @@ class ChangePointHistoryGrid extends Component {
     super(props);
     this.state = {gridData: [],hiddenCheck: '', toCheck: ''}
     this.cancelAttemptTemplate = this.cancelAttemptTemplate.bind(this);
-    this.cancelReCompleteTemplate = this.cancelReCompleteTemplate.bind(this);
-    this.cancelTemplate = this.cancelTemplate.bind(this);
   }
 
   componentDidMount() {
@@ -28,7 +26,6 @@ class ChangePointHistoryGrid extends Component {
     if (!changePointHistoryList || changePointHistoryList === undefined || changePointHistoryList.isEmpty()) {
       return
     }
-    
     
     let list = [];
     changePointHistoryList.sort((prev, next) => moment(prev.get('changeDt')) > moment(next.get('changeDt')) ? 1 : -1)
@@ -61,65 +58,45 @@ class ChangePointHistoryGrid extends Component {
     })
     this.setState({gridData: list.reverse()});
 
-    const {role} = this.props;
-
-    let hiddenCheck = '';
-    let toCheck = 'none'
-    if (role !== 'ROLE_ADMIN') {
-      hiddenCheck = 'none';
-      toCheck = '';
-    }
-    this.setState({hiddenCheck: hiddenCheck});
-    this.setState({toCheck: toCheck});
-
     const btnExcel = document.querySelector('#btnExcel');
-    if (role === 'ROLE_ADMIN') {
-      btnExcel.hidden = true;
-    } else {
-      btnExcel.hidden = false;
-      btnExcel.textContent = 'EXCEL';
-      btnExcel.className="btn down-excel"
-      btnExcel.addEventListener('click', function() {
-        const check = window.confirm('조회된 정보를 엑셀로 저장 하시겠습니까?');
-        if (check === true) {
-          let excelList = [];
-          // let excelNumber = 1;
-          changePointHistoryList.sort((prev, next) => moment(prev.get('changeDt')) > moment(next.get('changeDt')) ? 1 : -1)
-          .forEach(e => {
-            let changeType = '';
-            changeTypeItems.forEach(function(row){
-              if (e.get('changeType') === row.value) {
-                changeType = row.label;
-              };
-            });
-            // push Value type is JSON
-            excelList.push({
-              // 번호: excelNumber++,
-              변동일자: moment(e.get("changeDt")).format('YYYY년MM월DD일 HH:MM:ss'),
-              '결제(주문)번호': e.get("odrNo") ? e.get("odrNo") : e.get("paymentNo"),
-              // 결제번호: e.get("paymentNo"),
-              // 주문번호: e.get("odrNo"),
-              결제금액: e.get("paymentCash"),
-              변동유형: changeType,
-              변동포인트: e.get("changePoint"),
-              남은포인트: e.get("currentBalPoint"),
-            })
+    btnExcel.textContent = 'EXCEL';
+    btnExcel.className="btn down-excel"
+    btnExcel.addEventListener('click', function() {
+      const check = window.confirm('조회된 정보를 엑셀로 저장 하시겠습니까?');
+      if (check === true) {
+        let excelList = [];
+        // let excelNumber = 1;
+        changePointHistoryList.sort((prev, next) => moment(prev.get('changeDt')) > moment(next.get('changeDt')) ? 1 : -1)
+        .forEach(e => {
+          let changeType = '';
+          changeTypeItems.forEach(function(row){
+            if (e.get('changeType') === row.value) {
+              changeType = row.label;
+            };
+          });
+          // push Value type is JSON
+          excelList.push({
+            변동일자: moment(e.get("changeDt")).format('YYYY년MM월DD일 HH:MM:ss'),
+            '결제(주문)번호': e.get("odrNo") ? e.get("odrNo") : e.get("paymentNo"),
+            결제금액: e.get("paymentCash"),
+            변동유형: changeType,
+            변동포인트: e.get("changePoint"),
+            남은포인트: e.get("currentBalPoint"),
           })
-    
-          /* make the worksheet */
-          let worksheet = XLSX.utils.json_to_sheet(excelList);
-    
-          /* add to workbook */
-          let workbook = XLSX.utils.book_new();
-          XLSX.utils.book_append_sheet(workbook, worksheet, "포인트_변동내역");
-    
-          /* generate an XLSX file */
-          let writeName = moment().format('yyyymmdd')+"_ALGO_포인트_변동내역.xlsx"
-          XLSX.writeFile(workbook, writeName);
-        }
-      })
-    }
-    
+        })
+  
+        /* make the worksheet */
+        let worksheet = XLSX.utils.json_to_sheet(excelList);
+  
+        /* add to workbook */
+        let workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, "포인트_변동내역");
+  
+        /* generate an XLSX file */
+        let writeName = moment().format('yyyymmdd')+"_ALGO_포인트_변동내역.xlsx"
+        XLSX.writeFile(workbook, writeName);
+      }
+    })
   }
 
   // 취소요청
@@ -132,8 +109,6 @@ class ChangePointHistoryGrid extends Component {
       }
     }
     if (moment().add(-6, 'months').format() < rowData.changeDtOrigin.format()) {
-      // console.log(rowData.changeDtOrigin.format());
-      // console.log(moment().add(-6, 'months').format());
       if (rowData.changeType === '결제' || rowData.changeType === '결제취소') {
         if (rowData.changeType === '결제취소') {
           return '-';
@@ -174,67 +149,6 @@ class ChangePointHistoryGrid extends Component {
         }
       }
     }
-
-  }
-
-  // 취소요청 철회
-  cancelReCompleteTemplate(rowData, column) {
-    const { changePointCancleReCompleteCallback } = this.props;
-    function onClickButton() {
-      const check = window.confirm('취소요청에 대한 승인을 하시겠습니까?');
-      if (check === true) {
-        changePointCancleReCompleteCallback(rowData);
-      }
-    }
-    if (rowData.changeType === '결제' || rowData.changeType === '결제취소') {
-      if (rowData.changeType === '결제취소') {
-        return '-';
-      } 
-      if (rowData.changeType === '결제') {
-        if (rowData.activated === true) {
-          return '-';
-        } else {
-          return <font style={{color: 'red'}}>취소됨</font>;
-        }
-      }
-    }
-    if (rowData.changeType === '결제취소요청') {
-      if (rowData.activated === true) {
-        return '-'
-      } else {
-        return <button id="btnCancleReComplete" icon="pi pi-pencil" className="p-button-warning" onClick={onClickButton}>취소철회</button>
-      }
-    }
-  }
-
-  // 취소요청 승인
-  cancelTemplate(rowData, column) {
-    const { changePointCancleCallback } = this.props;
-    function onClickButton() {
-      const check = window.confirm('취소요청에 대한 승인을 하시겠습니까?');
-      if (check === true) {
-        changePointCancleCallback(rowData);
-      }
-    }
-    if (rowData.changeType === '결제' || rowData.changeType === '결제취소') {
-      if (rowData.changeType === '결제취소') {
-        return '-';
-      } 
-      if (rowData.changeType === '결제') {
-        if (rowData.activated === true) {
-          return '-';
-        } else {
-          return <font style={{color: 'red'}}>취소됨</font>;
-        }
-      }
-    }
-    if (rowData.changeType === '결제취소요청') {
-      if (rowData.activated === true) {
-        return '-'
-      } else {
-        return <button id="btnCancle" icon="pi pi-pencil" className="p-button-warning" onClick={onClickButton}>취소승인</button>
-      }
-    }
   }
 
   render() {
@@ -254,11 +168,7 @@ class ChangePointHistoryGrid extends Component {
             <Column field="changeType" header="변동 유형"/>
             <Column field="changePoint" header="변동 포인트"/>
             <Column field="currentBalPoint" header="남은 포인트"/>
-            <Column columnKey="grdUserNm" field="userNm" header="주문자"  style={{display:this.state.hiddenCheck}}/>
-            <Column columnKey="grdEmail" field="email" header="아이디"  style={{display:this.state.hiddenCheck}}/>
             <Column columnKey="grdBtnPaymentAttemptCancle" body={this.cancelAttemptTemplate} style={{display:this.state.toCheck}} />
-            <Column columnKey="grdBtnPaymentCancleReComplete" body={this.cancelReCompleteTemplate} style={{display:this.state.hiddenCheck}} />
-            <Column columnKey="grdBtnPaymentCancle" body={this.cancelTemplate} style={{display:this.state.hiddenCheck}} />
           </DataTable>
         </section>
         <div className="div-sub-top-right">
