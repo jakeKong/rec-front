@@ -16,13 +16,13 @@ module.exports = function(app) {
   );
   app.use(
     proxy('/web/rec/api/bms', {
-      target: 'http://localhost:8003',
+      target: 'http://algozip.co.kr:8003',
       changeOrigin: true
     })
   );
   app.use(
     proxy('/web/rec/api/mpa', {
-      target: 'http://localhost:8004',
+      target: 'http://algozip.co.kr:8004',
       changeOrigin: true
     })
   );
@@ -34,7 +34,7 @@ module.exports = function(app) {
   );
   app.use(
     proxy('/web/rec/api/file', {
-      target: 'http://localhost:8006',
+      target: 'http://algozip.co.kr:8006',
       changeOrigin: true
     })
   );
@@ -46,7 +46,7 @@ module.exports = function(app) {
   );
   app.use(
     proxy('/web/rec/api/sol', { 
-      target: 'http://localhost:8008',
+      target: 'http://algozip.co.kr:8008',
       changeOrigin: true
     })
   );
