@@ -10,7 +10,7 @@ const config = {
     fileService: "/web/rec/api/file",
     commonService: "/web/srd/common",
     solapiService: "/web/rec/api/sol",
-    mainSummryService: "http://http://www.algozip.co.kr:8004/web/rec/api/mpa/analysis/summry/count",
+    mainSummryService: "http://algozip.co.kr:8004/web/rec/api/mpa/analysis/summry/count",
     datagokrServiceKey: "OL02XCXlaJlHFVUI%2BVVCBI5p%2FU3GrFAhnlaUEewiOJ%2B5%2BDbu9%2B41LBzdFVSnE1ilQXWhzurOOGu4OEml9hao3w%3D%3D",    
     naverpay: "https://dev.apis.naver.com",
     pdfUrl: "http://algozip.co.kr:8080/generatedPdf",

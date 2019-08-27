@@ -123,7 +123,7 @@ class BlogTyleNews extends Component {
           // 블로그 이미지
           image.className = 'image';
           if (e.tylenewsImg === "" || e.tylenewsImg === null) {
-            image.src = 'http://localhost:8006/web/rec/api/file/files/downloadFile/61561aa0-a44c-463a-aa5a-118236815330';
+            image.src = 'http://algozip.co.kr:8006/web/rec/api/file/files/downloadFile/61561aa0-a44c-463a-aa5a-118236815330';
           } else {
             image.src = e.tylenewsImg;
           }
