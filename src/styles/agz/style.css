@@ -2779,3 +2779,11 @@ margin-left: 70px;
   margin-bottom: 4px;
   text-align: left;
 }
+
+.p-datepicker-year {
+  padding: 0.857em;
+  background-color: #ffffff;
+  color: #333333;
+  border: 0;
+  border-radius: 3px;
+}

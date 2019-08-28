@@ -327,7 +327,7 @@ class RegisterInput extends Component {
           <div className="default-column">
             <label id="lbBirthDt" className="label-flex-20-left"/>
             <div className="div-flex-80-left">
-              <Calendar className="calendar-width-100" readOnlyInput={true} locale={calendarLocale} showIcon={true} value={this.state.tbirthDt} onChange={(e) => this.setState({tbirthDt: moment(e.value).format('YYYY-MM-DD')})}/>
+              <Calendar className="calendar-width-100" yearNavigator={true} yearRange="1900:2030" readOnlyInput={true} locale={calendarLocale} showIcon={true} value={this.state.tbirthDt} onChange={(e) => this.setState({tbirthDt: moment(e.value).format('YYYY-MM-DD')})}/>
             </div>
           </div>
           <div className="default-column">
