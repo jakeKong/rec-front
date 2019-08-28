@@ -1,0 +1,60 @@
+/* log-purchase */
+.section-datatable-orderhistory .btn-download {
+  color: #fff !important;
+  background: #4fd81b;
+  padding: 2px 8px;
+  font-size: 12px;
+  border: none;
+}
+.section-datatable-orderhistory .p-button-warning {
+  color: #fff !important;
+  background: #ec8989;
+  padding: 2px 8px;
+  font-size: 12px;
+  border: none;
+}
+.section-datatable-orderhistory .p-datatable-thead th:nth-of-type(1),
+.section-datatable-orderhistory .p-datatable-tbody td:nth-of-type(1) {
+  width: 50px;
+}
+.section-datatable-orderhistory .p-datatable-thead th:nth-of-type(2),
+.section-datatable-orderhistory .p-datatable-tbody td:nth-of-type(2) {
+  width: 150px;
+}
+.section-datatable-orderhistory .p-datatable-thead th:nth-of-type(3),
+.section-datatable-orderhistory .p-datatable-tbody td:nth-of-type(3) {
+  width: 200px;
+}
+.section-datatable-orderhistory .p-datatable-thead th:nth-of-type(4),
+.section-datatable-orderhistory .p-datatable-tbody td:nth-of-type(4) {
+  width: 130px;
+}
+.section-datatable-orderhistory .p-datatable-thead th:nth-of-type(5),
+.section-datatable-orderhistory .p-datatable-tbody td:nth-of-type(5) {
+  width: 92px;
+}
+.section-datatable-orderhistory .p-datatable-thead th:nth-of-type(6),   
+.section-datatable-orderhistory .p-datatable-tbody td:nth-of-type(6) {
+  width: 130px;
+}
+.section-datatable-orderhistory .p-datatable-thead th:nth-of-type(7),
+.section-datatable-orderhistory .p-datatable-tbody td:nth-of-type(7) {
+  width: 86px;
+}
+.section-datatable-orderhistory .p-datatable-thead th:nth-of-type(8),
+.section-datatable-orderhistory .p-datatable-tbody td:nth-of-type(8) {
+  width: 86px;
+}
+.section-datatable-orderhistory .p-datatable-thead th:nth-of-type(9),
+.section-datatable-orderhistory .p-datatable-tbody td:nth-of-type(9) {
+  width: 86px;
+}
+.section-datatable-orderhistory .p-datatable-thead th:nth-of-type(10),
+.section-datatable-orderhistory .p-datatable-tbody td:nth-of-type(10) {
+  width: 100px;
+}
+.section-datatable-orderhistory .p-datatable-thead th:nth-of-type(11),
+.section-datatable-orderhistory .p-datatable-tbody td:nth-of-type(11) {
+  width: 100px;
+}
+/* log-purchase END */

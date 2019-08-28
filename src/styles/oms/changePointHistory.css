@@ -1,0 +1,50 @@
+/* log-point 포인트 변동 내역 조회 테이블*/
+.section-datatable-changehistory .p-datatable-thead th:nth-of-type(1),
+.section-datatable-changehistory .p-datatable-tbody td:nth-of-type(1) {
+    width: 180px;
+}
+.section-datatable-changehistory .p-datatable-thead th:nth-of-type(2),
+.section-datatable-changehistory .p-datatable-tbody td:nth-of-type(2) {
+    width: 150px;
+}
+.section-datatable-changehistory .p-datatable-thead th:nth-of-type(3),
+.section-datatable-changehistory .p-datatable-tbody td:nth-of-type(3) {
+    width: 120px;
+}
+.section-datatable-changehistory .p-datatable-thead th:nth-of-type(4),
+.section-datatable-changehistory .p-datatable-tbody td:nth-of-type(4) {
+    width: 120px;
+}
+.section-datatable-changehistory .p-datatable-thead th:nth-of-type(5),
+.section-datatable-changehistory .p-datatable-tbody td:nth-of-type(5) {
+    width: 100px;
+}
+.section-datatable-changehistory .p-datatable-thead th:nth-of-type(6),
+.section-datatable-changehistory .p-datatable-tbody td:nth-of-type(6) {
+    width: 100px;
+}
+.section-datatable-changehistory .p-datatable-thead th:nth-of-type(7),
+.section-datatable-changehistory .p-datatable-tbody td:nth-of-type(7) {
+    width: 150px;
+}
+.section-datatable-changehistory .p-datatable-thead th:nth-of-type(8),
+.section-datatable-changehistory .p-datatable-tbody td:nth-of-type(8) {
+    width: 100px;
+}
+.section-datatable-changehistory .p-datatable .p-button-warning {
+    border: none;
+    color: #fff;
+    background: rgb(236, 137, 137);
+    font-size: 12px;
+    padding: 3px 8px;
+}
+.section-datatable-changehistory .p-datatable .p-button-warning:hover {
+    background: rgb(236, 100, 100);
+}
+.section-datatable-changehistory .p-datatable .p-button-warning:active {
+    background: rgb(236, 160, 160);
+}
+#lbSearch + .p-dropdown {
+    border: none;
+}
+/* log-point END */

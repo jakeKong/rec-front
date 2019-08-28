@@ -1,13 +1,37 @@
+// agz
+@import "./agz/style.css";
+@import "./agz/table_style.css";
+@import "./agz/reset_v01.css";
+
 // COMMON
 @import "./commons/footer.scss";
 @import "./commons/label.scss";
 @import "./commons/div.scss";
 @import "./commons/ulLi.scss";
+
 @import './components/primereact-calendar.scss';
 @import './components/primereact-dropdown.scss';
 
-// agz
-// 메인 적용 CSS 파일
-@import "./agz/style.css";
-@import "./agz/table_style.css";
-@import "./agz/reset_v01.css";
+@import './commons/find.css';
+@import './commons/login.css';
+@import './commons/register.css';
+
+// BLOG
+@import './blog/tilenews.css';
+
+// BMS
+@import './bms/notice.css';
+@import './bms/question.css';
+
+// MPA
+@import './mpa/landInfo.css';
+
+// OMS
+@import './oms/changePointHistory.css';
+@import './oms/orderHistory.css';
+
+// PAYMENT
+@import './payment/payment.css';
+
+// SCM
+@import './scm/userDetail.css';

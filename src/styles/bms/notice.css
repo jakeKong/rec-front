@@ -1,0 +1,101 @@
+/* 공지사항 */
+.section-notice-upload {
+  margin-top: 40px;
+}
+.section-notice-upload #tfTitle{
+  border: none;
+  font-size: 20px;
+  border-bottom: 2px solid #eee;
+  width: 100%;
+  border-radius: 0;
+  padding-left: 24px;
+}
+.section-notice-upload #tfTitle:focus {
+  outline: 0 !important;
+  border-bottom-color: #4fd81b;
+  box-shadow: none !important;
+}
+.section-notice-upload #toastEditor {
+  padding: 0 !important;
+}
+.section-notice-upload #toastEditor  #editSection {
+  height: 100% !important;
+}
+.section-notice-upload #toastEditor .te-mode-switch-section {
+  display: none !important;
+}
+.section-notice-upload #toastEditor .tui-editor-defaultUI {
+  border: none ;
+}
+.section-notice-upload #toastEditor .tui-editor-contents {
+  min-height: 365px !important;
+}
+.section-notice-upload #toastEditor + div {
+  text-align: right;
+  margin-top: 14px;
+}
+.section-notice-upload #btnRegister,
+.section-notice-upload #btnCancle {
+  margin: 0;
+  border-radius: 0;
+  cursor: pointer;
+}
+.section-notice-upload #btnRegister {
+  background: #47c10a;
+  color: #fff;
+  margin-right: 12px;
+}
+.section-notice-upload #btnCancle {
+  color: #666;
+}
+/* PAGE-notice */
+
+.div-board-title {
+  margin-top: 30px;
+  padding-top: 20px;
+  padding-bottom: 0px;
+  height: 64px !important;
+  color: #444;
+  border-bottom: none !important;
+  border-top: 2px solid #ddd;
+  text-indent: 20px;
+  font-size: 18px !important;
+}
+.div-board-sub-title {
+  text-align: left !important;
+  color: #888;
+  border-bottom: 1px solid #eee;
+  text-indent: 32px;
+  font-size: 13px !important;
+}
+.div-board-sub-title label {
+  margin-right: 24px;
+}
+#toastEditor {
+  /* border-bottom: 2px solid #ddd; */
+  height: 400px;
+  overflow: auto;
+  padding-top: 24px;
+  padding-bottom: 24px;
+  padding-left: 2em !important;
+  padding-right: 2em !important;
+}
+.div-sub-main {
+  padding-top: 24px !important;
+  margin: 0 !important;
+}
+.div-sub-main vaadin-button {
+  color: #4fd81b;
+  border-radius: 0;
+  margin: 0;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.div-sub-main vaadin-button:hover {
+  color: #fff;
+  background: #4fd81b;
+}
+.div-sub-main vaadin-button:active {
+  background: #3fc80b;
+}
+/* PAGE-notice END*/

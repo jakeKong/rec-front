@@ -1,0 +1,411 @@
+
+/* PAGE-register */
+.div-register {
+  padding: 24px 0 24px 0 !important;
+  margin: 0 !important;
+}
+.div-register-title {
+  display: inline-block !important;
+  width: 100% ;
+  padding: 0 0 24px 0 !important;
+  border-bottom: 3px dashed #f4f4f4;
+}
+.div-register-title > div {
+  display: block !important;
+  float: left !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  width: 25%;
+  height: 60px !important;
+  line-height: 60px;
+  border: none !important;
+  position: relative;
+}
+.div-register-title > label:first-child {
+  padding-left: 0;
+}
+.div-register-title > div > label {
+  font-size: 15px !important;
+  font-weight: 300 !important;
+  letter-spacing: 1px;
+  padding-left: 24px;
+  color: #aaa;
+
+}
+.div-register-title > div.div-register-title-focus-on {
+  /* background-color: #bbeea1 !important; */
+  background-color: #47c10a !important;
+
+}
+.div-register-title > div.div-register-title-focus-on label {
+  font-size: 18px !important;
+  font-weight: 500 !important;
+  color: #fff !important;
+}
+
+
+.div-register-title > div:after,
+.div-register-title > div:before {
+  content: '';
+  position: absolute;
+  z-index:1;
+  left: 100%;
+}
+.div-register-title > div.div-register-title-focus-on:after{
+  border-left: 30px solid #47c10a;
+  border-top: 30px solid transparent;
+  border-bottom:30px solid transparent;
+}
+.div-register-title > div.div-register-title-focus-off:after {
+  border-left: 30px solid #eee;
+  border-top: 30px solid transparent;
+  border-bottom:30px solid transparent;
+}
+.div-register-title > div.div-register-title-focus-off:before {
+  border-left: 30px solid #fff;
+  border-top: 30px solid transparent;
+  border-bottom:30px solid transparent;
+  left: calc(100% - 3px);
+  z-index: 2;
+}
+.div-register-title > div:last-child:after,
+.div-register-title > div:last-child:before {
+  display: none !important;
+}
+.div-register .label-register-agree-sub-title {
+  display: inline-block;
+  padding: 6px 12px 12px 12px;
+  font-size: 24px !important;
+  color: #222 !important;
+  font-weight: 300 !important;
+}
+.div-register .vaadin-text-area-register-agree {
+  margin-top: -10px !important;
+}
+.div-register .vaadin-text-area-register-agree * {
+  font-size: 12px !important;
+}
+.div-register .vaadin-text-area-register-agree::before {
+  height: 0;
+}
+/* .div-register .div-register-agree .div-register-agree-box vaadin-text-area {
+  display: block !important;
+  min-height: 56px !important;
+  height: 56px;
+  overflow: hidden;
+  transition: 0.3s;
+}
+.div-register .div-register-agree .div-register-agree-box:hover vaadin-text-area{
+  min-height: 240px !important;
+} */
+.div-register .div-register-agree-box-check {
+  font-size: 12px;
+  margin-top: 6px;
+}
+.div-register .div-register-agree-total label{
+  color: #555;
+}
+.div-register .div-register-agree-total {
+  border-bottom: 3px dashed #eee;
+}
+.div-register .div-register-agree-total vaadin-checkbox {
+  padding: 8px 14px;
+  border-radius: 2px;
+  background: #fff;
+  color: #777;
+  border: 1px solid #eee;
+
+}
+.div-register .div-register-agree-button {
+  padding-top: 14px !important;
+}
+.div-register #btnCommonRegister,
+.div-register #naverIdLogin{
+  border-radius: 0 ;
+  height: 50px;
+  font-weight: 400;
+  border: none;
+  cursor: pointer;
+  display: inline-block;
+  vertical-align: middle;
+}
+.div-register #btnCommonRegister {
+  background: #4fd81b;
+  color: #fff;
+}
+.div-register #naverIdLogin img {
+  height: 50px;
+}
+/*본인 인증*/
+.div-register .div-register-verify {
+  padding-top: 60px;
+  margin: 0 auto;
+  width: 380px;
+}
+.div-register .div-register-verify > p {
+  padding-bottom: 20px;
+  margin-bottom: 22px;
+  font-size: 24px;
+  text-align: left;
+}
+.div-register .div-register-verify > div {
+  width: 90%;
+  margin-left: 5%;
+  margin-bottom: 24px;
+}
+.div-register .div-register-verify > div > p {
+  text-align: left;
+  font-size: 14px;
+  color: #666;
+  font-weight: 300;
+}
+.div-register .div-register-verify > div > .p-inputtext {
+  width: 100%;
+  height: 40px;
+  margin-top: 8px;
+  border: none;
+  border-radius: 0;
+  border-bottom: 1px solid #ccc;
+  text-align: center;
+}
+.div-register .div-register-verify > div > .p-inputtext:focus {
+  box-shadow: none;
+}
+.div-register .div-register-verify > div:nth-of-type(2) > .p-inputtext {
+  width: 20%;
+}
+.div-register .div-register-verify > div:nth-of-type(2) > label {
+  display: inline-block;
+  width: 5%;
+  text-align: center;
+  color: #888;
+}
+.div-register .div-register-verify > div:nth-of-type(2) > button,
+.div-register .div-register-verify > div:nth-of-type(3) > button {
+  width: 28%;
+  height: 40px;
+  margin-left: 2%;
+  border: none;
+  border: 1px solid #4fd81b;
+  background: #fff;
+  color: #4fd81b;
+  font-size: 14px;
+  font-weight: 300;
+  transition: 0.3s;
+  letter-spacing: -1px;
+}
+.div-register .div-register-verify > div:nth-of-type(2) > button:hover,
+.div-register .div-register-verify > div:nth-of-type(3) > button:hover {
+  font-weight: 300;
+  background: #47c10a;
+  color: #fff;
+}
+.div-register .div-register-verify > div:nth-of-type(3) > .p-inputtext {
+  width: 70%;
+}
+.div-register .div-register-verify #btnAuthCheck {
+  margin-top: 20px;
+  float: right;
+  background: #4fd81b;
+  color: #fff;
+  height: 40px;
+  border-radius: 4px;
+  width: 80px;
+  border: none;
+} 
+.div-register .div-register-verify #btnAuthCheck:hover {
+  background: #47c10a;
+}
+/* 회원정보 입력 */
+.div-register .div-register-input {
+  padding: 20px 300px 0px !important;
+}
+.div-register .div-register-input > div{
+  padding: 0 !important;
+  padding: 6px 0 !important;
+}
+.div-register .div-register-input > div label {
+  color: #666;
+  font-size: 13px;
+}
+.div-register .div-register-input input {
+  height: 36px;
+  vertical-align: bottom;
+  border-color: #ccc !important;
+}
+/* 이메일 */
+.div-register .div-register-input label#lbEmail + div input#itEname,
+.div-register .div-register-input label#lbEmail + div input#itEdomain {
+  width: 46%;
+}
+/* .div-register .div-register-input label#lbEmail + div input#itEcom {
+  width: 14%;
+} */
+.div-register .div-register-input label#lbEmail + div label {
+  display: inline-block;
+  width: 5%;
+  text-align: center;
+  font-size: 20px;
+  line-height: 36px;
+  height: 36px;
+  vertical-align: bottom;
+  margin: 0 1.5%;
+}
+
+/* 생년월일 */
+.div-register .div-register-input #lbBirthDt + div > span {
+  width: calc( 100% - 33px );
+}
+.div-register .div-register-input #lbBirthDt + div > span > input {
+  width: 100%;
+}
+
+/* 전화번호 */
+.div-register .div-register-input #lbTellNo + div input {
+  width: 30%;
+}
+.div-register .div-register-input #lbTellNo + div label {
+  display: inline-block;
+  line-height: 36px;
+  font-size: 20px;
+  text-align: center;
+  width: 5%;
+}
+/* 주소 */
+.div-register .div-register-input #lbAddress + div > input {
+  width: 100%;
+  margin-top: 6px;
+}
+.div-register .div-register-input #lbRecommendCode + div > input {
+width: 50%;
+}
+/* 100% 넓이 input */
+.div-register .div-register-input #lbPw + div > input,
+.div-register .div-register-input #lbRepw + div > input,
+.div-register .div-register-input #lbNm + div > input{
+width: 100%;
+}
+
+
+.div-register .div-register-input #btnAddressSearch {
+  border: none;
+  color: #fff;
+  height: 36px;
+  background: #4fd81b;
+  border-radius: 2px;
+  padding: 0 18px;
+  margin-left: 24px;
+  font-size: 13px;
+}
+.div-register .div-register-input #btnAddressSearch:hover {
+  background: #47c10a;
+}
+.div-register .div-register-popup-bottom {
+  width: 100%;
+  margin: 22px auto 0;
+  padding: 0;
+}
+.div-register .div-register-popup-bottom vaadin-button {
+  border-radius: 0 ;
+  height: 40px;
+  font-weight: 400;
+  border: none;
+  cursor: pointer;
+}
+.div-register .div-register-popup-bottom vaadin-button#btnOk {
+  background: #4fd81b;
+  color: #fff;
+}
+
+.div-register .div-register-popup-bottom vaadin-button#btnOk:hover {
+  background: #47c10a;
+}
+.div-register .div-register-popup-bottom vaadin-button#btnCancle {
+  color: #666;
+}
+
+.p-password-panel {
+  min-width: 340px !important;
+}
+/*가입완료*/
+.div-register .div-register-complete {
+  margin-top: 50px;
+}
+.div-register .div-register-complete .p-register-complete-title {
+  display: inline-block;
+  width: 400px;
+  font-size: 24px !important;
+  font-weight: 400;
+  line-height: 32px;
+  color: rgba(0,0,0,0.8);
+  margin-bottom: 12px;
+}
+.div-register .div-register-complete .p-register-complete-sub-title {
+  font-size: 13px !important;
+  font-weight: 200;
+  color: rgba(0,0,0,0.5);
+}
+.div-register .div-register-complete .div-register-complete-field {
+  margin-top: 42px;
+  margin-left: 17em !important;
+  margin-right: 17em !important;
+}
+.div-register .div-register-complete .div-register-complete-field .div-register-complete-field-title {
+  line-height: 32px;
+  font-weight: 400;
+  border-right: 1px solid #eee;
+}
+.div-register .div-register-complete .div-register-complete-field .div-register-complete-field-value {
+  line-height: 32px;
+  font-weight: 200;
+  text-align: left;
+}
+.div-register .div-register-complete-button vaadin-button{
+  height: 46px;
+  border: none;
+  border-radius: 0;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.div-register .div-register-complete-button vaadin-button:hover {
+  opacity: 0.8;
+}
+.div-register .div-register-complete-button vaadin-button#btnGoLogin {
+  background: #4fd81b;
+  color: #fff;
+}
+.div-register .div-register-complete-button vaadin-button#btnGoHome {
+  color: rgba(0,0,0,0.5);
+}
+/* PAGE-register END */
+
+#btnGoLoginRegister {
+  border: none;
+  height: 50px;
+  width: 100px;
+  font-size: 15px;
+  /* padding: 0 24px; */
+  background: #4fd81b;
+  color: #fff;
+  border-radius: 4px;
+  margin-left: 30px;
+  margin-right: 30px;
+}
+#btnGoLoginRegister:hover {
+  background: #47c10a;
+}
+#btnGoHomeRegister {
+  border: none;
+  height: 50px;
+  width: 100px;
+  font-size: 15px;
+  /* padding: 0 24px; */
+  background: #4fd81b;
+  color: #fff;
+  border-radius: 4px;
+  margin-left: 30px;
+  margin-right: 30px;
+}
+#btnGoHomeRegister:hover {
+  background: #47c10a;
+}

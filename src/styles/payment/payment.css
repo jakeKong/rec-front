@@ -1,0 +1,169 @@
+/* purchase */
+.page-purchase .agz-bbs {
+  border-top: 2px dashed #eee;
+  padding-top: 12px;
+}
+.section-datatable-payment {
+  width: 100%;
+}
+.section-datatable-payment .p-datatable-thead th:nth-of-type(1),
+.section-datatable-payment .p-datatable-tbody td:nth-of-type(1){
+  width: 10% !important;
+}
+.section-datatable-payment .p-datatable-thead th:nth-of-type(2),
+.section-datatable-payment .p-datatable-tbody td:nth-of-type(2){
+  width: 40% !important;
+}
+.section-datatable-payment .p-datatable-thead th:nth-of-type(3),
+.section-datatable-payment .p-datatable-tbody td:nth-of-type(3){
+  width: 25% !important;
+}
+.receipt {
+  display: inline-block;
+  width: 100%;
+  text-align: left;
+  padding: 24px 0 16px 0;;
+}
+.receipt .div-inline{
+  margin: 0;
+}
+.receipt .label {
+  font-size: 16px;
+  padding-right: 4px;
+}
+.receipt .amount {
+  font-size: 24px;
+}
+.receipt .amount.cash {
+  color: #4fd81b;
+}
+.receipt .amount.point {
+  color: #0b78d8;
+}
+.receipt .label-currency {
+  padding-right: 20px;
+  padding-left: 6px;
+}
+.desc-purchase {
+  display: block;
+  width: 100%;
+  text-align: left;
+  font-size: 13px;
+  color: #666;
+}
+.wrap-btn-iamportpay {
+  margin-top: -56px;
+  text-align: right;
+}
+.wrap-btn-iamportpay button {
+  width: 200px;
+  height: 60px;
+  background: #fff;
+  border: 1px solid #ccc;
+  text-align: center;
+  padding: 0 30px 0 30px;
+  /* background: url(image/naver-simbol.png);
+  background-size: 30px;
+  background-repeat: no-repeat;
+  background-position: 20px; */
+  font-size: 20px;
+  transition: 0.3s;
+}
+.wrap-btn-iamportpay button:hover {
+  border: 1px solid #222;
+}
+.wrap-btn-iamportpay button:active {
+  border: 1px solid #222;
+  background: #222;
+  color: #fff;
+}
+/* purchase END */
+
+.div-payment-complete-layout {
+  width: 590px;
+  margin: 40px auto;
+  padding: 40px 60px 50px 60px;
+  background: #fff;
+  border: 1px solid #ddd;
+}
+.div-complete-result-title-card {
+  text-align: center;
+  margin-bottom: 30px;
+}
+.div-complete-result-title-card label {
+  font-size: 24px;
+  color: rgb(95, 95, 95);
+}
+.div-complete-result-card {
+  margin: 50px 30px 25px 30px;
+}
+.div-complete-result-card div {
+  display: flex;
+  margin: 20px 30px 25px 30px;
+}
+.div-complete-result-card div label:first-child {
+  font-size: 16px;
+  font-weight: 350;
+  flex: 30;
+  text-align: left;
+}
+.div-complete-result-card div label:last-child {
+  font-size: 15px;
+  font-weight: 300;
+  flex: 70;
+  text-align: right;
+}
+
+.div-payment-complete-button-layout {
+  margin-top: 30px;
+  text-align: center;
+}
+#btnGoProduct {
+  border: none;
+  height: 50px;
+  width: 120px;
+  font-size: 15px;
+  /* padding: 0 24px; */
+  background: #4fd81b;
+  color: #fff;
+  border-radius: 4px;
+}
+#btnGoProduct:hover {
+  background-color: #3fc80b;
+}
+#btnGoProduct:active {
+  background: #3fc80b;
+}
+
+#btnGoHome {
+  border: none;
+  height: 50px;
+  width: 100px;
+  font-size: 15px;
+  /* padding: 0 24px; */
+  background: #4fd81b;
+  color: #fff;
+  border-radius: 4px;
+  margin-left: 30px;
+  margin-right: 30px;
+}
+#btnGoHome:hover {
+  background-color: #3fc80b;
+}
+#btnGoHome:active {
+  background: #3fc80b;
+}
+
+#btnGoPaymentHistory {
+  border: none;
+  height: 50px;
+  width: 120px;
+  font-size: 15px;
+  /* padding: 0 24px; */
+  background: #4fd81b;
+  color: #fff;
+  border-radius: 4px;
+}
+#btnGoPaymentHistory:hover {
+  background-color: #3fc80b;
+}
