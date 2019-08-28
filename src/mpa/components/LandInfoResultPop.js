@@ -5,6 +5,8 @@ import {InputTextarea} from 'primereact/inputtextarea';
 import storage from '../../common/storage';
 import { comma } from '../../common/utils';
 
+import config from '../../config';
+
 class LandInfoResultPop extends Component {
 
   constructor(props) {
@@ -37,7 +39,7 @@ class LandInfoResultPop extends Component {
         document.querySelector('#btnDownloadPdf').textContent = 'PDF 다운';
         document.querySelector('#btnDownloadPdf').addEventListener('click', function() {
           // result.downloadPdfUrl
-          window.open(result.downloadPdfUrl);
+          window.open(config.pdfUrl+result.downloadPdfUrl);
         })
       }
     }

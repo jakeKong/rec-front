@@ -36,13 +36,13 @@ class RegisterComplete extends Component {
       // if (dto.address !== null) {
 
       // }
-      const btnGoLogin = document.querySelector('#btnGoLogin');
+      const btnGoLogin = document.querySelector('#btnGoLoginRegister');
       btnGoLogin.textContent = '로그인';
       // btnGoLogin.className = 'vaadin-button-register-complete';
       btnGoLogin.addEventListener('click', function() {
         window.location.href = '/login';
       });
-      const btnGoHome = document.querySelector('#btnGoHome');
+      const btnGoHome = document.querySelector('#btnGoHomeRegister');
       btnGoHome.textContent = '홈으로'
       // btnGoHome.className = 'vaadin-button-register-complete';
       btnGoHome.addEventListener('click', function() {
@@ -80,8 +80,8 @@ class RegisterComplete extends Component {
           </div>
         </div>
         <div className="div-register-complete-button">
-          <button id="btnGoLogin"/>
-          <button id="btnGoHome"/>
+          <button id="btnGoLoginRegister"/>
+          <button id="btnGoHomeRegister"/>
         </div>
       </Fragment>
     );
