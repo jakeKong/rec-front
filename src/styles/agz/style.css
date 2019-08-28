@@ -184,7 +184,7 @@ html, body, #root .index {
     padding-left: 100px;
     background-size: cover;
 }
-    /* 헤더 사용자 버튼 */
+/* 헤더 사용자 버튼 */
 .header .wrap-btn-client {
     position: absolute;
     right: 0;
@@ -2166,9 +2166,11 @@ html, body, #root .index {
     width: 70%;
     padding-top: 52px;
     margin-left: 15%;
+    height: 480px;
 }
 .p-dialog .p-dialog-content .div-register-input > div {
     padding: 0 0 22px 0;
+    margin: 1em 0 0 0;
 }
 .p-dialog .p-dialog-content .div-register-input .default-column label,
 .p-dialog .p-dialog-content .div-register-input .email-column label,
@@ -2786,4 +2788,71 @@ margin-left: 70px;
   color: #333333;
   border: 0;
   border-radius: 3px;
+}
+
+.input-flex-80-left {
+  flex: 80;
+}
+.button-address-search {
+  display: inline-block;
+  width: 100px;
+  height: 48px;
+  line-height: 48px;
+  vertical-align: bottom;
+  border: none;
+  background: #4fd80b;
+  color: #fff;
+  font-size: 16px;
+  letter-spacing: 1px;
+  margin-left: -6px;
+  font-weight: bold;
+  cursor: pointer;
+  
+  border-radius: 0;
+  margin: 0 -4px;
+}
+
+#btnHeadRegister {
+  width: 80px;
+  height: 50px;
+  color: green;
+  background-color: white;
+  border: 1px solid #d5d5d5;
+  margin-right: 1em;
+  margin-left: 1em;
+}
+.button-cmt-register-onoff {
+  background: none;
+  width: -1px;
+  padding: 0, 0, 0, 1px;
+  margin: 0em;
+  height: -1px;
+  font-size: 11px;
+  cursor: pointer;
+  border: 0;
+}
+
+.button-cmt-update-onoff {
+  background: none;
+  width: -1px;
+  padding: 0, 0, 0, 1px;
+  margin: 0em;
+  height: -1px;
+  font-size: 11px;
+  cursor: pointer;
+  border: 0;
+  float: right;
+}
+
+.button-cmt-delete {
+  background: none;
+  width: -1px;
+  padding: 0em;
+  margin: 0em;
+  height: -1px;
+  font-size: 11px;
+  cursor: pointer;
+  border: 0;
+  color: red;
+  float: right;
 }

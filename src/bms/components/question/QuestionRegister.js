@@ -8,7 +8,7 @@ import 'tui-editor/dist/tui-editor.css';
 import 'tui-editor/dist/tui-editor-contents.css';
 import 'highlight.js/styles/github.css';
 import 'tui-color-picker/dist/tui-color-picker.min.css';
-import '../../../styles/ToastEditor.scss';
+import '../../../styles/components/ToastEditor.scss';
 
 import '@vaadin/vaadin-button';
 import {InputText} from 'primereact/inputtext';
