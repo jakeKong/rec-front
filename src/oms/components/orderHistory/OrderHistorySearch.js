@@ -213,7 +213,7 @@ class OrderHistorySearch extends Component {
 
         <label className="label" id="lbRealEstateType" />
         {/* <vaadin-select id="slRealEstateType" /> */}
-        <Dropdown className="dropdown-width-100"
+        <Dropdown className="dropdown-width-120"
                   value={this.state.searchRealEstateTypeItemValue}
                   options={realEstateTypeItems} 
                   onChange={e=>this.SearchRealEstateTypeItemChangeEvent(e)} />

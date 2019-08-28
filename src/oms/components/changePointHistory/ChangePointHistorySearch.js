@@ -188,7 +188,7 @@ class ChangePointHistorySearch extends Component {
     return (
       <Fragment>
         <label className="label-center" id="lbChangeType" />
-        <Dropdown className="dropdown-width-100"
+        <Dropdown className="dropdown-width-150"
                   value={searchItemValue}
                   options={changeTypeItems} 
                   onChange={e=>this.SearchItemChangeEvent(e)} />
