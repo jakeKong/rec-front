@@ -79,6 +79,21 @@ class BlogTyleNews extends Component {
             pagination.appendChild(pageBtn);
           }
         }
+      } else if (page+2 > pages.length){
+        for (let p=pages.length-5; p<pages.length; p++) {
+          if (pages[p] !== undefined) {
+            const pageBtn = window.document.createElement('vaadin-button');
+            pageBtn.textContent = pages[p];
+            pageBtn.className = 'btn number';
+            pageBtn.addEventListener('click', function(e) {
+              updateItemsFromPage(parseInt(e.target.textContent));
+            });
+            if (pages[p] === page) {
+              pageBtn.setAttribute('selected', true);
+            }
+            pagination.appendChild(pageBtn);
+          }
+        }
       } else {
         for (let p=page-3; p<page+2; p++) {
           if (pages[p] !== undefined) {
