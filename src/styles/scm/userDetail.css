@@ -32,13 +32,13 @@
   border: none;
   color: #fff;
   font-size: 13px;
-  background: #4fd81b;
+  background: #4cbf20;
   padding: 8px 16px;
   margin-right: 8px;
   transition: 0.3s;
 }
 .section-profile ul + div button:hover {
-  background: #47c10a;
+  background: #4dbf21;
 }
 /* PAGE-profile END */
 
@@ -84,14 +84,14 @@
   border: none;
   color: #fff;
   height: 33px;
-  background: #4fd81b;
+  background: #4cbf20;
   border-radius: 2px;
   padding: 0 18px;
   margin-left: 12px;
   font-size: 13px;
 }
 .p-dialog .p-dialog-content .div-register-input .address-column > div > div button:hover {
-  background: #47c10a;
+  background: #4dbf21;
 }
 .p-dialog .p-dialog-content .div-register-input .address-column > div > input {
   width: 100%;

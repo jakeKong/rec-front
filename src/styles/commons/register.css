@@ -34,7 +34,7 @@
 }
 .div-register-title > div.div-register-title-focus-on {
   /* background-color: #bbeea1 !important; */
-  background-color: #47c10a !important;
+  background-color: #4dbf21 !important;
 
 }
 .div-register-title > div.div-register-title-focus-on label {
@@ -52,7 +52,7 @@
   left: 100%;
 }
 .div-register-title > div.div-register-title-focus-on:after{
-  border-left: 30px solid #47c10a;
+  border-left: 30px solid #4dbf21;
   border-top: 30px solid transparent;
   border-bottom:30px solid transparent;
 }
@@ -130,7 +130,7 @@
   vertical-align: middle;
 }
 .div-register #btnCommonRegister {
-  background: #4fd81b;
+  background: #4cbf20;
   color: #fff;
 }
 .div-register #naverIdLogin img {
@@ -186,9 +186,9 @@
   height: 40px;
   margin-left: 2%;
   border: none;
-  border: 1px solid #4fd81b;
+  border: 1px solid #4cbf20;
   background: #fff;
-  color: #4fd81b;
+  color: #4cbf20;
   font-size: 14px;
   font-weight: 300;
   transition: 0.3s;
@@ -197,7 +197,7 @@
 .div-register .div-register-verify > div:nth-of-type(2) > button:hover,
 .div-register .div-register-verify > div:nth-of-type(3) > button:hover {
   font-weight: 300;
-  background: #47c10a;
+  background: #4dbf21;
   color: #fff;
 }
 .div-register .div-register-verify > div:nth-of-type(3) > .p-inputtext {
@@ -206,7 +206,7 @@
 .div-register .div-register-verify #btnAuthCheck {
   margin-top: 20px;
   float: right;
-  background: #4fd81b;
+  background: #4cbf20;
   color: #fff;
   height: 40px;
   border-radius: 4px;
@@ -214,7 +214,7 @@
   border: none;
 } 
 .div-register .div-register-verify #btnAuthCheck:hover {
-  background: #47c10a;
+  background: #4dbf21;
 }
 /* 회원정보 입력 */
 .div-register .div-register-input {
@@ -291,14 +291,14 @@ width: 100%;
   border: none;
   color: #fff;
   height: 36px;
-  background: #4fd81b;
+  background: #4cbf20;
   border-radius: 2px;
   padding: 0 18px;
   margin-left: 24px;
   font-size: 13px;
 }
 .div-register .div-register-input #btnAddressSearch:hover {
-  background: #47c10a;
+  background: #4dbf21;
 }
 .div-register .div-register-popup-bottom {
   width: 100%;
@@ -313,12 +313,12 @@ width: 100%;
   cursor: pointer;
 }
 .div-register .div-register-popup-bottom vaadin-button#btnOk {
-  background: #4fd81b;
+  background: #4cbf20;
   color: #fff;
 }
 
 .div-register .div-register-popup-bottom vaadin-button#btnOk:hover {
-  background: #47c10a;
+  background: #4dbf21;
 }
 .div-register .div-register-popup-bottom vaadin-button#btnCancle {
   color: #666;
@@ -371,7 +371,7 @@ width: 100%;
   opacity: 0.8;
 }
 .div-register .div-register-complete-button vaadin-button#btnGoLogin {
-  background: #4fd81b;
+  background: #4cbf20;
   color: #fff;
 }
 .div-register .div-register-complete-button vaadin-button#btnGoHome {
@@ -385,14 +385,14 @@ width: 100%;
   width: 100px;
   font-size: 15px;
   /* padding: 0 24px; */
-  background: #4fd81b;
+  background: #4cbf20;
   color: #fff;
   border-radius: 4px;
   margin-left: 30px;
   margin-right: 30px;
 }
 #btnGoLoginRegister:hover {
-  background: #47c10a;
+  background: #4dbf21;
 }
 #btnGoHomeRegister {
   border: none;
@@ -400,12 +400,12 @@ width: 100%;
   width: 100px;
   font-size: 15px;
   /* padding: 0 24px; */
-  background: #4fd81b;
+  background: #4cbf20;
   color: #fff;
   border-radius: 4px;
   margin-left: 30px;
   margin-right: 30px;
 }
 #btnGoHomeRegister:hover {
-  background: #47c10a;
+  background: #4dbf21;
 }

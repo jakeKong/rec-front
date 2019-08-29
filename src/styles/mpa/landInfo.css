@@ -154,7 +154,7 @@
   width: 128px;
   height: 42px;
   color: #fff;
-  background-color: #4fd81b;
+  background-color: #4cbf20;
   cursor: pointer;
   transition: 0.3s;
 }
@@ -164,7 +164,7 @@
 .btn-make-pdf-abled:active {
   background-color: #fff;
   border: 1px solid #3fc80b;
-  color: #4fd81b;
+  color: #4cbf20;
 }
 .btn-make-pdf-disabled {
 display: inline-block;
@@ -227,7 +227,7 @@ color: #aaa;
   cursor: pointer !important;
 }
 #doRegister .div-register-popup-bottom #btnOk {
-  background: #4fd81b !important;
+  background: #4cbf20 !important;
   color: #fff !important;
 }
 #doRegister .div-register-popup-bottom #btnCancle {
@@ -240,7 +240,7 @@ color: #aaa;
   /* height: 55px; */
   width: 80px;
   font-size: 15px;
-  color: #4fd81b;
+  color: #4cbf20;
   background: #fff;
   border-radius: 0;
   cursor: pointer;
@@ -252,7 +252,7 @@ color: #aaa;
 }
 .button-mpa-result-pdf-download:hover {
   color: #fff;
-  background: #4fd81b;
+  background: #4cbf20;
 }
 .div-mpa-download-btn-layout {
   flex: 70;

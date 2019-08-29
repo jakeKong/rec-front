@@ -136,7 +136,7 @@ html, body, #root .index {
 }
 .agz-scroll::-webkit-scrollbar-thumb
 {
-    background-color: #4fd81b;
+    background-color: #4cbf20;
 	background-image: -webkit-gradient(linear, 0 0, 0 100%,
 	                   color-stop(.5, rgba(255, 255, 255, .2)),
 					   color-stop(.5, transparent), to(transparent));
@@ -157,10 +157,10 @@ html, body, #root .index {
 
 /* Colors */
 .agz-bg {
-    background: #4fd81b;
+    background: #4cbf20;
 }
 .agz-fc {
-    color: #4fd81b !important;
+    color: #4cbf20 !important;
 }
 
 /* colors END */
@@ -270,7 +270,7 @@ html, body, #root .index {
 .rc-menu-vertical.rc-menu-sub .rc-menu-item-active,
 .rc-menu-vertical.rc-menu-sub .rc-menu-item-selected{
     color: #f0ee35;
-    background: #4fd81b;
+    background: #4cbf20;
     cursor: pointer;
 }
 /* 헤더 서브메뉴 끝*/
@@ -351,6 +351,7 @@ html, body, #root .index {
 .footer_new .footer-layer1 a {
     cursor: pointer;
     color: #fff !important;
+    font-size: 13px !important;
 }
 .footer_new .footer-layer2 {
     display: inline-block;
@@ -378,7 +379,7 @@ html, body, #root .index {
     line-height: 16px;
     color: #fff;
     font-weight: 200;
-    font-size: 11px !important;
+    font-size: 12px !important;
     letter-spacing: 1px;
 }
 /* footer END */
@@ -387,7 +388,8 @@ html, body, #root .index {
 .page-main .illust-main {
     width: 100%;
     height: 280px;
-    padding-top: 100px;
+    padding-top: 60px;
+    margin-bottom: 20px;
     background: url('./image/main_illu_3x.png');
     background-size: 100%;
     background-repeat: no-repeat;
@@ -398,6 +400,16 @@ html, body, #root .index {
     height: calc(100% - 280px - 100px);
     position: relative;
     padding-top: 6%;
+}
+.wrap-content-main .searchbox:after {
+  content: '';
+  display: block;
+  width: 280px;
+  height: 30px;
+  margin: 12px auto 0 auto;
+  background: url('./image/main_phrase_lower.png');
+  background-size: cover;
+  background-position: 50%;
 }
 .wrap-searchbox {
     width: 100%;
@@ -413,7 +425,7 @@ html, body, #root .index {
     width: 400px;
     height: 64px;
     vertical-align: bottom;
-    border: 3px solid #4fd81b;
+    border: 3px solid #4cbf20;
     outline: none;
     padding-left: 12px;
     padding-right: 12px;
@@ -436,7 +448,7 @@ html, body, #root .index {
     
     vertical-align: bottom;
     border: none;
-    background: #4fd81b;
+    background: #4cbf20;
     color: #fff;
     font-size: 22px;
     letter-spacing: 1px;
@@ -473,7 +485,7 @@ html, body, #root .index {
     text-align: center;
 }
 .page-main .box-summary .num {
-    color: #47c10a;
+    color: #4dbf21;
     font-size: 25px;
 }
 /* searchbox END */
@@ -547,9 +559,9 @@ html, body, #root .index {
 }
 /* table selector */
 .p-datatable .p-checkbox-box.p-highlight {
-    border-color: #4fd81b !important;
+    border-color: #4cbf20 !important;
     background-color: #fff !important;
-    color: #4fd81b !important;
+    color: #4cbf20 !important;
 }
 
 /* table pagination */
@@ -559,7 +571,7 @@ html, body, #root .index {
     margin-top: 24px;
 }
 .p-datatable .p-paginator .p-paginator-page.p-highlight {
-    background-color: #4fd81b !important;
+    background-color: #4cbf20 !important;
 }
 .p-datatable .p-dropdown-label.p-inputtext {
     height: 32px;
@@ -635,7 +647,7 @@ html, body, #root .index {
     background: #3fc80b;
 }
 .wrap-search .btn:active {
-    background: #4fd81b;
+    background: #4cbf20;
 }
 .wrap-search .datepickr {
     display: inline-block;
@@ -720,19 +732,19 @@ html, body, #root .index {
 }
 .pagination .btn.prev:hover,
 .pagination .btn.next:hover{
-    color: #4fd81b;
+    color: #4cbf20;
 }
 .pagination .btn.number {
     background: #e4fff1;
     border-radius: 2px;
-    color: #4fd81b;
+    color: #4cbf20;
 }
 .pagination .btn.number[selected="true"] {
-    background-color: #4fd81b !important;
+    background-color: #4cbf20 !important;
     color: #fff;
 }
 .pagination .btn.number:hover {
-    background: #4fd81b;
+    background: #4cbf20;
     color: #fff;
 }
     /* Btns */
@@ -747,7 +759,7 @@ html, body, #root .index {
     
     float: right;
     color: #fff;
-    background: #4fd81b;
+    background: #4cbf20;
     margin: 0 0 0 20px;
     
     cursor: pointer;
@@ -759,7 +771,7 @@ html, body, #root .index {
 .btn.down-excel {
     display: inline-block;
     color: #fff;
-    background: #4fd81b;
+    background: #4cbf20;
     font-size: 12px;
     padding: 8px 18px;
     border-radius: 24px;
@@ -798,7 +810,7 @@ html, body, #root .index {
 .div-search > div > div:last-child vaadin-button {
     height: 50px;
     margin: 0;
-    background-color: #4fd81b;
+    background-color: #4cbf20;
     color: #fff;
     border-radius: 0;
     cursor: pointer;
@@ -811,7 +823,7 @@ html, body, #root .index {
     width: 100%;
     height: 50px;
     border: none;
-    border: 2px solid #4fd81b;
+    border: 2px solid #4cbf20;
     border-radius: 0;
     color: #444;
 }
@@ -841,7 +853,7 @@ html, body, #root .index {
 }
 .p-dialog .p-dialog-titlebar .p-dialog-title {
     font-weight: 200 !important;
-    color: #47c10a;
+    color: #4dbf21;
 }
 .p-dialog .p-dialog-titlebar .p-dialog-titlebar-icons {
     position: absolute;
@@ -878,7 +890,7 @@ html, body, #root .index {
     opacity: 0.8;
 }
 .p-dialog .p-dialog-footer > div button:first-child {
-    background: #4fd81b;
+    background: #4cbf20;
     color: #fff;
 }
 
@@ -927,13 +939,13 @@ REQUESTS
   width: 64px !important;
   height: 20px !important;
   color: #fff !important;
-  background: #4fd81b;
+  background: #4cbf20;
   padding: 2px 8px;
   font-size: 12px;
   border: none;
 }
 .button-user-activated-changed-gotrue:hover {
-  background: #47c10a;
+  background: #4dbf21;
 }
 .button-user-disabled-changed-gotrue {
   width: 64px !important;

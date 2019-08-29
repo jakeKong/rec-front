@@ -64,22 +64,22 @@
 }
 .div-login-card .p-togglebutton.p-highlight {
   background: transparent;
-  color: #47c10a;
+  color: #4dbf21;
 }
 .div-login-card .p-togglebutton:hover {
   background: transparent !important;
 }
 .div-login-card .p-togglebutton.p-highlight:hover {
-  color: #4fd81b;
+  color: #4cbf20;
 }
 .div-login-card .p-togglebutton .p-button-icon-left {
   left: 0;
 }
 .div-login-card .p-togglebutton .pi.pi-check {
-  color: #47c10a;
+  color: #4dbf21;
 }
 .div-login-card .p-togglebutton.p-highlight:hover .pi.pi-check {
-  color: #4fd81b;
+  color: #4cbf20;
 }
 .div-login-card .p-togglebutton .p-unselectable-text {
   text-align: right;
@@ -106,7 +106,7 @@
   border: none !important;
   margin-bottom: 12px !important;
   color: #fff;
-  background-color: #4fd81b;
+  background-color: #4cbf20;
 }
 .div-login-card .vaadin-button-login-naver {
   background: url('../agz/image/naver-simbol.png');

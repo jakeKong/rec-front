@@ -35,7 +35,7 @@
   font-size: 24px;
 }
 .receipt .amount.cash {
-  color: #4fd81b;
+  color: #4cbf20;
 }
 .receipt .amount.point {
   color: #0b78d8;
@@ -124,7 +124,7 @@
   width: 120px;
   font-size: 15px;
   /* padding: 0 24px; */
-  background: #4fd81b;
+  background: #4cbf20;
   color: #fff;
   border-radius: 4px;
 }
@@ -141,7 +141,7 @@
   width: 100px;
   font-size: 15px;
   /* padding: 0 24px; */
-  background: #4fd81b;
+  background: #4cbf20;
   color: #fff;
   border-radius: 4px;
   margin-left: 30px;
@@ -160,7 +160,7 @@
   width: 120px;
   font-size: 15px;
   /* padding: 0 24px; */
-  background: #4fd81b;
+  background: #4cbf20;
   color: #fff;
   border-radius: 4px;
 }

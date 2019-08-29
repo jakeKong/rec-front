@@ -22,7 +22,7 @@
 }
 .section-question-upload #tfTitle:focus {
     outline: 0 !important;
-    border-bottom-color: #4fd81b;
+    border-bottom-color: #4cbf20;
     box-shadow: none !important;
 }
 .section-question-upload #toastEditor {
@@ -51,7 +51,7 @@
     cursor: pointer;
 }
 .section-question-upload #btnRegister {
-    background: #47c10a;
+    background: #4dbf21;
     color: #fff;
     margin-right: 12px;
 }
@@ -68,7 +68,7 @@
   border: none;
   height: 40px;
   font-size: 15px;
-  color: #4fd81b;
+  color: #4cbf20;
   border-radius: 0;
   margin: 0;
   cursor: pointer;
@@ -78,7 +78,7 @@
 }
 .div-question-button-layout #btnGoList:hover {
   color: #fff;
-  background: #4fd81b;
+  background: #4cbf20;
 }
 .div-question-button-layout #btnGoList:active {
   background: #3fc80b;
@@ -140,7 +140,7 @@
   height: 55px;
   width: 80px;
   font-size: 15px;
-  color: #4fd81b;
+  color: #4cbf20;
   background: #fff;
   border-radius: 0;
   cursor: pointer;
@@ -152,14 +152,14 @@
 }
 .button-question-comment-add-ntb:hover {
   color: #fff;
-  background: #4fd81b;
+  background: #4cbf20;
 }
 .button-question-comment-to-add-ntb {
   border: none;
   height: 55px;
   width: 80px;
   font-size: 15px;
-  color: #4fd81b;
+  color: #4cbf20;
   background: #fff;
   border-radius: 0;
   cursor: pointer;
@@ -171,14 +171,14 @@
 }
 .button-question-comment-to-add-ntb:hover {
   color: #fff;
-  background: #4fd81b;
+  background: #4cbf20;
 }
 .button-question-answer-add-ntb {
   border: none;
   height: 55px;
   width: 80px;
   font-size: 15px;
-  color: #4fd81b;
+  color: #4cbf20;
   background: #fff;
   border-radius: 0;
   cursor: pointer;
@@ -190,7 +190,7 @@
 }
 .button-question-answer-add-ntb:hover {
   color: #fff;
-  background: #4fd81b;
+  background: #4cbf20;
 }
 .question-text-area-answer {
   margin-top: 7px;

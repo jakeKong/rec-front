@@ -68,15 +68,15 @@ width: 5%;
   height: 40px;
   font-size: 14px;
   border: none;
-  color: #4fd81b;
+  color: #4cbf20;
   background: #fff;
-  border: 1px solid #4fd81b;
+  border: 1px solid #4cbf20;
   transition: 0.3s;
 }
 
 .section-findAcnt > div > div:nth-of-type(2) > button:hover,
 .section-findAcnt > div > div:nth-of-type(3) > button:hover {
-  background: #4fd81b;
+  background: #4cbf20;
   color: #fff;
 }
 
@@ -91,7 +91,7 @@ width: 5%;
   border: none;
   height: 40px;
   padding: 0 24px;
-  background: #4fd81b;
+  background: #4cbf20;
   color: #fff;
   border-radius: 4px;
 }
@@ -130,7 +130,7 @@ width: 5%;
   /* height: 46px; */
   margin: 0em 1em 0em 4em;
   float: left;
-  background: #4fd81b;
+  background: #4cbf20;
   color: #fff;
   height: 40px;
   border-radius: 4px;
@@ -138,12 +138,12 @@ width: 5%;
   border: none;
 }
 #btnIdResultToLoginGo:hover {
-  background: #47c10a;
+  background: #4dbf21;
 }
 #btnIdResultToHomeGo {
   margin: 0em 4em 0em 1em;
   float: right;
-  background: #4fd81b;
+  background: #4cbf20;
   color: #fff;
   height: 40px;
   border-radius: 4px;
@@ -151,7 +151,7 @@ width: 5%;
   border: none;
 }
 #btnIdResultToHomeGo:hover {
-  background: #47c10a;
+  background: #4dbf21;
 }
 
 #lbAfterPw {
@@ -181,13 +181,13 @@ width: 5%;
     height: 30px;
     font-size: 12px;
     border: none;
-    color: #4fd81b;
+    color: #4cbf20;
     background: #fff;
-    border: 1px solid #4fd81b;
+    border: 1px solid #4cbf20;
     transition: 0.3s;
   }
   .button-user-detail-auth-attempt:hover {
-    background: #4fd81b;
+    background: #4cbf20;
     color: #fff;
   }
   .button-user-detail-auth-attempt:active {
@@ -199,13 +199,13 @@ width: 5%;
     height: 30px;
     font-size: 12px;
     border: none;
-    color: #4fd81b;
+    color: #4cbf20;
     background: #fff;
-    border: 1px solid #4fd81b;
+    border: 1px solid #4cbf20;
     transition: 0.3s;
   }
   .button-user-detail-auth-check:hover {
-    background: #4fd81b;
+    background: #4cbf20;
     color: #fff;
   }
   .button-user-detail-auth-check:active {
