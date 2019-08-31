@@ -788,57 +788,6 @@ html, body, #root .index {
 }
 /* table END */
 
-/* tile news */
-.tilenews {
-    box-sizing: border-box;
-    height: calc(100% - 66px);
-}
-.tilenews .masonry {
-    height: 100%;
-    padding: 0 36px;
-    padding-top: 24px;
-    padding-bottom: 0px;
-}
-.tilenews .masonry .card {
-    display: inline-block;
-    margin-right: 5%;
-    margin-bottom: 12px;
-    min-height: 280px;
-    max-height: 280px;
-    width: 30%;
-    box-shadow: 0px 8px 10px rgba(0,0,0,0.2);
-    overflow: hidden;
-    border: 1px solid #eee;
-    cursor: pointer;
-    transition: 0.3s;
-}
-.tilenews .masonry .card:nth-of-type(3n) {
-    margin-right: 0;
-}
-.tilenews .masonry .card:hover{
-    box-shadow: 0px 10px 12px rgba(0,0,0,0.3);
-}
-.tilenews .card .image {
-    width: 100%;
-    max-height: 160px;
-    min-height: 140px;
-}
-.tilenews .card .title {
-    text-align: right;
-    font-size: 20px;
-    padding: 18px 20px 0px 60px;
-    color: rgba(0,0,0,0.8);
-}
-.tilenews .card .title p {
-    word-break: keep-all;
-}
-.tilenews .card .subtitle {
-    text-align: right;
-    padding: 14px 20px 40px 0px;
-    color: #aaa;
-    font-size: 12px;
-}
-/* tile news END */
 /* PAGE - land info */
 .page-description + div > div.searchbox > div {
     text-align: right !important;
@@ -892,154 +841,127 @@ html, body, #root .index {
     border-top: none;
 }
 
-/* 부동산 상세정보 */
-.wrap-land-info {
-    display: block;
-    width: 100%;
-    margin-top: 6px;
+/* Dialog */
+.p-dialog{
+    max-width: 800px;
+    overflow: hidden;
+    border-radius: 7px !important;
 }
-/* 부동산 정보 조회 페이지 검색창 wrapper */
-.searchbox + div {
-    width:100% !important;
-    min-height: 554px;
-    display: inline-block;
+.p-dialog .p-dialog-titlebar {
+    background: #fff !important;
+    border: none !important;
+    font-size: 40px;
+    padding-bottom: 0 !important;
 }
-.button-address-search {
-    margin: 0 !important;
+.p-dialog .p-dialog-titlebar .p-dialog-title {
+    font-weight: 200 !important;
+    color: #4dbf21;
 }
-.div-land-info-item {
-    display: block;
-    float: left;
+.p-dialog .p-dialog-titlebar .p-dialog-titlebar-icons {
+    position: absolute;
+    right:12px;
+    top: 12px;
+    font-size: 30px;
 }
-
-.div-land-info-item.left {
-    width: calc(100% - 610px - 16px);
-    margin-right: 16px;
-    height: 100%;
+.p-dialog .p-dialog-titlebar .p-dialog-titlebar-icons .p-dialog-titlebar-close-icon {
+    font-size: 30px;
 }
-.div-land-info-item.right {
-    width: 610px;
-    height: 100%;
+.p-dialog .p-dialog-content {
+    border: none !important;
+    padding: 0px !important;
 }
-
-.wrap-land-info table{
-    width: 100%;
-    font-weight: 200;
+.p-dialog textarea {
+    line-height: 30px;
+    font-weight: 300;
+    max-width: 100%;
+    border: none;
+    margin: 0;
+    padding: 40px 40px 60px 40px !important
 }
-
-.wrap-land-info table th {
-    font-weight: 400;
+.p-dialog .p-dialog-footer {
+    padding-top: 20px !important;
+    padding-bottom: 36px !important;
 }
-
-.wrap-land-info table tr {
-    box-sizing: border-box;
-    border-bottom: 1px solid #eee;
-}
-
-.tbl-info-01 {
-    border-top: 1px solid #aaa;
-    height: 166px;
-}
-.tbl-info-01 th,
-.tbl-info-01 td {
-    box-sizing: border-box;
-    max-height: 26px;
-    line-height: 26px;
-    padding-left: 12px;
+.p-dialog .p-dialog-footer > div button {
+    border: none;
+    height: 33px;
+    padding: 0 22px;
     font-size: 13px;
 }
-.tbl-info-01 th {
-    width: 30%;
-    background: #f7f7f8;
+.p-dialog .p-dialog-footer > div button:hover{
+    opacity: 0.8;
+}
+.p-dialog .p-dialog-footer > div button:first-child {
+    background: #4cbf20;
+    color: #fff;
 }
 
-.tbl-info-02 {
-    margin-top: 6px;
-    border-top: 1px solid #aaa;
+/* Dialog END */ 
+/*
+CANDO
+
+TODO
+각종 modal css 적용
+    - 크로스워크 소개 (푸터 서브메뉴) (컨셉 결정되면 디자인 및 적용)
+포인트 구매 페이지 버튼 작동여부 확인 => 확인후 내부페이지 디자인 여부 확인
+휴대폰 인증 페이지 추후 개발완료시 디자인 적용
+가입 완료 페이지 버튼 디자인 변경 (현재 가입 불가 현상 발생)
+주문버튼 클릭시 팝업되는 모달 디자인 (라이브 서버 변경 확인)
+
+REQUESTS
+- 회원가입이 자꾸 실패해서 회원가입 완료 페이지를 확인 할 수 없음
+*/
+
+.button-user-activated-changed-gofalse {
+  width: 64px !important;
+  height: 20px !important;
+  color: #fff !important;
+  background: #ec8989;
+  padding: 2px 8px;
+  font-size: 12px;
+  border: none;
 }
-.tbl-info-02 th,
-.tbl-info-02 td {
-    box-sizing: border-box;
-    line-height: 20px;
-    height: 20px;
-    max-height: 20px;
-    text-align: center;
-    font-size: 12px;
+.button-user-activated-changed-gofalse:hover {
+  background: #e97171;
 }
-.tbl-info-02 th {
-    background: #f7f7f8;
+.button-user-disabled-changed-gofalse {
+  width: 64px !important;
+  height: 20px !important;
+  color: #fff !important;
+  background: #888;
+  padding: 2px 8px;
+  font-size: 12px;
+  border: none;
+}
+.button-user-disabled-changed-gofalse:hover {
+  background: rgb(95, 95, 95);
 }
 
-.tbl-info-03 {
-    margin-top: 6px;
-    border-top: 1px solid #aaa;
-    max-height: 280px
+.button-user-activated-changed-gotrue {
+  width: 64px !important;
+  height: 20px !important;
+  color: #fff !important;
+  background: #4cbf20;
+  padding: 2px 8px;
+  font-size: 12px;
+  border: none;
 }
-.tbl-info-03 tr {
-    height: 24px;
+.button-user-activated-changed-gotrue:hover {
+  background: #4dbf21;
 }
-.tbl-info-03 th,
-.tbl-info-03 td {
-    box-sizing: border-box;
-    max-height: 24px;
-    line-height: 24px;
-    text-indent: 12px;
+.button-user-disabled-changed-gotrue {
+  width: 64px !important;
+  height: 20px !important;
+  color: #fff !important;
+  background: rgb(119, 194, 255);
+  padding: 2px 8px;
+  font-size: 12px;
+  border: none;
 }
-.tbl-info-03 th {
-    background: #f7f7f8;
-    width: 30%;
-    font-size: 12px;
+.button-user-disabled-changed-gotrue:hover {
+  background: rgb(56, 86, 255);;
 }
-.tbl-info-03 td {
-    font-size: 11px;
-}
-.wrap-land-info .map {
-    width: 100%;
-    height: 340px;
-    box-sizing: border-box;
-    border: 1px solid #f7f7f8;
-}
-
-.tbl-info-04 {
-    margin-top: 6px;
-    width: 100%;
-    border-top: 1px solid #aaa;
-}
-.tbl-info-04 th,
-.tbl-info-04 td {
-    box-sizing: border-box;
-    text-align: center;
-}
-.tbl-info-04 th {
-    max-height: 24px;
-    line-height: 24px;
-    font-size: 13px;
-}
-.tbl-info-04 td {
-    max-height: 28px;
-    line-height: 28px;
-    font-size: 12px;
-}
-.tbl-info-04 th:nth-of-type(1),
-.tbl-info-04 td:nth-of-type(1){
-    width: 10%;
-}
-.tbl-info-04 th:nth-of-type(2),
-.tbl-info-04 td:nth-of-type(2){
-    width: 65%;
-}
-.tbl-info-04 tr:nth-of-type(2n-1) {
-    background: #f8f8f9; 
-}
-.tbl-info-04 th {
-    background: #f7f7f8;
-}
-/* 주문 버튼 wrapper */
-.searchbox + div + div {
-    margin: 0 !important;
-    padding: 12px 0;
-    width: 100%;
-}
+<<<<<<< HEAD
 .btn-make-pdf-abled {
     display: inline-block;
     margin: 0;
@@ -1050,24 +972,47 @@ html, body, #root .index {
     background-color: #4cbf20;
     cursor: pointer;
     transition: 0.3s;
+=======
+#lbTimer {
+  display: block;
+  font-size: 13px;
+  color: #666;
+  margin-bottom: 4px;
+  text-align: left;
+>>>>>>> origin/yieon
 }
-.btn-make-pdf-abled:hover {
-    background-color: #3fc80b;
+.p-datepicker-year {
+  padding: 0.857em;
+  background-color: #ffffff;
+  color: #333333;
+  border: 0;
+  border-radius: 3px;
 }
+<<<<<<< HEAD
 .btn-make-pdf-abled:active {
     background-color: #fff;
     border: 1px solid #3fc80b;
     color: #4cbf20;
+=======
+.input-flex-80-left {
+  flex: 80;
+>>>>>>> origin/yieon
 }
-.btn-make-pdf-disabled {
+.button-address-search {
   display: inline-block;
-  margin: 0;
-  border-radius: 0;
-  width: 128px;
-  height: 42px;
+  width: 100px;
+  height: 48px;
+  line-height: 48px;
+  vertical-align: bottom;
+  border: none;
+  background: #4fd80b;
   color: #fff;
-  background-color: #aaa;
+  font-size: 16px;
+  letter-spacing: 1px;
+  margin-left: -6px;
+  font-weight: bold;
   cursor: pointer;
+<<<<<<< HEAD
   transition: 0.3s;
 }
 .btn-make-pdf-disabled:hover {
@@ -1150,74 +1095,57 @@ html, body, #root .index {
   font-size: 20px;
   border-bottom: 2px solid #eee;
   width: 100%;
+=======
+  
+>>>>>>> origin/yieon
   border-radius: 0;
-  padding-left: 24px;
+  margin: 0 -4px;
 }
-.section-notice-upload #tfTitle:focus {
-  outline: 0 !important;
-  border-bottom-color: #4fd81b;
-  box-shadow: none !important;
+#btnHeadRegister {
+  width: 80px;
+  height: 50px;
+  color: green;
+  background-color: white;
+  border: 1px solid #d5d5d5;
+  margin-right: 1em;
+  margin-left: 1em;
 }
-.section-notice-upload #toastEditor {
-  padding: 0 !important;
-}
-.section-notice-upload #toastEditor  #editSection {
-  height: 100% !important;
-}
-.section-notice-upload #toastEditor .te-mode-switch-section {
-  display: none !important;
-}
-.section-notice-upload #toastEditor .tui-editor-defaultUI {
-  border: none ;
-}
-.section-notice-upload #toastEditor .tui-editor-contents {
-  min-height: 365px !important;
-}
-.section-notice-upload #toastEditor + div {
-  text-align: right;
-  margin-top: 14px;
-}
-.section-notice-upload #btnRegister,
-.section-notice-upload #btnCancle {
-  margin: 0;
-  border-radius: 0;
+.button-cmt-register-onoff {
+  background: none;
+  width: -1px;
+  padding: 0, 0, 0, 1px;
+  margin: 0em;
+  height: -1px;
+  font-size: 11px;
   cursor: pointer;
-}
-.section-notice-upload #btnRegister {
-  background: #47c10a;
-  color: #fff;
-  margin-right: 12px;
-}
-.section-notice-upload #btnCancle {
-  color: #666;
+  border: 0;
 }
 
-/* purchase */
-.page-purchase .agz-bbs {
-    border-top: 2px dashed #eee;
-    padding-top: 12px;
+.button-cmt-update-onoff {
+  background: none;
+  width: -1px;
+  padding: 0, 0, 0, 1px;
+  margin: 0em;
+  height: -1px;
+  font-size: 11px;
+  cursor: pointer;
+  border: 0;
+  float: right;
 }
-.section-datatable-payment {
-    width: 100%;
+
+.button-cmt-delete {
+  background: none;
+  width: -1px;
+  padding: 0em;
+  margin: 0em;
+  height: -1px;
+  font-size: 11px;
+  cursor: pointer;
+  border: 0;
+  color: red;
+  float: right;
 }
-.section-datatable-payment .p-datatable-thead th:nth-of-type(1),
-.section-datatable-payment .p-datatable-tbody td:nth-of-type(1){
-    width: 10% !important;
-}
-.section-datatable-payment .p-datatable-thead th:nth-of-type(2),
-.section-datatable-payment .p-datatable-tbody td:nth-of-type(2){
-    width: 40% !important;
-}
-.section-datatable-payment .p-datatable-thead th:nth-of-type(3),
-.section-datatable-payment .p-datatable-tbody td:nth-of-type(3){
-    width: 25% !important;
-}
-.receipt {
-    display: inline-block;
-    width: 100%;
-    text-align: left;
-    padding: 24px 0 16px 0;;
-}
+<<<<<<< HEAD
 .receipt .div-inline{
     margin: 0;
 }
@@ -2792,3 +2720,5 @@ margin-left: 70px;
   margin-bottom: 4px;
   text-align: left;
 }
+=======
+>>>>>>> origin/yieon

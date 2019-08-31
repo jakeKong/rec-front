@@ -1,0 +1,213 @@
+
+/* PAGE-find account */
+.wrap-btn-findAcnt {
+  width: 480px;
+  margin: 60px auto 0;
+}
+.wrap-btn-findAcnt button {
+  width: 50%;
+  height: 40px;
+  background: #fff;
+  border: none;
+  color: #666;
+  font-size: 14px;
+  border-radius: 4px 4px 0 0;
+  border: 1px solid #bbb;
+}
+.section-findAcnt {
+  width: 480px;
+  margin: 0 auto;
+  border: 1px solid #bbb;
+  border-top-color: #888;
+  padding: 24px 42px;
+}
+.section-findAcnt > div > p {
+  font-size: 24px;
+  color: #444;
+  font-weight: 300;
+  margin-bottom: 42px;
+}
+.section-findAcnt > div > div {
+  margin-bottom: 24px;
+}
+.section-findAcnt > div > div > label,
+.section-findAcnt > div > div > p {
+  display: block;
+  font-size: 13px;
+  color: #666;
+  margin-bottom: 4px;
+}
+.section-findAcnt > div > div > label + input,
+.section-findAcnt > div > div > p + input {
+  width: 100%;
+  height: 40px;
+  border: none;
+  border-radius: 0;
+  border-bottom: 1px solid #eee;
+  text-align: center;
+  box-shadow: none;
+}
+
+.section-findAcnt > div > div > label + input:focus,
+.section-findAcnt > div > div > p + input:focus {
+  box-shadow: none !important;
+}
+
+.section-findAcnt > div > div:nth-of-type(2) > input { 
+width: 20%;
+}
+.section-findAcnt > div > div:nth-of-type(2) > label { 
+display: inline-block;
+color: #888;
+width: 5%;
+}
+.section-findAcnt > div > div:nth-of-type(2) > button,
+.section-findAcnt > div > div:nth-of-type(3) > button {
+  margin-left: 2%;
+  width: 28%;
+  height: 40px;
+  font-size: 14px;
+  border: none;
+  color: #4cbf20;
+  background: #fff;
+  border: 1px solid #4cbf20;
+  transition: 0.3s;
+}
+
+.section-findAcnt > div > div:nth-of-type(2) > button:hover,
+.section-findAcnt > div > div:nth-of-type(3) > button:hover {
+  background: #4cbf20;
+  color: #fff;
+}
+
+.section-findAcnt > div > div:nth-of-type(3) > input { 
+  width: 70%;
+}
+.section-findAcnt > div > div:last-child {
+  text-align: right;
+  margin-top: 24px;
+}
+.section-findAcnt > div > div:last-child button { 
+  border: none;
+  height: 40px;
+  padding: 0 24px;
+  background: #4cbf20;
+  color: #fff;
+  border-radius: 4px;
+}
+/* PAGE-find account END */
+
+
+.id-find-result-field {
+  text-align: center;
+  margin-top: 10px;
+  height: 50px;
+  display: flex;
+}
+.id-find-result-btn-field {
+  text-align: center;
+  height: 50px;
+}
+.label-find-pw-complete {
+  text-align: center;
+  font-size: 14px;
+  color: #666;
+  margin-left: 65px;
+}
+#lbFindIdResultTag {
+  text-align: center;
+  flex: 40;
+  font-size: 14px;
+  color: #666;
+}
+#lbFindIdResult {
+  text-align: center;
+  flex: 60;
+  font-size: 14px;
+  color: #666;
+}
+#btnIdResultToLoginGo {
+  /* height: 46px; */
+  margin: 0em 1em 0em 4em;
+  float: left;
+  background: #4cbf20;
+  color: #fff;
+  height: 40px;
+  border-radius: 4px;
+  width: 80px;
+  border: none;
+}
+#btnIdResultToLoginGo:hover {
+  background: #4dbf21;
+}
+#btnIdResultToHomeGo {
+  margin: 0em 4em 0em 1em;
+  float: right;
+  background: #4cbf20;
+  color: #fff;
+  height: 40px;
+  border-radius: 4px;
+  width: 80px;
+  border: none;
+}
+#btnIdResultToHomeGo:hover {
+  background: #4dbf21;
+}
+
+#lbAfterPw {
+  color: #888;
+  width: 100%;
+}
+#pwAfterPw {
+  width: 100%;
+}
+#lbAfterRePw {
+  color: #888;
+  width: 100%;
+}
+#pwAfterRePw {
+  width: 100%;
+}
+
+.div-user-detail-auth {
+  margin-left: 70px;
+  }
+  .div-user-detail-auth input {
+    margin-left: 2%;
+  }
+  .button-user-detail-auth-attempt {
+    /* margin-left: 2%; */
+    /* width: 23%; */
+    height: 30px;
+    font-size: 12px;
+    border: none;
+    color: #4cbf20;
+    background: #fff;
+    border: 1px solid #4cbf20;
+    transition: 0.3s;
+  }
+  .button-user-detail-auth-attempt:hover {
+    background: #4cbf20;
+    color: #fff;
+  }
+  .button-user-detail-auth-attempt:active {
+    background: #3fc80b;
+  }
+  .button-user-detail-auth-check {
+    margin-left: 2%;
+    /* width: 23%; */
+    height: 30px;
+    font-size: 12px;
+    border: none;
+    color: #4cbf20;
+    background: #fff;
+    border: 1px solid #4cbf20;
+    transition: 0.3s;
+  }
+  .button-user-detail-auth-check:hover {
+    background: #4cbf20;
+    color: #fff;
+  }
+  .button-user-detail-auth-check:active {
+    background: #3fc80b;
+  }

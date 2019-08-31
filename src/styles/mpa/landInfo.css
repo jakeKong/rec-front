@@ -1,0 +1,282 @@
+/* 부동산 상세정보 */
+.wrap-land-info {
+  display: block;
+  width: 100%;
+  margin-top: 6px;
+}
+
+/* 부동산 정보 조회 페이지 검색창 wrapper */
+.searchbox + div {
+  width:100% !important;
+  min-height: 554px;
+  display: inline-block;
+}
+.button-address-search {
+  margin: 0 !important;
+}
+.div-land-info-item {
+  display: block;
+  float: left;
+}
+
+.div-land-info-item.left {
+  width: calc(100% - 610px - 16px);
+  margin-right: 16px;
+  height: 100%;
+}
+.div-land-info-item.right {
+  width: 610px;
+  height: 100%;
+}
+
+.wrap-land-info table{
+  width: 100%;
+  font-weight: 200;
+}
+
+.wrap-land-info table th {
+  font-weight: 400;
+}
+
+.wrap-land-info table tr {
+  box-sizing: border-box;
+  border-bottom: 1px solid #eee;
+}
+
+.tbl-info-01 {
+  border-top: 1px solid #aaa;
+  height: 166px;
+}
+.tbl-info-01 th,
+.tbl-info-01 td {
+  box-sizing: border-box;
+  max-height: 26px;
+  line-height: 26px;
+  padding-left: 12px;
+  font-size: 13px;
+}
+.tbl-info-01 th {
+  width: 30%;
+  background: #f7f7f8;
+}
+
+.tbl-info-02 {
+  margin-top: 6px;
+  border-top: 1px solid #aaa;
+}
+.tbl-info-02 th,
+.tbl-info-02 td {
+  box-sizing: border-box;
+  line-height: 20px;
+  height: 20px;
+  max-height: 20px;
+  text-align: center;
+  font-size: 12px;
+}
+.tbl-info-02 th {
+  background: #f7f7f8;
+}
+
+.tbl-info-03 {
+  margin-top: 6px;
+  border-top: 1px solid #aaa;
+  max-height: 280px
+}
+.tbl-info-03 tr {
+  height: 24px;
+}
+.tbl-info-03 th,
+.tbl-info-03 td {
+  box-sizing: border-box;
+  max-height: 24px;
+  line-height: 24px;
+  text-indent: 12px;
+}
+.tbl-info-03 th {
+  background: #f7f7f8;
+  width: 30%;
+  font-size: 12px;
+}
+.tbl-info-03 td {
+  font-size: 11px;
+}
+.wrap-land-info .map {
+  width: 100%;
+  height: 340px;
+  box-sizing: border-box;
+  border: 1px solid #f7f7f8;
+}
+
+.tbl-info-04 {
+  margin-top: 6px;
+  width: 100%;
+  border-top: 1px solid #aaa;
+}
+.tbl-info-04 th,
+.tbl-info-04 td {
+  box-sizing: border-box;
+  text-align: center;
+}
+.tbl-info-04 th {
+  max-height: 24px;
+  line-height: 24px;
+  font-size: 13px;
+}
+.tbl-info-04 td {
+  max-height: 28px;
+  line-height: 28px;
+  font-size: 12px;
+}
+.tbl-info-04 th:nth-of-type(1),
+.tbl-info-04 td:nth-of-type(1){
+  width: 10%;
+}
+.tbl-info-04 th:nth-of-type(2),
+.tbl-info-04 td:nth-of-type(2){
+  width: 65%;
+}
+.tbl-info-04 tr:nth-of-type(2n-1) {
+  background: #f8f8f9; 
+}
+.tbl-info-04 th {
+  background: #f7f7f8;
+}
+/* 주문 버튼 wrapper */
+.searchbox + div + div {
+  margin: 0 !important;
+  padding: 12px 0;
+  width: 100%;
+}
+.btn-make-pdf-abled {
+  display: inline-block;
+  margin: 0;
+  border-radius: 0;
+  width: 128px;
+  height: 42px;
+  color: #fff;
+  background-color: #4cbf20;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.btn-make-pdf-abled:hover {
+  background-color: #3fc80b;
+}
+.btn-make-pdf-abled:active {
+  background-color: #fff;
+  border: 1px solid #3fc80b;
+  color: #4cbf20;
+}
+.btn-make-pdf-disabled {
+display: inline-block;
+margin: 0;
+border-radius: 0;
+width: 128px;
+height: 42px;
+color: #fff;
+background-color: #aaa;
+cursor: pointer;
+transition: 0.3s;
+}
+.btn-make-pdf-disabled:hover {
+background-color: #aaa;
+}
+.btn-make-pdf-disabled:active {
+background-color: #fff;
+border: 1px solid #aaa;
+color: #aaa;
+}
+/* land info END */
+
+
+/* 주문 dialog */
+#doRegister .div-register-popup-board {
+  text-align: center !important;
+}
+#doRegister .div-register-popup-board > div:first-child {
+  margin-bottom: 18px !important;
+}
+#doRegister .div-register-popup-board > div:first-child label:first-child{
+  color: #444 !important;
+  font-size: 24px !important;
+
+}
+#doRegister .div-register-popup-board > div:first-child label:last-child {
+  color: #666 !important;
+  font-size: 13px !important;
+}
+#doRegister .div-register-popup-board > div:last-child {
+  display: block !important;
+}
+#doRegister .div-register-popup-board > div:last-child > label {
+  width: 100% !important;
+  display: inline-block !important;
+  font-size: 14px !important;
+  font-weight: 300 !important;
+  color: #555 !important;
+}
+#doRegister .div-register-popup-board > div:last-child > #tfLink {
+  width: 100% !important;
+  margin: 0 !important;
+}
+#doRegister .div-register-popup-bottom {
+  padding-top: 24px !important;
+}
+#doRegister .div-register-popup-bottom vaadin-button {
+  border-radius: 0 !important;
+  height: 40px !important;
+  cursor: pointer !important;
+}
+#doRegister .div-register-popup-bottom #btnOk {
+  background: #4cbf20 !important;
+  color: #fff !important;
+}
+#doRegister .div-register-popup-bottom #btnCancle {
+  color: #666 !important;
+}
+
+.button-mpa-result-pdf-download {
+  border: none;
+  /* flex: 70; */
+  /* height: 55px; */
+  width: 80px;
+  font-size: 15px;
+  color: #4cbf20;
+  background: #fff;
+  border-radius: 0;
+  cursor: pointer;
+  margin-top: 7px;
+  margin-left: 0px;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+  border: 1px solid lightgray;
+}
+.button-mpa-result-pdf-download:hover {
+  color: #fff;
+  background: #4cbf20;
+}
+.div-mpa-download-btn-layout {
+  flex: 70;
+  text-align: right;
+}
+.div-mpa-result-popup-board {
+  /* width: 500px; */
+  /* height: 100%; */
+  padding: 1em 1em 1em 4em;
+}
+
+.div-mpa-result-popup-board div label:last-child{
+  text-align: right;
+}
+#lbComment {
+  display: block;
+  /* width: 100%; */
+}
+.div-mpa-result-popup-board div textarea {
+  /* line-height: 30px; */
+  font-weight: 300;
+  /* display: inline; */
+  width: 100%;
+  border: none;
+  margin: 0;
+  padding: 0 !important;
+}

@@ -3,7 +3,7 @@ import React, { Component, Fragment } from 'react';
 // rc-menu
 import Menu, { SubMenu, Item as MenuItem } from 'rc-menu';
 // import 'rc-menu/assets/index.css';
-import '../../styles/custom-rc-menu.scss';
+import '../../styles/commons/custom-rc-menu.scss';
 
 import storage from '../storage';
 

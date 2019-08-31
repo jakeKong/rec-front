@@ -1,68 +1,37 @@
-// common
-// @import "./commons/header.scss";
-@import "./commons/footer.scss";
-// @import "./commons/content.scss";
-// @import "./commons/pageDescription.scss";
-@import "./commons/label.scss";
-@import "./commons/button.scss";
-// @import "./commons/pageTemplate.scss";
-@import "./commons/div.scss";
-@import "./commons/ulLi.scss";
-
-// layouts
-@import "./layouts/vaadin-app-layout.scss";
-@import "./layouts/vaadin-form-layout.scss";
-@import "./layouts/vaadin-horizontal-layout.scss";
-@import "./layouts/vaadin-split-layout.scss";
-@import "./layouts/vaadin-vertical-layout.scss";
-
-// components
-@import "./components/vaadin-button.scss";
-@import "./components/vaadin-combo-box.scss";
-@import "./components/vaadin-date-picker.scss";
-@import "./components/vaadin-text-field.scss";
-@import "./components/vaadin-select.scss";
-@import "./components/vaadin-grid.scss";
-@import "./components/vaadin-dialog.scss";
-@import "./components/vaadin-details.scss";
-@import "./components/vaadin-list-box.scss";
-
-@import './components/primereact-calendar.scss';
-@import './components/primereact-dropdown.scss';
-
 // agz
 @import "./agz/style.css";
 @import "./agz/table_style.css";
 @import "./agz/reset_v01.css";
-// @import "./agz/prime_react_theme.scss";
-.input-flex-80-left {
-  flex: 80;
-}
-// .index {
-//   width: 100%;
-//   height: 100%;
-// }
-// * {
-//   margin: 0;
-//   padding: 0;
-//   list-style: none;
-//   text-decoration: none;
-//   font-family: '맑은 샘물';
-// }
 
-// html, body {
-//     margin: 0;
-//     padding: 0;
-//     width: 100%;
-//     height: 100%;
-//     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-//       "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-//       sans-serif;
-//     -webkit-font-smoothing: antialiased;
-//     -moz-osx-font-smoothing: grayscale;
-// }
-  
-// code {
-//     font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-//     monospace;
-// }
+// COMMON
+@import "./commons/footer.scss";
+@import "./commons/label.scss";
+@import "./commons/div.scss";
+@import "./commons/ulLi.scss";
+
+@import './components/primereact-calendar.scss';
+@import './components/primereact-dropdown.scss';
+
+@import './commons/find.css';
+@import './commons/login.css';
+@import './commons/register.css';
+
+// BLOG
+@import './blog/tilenews.css';
+
+// BMS
+@import './bms/notice.css';
+@import './bms/question.css';
+
+// MPA
+@import './mpa/landInfo.css';
+
+// OMS
+@import './oms/changePointHistory.css';
+@import './oms/orderHistory.css';
+
+// PAYMENT
+@import './payment/payment.css';
+
+// SCM
+@import './scm/userDetail.css';

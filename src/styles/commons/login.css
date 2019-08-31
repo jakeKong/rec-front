@@ -1,0 +1,137 @@
+/* PAGE-login */
+.div-login * {
+  display: block !important;
+}
+.div-login-card #lbLoginId, #lbLoginPw {
+  margin-bottom: 6px;
+  font-size: 12px;
+  color: #aaa;
+}
+.div-login {
+  padding: 0 !important;
+  width: 361px;
+  box-shadow: 0px 0px 3px 2px rgba(100,100,100,0.1);
+  margin: 0 auto;
+}
+.div-login-card {
+  border: none !important;
+  padding: 42px !important;
+  width:100% !important;
+  display: block !important;
+}
+.div-login-card .div-login-input-field {
+  display: block !important;
+  width: 100%;
+  margin: 0 auto;
+  text-align: left !important;
+}
+.div-login-card .label-login-title {
+  display: none !important;
+  margin-bottom: 32px;
+  color: #444;
+}
+.div-login-card .vaadin-text-field-id, .vaadin-text-field-pw {
+  width: 100%;
+}
+.div-login-card .vaadin-text-field-id::before , .vaadin-text-field-pw::before {
+  display: none;
+}
+.div-login-card #lbLoginIdExample {
+  display: none !important;
+  color: #aaa !important;
+  font-size: 13px;
+  font-weight: 300;
+}
+.div-login-card .vaadin-text-field-id[focused] + #lbLoginIdExample {
+  display: block !important;
+}
+.div-login-card .div-login-button-field {
+  margin-top: 22px;
+  padding:0 !important;
+}
+.div-login-card .p-togglebutton {
+  display: inline-block !important;
+  width: auto !important;
+  background: transparent;
+  border: none;
+  margin: 2px 0 10px 0;
+  padding: 0;
+  outline: 0 !important;
+  color: #666;
+}
+.div-login-card .p-togglebutton.p-pocus {
+  outline: 0 !important;
+}
+.div-login-card .p-togglebutton.p-highlight {
+  background: transparent;
+  color: #4dbf21;
+}
+.div-login-card .p-togglebutton:hover {
+  background: transparent !important;
+}
+.div-login-card .p-togglebutton.p-highlight:hover {
+  color: #4cbf20;
+}
+.div-login-card .p-togglebutton .p-button-icon-left {
+  left: 0;
+}
+.div-login-card .p-togglebutton .pi.pi-check {
+  color: #4dbf21;
+}
+.div-login-card .p-togglebutton.p-highlight:hover .pi.pi-check {
+  color: #4cbf20;
+}
+.div-login-card .p-togglebutton .p-unselectable-text {
+  text-align: right;
+  width: 86px;
+  padding: 0 0 0 16px !important;
+}
+.div-login-card .vaadin-text-field-container[part='input-field'] {
+  background: #fff !important;
+  border: 1px solid #eee !important;
+}
+.div-login-card .div-login-button-field vaadin-button {
+  margin: 0;
+  height: 42px !important;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 12px 0 !important;
+}
+.div-login-card .vaadin-button-login,
+.div-login-card .vaadin-button-login-naver {
+  margin: 0;
+  font-size: 16px;
+}
+.div-login-card .vaadin-button-login {
+  border: none !important;
+  margin-bottom: 12px !important;
+  color: #fff;
+  background-color: #4cbf20;
+}
+.div-login-card .vaadin-button-login-naver {
+  background: url('../agz/image/naver-simbol.png');
+  background-size : 36px;
+  background-repeat: no-repeat;
+  background-position-x: 12px;
+  background-position-y: 50%;
+  border: 1px solid #eee !important;
+  color: #999;
+}
+.div-login .div-login-card .div-sub-field {
+  width: 100%;
+  padding: 0 !important;
+  text-align: right;
+  margin-top: 6px;
+}
+.div-login-card .div-sub-field label{
+  display: inline-block !important;
+  color: #999 !important;
+  font-size: 12px !important;
+  padding: 0 4px;
+  transition: 0.3s;
+}
+.div-login-card .div-sub-field .label-register:hover ,
+.div-login-card .div-sub-field .label-findby-idpw:hover {
+  color: #555 !important;
+}
+/* PAGE-login END */

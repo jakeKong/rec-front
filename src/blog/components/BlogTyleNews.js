@@ -33,7 +33,6 @@ class BlogTyleNews extends Component {
         })
       }
     })
-    const pagesControl = document.querySelector('#pages');
     let pages;
     let items;
     updateItemsFromPage(1);
@@ -47,37 +46,80 @@ class BlogTyleNews extends Component {
         pages = Array.apply(null, {length: Math.ceil(list.length / 6)}).map(function(item, index) {
           return index + 1;
         });
-        const prevBtn = window.document.createElement('vaadin-button');
-        prevBtn.className = 'btn prev';
-        prevBtn.textContent = '<';
-        prevBtn.addEventListener('click', function() {
-          const selectedPage = parseInt(pagesControl.querySelector('[selected]').textContent);
-          updateItemsFromPage(selectedPage - 1);
-        });
-        pagesControl.appendChild(prevBtn);
-
-        pages.forEach(function(pageNumber) {
-          const pageBtn = window.document.createElement('vaadin-button');
-          pageBtn.textContent = pageNumber;
-          pageBtn.className = 'btn number';
-          pageBtn.addEventListener('click', function(e) {
-            updateItemsFromPage(parseInt(e.target.textContent));
-          });
-          if (pageNumber === page) {
-            pageBtn.setAttribute('selected', true);
-          }
-          pagesControl.appendChild(pageBtn);
-        });
-
-        const nextBtn = window.document.createElement('vaadin-button');
-        nextBtn.textContent = '>';
-        nextBtn.className = 'btn next';
-        nextBtn.addEventListener('click', function() {
-          const selectedPage = parseInt(pagesControl.querySelector('[selected]').textContent);
-          updateItemsFromPage(selectedPage + 1);
-        });
-        pagesControl.appendChild(nextBtn);
       }
+      const pagesControl = document.querySelector('#pages');
+      const pagination = document.createElement('div');
+      pagination.className="pagination";
+      if (pagesControl.childNodes.length !== 0) {
+        pagesControl.removeChild(pagesControl.childNodes[0])
+      }
+      pagesControl.appendChild(pagination);
+      const prevBtn = window.document.createElement('vaadin-button');
+      prevBtn.textContent = '<';
+      prevBtn.className = 'btn prev';
+      prevBtn.addEventListener('click', function() {
+        const selectedPage = parseInt(pagination.querySelector('[selected]').textContent);
+        updateItemsFromPage(selectedPage - 1);
+      });
+      pagination.appendChild(prevBtn);
+
+      // default page value = 1
+      if (page-2 < 1) {
+        for (let p=0; p<5; p++) {
+          if (pages[p] !== undefined) {
+            const pageBtn = window.document.createElement('vaadin-button');
+            pageBtn.textContent = pages[p];
+            pageBtn.className = 'btn number';
+            pageBtn.addEventListener('click', function(e) {
+              updateItemsFromPage(parseInt(e.target.textContent));
+            });
+            if (pages[p] === page) {
+              pageBtn.setAttribute('selected', true);
+            }
+            pagination.appendChild(pageBtn);
+          }
+        }
+      } else if (page+2 > pages.length){
+        for (let p=pages.length-5; p<pages.length; p++) {
+          if (pages[p] !== undefined) {
+            const pageBtn = window.document.createElement('vaadin-button');
+            pageBtn.textContent = pages[p];
+            pageBtn.className = 'btn number';
+            pageBtn.addEventListener('click', function(e) {
+              updateItemsFromPage(parseInt(e.target.textContent));
+            });
+            if (pages[p] === page) {
+              pageBtn.setAttribute('selected', true);
+            }
+            pagination.appendChild(pageBtn);
+          }
+        }
+      } else {
+        for (let p=page-3; p<page+2; p++) {
+          if (pages[p] !== undefined) {
+            const pageBtn = window.document.createElement('vaadin-button');
+            pageBtn.textContent = pages[p];
+            pageBtn.className = 'btn number';
+            pageBtn.addEventListener('click', function(e) {
+              updateItemsFromPage(parseInt(e.target.textContent));
+            });
+            if (pages[p] === page) {
+              pageBtn.setAttribute('selected', true);
+            }
+            pagination.appendChild(pageBtn);
+          }
+        }
+      }
+
+      const nextBtn = window.document.createElement('vaadin-button');
+      nextBtn.textContent = '>';
+      nextBtn.className = 'btn next';
+      nextBtn.addEventListener('click', function() {
+        const selectedPage = parseInt(pagination.querySelector('[selected]').textContent);
+        updateItemsFromPage(selectedPage + 1);
+      });
+      pagination.appendChild(nextBtn);
+
       const buttons = Array.from(pagesControl.children);
       buttons.forEach(function(btn, index) {
         if (parseInt(btn.textContent) === page) {

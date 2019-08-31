@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 
 import '@vaadin/vaadin-ordered-layout';
 import '@vaadin/vaadin-button';
-import '../../../styles/ToastEditor.scss';
+import '../../../styles/components/ToastEditor.scss';
 
 import storage from '../../../common/storage';
 import { deleteNotice } from '../../api/noticeAxios'
