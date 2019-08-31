@@ -40,7 +40,7 @@ class ChangePointHistoryGrid extends Component {
       list.push({
         changePointSid: e.get("changeSid"),
         email: e.get("email"), 
-        changeDt: moment(e.get("changeDt")).format('YYYY년MM월DD일 HH:MM:ss'),
+        changeDt: moment(e.get("changeDt")).format('YYYY년MM월DD일 HH:mm:ss'),
         changeDtOrigin: moment(e.get("changeDt")),
         odrPaymentNo: e.get("odrNo") ? e.get("odrNo") : e.get("paymentNo"),
         odrNo: e.get("odrNo"),
@@ -53,7 +53,8 @@ class ChangePointHistoryGrid extends Component {
         currentBalPoint: comma(e.get("currentBalPoint"))+' P',
         currentBalPointOrigin: e.get("currentBalPoint"),
         userNm: e.get("userNm"),
-        activated: e.get("activated")
+        activated: e.get("activated"),
+        remarks: e.get("remarks") ? e.get("remarks") : '-'
       })
     })
     this.setState({gridData: list.reverse()});
@@ -77,12 +78,13 @@ class ChangePointHistoryGrid extends Component {
           });
           // push Value type is JSON
           excelList.push({
-            변동일자: moment(e.get("changeDt")).format('YYYY년MM월DD일 HH:MM:ss'),
+            변동일자: moment(e.get("changeDt")).format('YYYY년MM월DD일 HH:mm:ss'),
             '결제(주문)번호': e.get("odrNo") ? e.get("odrNo") : e.get("paymentNo"),
             결제금액: e.get("paymentCash"),
             변동유형: changeType,
             변동포인트: e.get("changePoint"),
             남은포인트: e.get("currentBalPoint"),
+            비고: e.get("remarks") ? e.get("remarks") : '-'
           })
         })
   
@@ -169,6 +171,7 @@ class ChangePointHistoryGrid extends Component {
             <Column field="changeType" header="변동 유형"/>
             <Column field="changePoint" header="변동 포인트"/>
             <Column field="currentBalPoint" header="남은 포인트"/>
+            <Column field="remarks" header="비고"/>
             <Column columnKey="grdBtnPaymentAttemptCancle" body={this.cancelAttemptTemplate} style={{display:this.state.toCheck}} />
           </DataTable>
         </section>

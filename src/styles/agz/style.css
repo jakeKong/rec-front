@@ -1324,19 +1324,35 @@ html, body, #root .index {
 /* log-point 포인트 변동 내역 조회 테이블*/
 .section-datatable-changehistory .p-datatable-thead th:nth-of-type(1),
 .section-datatable-changehistory .p-datatable-tbody td:nth-of-type(1) {
-    width: 200px;
+    width: 180px;
 }
 .section-datatable-changehistory .p-datatable-thead th:nth-of-type(2),
 .section-datatable-changehistory .p-datatable-tbody td:nth-of-type(2) {
-    width: 200px;
+    width: 150px;
 }
 .section-datatable-changehistory .p-datatable-thead th:nth-of-type(3),
 .section-datatable-changehistory .p-datatable-tbody td:nth-of-type(3) {
-    width: 200px;
+    width: 120px;
 }
 .section-datatable-changehistory .p-datatable-thead th:nth-of-type(4),
 .section-datatable-changehistory .p-datatable-tbody td:nth-of-type(4) {
     width: 120px;
+}
+.section-datatable-changehistory .p-datatable-thead th:nth-of-type(5),
+.section-datatable-changehistory .p-datatable-tbody td:nth-of-type(5) {
+    width: 100px;
+}
+.section-datatable-changehistory .p-datatable-thead th:nth-of-type(6),
+.section-datatable-changehistory .p-datatable-tbody td:nth-of-type(6) {
+    width: 100px;
+}
+.section-datatable-changehistory .p-datatable-thead th:nth-of-type(7),
+.section-datatable-changehistory .p-datatable-tbody td:nth-of-type(7) {
+    width: 150px;
+}
+.section-datatable-changehistory .p-datatable-thead th:nth-of-type(8),
+.section-datatable-changehistory .p-datatable-tbody td:nth-of-type(8) {
+    width: 100px;
 }
 .section-datatable-changehistory .p-datatable .p-button-warning {
     border: none;
@@ -2723,4 +2739,43 @@ margin-left: 70px;
   border: none;
   margin: 0;
   padding: 0 !important;
+}
+
+#btnGoLoginRegister {
+  border: none;
+  height: 50px;
+  width: 100px;
+  font-size: 15px;
+  /* padding: 0 24px; */
+  background: #4fd81b;
+  color: #fff;
+  border-radius: 4px;
+  margin-left: 30px;
+  margin-right: 30px;
+}
+#btnGoLoginRegister:hover {
+  background: #47c10a;
+}
+#btnGoHomeRegister {
+  border: none;
+  height: 50px;
+  width: 100px;
+  font-size: 15px;
+  /* padding: 0 24px; */
+  background: #4fd81b;
+  color: #fff;
+  border-radius: 4px;
+  margin-left: 30px;
+  margin-right: 30px;
+}
+#btnGoHomeRegister:hover {
+  background: #47c10a;
+}
+
+#lbTimer {
+  display: block;
+  font-size: 13px;
+  color: #666;
+  margin-bottom: 4px;
+  text-align: left;
 }

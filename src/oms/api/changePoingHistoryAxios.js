@@ -53,7 +53,8 @@ export const addChangePointHistory = (email, dto) => axios({
     'currentBalPoint': dto.currentBalPoint,
     'odrNo': dto.odrNo,
     'paymentNo': dto.paymentNo,
-    'activated': dto.activated
+    'activated': dto.activated,
+    'remarks': dto.remarks
   })
 });
 

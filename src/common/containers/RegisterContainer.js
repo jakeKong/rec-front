@@ -205,7 +205,8 @@ class RegisterContainer extends Component {
                           'currentBalPoint': 1000,
                           'odrNo': '',
                           'paymentNo': '',
-                          'activated': true
+                          'activated': true,
+                          'remarks': '추천인 코드 입력'
                         }
                         addChangePointHistory(getDto.email, changePointDto).then(res => {
                           // 완료
