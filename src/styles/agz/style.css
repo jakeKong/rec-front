@@ -961,7 +961,6 @@ REQUESTS
 .button-user-disabled-changed-gotrue:hover {
   background: rgb(56, 86, 255);;
 }
-<<<<<<< HEAD
 .btn-make-pdf-abled {
     display: inline-block;
     margin: 0;
@@ -972,14 +971,6 @@ REQUESTS
     background-color: #4cbf20;
     cursor: pointer;
     transition: 0.3s;
-=======
-#lbTimer {
-  display: block;
-  font-size: 13px;
-  color: #666;
-  margin-bottom: 4px;
-  text-align: left;
->>>>>>> origin/yieon
 }
 .p-datepicker-year {
   padding: 0.857em;
@@ -988,15 +979,13 @@ REQUESTS
   border: 0;
   border-radius: 3px;
 }
-<<<<<<< HEAD
 .btn-make-pdf-abled:active {
     background-color: #fff;
     border: 1px solid #3fc80b;
     color: #4cbf20;
-=======
+}
 .input-flex-80-left {
   flex: 80;
->>>>>>> origin/yieon
 }
 .button-address-search {
   display: inline-block;
@@ -1012,7 +1001,6 @@ REQUESTS
   margin-left: -6px;
   font-weight: bold;
   cursor: pointer;
-<<<<<<< HEAD
   transition: 0.3s;
 }
 .btn-make-pdf-disabled:hover {
@@ -1095,9 +1083,6 @@ REQUESTS
   font-size: 20px;
   border-bottom: 2px solid #eee;
   width: 100%;
-=======
-  
->>>>>>> origin/yieon
   border-radius: 0;
   margin: 0 -4px;
 }
@@ -1145,7 +1130,6 @@ REQUESTS
   color: red;
   float: right;
 }
-<<<<<<< HEAD
 .receipt .div-inline{
     margin: 0;
 }
@@ -2720,5 +2704,3 @@ margin-left: 70px;
   margin-bottom: 4px;
   text-align: left;
 }
-=======
->>>>>>> origin/yieon
