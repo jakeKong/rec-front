@@ -196,13 +196,13 @@ class RegisterContainer extends Component {
                       this.setState({isRegisterInput: false, 
                                     isRegisterComplete: true});
                       // 이벤트성 포인트 지급
-                      updateUserByBalancePointIncrease(getDto.email, 1000, result.accessToken).then(res => {
+                      updateUserByBalancePointIncrease(getDto.email, 10000, result.accessToken).then(res => {
                         let changePointDto = {
                           'changeDt': new Date(),
                           'paymentCash': 0,
                           'changeType': 'EVENT_ADD',
-                          'changePoint': 1000,
-                          'currentBalPoint': 1000,
+                          'changePoint': 10000,
+                          'currentBalPoint': 10000,
                           'odrNo': '',
                           'paymentNo': '',
                           'activated': true,
