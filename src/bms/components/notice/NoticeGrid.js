@@ -6,8 +6,6 @@ import 'primereact/resources/themes/nova-light/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 
-import storage from '../../../common/storage';
-
 class NoticeGrid extends Component {
   constructor(props) {
     super(props);
@@ -62,24 +60,21 @@ class NoticeGrid extends Component {
   }
 
   roleCheckColumnRenderingEvent() {
-    if (storage.get('loggedInfo')) {
-      return (
-        // 사용자 (기능별 스타일 적용에 필요한 section 추가)
-        <Fragment>
-          <section className="section-table-notice">
-            <DataTable id="table" 
-                      value={this.state.gridData} 
-                      paginator={true} 
-                      rows={10} 
-                      rowsPerPageOptions={[5,10,15,20]} >
-              <Column field="index" header="번호"/>
-              <Column body={this.noticeTitleClickLabelTemplate} header="제목"/>
-              <Column field="reportingDt" header="작성일자"/>
-            </DataTable>
-          </section>
-        </Fragment>
-      );
-    } 
+    return (
+      <Fragment>
+        <section className="section-table-notice">
+          <DataTable id="table" 
+                    value={this.state.gridData} 
+                    paginator={true} 
+                    rows={10} 
+                    rowsPerPageOptions={[5,10,15,20]} >
+            <Column field="index" header="번호"/>
+            <Column body={this.noticeTitleClickLabelTemplate} header="제목"/>
+            <Column field="reportingDt" header="작성일자"/>
+          </DataTable>
+        </section>
+      </Fragment>
+    );
   }
 
   render() {
