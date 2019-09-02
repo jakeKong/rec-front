@@ -2,6 +2,8 @@ import React, { Component, Fragment } from 'react';
 
 import * as popup from '../popupUtil';
 
+import beta_test from '../../styles/agz/image/popup_beta_test.png'
+
 class BetaTestNotificationPage extends Component {
 
   componentDidMount() {
@@ -16,9 +18,10 @@ class BetaTestNotificationPage extends Component {
   render() {
     return (
       <Fragment>
-        <div>
+        {/* <div>
           베타테스트 안내 입니다.
-        </div>
+        </div> */}
+        <img alt="" src={beta_test} ></img>
         <span style={{float:'right', fontSize:'12px', color:'#666', margin:'10px 10px'}}>
           <label>오늘하루이창 열지 않기</label>
           <input type="checkbox" name="notshow" id="notshow" />

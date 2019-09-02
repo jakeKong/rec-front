@@ -4,7 +4,7 @@ export function openWin( winName ) {
   if( blnCookie !== 'done') {
     // 팝업 설정
     if (winName === 'div_betatest_popup') {
-      var popupOption = "width=500%, height=635%, resizable=no, scrollbars=no, status=no;";
+      var popupOption = "width=518%, height=668%, resizable=no, scrollbars=no, status=no;";
       window.open('/pop/betatest/notification', '베타테스트 안내', popupOption);
     } else if (winName === '') {
       return;
