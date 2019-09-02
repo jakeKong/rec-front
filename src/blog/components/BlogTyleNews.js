@@ -120,7 +120,7 @@ class BlogTyleNews extends Component {
       });
       pagination.appendChild(nextBtn);
 
-      const buttons = Array.from(pagesControl.children);
+      const buttons = Array.from(pagination.children);
       buttons.forEach(function(btn, index) {
         if (parseInt(btn.textContent) === page) {
           btn.setAttribute('selected', true);
