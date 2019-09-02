@@ -1,6 +1,7 @@
 import React, { Fragment, Component } from 'react';
 // import algozip from '../../styles/agz/algozip_w.png';
 import main_illu from '../../styles/agz/image/main_illu_3x.png';
+import intro from '../../styles/agz/image/algozip_intro.png';
 
 import {Dialog} from 'primereact/dialog';
 
@@ -114,7 +115,8 @@ class Footer extends Component {
           </div>
         </div>
         <Dialog header="알고집 소개" visible={this.state.intro} onHide={() => this.infoIntroClose()}>
-          <textarea id="taInfoIntro" rows="20" cols="100" readOnly />
+          {/* <textarea id="taInfoIntro" rows="20" cols="100" readOnly /> */}
+          <img alt="" src={intro}></img>
         </Dialog>
         <Dialog header="이용약관" visible={this.state.termsofservice} onHide={() => this.infoTermsofserviceClose()}>
           <textarea id="taInfoTermsofservice" rows="20" cols="100" readOnly />
