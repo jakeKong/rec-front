@@ -46,7 +46,7 @@ module.exports = function(app) {
   );
   app.use(
     proxy('/web/rec/api/sol', { 
-      target: 'http://algozip.co.kr:8008',
+      target: 'http://172.26.10.111:8008',
       changeOrigin: true
     })
   );
