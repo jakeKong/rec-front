@@ -106,6 +106,11 @@ class LoginContainer extends Component {
           // storage.remove('loggedInfo');
           return window.location.href = '/login';
         }
+        if (loggedInfo.division !== 'NORMAL') {
+          window.alert('일반 가입 회원이 아닙니다.\n네이버 로그인을 이용해주세요.')
+          // storage.remove('loggedInfo');
+          return window.location.href = '/login';
+        }
         storage.set('loggedInfo', loggedInfo)
         return <Redirect to={{
           pathname: "/",
@@ -118,6 +123,11 @@ class LoginContainer extends Component {
         }
         if (userInfo.disabled === false) {
           window.alert('탈퇴한 회원입니다.')
+          // storage.remove('loggedInfo');
+          return window.location.href = '/login';
+        }
+        if (userInfo.division !== 'NAVER') {
+          window.alert('네이버 회원이 아닙니다.\n일반 로그인을 이용해주세요.')
           // storage.remove('loggedInfo');
           return window.location.href = '/login';
         }

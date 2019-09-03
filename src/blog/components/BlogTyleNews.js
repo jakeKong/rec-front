@@ -4,6 +4,8 @@ import React, { Component, Fragment } from 'react';
 import '@vaadin/vaadin-button';
 import '@vaadin/vaadin-text-field';
 
+import default_image from '../../styles/agz/image/blog_default_image.jpg';
+
 class BlogTyleNews extends Component {
 
   constructor(props) {
@@ -165,7 +167,8 @@ class BlogTyleNews extends Component {
           // 블로그 이미지
           image.className = 'image';
           if (e.tylenewsImg === "" || e.tylenewsImg === null) {
-            image.src = 'http://algozip.co.kr:8006/web/rec/api/file/files/downloadFile/61561aa0-a44c-463a-aa5a-118236815330';
+            // image.src = 'http://algozip.co.kr:8006/web/rec/api/file/files/downloadFile/61561aa0-a44c-463a-aa5a-118236815330';
+            image.src = default_image;
           } else {
             image.src = e.tylenewsImg;
           }

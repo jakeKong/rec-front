@@ -38,6 +38,7 @@ class UserDetail extends Component {
   }
 
   render() {
+    const loggedInfo = storage.get('loggedInfo');
     return (
       <Fragment>
         <div className="section-profile">
@@ -74,7 +75,7 @@ class UserDetail extends Component {
           </ul>
           <div>
             <button id="btnUserUpdate"/>
-            <button id="btnPasswordReset"/>
+            <button id="btnPasswordReset" hidden={loggedInfo.division === 'NAVER'}/>
           </div>
         </div>
       </Fragment>

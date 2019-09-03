@@ -15,6 +15,7 @@ export { default as PwFindByResult } from './components/find/PwFindByResult';
 export { default as RegisterAgree } from './components/register/RegisterAgree';
 export { default as RegisterAuth } from './components/register/RegisterAuth';
 export { default as RegisterInput } from './components/register/RegisterInput';
+export { default as RegisterNaver } from './components/register/RegisterNaver';
 export { default as RegisterComplete } from './components/register/RegisterComplete';
 export { default as Autosuggest } from './components/autosuggest/Autosuggest';
 //export { default as AddressSearchDaum } from './components/AddressSearchDaum';

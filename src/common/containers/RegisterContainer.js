@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { RegisterAgree, RegisterAuth, RegisterInput, RegisterComplete } from "../index";
+import { RegisterAgree, RegisterAuth, RegisterInput, RegisterNaver, RegisterComplete } from "../index";
 
 import storage from '../storage';
 import { oauth_web } from '../../OAuth2Config'
@@ -15,6 +15,7 @@ class RegisterContainer extends Component {
       isRegisterAgree: true,
       isRegisterAuth: false,
       isRegisterInput: false,
+      isNaverRegisterInput: false,
       isRegisterComplete: false,
       dto: {
         email: null,
@@ -66,7 +67,7 @@ class RegisterContainer extends Component {
                                         name: name
               }})
               this.setState({isRegisterAgree: false, 
-                  isRegisterInput: true});
+                             isNaverRegisterInput: true});
             }
           }).catch(err => {
             console.log(err);
@@ -131,7 +132,6 @@ class RegisterContainer extends Component {
     });
     */
 
-
   }
 
   addCallback = (getDto) => {
@@ -153,6 +153,7 @@ class RegisterContainer extends Component {
                 window.location.href="/register";
               } else {
                 this.setState({isRegisterInput: false, 
+                               isNaverRegisterInput: false,
                                isRegisterComplete: true});
               }
             }).catch(err => {
@@ -194,7 +195,8 @@ class RegisterContainer extends Component {
                       window.location.href="/register";
                     } else {
                       this.setState({isRegisterInput: false, 
-                                    isRegisterComplete: true});
+                                     isNaverRegisterInput: false,
+                                     isRegisterComplete: true});
                       // 이벤트성 포인트 지급
                       updateUserByBalancePointIncrease(getDto.email, 10000, result.accessToken).then(res => {
                         let changePointDto = {
@@ -242,7 +244,7 @@ class RegisterContainer extends Component {
     }
   }
 
-  titleBooleanCheckEvent(agree, auth, input, complete) {
+  titleBooleanCheckEvent(agree, auth, input, naverInput, complete) {
     
     if (agree) {
       return (
@@ -304,6 +306,26 @@ class RegisterContainer extends Component {
           <RegisterInput addCallback={this.addCallback} addRecommendToAddCallback={this.addRecommendToAddCallback} userinfo={this.state.userinfo}/>
         </div>
       );
+    } else if (naverInput) {
+      return  (
+        <div className="div-register">
+          <div className="div-register-title">
+            <div className="div-register-title-focus-off">
+              <label id="lbAgree" className="label-register-title" />
+            </div>
+            <div className="div-register-title-focus-off">
+              <label id="lbAuth" className="label-register-title" />
+            </div>
+              <div className="div-register-title-focus-on">
+              <label id="lbInput" className="label-register-title" />
+            </div>
+              <div className="div-register-title-focus-off">
+              <label id="lbComplete" className="label-register-title" />
+            </div>
+          </div>
+          <RegisterNaver addCallback={this.addCallback} addRecommendToAddCallback={this.addRecommendToAddCallback} userinfo={this.state.userinfo}/>
+        </div>
+      );
     } else if (complete) {
       return  (
         <div className="div-register">
@@ -328,9 +350,9 @@ class RegisterContainer extends Component {
   }
 
   render() {
-    const { isRegisterAgree, isRegisterAuth, isRegisterInput, isRegisterComplete } = this.state;
+    const { isRegisterAgree, isRegisterAuth, isRegisterInput, isNaverRegisterInput, isRegisterComplete } = this.state;
     return (
-      this.titleBooleanCheckEvent(isRegisterAgree, isRegisterAuth, isRegisterInput, isRegisterComplete)
+      this.titleBooleanCheckEvent(isRegisterAgree, isRegisterAuth, isRegisterInput, isNaverRegisterInput, isRegisterComplete)
     );
   }
 }

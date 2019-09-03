@@ -409,3 +409,46 @@ width: 100%;
 #btnGoHomeRegister:hover {
   background: #4dbf21;
 }
+
+/* naver input*/
+.div-register .div-register-input-naver {
+  padding-top: 60px;
+  margin: 0 auto;
+  width: 560px;
+  text-align: left;
+}
+.div-register .div-register-input-naver > p {
+  padding-bottom: 20px;
+  margin-bottom: 22px;
+  font-size: 24px;
+  text-align: left;
+}
+.div-register .div-register-input-naver > div {
+  width: 90%;
+  margin-left: 5%;
+  margin-bottom: 24px;
+}
+.div-register .div-register-input-naver > div > p {
+  text-align: left;
+  font-size: 14px;
+  color: #666;
+  font-weight: 300;
+}
+.div-register .div-register-input-naver > div > .p-inputtext {
+  width: 100%;
+  max-width: 120px;
+  height: 40px;
+  margin-top: 8px;
+  border: none;
+  border-radius: 0;
+  border-bottom: 1px solid #ccc;
+  text-align: center;
+}
+.div-register .div-register-input-naver > div > .p-inputtext:focus {
+  box-shadow: none;
+}
+.div-register .div-register-input-naver > div button {
+  margin-left: 15px;
+  height: 50px;
+  min-width: 80px;
+}
