@@ -70,6 +70,7 @@ class OrderHistoryGrid extends Component {
         pdfFileNm: e.get("pdfFileNm"),
         ordererNm: e.get("ordererNm"),
         activated: e.get("activated"),
+        jibunAddr: e.get("jibunAddr")
       })
     })    
     this.setState({gridData: list.reverse()});
@@ -96,7 +97,8 @@ class OrderHistoryGrid extends Component {
           excelList.push({
             번호: excelNumber++,
             주문번호: e.get("odrNo"),
-            지번: e.get("pnuNo"),
+            // 지번: e.get("pnuNo"),
+            주소: e.get("jibunAddr"),
             주문일자: moment(e.get("odrDt")).format('YYYY년MM월DD일'),
             증감포인트: comma(e.get("variationPoint"))+' P',
             만료일자: moment(e.get("downloadEndDt")).format('YYYY년MM월DD일'),
@@ -184,7 +186,8 @@ class OrderHistoryGrid extends Component {
             paginator={true} rows={10} rowsPerPageOptions={[5,10,15,20]} >
             <Column field="index" header="번호"/>
             <Column field="odrNo" header="주문 번호"/>
-            <Column field="pnuNo" header="지번"/>
+            {/* <Column field="pnuNo" header="지번"/> */}
+            <Column field="jibunAddr" header="주소"/>
             <Column field="odrDt" header="주문 일자"/>
             <Column field="variationPoint" header="증감 포인트"/>
             <Column field="downloadEndDt" header="만료일자"/>

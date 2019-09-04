@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 //import NumberFormat from 'react-number-format';
 
-const curruncyFormat = (value) => new Intl.NumberFormat('en-IN', {style: 'currency',currency: 'KRW'}).format(value);
+const curruncyFormat = (value) => new Intl.NumberFormat('ko-KR', {style: 'currency',currency: 'KRW'}).format(value);
 // const commaFormat = (value) => new Intl.NumberFormat('en-IN', {maximumSignificantDigits: 3}).format(value);
 class LandInfoView extends Component {
   constructor(props) {
@@ -283,6 +283,7 @@ class LandInfoView extends Component {
                 <img id="imgMap" className="map" alt=""/>
               </li>
               <li>
+                <ul>유사 매매 사례</ul>
                 <table className="tbl-info-04">
                   <tbody>
                     <tr>

@@ -14,7 +14,7 @@ const PaymentPage = () => {
   return (
     // <div>
       <PageTemplate>
-        <div className="page-description">포인트 구매</div>
+        <div className="page-description">포인트 충전</div>
         <PaymentContainer />
       </PageTemplate>
     // </div>

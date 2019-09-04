@@ -30,7 +30,7 @@ class RCMenu extends Component {
               <MenuItem key="/user/details">회원정보</MenuItem>
               <MenuItem key="/oms/order/history/email">주문내역</MenuItem>
               <MenuItem key="/oms/changepoint/history/email">포인트 변동내역</MenuItem>
-              <MenuItem key="/payment/product">포인트구매</MenuItem>
+              <MenuItem key="/payment/product">포인트 충전</MenuItem>
             </SubMenu>
           </Menu>
         </Fragment>

@@ -69,6 +69,12 @@ class AddressSearch extends Component {
 
   onKeyPress = (e) => {
     if (e.key === 'Enter') {
+      if (this.state.suggestions.length === 1) {
+        // console.log(this.state.suggestions[0]);
+        const {onComplete} = this.props;
+        onComplete(this.state.suggestions[0]);
+        return;
+      }
       if (this.state.selected === false) {
         window.alert('항목이 선택되지 않았습니다.\n조회할 주소를 선택 후 다시 시도해주세요.')
       } else {
