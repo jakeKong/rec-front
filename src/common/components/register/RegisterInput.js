@@ -22,6 +22,7 @@ class RegisterInput extends Component {
         birthDt: null,
         createdUser: null,
         assignedRoles: [],
+        division: 'NORMAL'
       },
       tEmailName: '',
       tEmailDomain: '',
@@ -77,24 +78,24 @@ class RegisterInput extends Component {
 
     const { userinfo } = this.props;
 
-    const changeTEmailName = this.changeTEmailName;
-    const changeTEmailDomain = this.changeTEmailDomain;
+    // const changeTEmailName = this.changeTEmailName;
+    // const changeTEmailDomain = this.changeTEmailDomain;
     const changeTName = this.changeTName;
     const changeTTellStation = this.changeTTellStation;
     const changeTTellByNumber = this.changeTTellByNumber;
     const changeTTellNumberByNumber = this.changeTTellNumberByNumber;
 
     if (userinfo !== null && userinfo !== '' && userinfo !== undefined) {
-      if(userinfo.email !== null && userinfo.email !== undefined && userinfo.email !== '') {
-        // email 추출
-        let emailName = userinfo.email.substring(0, userinfo.email.indexOf('@'));
-        let emailDomain = userinfo.email.substring(userinfo.email.indexOf('@')+1, userinfo.email.length);
-        // let emailDomain = userinfo.email.substring(userinfo.email.indexOf('@')+1, userinfo.email.indexOf('.'));
-        // let emailCom = userinfo.email.substring(userinfo.email.indexOf('.')+1, userinfo.email.length);
-        changeTEmailName(emailName);
-        changeTEmailDomain(emailDomain);
-        changeTName(userinfo.name)
-      }
+      // if(userinfo.email !== null && userinfo.email !== undefined && userinfo.email !== '') {
+      //   // email 추출
+      //   let emailName = userinfo.email.substring(0, userinfo.email.indexOf('@'));
+      //   let emailDomain = userinfo.email.substring(userinfo.email.indexOf('@')+1, userinfo.email.length);
+      //   // let emailDomain = userinfo.email.substring(userinfo.email.indexOf('@')+1, userinfo.email.indexOf('.'));
+      //   // let emailCom = userinfo.email.substring(userinfo.email.indexOf('.')+1, userinfo.email.length);
+      //   changeTEmailName(emailName);
+      //   changeTEmailDomain(emailDomain);
+      //   changeTName(userinfo.name)
+      // }
       if(userinfo.tellNo !== null && userinfo.tellNo !== undefined && userinfo.tellNo !== '') {
         let tfTellStation = userinfo.tellNo.substr(0, userinfo.tellNo.indexOf("-"));
         let tfTellByNumber = userinfo.tellNo.substr(userinfo.tellNo.indexOf("-")+1, userinfo.tellNo.lastIndexOf("-")-userinfo.tellNo.indexOf("-")-1);

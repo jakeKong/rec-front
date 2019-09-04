@@ -105,9 +105,9 @@ class Footer extends Component {
               <div className="footer-content">
                 <a href="/"><img src={main_illu} style={{margin:0, display:'inline-block', width:100, height:80}} alt=""></img></a>
                 <address>
-                  주식회사 크로스워크 | 주소 : 서울특별시 성동구 성수동1가 685-418<br/>
+                  주식회사 크로스워크 | 대표자 : 한창훈 | 주소 : 서울특별시 성동구 성수동1가 685-418<br/>
                   전화 : 070-5180-1794 | 팩스 : 0303-3440-0228<br/>
-                  통신판매신고 : 제 2019-서울성동-01463호<br/>
+                  통신판매신고 : 제 2019-서울성동-01463호 | 사업자등록번호 : 553-87-01353<br/>
                   COPYRIGHT 2019 BY CROSSWALK CO.LTD. ALL RIGHTS RESERVED<br/>
                 </address>
               </div>

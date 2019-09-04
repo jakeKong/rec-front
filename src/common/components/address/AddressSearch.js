@@ -33,6 +33,7 @@ class AddressSearch extends Component {
     this.state = {
       value: '',
       suggestions: [],
+      selected: false
     };
   }
   onSearchClick = async (selectedSuggestion) => { 
@@ -42,6 +43,7 @@ class AddressSearch extends Component {
     this.onSuggestionsClearRequested();
   }
   onComplete  = async (selectedSuggestion) => {   
+    this.setState({selected: true})
   }
   // Teach Autosuggest how to calculate suggestions for any given input value.
   getSuggestions = value => {
@@ -59,13 +61,21 @@ class AddressSearch extends Component {
       }
   };
 
-  onChange = (event, { newValue }) => {
-
+  onChange = (event, { newValue, method }) => {
     this.setState({
       value: newValue
     });
   };
 
+  onKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      if (this.state.selected === false) {
+        window.alert('항목이 선택되지 않았습니다.\n조회할 주소를 선택 후 다시 시도해주세요.')
+      } else {
+        this.setState({selected: false})
+      }
+    }
+  }
   componentDidMount() {
       const btnSearch = document.querySelector('#btnSearch');
       btnSearch.innerHTML = '시세조회';
@@ -126,7 +136,8 @@ class AddressSearch extends Component {
       value,                              // usually comes from the application state
       // onBlur,                             // called when the input loses focus, e.g. when user presses Tab
       // type: 'search',                     //usually means that user typed something, but can also be that they pressed Backspace, pasted something into the input, etc.
-      onChange: this.onChange             //called every time the input value changes
+      onChange: this.onChange,             //called every time the input value changes
+      onKeyPress: this.onKeyPress
     };
 
     return (

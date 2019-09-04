@@ -68,6 +68,7 @@ export const addUser = (userDto, token) => axios({
     'birthDt': userDto.birthDt,
     'createdUser': userDto.createdUser,
     'assignedRoles': userDto.assignedRoles,
+    'division': userDto.division
   })
 });
 
@@ -90,6 +91,7 @@ export const createUser = (userDto, token) => axios({
     'birthDt': userDto.birthDt,
     'createdUser': userDto.createdUser,
     'assignedRoles': userDto.assignedRoles,
+    'division': userDto.division
   })
 });
 
