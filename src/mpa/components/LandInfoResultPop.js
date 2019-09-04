@@ -39,7 +39,7 @@ class LandInfoResultPop extends Component {
         document.querySelector('#btnDownloadPdf').textContent = 'PDF 다운';
         document.querySelector('#btnDownloadPdf').addEventListener('click', function() {
           // result.downloadPdfUrl
-          window.open(config.pdfUrl+result.downloadPdfUrl);
+          window.open(config.pdfUrl+'/'+result.downloadPdfUrl);
         })
       }
     }
