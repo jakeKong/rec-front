@@ -29,6 +29,11 @@
   height: 100%;
 }
 
+.div-land-info-item.right > li > ul {
+  font-size: 13.5px;
+  color: rgb(105, 105, 105);
+}
+
 .wrap-land-info table{
   width: 100%;
   font-weight: 200;

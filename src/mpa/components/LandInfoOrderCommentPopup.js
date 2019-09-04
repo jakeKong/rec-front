@@ -94,10 +94,10 @@ class LandInfoOrderCommentPopup extends Component {
       const btnOk = document.querySelector('#btnOk');
       btnOk.innerHTML = "확인";
       btnOk.addEventListener('click', function() {
-        window.setTimeout(function() {
+        // window.setTimeout(function() {
           // console.log("//////"+comment);
           popupCallback(comment);          
-        }, 3000);
+        // }, 3000);
 
         popupClose(clicked);
         document.querySelector('#doRegister').opened = false;
