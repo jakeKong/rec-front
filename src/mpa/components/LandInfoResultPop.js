@@ -17,6 +17,24 @@ class LandInfoResultPop extends Component {
     this.mpaClose = this.mpaClose.bind(this);
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.result !== undefined) {
+      this.setState({mpaPopVisiblility : true});
+      if (storage.get('loggedInfo')) {
+        document.querySelector('#lbEstateResult').innerHTML = nextProps.result.jibunAddr;
+        document.querySelector('#lbMngNoResult').innerHTML = nextProps.result.mngNo;
+        document.querySelector('#lbUsedPointResult').innerHTML = nextProps.result.usedPoint;
+        document.querySelector('#lbBalancePointResult').innerHTML = comma(nextProps.result.balancePoint)+'P';
+        document.querySelector('#taCommentResult').value = nextProps.result.comment;
+        
+        document.querySelector('#btnDownloadPdf').textContent = 'PDF 다운';
+        document.querySelector('#btnDownloadPdf').addEventListener('click', function() {
+          window.open(config.pdfUrl+'/'+nextProps.result.downloadPdfUrl);
+        })
+      }
+    }
+  }
+
   componentDidMount() {
     document.querySelector('#lbEstate').innerHTML = "부동산";
     document.querySelector('#lbMngNo').innerHTML = "주문번호";
@@ -25,30 +43,31 @@ class LandInfoResultPop extends Component {
     document.querySelector('#lbComment').innerHTML = "메모";
     document.querySelector('#lbDownload').innerHTML = "다운로드";
 
-    const { result } = this.props;
-    if (result !== undefined && result !== null) {
-      this.setState({mpaPopVisiblility : true});
-      if (storage.get('loggedInfo')) {
-        document.querySelector('#lbEstateResult').innerHTML = result.jibunAddr;
-        document.querySelector('#lbMngNoResult').innerHTML = result.mngNo;
-        document.querySelector('#lbUsedPointResult').innerHTML = result.usedPoint;
-        document.querySelector('#lbBalancePointResult').innerHTML = comma(result.balancePoint)+'P';
-        // document.querySelector('#lbCommentResult').innerHTML = result.comment;
-        document.querySelector('#taCommentResult').value = result.comment;
+    // const { result } = this.props;
+    // if (result !== undefined && result !== null) {
+    //   this.setState({mpaPopVisiblility : true});
+    //   if (storage.get('loggedInfo')) {
+    //     document.querySelector('#lbEstateResult').innerHTML = result.jibunAddr;
+    //     document.querySelector('#lbMngNoResult').innerHTML = result.mngNo;
+    //     document.querySelector('#lbUsedPointResult').innerHTML = result.usedPoint;
+    //     document.querySelector('#lbBalancePointResult').innerHTML = comma(result.balancePoint)+'P';
+    //     // document.querySelector('#lbCommentResult').innerHTML = result.comment;
+    //     document.querySelector('#taCommentResult').value = result.comment;
         
-        document.querySelector('#btnDownloadPdf').textContent = 'PDF 다운';
-        document.querySelector('#btnDownloadPdf').addEventListener('click', function() {
-          // result.downloadPdfUrl
-          window.open(config.pdfUrl+'/'+result.downloadPdfUrl);
-        })
-      }
-    }
+    //     document.querySelector('#btnDownloadPdf').textContent = 'PDF 다운';
+    //     document.querySelector('#btnDownloadPdf').addEventListener('click', function() {
+    //       // result.downloadPdfUrl
+    //       window.open(config.pdfUrl+'/'+result.downloadPdfUrl);
+    //     })
+    //   }
+    // }
   }
 
   mpaClose() {
-    // const { mpaPopupClose } = this.props;
+    const { resetResult } = this.props;
     // mpaPopupClose();
     this.setState({mpaPopVisiblility: false});
+    resetResult();
   }
 
   render() {

@@ -24,10 +24,10 @@ class LandInfoView extends Component {
       return
     }
     else {
-      window.setTimeout(function() {
+      // window.setTimeout(function() {
         //주문번호를 container에 알려주기
         analysisReturnedCallback(landInfoData.get("mngNo"));          
-      }, 3000);
+      // }, 3000);
     }
     document.querySelector('#tdJibunAddr').innerHTML = landInfoData.get("jibunAddr");
     document.querySelector('#tdRoadAddr').innerHTML = landInfoData.get("roadAddr");
