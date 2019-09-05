@@ -8,6 +8,8 @@ import config from '../../../config';
 //suggestion이 단순 String 이면 상관없으나 DTO(JSON)이면 화면에 표출해줄 특정 필드를 선택해야 된다.
 const getSuggestionValue = suggestion => suggestion.jibunAddr;
 
+let getSearchValue;
+
 //선택대상 목록을 표출하는 형태 정의 하나의 아이템이 여러줄로 나오는 형태로 변경 가능함
 function renderSuggestion(suggestion) {
   return (
@@ -36,8 +38,15 @@ class AddressSearch extends Component {
       selected: false
     };
   }
+
   onSearchClick = async (selectedSuggestion) => { 
     const { onSearchClick } = this.props;
+    if (getSearchValue.length === 1) {
+      const {onComplete} = this.props;
+      onComplete(getSearchValue[0]);
+      getSearchValue = undefined;
+      return;  
+    }
     onSearchClick && onSearchClick();
     
     this.onSuggestionsClearRequested();
@@ -54,7 +63,8 @@ class AddressSearch extends Component {
             .then(res => res.json())
             .then((data) => {     
               if(data.length >= 1 && data[0].roadAddr !== null) {       
-                this.setState({suggestions: data});              
+                this.setState({suggestions: data});         
+                getSearchValue = data;     
               }
               else {this.setState({suggestions: []});}
             }).catch(console.log);  
@@ -143,7 +153,7 @@ class AddressSearch extends Component {
       // onBlur,                             // called when the input loses focus, e.g. when user presses Tab
       // type: 'search',                     //usually means that user typed something, but can also be that they pressed Backspace, pasted something into the input, etc.
       onChange: this.onChange,             //called every time the input value changes
-      onKeyPress: this.onKeyPress
+      onKeyPress: this.onKeyPress,
     };
 
     return (

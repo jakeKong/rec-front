@@ -45,6 +45,8 @@ class LandInfoViewContainer extends Component {
     this.makeLandInfo = this.makeLandInfo.bind(this);    
     this.popupOpenStateEvent = this.popupOpenStateEvent.bind(this);
     this.makePdfResultCheckEvent = this.makePdfResultCheckEvent.bind(this);
+
+    this.resetResult = this.resetResult.bind(this);
     
     this.enabled = 'none';
   }
@@ -57,6 +59,10 @@ class LandInfoViewContainer extends Component {
     // const btnMakePdf = document.querySelector('#btnMakePdf');
     if (mngNo !== '' && mngNo !== undefined) {
       // btnMakePdf.className = "btn-make-pdf-abled"
+      if (storage.get('loggedInfo').balancePoint-900 < 0) {
+        window.alert('포인트가 부족합니다.\n포인트 충전 후 이용해주세요.')
+        return;
+      }
       this.setState({popupOpened: true});
     } else {
       const nfLoadingData = document.createElement('vaadin-notification');
@@ -245,13 +251,10 @@ class LandInfoViewContainer extends Component {
     else {
       if(this.state.search.pnu !== '1111111111111111111') this.getLandInfo(this.state.search);
     }
-       
   }
 
   makePdfResultCheckEvent(makeResult) {
-    
     if (makeResult !== undefined) {
-      console.log(makeResult);
       if (makeResult === '파일 생성 실패') {
         window.alert('파일 생성에 실패하였습니다.\n관리자에게 문의해주세요.');
       } else {
@@ -310,11 +313,19 @@ class LandInfoViewContainer extends Component {
     }
   }
 
+  resetResult() {
+    this.setState({purchaseResult: undefined})
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.makeResult !== undefined) {
+      this.makePdfResultCheckEvent(nextProps.makeResult)
+    }
+  }
+
   render() {
     const { pending, error, landInfoData } = this.props;
     const { popupOpened, purchaseResult } = this.state;
-    const { makeResult } = this.props;
-
     checkInfo();
 
     return (
@@ -336,9 +347,8 @@ class LandInfoViewContainer extends Component {
               {this.popupAddAndUpdateCheckOpenEvent(popupOpened)};
             </script>
           }
-          { purchaseResult === undefined && makeResult !== null && makeResult !== undefined && this.makePdfResultCheckEvent(makeResult) }
         </div>
-        { purchaseResult !== undefined && <LandInfoResultPop result={purchaseResult} />}
+        <LandInfoResultPop result={purchaseResult} resetResult={this.resetResult}/>
       </Fragment>
     );
   }
@@ -351,7 +361,7 @@ export default connect(
     error: state.landInfo.error,
     success: state.landInfo.success,
     complete: state.landInfo.complete,
-    makeResult: state.landInfo.makeResult
+    makeResult: state.landInfo.makeResult,
   }),
   dispatch => ({
     LandInfoViewModule: bindActionCreators(landInfoViewActions, dispatch)
