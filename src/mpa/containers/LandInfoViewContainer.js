@@ -56,6 +56,11 @@ class LandInfoViewContainer extends Component {
   }
   popupOpenStateEvent() {
     const { mngNo } = this.state;
+    const { pending } = this.props;
+    if (pending === true) {
+      window.alert('로딩중인 정보가 존재합니다.\n잠시 후 다시 시도해주세요.')
+      return
+    }
     // const btnMakePdf = document.querySelector('#btnMakePdf');
     if (mngNo !== '' && mngNo !== undefined) {
       // btnMakePdf.className = "btn-make-pdf-abled"
@@ -315,6 +320,7 @@ class LandInfoViewContainer extends Component {
 
   resetResult() {
     this.setState({purchaseResult: undefined})
+    this.setState({mngNo: ''})
   }
 
   componentWillReceiveProps(nextProps) {

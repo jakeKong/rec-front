@@ -41,7 +41,7 @@ class AddressSearch extends Component {
 
   onSearchClick = async (selectedSuggestion) => { 
     const { onSearchClick } = this.props;
-    if (getSearchValue.length === 1) {
+    if (getSearchValue !== undefined && getSearchValue.length === 1) {
       const {onComplete} = this.props;
       onComplete(getSearchValue[0]);
       getSearchValue = undefined;
