@@ -27,11 +27,23 @@ class LandInfoResultPop extends Component {
         document.querySelector('#lbBalancePointResult').innerHTML = comma(nextProps.result.balancePoint)+'P';
         document.querySelector('#taCommentResult').value = nextProps.result.comment;
         
-        document.querySelector('#btnDownloadPdf').textContent = 'PDF 다운';
-        document.querySelector('#btnDownloadPdf').addEventListener('click', function() {
-          // window.open(config.pdfUrl+'/'+nextProps.result.downloadPdfUrl);
-          window.open(config.pdfUrl+'/'+nextProps.result.mngNo+'.pdf');
-        })
+        let refreshPdfUrl = nextProps.result.downloadPdfUrl;
+        const replaceEvent = () => {
+          if (refreshPdfUrl !== undefined) {
+            window.open(config.pdfUrl+'/'+nextProps.result.downloadPdfUrl);
+          } else {
+            window.alert('PDF정보가 존재하지 않습니다.\n관리자에게 문의해주세요.');
+          }
+        }
+        const divDownload = document.querySelector('.div-mpa-download-btn-layout')
+        if (divDownload.childNodes.length !== 0) {
+          divDownload.removeChild(divDownload.childNodes[0])
+        }
+        const btnDownload = document.createElement('button');
+        btnDownload.className = 'button-mpa-result-pdf-download'
+        btnDownload.textContent = 'PDF 다운';
+        btnDownload.addEventListener('click', () => replaceEvent())
+        divDownload.appendChild(btnDownload);
       }
     }
   }
@@ -43,30 +55,10 @@ class LandInfoResultPop extends Component {
     document.querySelector('#lbBalancePoint').innerHTML = "차감 후 잔여포인트";
     document.querySelector('#lbComment').innerHTML = "메모";
     document.querySelector('#lbDownload').innerHTML = "다운로드";
-
-    // const { result } = this.props;
-    // if (result !== undefined && result !== null) {
-    //   this.setState({mpaPopVisiblility : true});
-    //   if (storage.get('loggedInfo')) {
-    //     document.querySelector('#lbEstateResult').innerHTML = result.jibunAddr;
-    //     document.querySelector('#lbMngNoResult').innerHTML = result.mngNo;
-    //     document.querySelector('#lbUsedPointResult').innerHTML = result.usedPoint;
-    //     document.querySelector('#lbBalancePointResult').innerHTML = comma(result.balancePoint)+'P';
-    //     // document.querySelector('#lbCommentResult').innerHTML = result.comment;
-    //     document.querySelector('#taCommentResult').value = result.comment;
-        
-    //     document.querySelector('#btnDownloadPdf').textContent = 'PDF 다운';
-    //     document.querySelector('#btnDownloadPdf').addEventListener('click', function() {
-    //       // result.downloadPdfUrl
-    //       window.open(config.pdfUrl+'/'+result.downloadPdfUrl);
-    //     })
-    //   }
-    // }
   }
 
   mpaClose() {
     const { resetResult } = this.props;
-    // mpaPopupClose();
     this.setState({mpaPopVisiblility: false});
     resetResult();
   }
@@ -107,7 +99,6 @@ class LandInfoResultPop extends Component {
           <div className="default-column">
             <label id="lbDownload" className="label-flex-30-left"/>
             <div className='div-mpa-download-btn-layout'>
-              <button id="btnDownloadPdf" className='button-mpa-result-pdf-download'/>
             </div>
           </div>
         </div>
