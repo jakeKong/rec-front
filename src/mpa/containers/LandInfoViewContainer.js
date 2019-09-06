@@ -17,6 +17,9 @@ import config from '../../config';
 import { checkInfo } from '../../common/loggedInfoCheck'
 import '@vaadin/vaadin-notification';
 
+import { getDefaultPointList } from '../../oms/setupPoint';
+
+let moment = require("moment");
 //해당 주소의 주문 버튼 visible 속성 제어
 // let enabled = 'none';
 //현재는 큰 의미 없는 값이며, 원래 목적은 메인화면에서 주소검색을 한건지, 현재 화면에서 한건지 여부를 판별하기 위해서 사용한 필드
@@ -36,6 +39,7 @@ class LandInfoViewContainer extends Component {
         userId: 'user@test.com',
         userNm: '사용자',
       },
+      pricePoint: undefined,
       commentRes: '',
       mngNo: '',
       selectedSuggestion: null,
@@ -64,7 +68,8 @@ class LandInfoViewContainer extends Component {
     // const btnMakePdf = document.querySelector('#btnMakePdf');
     if (mngNo !== '' && mngNo !== undefined) {
       // btnMakePdf.className = "btn-make-pdf-abled"
-      if (storage.get('loggedInfo').balancePoint-900 < 0) {
+      // if (storage.get('loggedInfo').balancePoint-900 < 0) {
+      if (storage.get('loggedInfo').balancePoint-this.state.pricePoint < 0) {
         window.alert('포인트가 부족합니다.\n포인트 충전 후 이용해주세요.')
         return;
       }
@@ -90,7 +95,8 @@ class LandInfoViewContainer extends Component {
     if (storage.get('loggedInfo')) {
       // 팝업창에서 다운로드 버튼 클릭 시 PDF URL호출 (새창)
       // 포인트 잔액 확인 -> pdf 생성 호출 -> 결과 리턴 -> 차감 -> 포인트 변동내역 추가 -> 결과 팝업 -> 다운로드 기능
-      if (storage.get('loggedInfo').balancePoint-900 < 0) {
+      // if (storage.get('loggedInfo').balancePoint-900 < 0) {
+      if (storage.get('loggedInfo').balancePoint-this.state.pricePoint < 0) {
         window.alert('포인트가 부족합니다.\n포인트 충전 후 이용해주세요.')
         return;
       }
@@ -214,6 +220,13 @@ class LandInfoViewContainer extends Component {
     const btnMakePdf = document.querySelector('#btnMakePdf');
     btnMakePdf.innerHTML = '주문';
 
+    getDefaultPointList().then(res => {
+      this.setState({pricePoint: res.data[0].pricePoint})
+    }).catch(err => {
+      console.log(err)
+      throw(err);
+    });
+
     //로그인 하지 않았으면 PDF 버튼 비활성화
     if (!storage.get('loggedInfo')) {
       this.enabled = 'none';
@@ -268,6 +281,33 @@ class LandInfoViewContainer extends Component {
         // this.updateChangePointHistoryActivated(dto.changePointSid, false);
         // addOrderHistory = mpa api에서 처리
         axios({
+          method: 'POST',
+          url: `${config.orderService}/order/history/add/${storage.get('loggedInfo').email}`,
+          headers: {
+            'Content-Type': 'application/json; charset=UTF-8',
+            'Accept': 'application/json',
+          },
+          // data: JSON.stringify(900)
+          data: JSON.stringify({
+            'odrNo': this.state.mngNo,
+            'odrDt': moment(),
+            'marketPrice': 0,
+            'variationPoint': this.state.pricePoint,
+            'realEstateType': 'ALL',
+            'downloadEndDt': null,
+            'downloadCnt': 0,
+            'pnuNo': this.state.search.pnu,
+            'pdfFileNm': '/'+makeResult,
+            'status': 'TRADE_COMPLETE',
+            'activated': true,
+            'jibunAddr': this.state.search.jibunAddr
+          })
+        }).then(res => {
+          console.log(res)
+        }).catch(err => {
+          console.log(err)
+        })
+        axios({
           method: 'PUT',
           url: `${config.systemService}/user/${storage.get('loggedInfo').email}/update/balancepoint/difference`,
           headers: {
@@ -275,7 +315,8 @@ class LandInfoViewContainer extends Component {
             'Accept': 'application/json',
             'Authorization': `Bearer ${token}`
           },
-          data: JSON.stringify(900)
+          // data: JSON.stringify(900)
+          data: JSON.stringify(this.state.pricePoint)
         }).then(res => {
           console.log(res)
           axios({
@@ -286,11 +327,13 @@ class LandInfoViewContainer extends Component {
               'Accept': 'application/json'
             },
             data: JSON.stringify({
-              'changeDt': new Date(),
+              'changeDt': moment(),
               'paymentCash': null,
               'changeType': 'PURCHASE_ADD',
-              'changePoint': 900,
-              'currentBalPoint': storage.get('loggedInfo').balancePoint-900,
+              // 'changePoint': 900,
+              'changePoint': this.state.pricePoint,
+              // 'currentBalPoint': storage.get('loggedInfo').balancePoint-900,
+              'currentBalPoint': storage.get('loggedInfo').balancePoint-this.state.pricePoint,
               'odrNo': this.state.mngNo,
               'paymentNo': null,
               'activated': true
@@ -300,8 +343,10 @@ class LandInfoViewContainer extends Component {
             let result = {
               jibunAddr: this.state.search.jibunAddr,
               mngNo: this.state.mngNo,
-              usedPoint: 900+'P',
-              balancePoint: storage.get('loggedInfo').balancePoint-900,
+              // usedPoint: 900+'P',
+              usedPoint: this.state.pricePoint+'P',
+              // balancePoint: storage.get('loggedInfo').balancePoint-900,
+              balancePoint: storage.get('loggedInfo').balancePoint-this.state.pricePoint,
               comment: this.state.commentRes,
               downloadPdfUrl: makeResult
             }

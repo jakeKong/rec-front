@@ -16,13 +16,15 @@ class BlogTyleNews extends Component {
   }
 
   componentDidMount() {
-
+    // 조회된 bloglist
     const { blogTyleNewsList } = this.props;
     if (!blogTyleNewsList || blogTyleNewsList === null || blogTyleNewsList === undefined) {
       return;
     }
     let list = [];
+    // json type으로 가져온 list값을 새로운 list 변수에 할당
     blogTyleNewsList.forEach(e => {
+      // 블로그 활성화 여부 체크
       if (e.get('tylenewsVisibility') === true) {
         list.push({
           // tylenewsSid: e.get('tylenewsSid'),
@@ -35,6 +37,7 @@ class BlogTyleNews extends Component {
         })
       }
     })
+
     let pages;
     let items;
     updateItemsFromPage(1);
@@ -52,9 +55,11 @@ class BlogTyleNews extends Component {
       const pagesControl = document.querySelector('#pages');
       const pagination = document.createElement('div');
       pagination.className="pagination";
+      // 페이징 된 컴포넌트 체크 후 변동값 발생시 중복제거를 위한 등록된 페이지 컴포넌트 삭제
       if (pagesControl.childNodes.length !== 0) {
         pagesControl.removeChild(pagesControl.childNodes[0])
       }
+      // 페이징 우측버튼
       pagesControl.appendChild(pagination);
       const prevBtn = window.document.createElement('vaadin-button');
       prevBtn.textContent = '<';
@@ -65,6 +70,7 @@ class BlogTyleNews extends Component {
       });
       pagination.appendChild(prevBtn);
 
+      // 페이지 값에 따른 페이징 변환
       // default page value = 1
       if (page-2 < 1) {
         for (let p=0; p<5; p++) {
@@ -113,6 +119,7 @@ class BlogTyleNews extends Component {
         }
       }
 
+      // 페이징 우측 컴포넌트
       const nextBtn = window.document.createElement('vaadin-button');
       nextBtn.textContent = '>';
       nextBtn.className = 'btn next';
@@ -149,15 +156,18 @@ class BlogTyleNews extends Component {
       var end = page * 6;
       items = list.sort((prev, next) => new Date(prev.tylenewsWriteDt).getTime() > new Date(next.tylenewsWriteDt).getTime() ? 1 : -1).reverse().slice(start, end);
 
+      // 블로그 card 컴포넌트
       const divBlogWrapper = document.querySelector('#div-blog-wrapper');
       divBlogWrapper.className = 'wrap-card-news';
       const divBlogColumns = document.createElement('div');
       divBlogColumns.className = 'masonry';
+      // 블로그 컴포넌트 갱신을 위한 노드관리
       if (divBlogWrapper.childNodes.length !== 0) {
         for (let i=0; i<divBlogWrapper.childNodes.length; i++) {
           divBlogWrapper.removeChild(divBlogWrapper.childNodes[i]);
         }
       }
+      // 페이징 처리되어 선택된 6개의 리스트값에 대한 컴포넌트화
       items.forEach(e => {
         if (e.tylenewsVisibility === true) {
           const divBlogCard = document.createElement('div');
