@@ -57,7 +57,6 @@ class Login extends Component {
     btnLogin.textContent = '로그인'
     btnLogin.className = 'vaadin-button-login';
     btnLogin.addEventListener('click', function() {
-      console.log(tfLoginId.value)
       // 로그인 버튼 클릭 이벤트
       if (tfLoginId.value === null || tfLoginId.value === '' || tfLoginId.value === undefined) {
         window.confirm('아이디를 입력해주세요');
@@ -102,33 +101,38 @@ class Login extends Component {
       }
     })
 
+    // 네이버 로그인 sdk 설정
     let naverLogin = new window.naver.LoginWithNaverId({
       clientId: "1iW5r3Qytlk4tte3X_UX",
       // clientSecret = 'jdC9xJas1b';
       callbackUrl: "http://algozip.co.kr/naver/log/pop",
-      // callbackUrl: "http://localhost:3000/login",
       isPopup: true, /* 팝업을 통한 연동처리 여부 */
       loginButton: {color: "white", type: 3, height: 60} /* 로그인 버튼의 타입을 지정 */
     })
+    // 네이버 로그인 sdk 호출
     naverLogin.init();
 
+    // 회원가입 버튼
     const lbRegister = document.querySelector('#lbRegister');
     lbRegister.addEventListener('click', function() {
       window.location.href = '/register';
     })
 
+    // 아이디/비밀번호찾기 버튼
     const lbFindByIdPw = document.querySelector('#lbFindByIdPw');
     lbFindByIdPw.addEventListener('click', function() {
       window.location.href = '/user/findhelp';
     })
   }
 
+  // 쿠키 설정
   setCookieById(name, value, expiredays) {
     let today = new Date();
     today.setDate(today.getDate() + expiredays);
     document.cookie = name + "=" + escape(value) + "; path=/; expires="+ today.toGMTString() + ";";
   }
 
+  // 쿠키 가져오기
   getCookieById() {
     var cook = document.cookie + ';';
     var idx = cook.indexOf("userid", 0);
@@ -145,6 +149,7 @@ class Login extends Component {
     }
   }
 
+  // 아이디 저장 이벤트
   idSavedCheck(id, pw) {
     const { checked } = this.state;
     const { RealEstateCommunityLoginAttempt } = this.props;
@@ -160,6 +165,7 @@ class Login extends Component {
     }
   }
 
+  // 아이디 저장 체크여부
   idTextSavedCheckEvent(e) {
     this.setState({checked: e.value})
   }

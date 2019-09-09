@@ -56,6 +56,7 @@ class ChangePointHistoryByEmailContainer extends Component {
 
   }
 
+  // 사용자별 포인트 변동내역 조회
   getChangePointHistoryListByEmail = async (email, search) => {
     const { ChangePointHistoryModule } = this.props;
     try {

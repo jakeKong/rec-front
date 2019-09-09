@@ -56,6 +56,7 @@ class OrderHistoryByEmailContainer extends Component {
     }
   }
 
+  // 사용자별 주문내역 조회
   getOrderHistoryListByEmail = async (email, search) => {
     const { OrderHistoryModule } = this.props;
     try {
@@ -65,10 +66,13 @@ class OrderHistoryByEmailContainer extends Component {
     }
   }
 
+  // 주문취소요청 callback 이벤트
   orderCancleAttemptCallback = (dto) => {
     const { search } =this.state;
     const loggedInfo = storage.get('loggedInfo');
+    //주문취소여부 변환
     updateOrderHistoryActivated(dto.odrSid, loggedInfo.email, false).then(res => {
+      // 주문취소 상태로 변환
       updateOrderHistoryCancleAttemptStatus(dto.odrSid, loggedInfo.email, 'TRADE_CANCLE_ATTEMPT').then(res => {
         // 로그인 된 사용자 정보로 목록 조회
         this.getOrderHistoryListByEmail(loggedInfo.email, search);

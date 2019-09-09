@@ -81,10 +81,6 @@ class UserUpdate extends Component {
 
     const loggedInfo = storage.get('loggedInfo');
 
-    // const changeTEmailName = this.changeTEmailName;
-    // const changeTEmailDomain = this.changeTEmailDomain;
-    // const changeTEmailCom = this.changeTEmailCom;
-
     const changeTName = this.changeTName;
 
     const changeTBirthDt = this.changeTBirthDt;
@@ -98,12 +94,6 @@ class UserUpdate extends Component {
 
     if (loggedInfo.email !== null && loggedInfo.email !== undefined && loggedInfo.email !== '') {
       document.querySelector('#lbFullEmail').innerHTML = loggedInfo.email;
-      // let emailName = loggedInfo.email.substring(0, loggedInfo.email.indexOf('@'));
-      // let emailDomain = loggedInfo.email.substring(loggedInfo.email.indexOf('@')+1, loggedInfo.email.indexOf('.'));
-      // let emailCom = loggedInfo.email.substring(loggedInfo.email.indexOf('.')+1, loggedInfo.email.length);
-      // changeTEmailName(emailName);
-      // changeTEmailDomain(emailDomain);
-      // changeTEmailCom(emailCom);
     }
 
     if (loggedInfo.name !== null && loggedInfo.name !== undefined && loggedInfo.name !== '') {
@@ -151,31 +141,6 @@ class UserUpdate extends Component {
       })
     });
   }
-
-  // changeTEmailName(e) { 
-  //   if (e.target === undefined || e.target === null) {
-  //     this.setState({tEmailName: e})
-  //     document.querySelector('#itEname').readOnly = true;
-  //   } else {
-  //     this.setState({tEmailName: e.target.value})
-  //   }
-  // }
-  // changeTEmailDomain(e) { 
-  //   if (e.target === undefined || e.target === null) {
-  //     this.setState({tEmailDomain: e})
-  //     document.querySelector('#itEdomain').readOnly = true;
-  //   } else {
-  //     this.setState({tEmailDomain: e.target.value}) 
-  //   }
-  // }
-  // changeTEmailCom(e) { 
-  //   if (e.target === undefined || e.target === null) {
-  //     this.setState({tEmailCom: e})
-  //     document.querySelector('#itEcom').readOnly = true;
-  //   } else {
-  //     this.setState({tEmailCom: e.target.value}) 
-  //   }
-  // }
 
   changeTName(e) { 
     if (e.target === undefined || e.target === null) {
@@ -225,6 +190,7 @@ class UserUpdate extends Component {
     }
   }
 
+  // 수정 요청
   updateCall() {
     const { userUpdateAttemptCallback, popupClose } = this.props;
     const { dto, authStatus } = this.state;
@@ -239,13 +205,16 @@ class UserUpdate extends Component {
     dto.name = tName;
     dto.birthDt = tbirthDt;
     dto.addressNo = tAddressNo;
+    // 상세주소 입력여부 체크
     if (tAddressTo !== '' && tAddressTo !== undefined && tAddressTo !== null) {
       dto.address = tAddress + ' ' + tAddressTo;
     } else {
       dto.address = tAddress;
     }
     dto.assignedRoles = storage.get('loggedInfo').assignedRoles;
+    // 텍스트필드에 입력된 핸드폰 번호와 현재 로그인된 사용자정보의 핸드폰번호가 일치하지 않을 경우
     if (dto.tellNo !== storage.get('loggedInfo').tellNo) {
+      // 인증완료 여부 체크
       if (authStatus === true) {
         userUpdateAttemptCallback(dto);
         popupClose();
@@ -263,6 +232,7 @@ class UserUpdate extends Component {
     popupClose();
   }
 
+  // 휴대폰 인증 컴포넌트 함수
   phoneAuthCheckingEvent() {
     const { tTellStation, tTellByNumber, tTellNumberByNumber } = this.state;
     let tellNo = tTellStation+'-'+tTellByNumber+'-'+tTellNumberByNumber;
@@ -280,9 +250,11 @@ class UserUpdate extends Component {
     }
   }
 
+  // 휴대폰 인증 요청
   authAttempt() {
     const { tTellStation, tTellByNumber, tTellNumberByNumber } = this.state;
     let phoneNumber;
+    // 전화번호 입력여부 체크
     if (tTellStation !== '' && tTellByNumber !== '' && tTellNumberByNumber !== '') {
       this.setState({tellNo: tTellStation+'-'+tTellByNumber+'-'+tTellNumberByNumber})
       phoneNumber = tTellStation+tTellByNumber+tTellNumberByNumber
@@ -295,12 +267,14 @@ class UserUpdate extends Component {
     document.querySelector('#btnMessageCall').innerHTML = '재전송';
 
     const token = storage.get('token');
-
+    // 전화번호로 가입된 회원정보 존재여부 체크
     checkUserByTellNo(tTellStation+'-'+tTellByNumber+'-'+tTellNumberByNumber, token).then(res => {
+      // 해당 번호로 가입된 회원정보가 존재할 경우
       if (res.data !== '' && res.data === true) {
         window.confirm('해당 번호로 가입된 회원정보가 존재합니다.');
         return;
       } else {
+        // 해당 번호로 가입된 회원정보가 존재하지 않을 경우 인증요청
         axios({
           method: 'GET',
           // url: `${config.solapiService}/solapi/simple/send/${this.state.tellNo}`,
@@ -310,18 +284,21 @@ class UserUpdate extends Component {
             'Accept': 'application/json',
           }
         }).then(res => {
-          console.log(res);
           if (res.data !== '') {
             if (res.data.errorCode !== '' && res.data.errorCode !== undefined && res.data.errorCode !== null) {
               console.log(res.data.errorCode)
+              // 인증 결과값으로 error값을 받았을 경우 alert알림
               window.alert(res.data.errorMessage);
+              // 실패시
             } else if (res.data === '연결실패'){
               window.alert(res.data);
             } else {
+              // 인증번호 요청 성공시
               // 문자 발송 성공 인증번호 4자리 코드 발급
               this.setState({responseAuthNumber: JSON.stringify(res.data)})
               // 인증번호 발급 후 30초 이후 폐기
               setTimeout(() => this.setState({responseAuthNumber: null}), 30000)
+              // 숫자 표기 라벨 카운터
               CountDownTimer('#lbTimer', '#btnMessageCall');
             }
           }
@@ -336,6 +313,7 @@ class UserUpdate extends Component {
     })
   }
 
+  // 인증하기 버튼 클릭 이벤트
   authCheck() {
     const {responseAuthNumber, authNumber} = this.state;
     if (responseAuthNumber !== null && responseAuthNumber !== undefined && responseAuthNumber !== '') {
