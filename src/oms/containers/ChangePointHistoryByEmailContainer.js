@@ -8,8 +8,10 @@ import { ChangePointHistoryGrid, ChangePointHistorySearch } from "../index";
 import storage from '../../common/storage';
 import { checkInfo } from '../../common/loggedInfoCheck'
 
+// 동기 사용을 위한 api
 import { updateChangePointHistoryActivated, updateChangePointHistoryChangeType } from '../api/changePoingHistoryAxios'
 
+// 포인트 변동내역 컨테이느
 class ChangePointHistoryByEmailContainer extends Component {
 
   // state set을 위한 초기 생성자
@@ -34,6 +36,7 @@ class ChangePointHistoryByEmailContainer extends Component {
   */
   searchCallback = async (dataSearchChild) => {
     const loggedInfo = storage.get('loggedInfo');
+    // 로그인 된 사용자 정보로 목록 조회
     this.getChangePointHistoryListByEmail(loggedInfo.email, dataSearchChild);
   }
 
@@ -47,10 +50,8 @@ class ChangePointHistoryByEmailContainer extends Component {
     const loggedInfo = storage.get('loggedInfo');
     if (loggedInfo.email || loggedInfo.email !== null || loggedInfo.email !== undefined) {
         const { search } = this.state;
-        // const { changePointHistoryList } = this.props;
-        // if (!changePointHistoryList || changePointHistoryList === undefined || changePointHistoryList.isEmpty()) {
-            this.getChangePointHistoryListByEmail(loggedInfo.email, search);
-        // }
+        // 로그인 된 사용자 정보로 목록 조회
+        this.getChangePointHistoryListByEmail(loggedInfo.email, search);
     }
 
   }
@@ -64,26 +65,18 @@ class ChangePointHistoryByEmailContainer extends Component {
     }
   }
 
+  // 결제 취소 요청 이벤트
   changePointCancleAttmeptCallback = (dto) => {
     const { search } = this.state;
     const loggedInfo = storage.get('loggedInfo');
     if (loggedInfo.balancePoint-dto.changePointOrigin < 0) {
       window.alert('잔여 포인트가 부족하여 결제취소를 할 수 없습니다.')
     } else {
-      // let changePointDto = {
-      //   'changeDt': new Date(),
-      //   'paymentCash': dto.paymentCashOrigin,
-      //   'changeType': 'PAYMENT_SUB_ATTEMPT',
-      //   'changePoint': dto.changePointOrigin,
-      //   'currentBalPoint': loggedInfo.balancePoint-dto.changePointOrigin,
-      //   'odrNo': dto.odrNo,
-      //   'paymentNo': dto.paymentNo,
-      //   'activated': false
-      // }
-      // const token = storage.get('token');
-      // 실제 결제 취소 내용 추가 필요 (or 관리자의 결제 취소로 재변경)
+      // 취소상태로 변경
       updateChangePointHistoryActivated(dto.changePointSid, loggedInfo.email, false).then(res => {
+        // 변동타입 취소요청으로 변경
         updateChangePointHistoryChangeType(dto.changePointSid, loggedInfo.email, 'PAYMENT_SUB_ATTEMPT').then(res => {
+          // 목록 재호출
           this.getChangePointHistoryListByEmail(loggedInfo.email, search);
         }).catch(err => {
           console.log(err)
@@ -91,47 +84,8 @@ class ChangePointHistoryByEmailContainer extends Component {
       }).catch(err => {
         console.log(err)
       })
-
-      // this.addChangePointHistory(loggedInfo.email, changePointDto, search);
-      // this.updateUserByBalancePointDifference(loggedInfo.email, dto.changePointOrigin, token);
     }
   }
-
-  // addChangePointHistory = async (email, dto, search) => {
-  //   const { ChangePointHistoryModule } = this.props;
-  //   try {
-  //     await ChangePointHistoryModule.addChangePointHistory(email, dto, search)
-  //   } catch (e) {
-  //     console.log("error log : " + e);
-  //   }
-  // }
-
-  // updateChangePointHistoryActivated = async (changePointSid, email, changePointActivated) => {
-  //   const { ChangePointHistoryModule } = this.props;
-  //   try {
-  //     await ChangePointHistoryModule.updateChangePointHistoryActivated(changePointSid, email, changePointActivated)
-  //   } catch (e) {
-  //     console.log("error log : " + e);
-  //   }
-  // }
-
-  // updateChangePointHistoryChangeType = async (changePointSid, email, changeType) => {
-  //   const { ChangePointHistoryModule } = this.props;
-  //   try {
-  //     await ChangePointHistoryModule.updateChangePointHistoryChangeType(changePointSid, email, changeType)
-  //   } catch (e) {
-  //     console.log("error log : " + e);
-  //   }
-  // }
-
-  // updateUserByBalancePointDifference = async (email, differencePoint, token) => {
-  //   const { UserManageModule } = this.props;
-  //   try {
-  //     await UserManageModule.updateUserByBalancePointDifference(email, differencePoint, token)
-  //   } catch (e) {
-  //     console.log("error log : " + e);
-  //   }
-  // }
 
   render() {
     const { changePointHistoryList, pending, error, success } = this.props;

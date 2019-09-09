@@ -56,4 +56,10 @@ module.exports = function(app) {
       changeOrigin: true
     })
   );
+  app.use(
+    proxy('/crosswalk', { 
+      target: 'http://srd.iptime.org:8080',
+      changeOrigin: true
+    })
+  );
 }

@@ -50,6 +50,7 @@ class OrderHistoryByEmailContainer extends Component {
     const loggedInfo = storage.get('loggedInfo');
     if (loggedInfo.email || loggedInfo.email !== null || loggedInfo.email !== undefined) {
         const { search } = this.state;
+        // 로그인 된 사용자 정보로 목록 조회
         this.getOrderHistoryListByEmail(loggedInfo.email, search);
       // }
     }
@@ -69,6 +70,7 @@ class OrderHistoryByEmailContainer extends Component {
     const loggedInfo = storage.get('loggedInfo');
     updateOrderHistoryActivated(dto.odrSid, loggedInfo.email, false).then(res => {
       updateOrderHistoryCancleAttemptStatus(dto.odrSid, loggedInfo.email, 'TRADE_CANCLE_ATTEMPT').then(res => {
+        // 로그인 된 사용자 정보로 목록 조회
         this.getOrderHistoryListByEmail(loggedInfo.email, search);
       }).catch(err => {
         console.log(err)
@@ -77,24 +79,6 @@ class OrderHistoryByEmailContainer extends Component {
       console.log(err)
     })
   }
-
-  // updateOrderHistoryActivated = async (odrSid, email, orderActivated) => {
-  //   const { OrderHistoryModule } = this.props;
-  //   try {
-  //     await OrderHistoryModule.updateOrderHistoryActivated(odrSid, email, orderActivated)
-  //   } catch (e) {
-  //     console.log("error log : " + e);
-  //   }
-  // }
-
-  // updateOrderHistoryCancleAttemptStatus = async (odrSid, email, status, search) => {
-  //   const { OrderHistoryModule } = this.props;
-  //   try {
-  //     await OrderHistoryModule.updateOrderHistoryCancleAttemptStatus(odrSid, email, status, search)
-  //   } catch (e) {
-  //     console.log("error log : " + e);
-  //   }
-  // }
 
   render() {
     const { email, orderHistoryList, pending, error, success } = this.props;

@@ -151,23 +151,40 @@ class LandInfoViewContainer extends Component {
     // 선택이 되면 들어오는 함수
     this.setState({selectedSuggestion: selectedSuggestion})
     // state.search 값 초기화
-    this.setState({
-      search: {
-        jibunAddr: selectedSuggestion.jibunAddr,
-        roadAddr: selectedSuggestion.roadAddr,
-        pnu: selectedSuggestion.bdMgtSn,
-        // comment: '',
-      }
-    });
     if (selectedSuggestion !== undefined) {
-      let nowCallSearchValue = {
-        jibunAddr: selectedSuggestion.jibunAddr,
-        roadAddr: selectedSuggestion.roadAddr,
-        pnu: selectedSuggestion.bdMgtSn.substring(0,19),
-        userId: storage.get('loggedInfo') ? storage.get('loggedInfo').email : null,
-        userNm: storage.get('loggedInfo') ? storage.get('loggedInfo').name : null,
-      }
-      this.getLandInfo(nowCallSearchValue);
+      axios({
+        method: 'GET',
+        url: `${config.gosmService}/utility/Utility/getPNUByFullAddress/`,
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Accept': 'application/json'
+        },
+        params: {
+          juso: selectedSuggestion.jibunAddr
+        }
+      }).then(res => {
+        this.setState({
+          search: {
+            jibunAddr: selectedSuggestion.jibunAddr,
+            roadAddr: selectedSuggestion.roadAddr,
+            // pnu: selectedSuggestion.bdMgtSn,
+            pnu: res.data.PNU,
+            // comment: '',
+          }
+        });
+        let nowCallSearchValue = {
+          jibunAddr: selectedSuggestion.jibunAddr,
+          roadAddr: selectedSuggestion.roadAddr,
+          // pnu: selectedSuggestion.bdMgtSn.substring(0,19),
+          pnu: res.data.PNU,
+          userId: storage.get('loggedInfo') ? storage.get('loggedInfo').email : null,
+          userNm: storage.get('loggedInfo') ? storage.get('loggedInfo').name : null,
+        }
+        this.getLandInfo(nowCallSearchValue);
+      }).catch(err => {
+        console.log(err)
+        window.alert('정규지번주소 지번 변환에 실패하였습니다.')
+      })
     }
   
     this.enabled = 'none';
@@ -175,15 +192,31 @@ class LandInfoViewContainer extends Component {
   }
   onSearchClick = async (selectedSuggestion) => { 
     if (this.state.selectedSuggestion !== null && selectedSuggestion !== undefined) {
-      let searchValue = {
-        jibunAddr: this.state.selectedSuggestion.jibunAddr,
-        roadAddr: this.state.selectedSuggestion.roadAddr,
-        pnu: this.state.selectedSuggestion.pnu.substring(0,19),
-        userId: storage.get('loggedInfo') ? storage.get('loggedInfo').email : null,
-        userNm: storage.get('loggedInfo') ? storage.get('loggedInfo').name : null,
-      }
-      //부동산 정보 검색 API 호출
-      this.getLandInfo(searchValue);
+      axios({
+        method: 'GET',
+        url: `${config.gosmService}/utility/Utility/getPNUByFullAddress/`,
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Accept': 'application/json'
+        },
+        params: {
+          juso: selectedSuggestion.jibunAddr
+        }
+      }).then(res => {
+        let searchValue = {
+          jibunAddr: this.state.selectedSuggestion.jibunAddr,
+          roadAddr: this.state.selectedSuggestion.roadAddr,
+          // pnu: this.state.selectedSuggestion.pnu.substring(0,19),
+          pnu: res.data.PNU,
+          userId: storage.get('loggedInfo') ? storage.get('loggedInfo').email : null,
+          userNm: storage.get('loggedInfo') ? storage.get('loggedInfo').name : null,
+        }
+        //부동산 정보 검색 API 호출
+        this.getLandInfo(searchValue);
+      }).catch(err => {
+        console.log(err)
+        window.alert('정규지번주소 지번 변환에 실패하였습니다.')
+      })
     } else {
       window.alert('시세 조회를 원하는 주소를 입력해주세요.')
     }
@@ -247,23 +280,40 @@ class LandInfoViewContainer extends Component {
     if(this.props.postStat !== undefined) {
       const {selectedSuggestion} = this.props.postStat;
       isSearched = false;
-      this.setState({
-        search: {
+      axios({
+        method: 'GET',
+        url: `${config.gosmService}/utility/Utility/getPNUByFullAddress/`,
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Accept': 'application/json'
+        },
+        params: {
+          juso: selectedSuggestion.jibunAddr
+        }
+      }).then(res => {
+        this.setState({
+          search: {
+            jibunAddr: selectedSuggestion.jibunAddr,
+            roadAddr: selectedSuggestion.roadAddr,
+            // pnu: selectedSuggestion.bdMgtSn.substring(0,19),
+            pnu: res.data.PNU,
+            comment: '',
+          },
+          selectedSuggestion: {selectedSuggestion}
+        });
+        const searchKey = {
           jibunAddr: selectedSuggestion.jibunAddr,
           roadAddr: selectedSuggestion.roadAddr,
-          pnu: selectedSuggestion.bdMgtSn.substring(0,19),
-          comment: '',
-        },
-        selectedSuggestion: {selectedSuggestion}
-      });
-      const searchKey = {
-        jibunAddr: selectedSuggestion.jibunAddr,
-        roadAddr: selectedSuggestion.roadAddr,
-        pnu: selectedSuggestion.bdMgtSn.substring(0,19),
-        userId: storage.get('loggedInfo') ? storage.get('loggedInfo').email : null,
-        userNm: storage.get('loggedInfo') ? storage.get('loggedInfo').name : null,
-      };
-      this.getLandInfo(searchKey);
+          // pnu: selectedSuggestion.bdMgtSn.substring(0,19),
+          pnu: res.data.PNU,
+          userId: storage.get('loggedInfo') ? storage.get('loggedInfo').email : null,
+          userNm: storage.get('loggedInfo') ? storage.get('loggedInfo').name : null,
+        };
+        this.getLandInfo(searchKey);
+      }).catch(err => {
+        console.log(err)
+        window.alert('정규지번주소 지번 변환에 실패하였습니다.')
+      })        
     }
     //이전 화면에서 넘어온 값이 아닌경우
     else {

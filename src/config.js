@@ -15,7 +15,7 @@ const config = {
     naverpay: "https://dev.apis.naver.com",
     pdfUrl: "http://algozip.co.kr:8080/generatedPdf",
     iamportpayMemberId:"imp74972676",
-
+    gosmService: "/crosswalk"
 };
 
 export default config;
