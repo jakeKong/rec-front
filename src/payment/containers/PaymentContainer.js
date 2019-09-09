@@ -52,6 +52,7 @@ class PaymentContainer extends Component {
     const iamportPayBtn = document.querySelector('#iamportPayBtn');
     lbTotalPayCommit.hidden = false;
     
+    // 선택값 존재여부 체크
     if (selectDto === undefined || selectDto === null) {
       iamportPayBtn.hidden = true;
       document.querySelector('#lbSelectPay').innerHTML = "0";
@@ -65,6 +66,7 @@ class PaymentContainer extends Component {
     }
   }
 
+  // 상품 목록 조회
   getProductList = async (search) => {
     const { ProductManageModule } = this.props;
     try {
@@ -73,27 +75,6 @@ class PaymentContainer extends Component {
       console.log("error log : " + e);
     }
   }
-
-  // --- response값 임시 설정 (결제승인 결과값 가져오기)
-  getSamplePaymentRequest = async (totalPay, totalPoint) => {
-    const { PaymentModule } = this.props;
-    try {
-      await PaymentModule.getSamplePaymentRequest(totalPay, totalPoint)
-    } catch (e) {
-      console.log("error log : " + e);
-    }
-  }
-
-  /*
-  addOrderHistory = async (email, dto) => {
-    const { OrderHistoryModule } = this.props;
-    try {
-      await OrderHistoryModule.addOrderHistory(email, dto)
-    } catch (e) {
-      console.log("error log : " + e);
-    }
-  }
-  */
 
   addChangePointHistory = async (email, dto) => {
     const { ChangePointHistoryModule } = this.props;
@@ -119,7 +100,7 @@ class PaymentContainer extends Component {
     }).then(response => {
       merchantUid = response.data;
       console.log('MerchantUid Generate!')
-      console.log(merchantUid)
+      // 결제번호 생성 실패 안내 이벤트
       if (merchantUid === undefined || merchantUid === null || merchantUid === '') {
         const nfNotAllowPayment = document.createElement('vaadin-notification');
         nfNotAllowPayment.renderer = function(root) {
@@ -134,15 +115,17 @@ class PaymentContainer extends Component {
         }, 2000)
         return;
       } else {
-        //구매 상품 명칭 생생성
+        // 결제번호 생성 성공 시 결제 이벤트 호출
+        // 구매 상품 명칭 생생성
         const itemName = "ALGO "+productDto.pointCash+" 포인트 구매";
-        //결제 모듈 초기화
+        // 결제 모듈 초기화
         IMP.init(config.iamportpayMemberId);
         // IMP.request_pay(param, callback) 호출
         const loggedInfo = storage.get('loggedInfo');
         IMP.request_pay({ // param
           pg: "kcp.A52CY",
           pay_method: "card",
+          // pay_method: "phone",
           merchant_uid: merchantUid,
           name: itemName,
           amount: productDto.pointCash,
@@ -156,6 +139,7 @@ class PaymentContainer extends Component {
             point: productDto.productPoint
           }
         }, rsp => { // callback
+          // 결제요청 성공시
           if (rsp.success === true) {
             this.setState({successPay: true})
             this.setState({purchaseResult: rsp})
@@ -173,12 +157,13 @@ class PaymentContainer extends Component {
               paymentNo: rsp.merchant_uid,
               activated: true
             }
-
+            // 포인트 변동내역 추가
             this.addChangePointHistory(loggedInfo.email, dto);
             // 사용자 포인트 추가 이벤트
             this.updateUserByBalancePointIncrease(loggedInfo.email, removeComma(rsp.custom_data.point), token)
   
           } else {
+            // 결제 실패시
             if (rsp.error_code === 'F1002') {
               window.confirm('결제에 실패하였습니다. \n' + rsp.error_msg);
               return;
@@ -227,7 +212,7 @@ class PaymentContainer extends Component {
     
     const openIamPortPay = this.openIamPortPay;
     iamportPayBtn.addEventListener('click', function() {
-      // ImPort 페이 결제 창 호출
+      // ImPort 페이 결제 창 호출 (card) -- 추가 기능 필요시 버튼추가 요망
       openIamPortPay();
     });
   }

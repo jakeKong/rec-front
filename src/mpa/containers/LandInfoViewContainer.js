@@ -17,6 +17,9 @@ import config from '../../config';
 import { checkInfo } from '../../common/loggedInfoCheck'
 import '@vaadin/vaadin-notification';
 
+import { getDefaultPointList } from '../../oms/setupPoint';
+
+let moment = require("moment");
 //해당 주소의 주문 버튼 visible 속성 제어
 // let enabled = 'none';
 //현재는 큰 의미 없는 값이며, 원래 목적은 메인화면에서 주소검색을 한건지, 현재 화면에서 한건지 여부를 판별하기 위해서 사용한 필드
@@ -36,6 +39,7 @@ class LandInfoViewContainer extends Component {
         userId: 'user@test.com',
         userNm: '사용자',
       },
+      pricePoint: undefined,
       commentRes: '',
       mngNo: '',
       selectedSuggestion: null,
@@ -57,14 +61,20 @@ class LandInfoViewContainer extends Component {
   popupOpenStateEvent() {
     const { mngNo } = this.state;
     const { pending } = this.props;
+    const { landInfoData } = this.props;
     if (pending === true) {
       window.alert('로딩중인 정보가 존재합니다.\n잠시 후 다시 시도해주세요.')
       return
     }
+    if (landInfoData.get("analysisTradeInfo").get("result").get("trade").size <= 1) {
+      window.alert('분석에 필요한 유사매매사례 건수가 부족합니다.\n유사매매사례가 2건 이상인 주소에 대해서만 시세주문이 가능합니다.')
+      return;
+    }
     // const btnMakePdf = document.querySelector('#btnMakePdf');
     if (mngNo !== '' && mngNo !== undefined) {
       // btnMakePdf.className = "btn-make-pdf-abled"
-      if (storage.get('loggedInfo').balancePoint-900 < 0) {
+      // if (storage.get('loggedInfo').balancePoint-900 < 0) {
+      if (storage.get('loggedInfo').balancePoint-this.state.pricePoint < 0) {
         window.alert('포인트가 부족합니다.\n포인트 충전 후 이용해주세요.')
         return;
       }
@@ -90,7 +100,8 @@ class LandInfoViewContainer extends Component {
     if (storage.get('loggedInfo')) {
       // 팝업창에서 다운로드 버튼 클릭 시 PDF URL호출 (새창)
       // 포인트 잔액 확인 -> pdf 생성 호출 -> 결과 리턴 -> 차감 -> 포인트 변동내역 추가 -> 결과 팝업 -> 다운로드 기능
-      if (storage.get('loggedInfo').balancePoint-900 < 0) {
+      // if (storage.get('loggedInfo').balancePoint-900 < 0) {
+      if (storage.get('loggedInfo').balancePoint-this.state.pricePoint < 0) {
         window.alert('포인트가 부족합니다.\n포인트 충전 후 이용해주세요.')
         return;
       }
@@ -145,23 +156,40 @@ class LandInfoViewContainer extends Component {
     // 선택이 되면 들어오는 함수
     this.setState({selectedSuggestion: selectedSuggestion})
     // state.search 값 초기화
-    this.setState({
-      search: {
-        jibunAddr: selectedSuggestion.jibunAddr,
-        roadAddr: selectedSuggestion.roadAddr,
-        pnu: selectedSuggestion.bdMgtSn,
-        // comment: '',
-      }
-    });
     if (selectedSuggestion !== undefined) {
-      let nowCallSearchValue = {
-        jibunAddr: selectedSuggestion.jibunAddr,
-        roadAddr: selectedSuggestion.roadAddr,
-        pnu: selectedSuggestion.bdMgtSn.substring(0,19),
-        userId: storage.get('loggedInfo') ? storage.get('loggedInfo').email : null,
-        userNm: storage.get('loggedInfo') ? storage.get('loggedInfo').name : null,
-      }
-      this.getLandInfo(nowCallSearchValue);
+      axios({
+        method: 'GET',
+        url: `${config.gosmService}/utility/Utility/getPNUByFullAddress/`,
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Accept': 'application/json'
+        },
+        params: {
+          juso: selectedSuggestion.jibunAddr
+        }
+      }).then(res => {
+        this.setState({
+          search: {
+            jibunAddr: selectedSuggestion.jibunAddr,
+            roadAddr: selectedSuggestion.roadAddr,
+            // pnu: selectedSuggestion.bdMgtSn,
+            pnu: res.data.PNU,
+            // comment: '',
+          }
+        });
+        let nowCallSearchValue = {
+          jibunAddr: selectedSuggestion.jibunAddr,
+          roadAddr: selectedSuggestion.roadAddr,
+          // pnu: selectedSuggestion.bdMgtSn.substring(0,19),
+          pnu: res.data.PNU,
+          userId: storage.get('loggedInfo') ? storage.get('loggedInfo').email : null,
+          userNm: storage.get('loggedInfo') ? storage.get('loggedInfo').name : null,
+        }
+        this.getLandInfo(nowCallSearchValue);
+      }).catch(err => {
+        console.log(err)
+        window.alert('정규지번주소 지번 변환에 실패하였습니다.')
+      })
     }
   
     this.enabled = 'none';
@@ -169,15 +197,31 @@ class LandInfoViewContainer extends Component {
   }
   onSearchClick = async (selectedSuggestion) => { 
     if (this.state.selectedSuggestion !== null && selectedSuggestion !== undefined) {
-      let searchValue = {
-        jibunAddr: this.state.selectedSuggestion.jibunAddr,
-        roadAddr: this.state.selectedSuggestion.roadAddr,
-        pnu: this.state.selectedSuggestion.pnu.substring(0,19),
-        userId: storage.get('loggedInfo') ? storage.get('loggedInfo').email : null,
-        userNm: storage.get('loggedInfo') ? storage.get('loggedInfo').name : null,
-      }
-      //부동산 정보 검색 API 호출
-      this.getLandInfo(searchValue);
+      axios({
+        method: 'GET',
+        url: `${config.gosmService}/utility/Utility/getPNUByFullAddress/`,
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Accept': 'application/json'
+        },
+        params: {
+          juso: selectedSuggestion.jibunAddr
+        }
+      }).then(res => {
+        let searchValue = {
+          jibunAddr: this.state.selectedSuggestion.jibunAddr,
+          roadAddr: this.state.selectedSuggestion.roadAddr,
+          // pnu: this.state.selectedSuggestion.pnu.substring(0,19),
+          pnu: res.data.PNU,
+          userId: storage.get('loggedInfo') ? storage.get('loggedInfo').email : null,
+          userNm: storage.get('loggedInfo') ? storage.get('loggedInfo').name : null,
+        }
+        //부동산 정보 검색 API 호출
+        this.getLandInfo(searchValue);
+      }).catch(err => {
+        console.log(err)
+        window.alert('정규지번주소 지번 변환에 실패하였습니다.')
+      })
     } else {
       window.alert('시세 조회를 원하는 주소를 입력해주세요.')
     }
@@ -214,6 +258,13 @@ class LandInfoViewContainer extends Component {
     const btnMakePdf = document.querySelector('#btnMakePdf');
     btnMakePdf.innerHTML = '주문';
 
+    getDefaultPointList().then(res => {
+      this.setState({pricePoint: res.data[0].pricePoint})
+    }).catch(err => {
+      console.log(err)
+      throw(err);
+    });
+
     //로그인 하지 않았으면 PDF 버튼 비활성화
     if (!storage.get('loggedInfo')) {
       this.enabled = 'none';
@@ -234,23 +285,40 @@ class LandInfoViewContainer extends Component {
     if(this.props.postStat !== undefined) {
       const {selectedSuggestion} = this.props.postStat;
       isSearched = false;
-      this.setState({
-        search: {
+      axios({
+        method: 'GET',
+        url: `${config.gosmService}/utility/Utility/getPNUByFullAddress/`,
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Accept': 'application/json'
+        },
+        params: {
+          juso: selectedSuggestion.jibunAddr
+        }
+      }).then(res => {
+        this.setState({
+          search: {
+            jibunAddr: selectedSuggestion.jibunAddr,
+            roadAddr: selectedSuggestion.roadAddr,
+            // pnu: selectedSuggestion.bdMgtSn.substring(0,19),
+            pnu: res.data.PNU,
+            comment: '',
+          },
+          selectedSuggestion: {selectedSuggestion}
+        });
+        const searchKey = {
           jibunAddr: selectedSuggestion.jibunAddr,
           roadAddr: selectedSuggestion.roadAddr,
-          pnu: selectedSuggestion.bdMgtSn.substring(0,19),
-          comment: '',
-        },
-        selectedSuggestion: {selectedSuggestion}
-      });
-      const searchKey = {
-        jibunAddr: selectedSuggestion.jibunAddr,
-        roadAddr: selectedSuggestion.roadAddr,
-        pnu: selectedSuggestion.bdMgtSn.substring(0,19),
-        userId: storage.get('loggedInfo') ? storage.get('loggedInfo').email : null,
-        userNm: storage.get('loggedInfo') ? storage.get('loggedInfo').name : null,
-      };
-      this.getLandInfo(searchKey);
+          // pnu: selectedSuggestion.bdMgtSn.substring(0,19),
+          pnu: res.data.PNU,
+          userId: storage.get('loggedInfo') ? storage.get('loggedInfo').email : null,
+          userNm: storage.get('loggedInfo') ? storage.get('loggedInfo').name : null,
+        };
+        this.getLandInfo(searchKey);
+      }).catch(err => {
+        console.log(err)
+        window.alert('정규지번주소 지번 변환에 실패하였습니다.')
+      })        
     }
     //이전 화면에서 넘어온 값이 아닌경우
     else {
@@ -268,6 +336,34 @@ class LandInfoViewContainer extends Component {
         // this.updateChangePointHistoryActivated(dto.changePointSid, false);
         // addOrderHistory = mpa api에서 처리
         axios({
+          method: 'POST',
+          url: `${config.orderService}/order/history/add/${storage.get('loggedInfo').email}`,
+          headers: {
+            'Content-Type': 'application/json; charset=UTF-8',
+            'Accept': 'application/json',
+          },
+          // data: JSON.stringify(900)
+          data: JSON.stringify({
+            'odrNo': this.state.mngNo,
+            'odrDt': moment(),
+            'marketPrice': 0,
+            'variationPoint': this.state.pricePoint,
+            'realEstateType': 'ALL',
+            'downloadEndDt': null,
+            'downloadCnt': 0,
+            'pnuNo': this.state.search.pnu,
+            'pdfFileNm': '/'+makeResult,
+            'status': 'TRADE_COMPLETE',
+            'activated': true,
+            'jibunAddr': this.state.search.jibunAddr,
+            'comment': this.state.commentRes
+          })
+        }).then(res => {
+          console.log(res)
+        }).catch(err => {
+          console.log(err)
+        })
+        axios({
           method: 'PUT',
           url: `${config.systemService}/user/${storage.get('loggedInfo').email}/update/balancepoint/difference`,
           headers: {
@@ -275,7 +371,8 @@ class LandInfoViewContainer extends Component {
             'Accept': 'application/json',
             'Authorization': `Bearer ${token}`
           },
-          data: JSON.stringify(900)
+          // data: JSON.stringify(900)
+          data: JSON.stringify(this.state.pricePoint)
         }).then(res => {
           console.log(res)
           axios({
@@ -286,11 +383,13 @@ class LandInfoViewContainer extends Component {
               'Accept': 'application/json'
             },
             data: JSON.stringify({
-              'changeDt': new Date(),
+              'changeDt': moment(),
               'paymentCash': null,
               'changeType': 'PURCHASE_ADD',
-              'changePoint': 900,
-              'currentBalPoint': storage.get('loggedInfo').balancePoint-900,
+              // 'changePoint': 900,
+              'changePoint': this.state.pricePoint,
+              // 'currentBalPoint': storage.get('loggedInfo').balancePoint-900,
+              'currentBalPoint': storage.get('loggedInfo').balancePoint-this.state.pricePoint,
               'odrNo': this.state.mngNo,
               'paymentNo': null,
               'activated': true
@@ -300,8 +399,10 @@ class LandInfoViewContainer extends Component {
             let result = {
               jibunAddr: this.state.search.jibunAddr,
               mngNo: this.state.mngNo,
-              usedPoint: 900+'P',
-              balancePoint: storage.get('loggedInfo').balancePoint-900,
+              // usedPoint: 900+'P',
+              usedPoint: this.state.pricePoint+'P',
+              // balancePoint: storage.get('loggedInfo').balancePoint-900,
+              balancePoint: storage.get('loggedInfo').balancePoint-this.state.pricePoint,
               comment: this.state.commentRes,
               downloadPdfUrl: makeResult
             }

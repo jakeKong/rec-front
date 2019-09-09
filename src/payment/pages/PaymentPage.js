@@ -6,18 +6,17 @@ import { Redirect } from 'react-router';
 import storage from '../../common/storage';
 
 const PaymentPage = () => {
+  // 로그인 정보 존재여부 체크
   if (!storage.get('loggedInfo')) {
     return <Redirect to={{
       pathname: "/",
     }} push={true}/>;
   }
   return (
-    // <div>
-      <PageTemplate>
-        <div className="page-description">포인트 충전</div>
-        <PaymentContainer />
-      </PageTemplate>
-    // </div>
+    <PageTemplate>
+      <div className="page-description">포인트 충전</div>
+      <PaymentContainer />
+    </PageTemplate>
   );
 };
 

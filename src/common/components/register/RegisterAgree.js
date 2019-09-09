@@ -77,6 +77,7 @@ class RegisterAgree extends Component {
       }
     })
 
+    // 네이버 회원가입 설정
     let naverLoginRegister = new window.naver.LoginWithNaverId({
       clientId: "1iW5r3Qytlk4tte3X_UX",
       // clientSecret = 'jdC9xJas1b';
@@ -84,8 +85,11 @@ class RegisterAgree extends Component {
       isPopup: true, /* 팝업을 통한 연동처리 여부 */
       loginButton: {color: "white", type: 3, height: 60} /* 로그인 버튼의 타입을 지정 */
     })
+    // 네이버 회원가입 요청 (클릭 시 동작) - 약관동의 생략
     naverLoginRegister.init();
 
+    // 이용약관
+    // 개인정보 처리방침
     let termsOfService = require('../../file/termsOfService.txt')
     let personalInformationCollectionAgreement = require('../../file/personalInformationCollectionAgreement.txt')
     fetch(termsOfService).then(r => r.text()).then(text => {

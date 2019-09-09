@@ -6,6 +6,9 @@ import { oauth_web } from '../../OAuth2Config'
 
 import { createUser, checkRecommendCode, updateUserByBalancePointIncrease, getUser, checkUserByTellNo } from '../../scm/api/userAxios';
 import { addChangePointHistory } from '../../oms/api/changePoingHistoryAxios';
+
+import { getDefaultPointList } from '../../oms/setupPoint';
+
 class RegisterContainer extends Component {
 
   // state set을 위한 초기 생성자
@@ -27,6 +30,8 @@ class RegisterContainer extends Component {
         birthDt: null,
         createdUser: null,
         assignedRoles: [],
+        registerPoint: undefined,
+        referrerPoint: undefined,
       },
       userinfo: undefined
     }
@@ -42,6 +47,14 @@ class RegisterContainer extends Component {
     document.querySelector('#lbAuth').innerHTML = '본인인증';
     document.querySelector('#lbInput').innerHTML = '회원정보 입력';
     document.querySelector('#lbComplete').innerHTML = '가입완료';
+
+    getDefaultPointList().then(res => {
+      this.setState({registerPoint: res.data[0].registerPoint})
+      this.setState({referrerPoint: res.data[0].referrerPoint})
+    }).catch(err => {
+      console.log(err)
+      throw(err);
+    });
 
     const { unrefined_userinfo } = this.props;
     if (unrefined_userinfo !== '' && unrefined_userinfo !== null && unrefined_userinfo !== undefined) {
@@ -155,6 +168,29 @@ class RegisterContainer extends Component {
                 this.setState({isRegisterInput: false, 
                                isNaverRegisterInput: false,
                                isRegisterComplete: true});
+                // 이벤트성 포인트 지급
+                updateUserByBalancePointIncrease(getDto.email, this.state.registerPoint, result.accessToken).then(res => {
+                  let changePointDto = {
+                    'changeDt': new Date(),
+                    'paymentCash': 0,
+                    'changeType': 'EVENT_ADD',
+                    'changePoint': this.state.registerPoint,
+                    'currentBalPoint': this.state.registerPoint,
+                    'odrNo': '',
+                    'paymentNo': '',
+                    'activated': true,
+                    'remarks': '회원가입'
+                  }
+                  addChangePointHistory(getDto.email, changePointDto).then(res => {
+                    // 완료
+                  }).catch(err => {
+                    console.log(err)
+                    throw err;
+                  })
+                }).catch(err => {
+                  console.log(err)
+                  throw err;
+                })
               }
             }).catch(err => {
               console.log(err);
@@ -198,13 +234,13 @@ class RegisterContainer extends Component {
                                      isNaverRegisterInput: false,
                                      isRegisterComplete: true});
                       // 이벤트성 포인트 지급
-                      updateUserByBalancePointIncrease(getDto.email, 10000, result.accessToken).then(res => {
+                      updateUserByBalancePointIncrease(getDto.email, this.state.referrerPoint, result.accessToken).then(res => {
                         let changePointDto = {
                           'changeDt': new Date(),
                           'paymentCash': 0,
                           'changeType': 'EVENT_ADD',
-                          'changePoint': 10000,
-                          'currentBalPoint': 10000,
+                          'changePoint': this.state.referrerPoint,
+                          'currentBalPoint': this.state.referrerPoint,
                           'odrNo': '',
                           'paymentNo': '',
                           'activated': true,

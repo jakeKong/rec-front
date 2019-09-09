@@ -2,23 +2,18 @@ import React, { Component, Fragment } from 'react';
 
 // component
 import '@vaadin/vaadin-button';
-import '@vaadin/vaadin-combo-box';
-import '@vaadin/vaadin-text-field';
-import '@vaadin/vaadin-icons'
-import '@vaadin/vaadin-date-picker'
-
-import '@vaadin/vaadin-select'
-import '@vaadin/vaadin-list-box'
-import '@vaadin/vaadin-item'
 
 import { Calendar } from 'primereact/calendar';
 import { Dropdown } from 'primereact/dropdown';
 import { InputText } from 'primereact/inputtext';
 
 import { changeTypeItems } from '../../items';
+// 날짜 관련 items
 import { monthBeforeDate, currentDate, calendarLocale } from '../../../common/items';
 
+// date 라이브러리
 let moment = require('moment');
+// 포인트 변동내역 조회 컴포넌트
 class ChangePointHistorySearch extends Component {
 
   constructor(props) {
@@ -37,6 +32,7 @@ class ChangePointHistorySearch extends Component {
       searchPurchaseItemValue: 'odrNo'
     }
 
+    // 함수 바인딩
     this.SearchItemChangeEvent = this.SearchItemChangeEvent.bind(this);
     this.roleCheckFieldRendering = this.roleCheckFieldRendering.bind(this);
     this.searchCallEvent = this.searchCallEvent.bind(this);
@@ -65,20 +61,26 @@ class ChangePointHistorySearch extends Component {
     btnSearch.innerHTML = '조회';
     btnSearch.className = "btn"
     btnSearch.addEventListener('click', function() {
+      // 조회 요청 callback
       searchCallEvent();
+      // 조회 후 사용된 값 초기화
       resetState();
     })
   }
 
+  // inputtext - 엔터 키 동작이벤트
   keyPressEvent(e) {
     const searchCallEvent = this.searchCallEvent;
     const resetState = this.resetState;
     if (e.charCode === 13) {
+      // 조회 요청 callback
       searchCallEvent();
+      // 조회 후 사용된 값 초기화
       resetState();
     }
   }
 
+  // 조회값 초기화
   resetState() {
     this.setState({
       odrNo: '',
@@ -88,8 +90,10 @@ class ChangePointHistorySearch extends Component {
     })
   }
 
+  // 조회 요청 함수
   searchCallEvent() {
     const { fromDt, toDt, odrNo, paymentNo, changeType, userNm, email } = this.state;
+    // 값 전달을 위한 변수 생성
     let searchValue = {
       fromDt: fromDt,
       toDt: toDt, 
@@ -100,6 +104,7 @@ class ChangePointHistorySearch extends Component {
       email: email
     }
     const { searchCallback } = this.props;
+    // 조회 요청 (컨테이너로)
     searchCallback(searchValue);
   }
 
@@ -188,10 +193,12 @@ class ChangePointHistorySearch extends Component {
     return (
       <Fragment>
         <label className="label-center" id="lbChangeType" />
+        {/* 변동타입 드롭다운 */}
         <Dropdown className="dropdown-width-150"
                   value={searchItemValue}
                   options={changeTypeItems} 
                   onChange={e=>this.SearchItemChangeEvent(e)} />
+        {/* 날짜 컴포넌트 */}
         <label className="label-center" id="lbDate" />
         <Calendar className="calendar-width-100" yearNavigator={true} yearRange="1900:2030" readOnlyInput={true} locale={calendarLocale} id="dpStart" showIcon={true} value={this.state.fromDt} onChange={(e) => this.setState({fromDt: moment(e.value).format('YYYY-MM-DD')})}/>
         <label className="label" id="lbPunct" />

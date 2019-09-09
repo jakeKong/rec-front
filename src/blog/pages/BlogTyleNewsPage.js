@@ -4,12 +4,10 @@ import { BlogTyleNewsContainer } from '../index';
 
 const BlogTyleNewsPage = () => {
   return (
-    // <div>
-      <PageTemplate>
-        <div className="page-description">블로그 > 타일뉴스</div>
-        <BlogTyleNewsContainer />
-      </PageTemplate>
-    // </div>
+    <PageTemplate>
+      <div className="page-description">블로그 > 타일뉴스</div>
+      <BlogTyleNewsContainer />
+    </PageTemplate>
   );
 };
 

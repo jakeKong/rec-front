@@ -13,12 +13,10 @@ const UserPage = () => {
     }} push={true}/>;
   }
   return (
-    // <div>
-      <PageTemplate>
-        <div className="page-description">회원정보</div>
-        <UserDetailContainer />
-      </PageTemplate>
-    // </div>
+    <PageTemplate>
+      <div className="page-description">회원정보</div>
+      <UserDetailContainer />
+    </PageTemplate>
   );
 };
 

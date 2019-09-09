@@ -20,7 +20,7 @@ class LandInfoView extends Component {
   componentDidMount() {
     const { landInfoData, isSearched, analysisReturnedCallback } = this.props;
     
-    if (!landInfoData || landInfoData === undefined || landInfoData.isEmpty()) {
+    if (!landInfoData || landInfoData === undefined) {
       return
     }
     else {
@@ -72,8 +72,13 @@ class LandInfoView extends Component {
     }
     //분석결과
     {
-      const analysisTradeInfo = landInfoData.get("analysisTradeInfo");
+      const analysisTradeInfo = landInfoData.get("analysisTradeInfo").get("result");
       
+      // V2 적용 에러코드 확인
+      if (landInfoData.get("analysisTradeInfo").get("error").get("errorCode") !== '0') {
+        window.alert(landInfoData.get("analysisTradeInfo").get("error").get("userMessage"));
+        return;
+      }
       // console.log(isSearched);
       const tradList = analysisTradeInfo.get("trade");
       // console.log(tradList);
@@ -155,7 +160,7 @@ class LandInfoView extends Component {
         }
       }
     }
-    document.querySelector('#imgMap').src = landInfoData.get("analysisTradeInfo").get("mapUrl");//도로접면
+    document.querySelector('#imgMap').src = landInfoData.get("analysisTradeInfo").get("result").get("mapUrl");//도로접면
   }
   render() {
       return (

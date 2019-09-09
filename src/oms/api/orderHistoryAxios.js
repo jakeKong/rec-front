@@ -57,7 +57,8 @@ export const addOrderHistory = (email, dto) => axios({
     'pnuNo': dto.pnuNo,
     'pdfFileNm': dto.pdfFileNm,
     'status': dto.status,
-    'activated': dto.activated
+    'activated': dto.activated,
+    'jibunAddr': dto.jibunAddr
   })
 });
 

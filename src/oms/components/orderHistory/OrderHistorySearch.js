@@ -5,23 +5,17 @@ import '@vaadin/vaadin-ordered-layout';
 
 // component
 import '@vaadin/vaadin-button';
-import '@vaadin/vaadin-combo-box';
-import '@vaadin/vaadin-text-field';
-import '@vaadin/vaadin-icons'
-import '@vaadin/vaadin-date-picker'
-
-import '@vaadin/vaadin-select'
-import '@vaadin/vaadin-list-box'
-import '@vaadin/vaadin-item'
 
 import { Calendar } from 'primereact/calendar';
 import { Dropdown } from 'primereact/dropdown';
 import { InputText } from 'primereact/inputtext';
 
 import { statusItems, realEstateTypeItems } from '../../items';
+// 날짜 관련 items
 import { monthBeforeDate, currentDate, calendarLocale } from '../../../common/items';
-
+// date 라이브러리
 let moment = require('moment');
+// 주문내역 조회 컴포넌트
 class OrderHistorySearch extends Component {
 
   constructor(props) {
@@ -39,6 +33,7 @@ class OrderHistorySearch extends Component {
       searchOrderCheckItemValue: 'odrNo',
       inputCheck: false
     }
+    // 함수 바인딩
     this.resetState = this.resetState.bind(this);
     this.searchCallEvent = this.searchCallEvent.bind(this);
     this.SearchStatusItemChangeEvent = this.SearchStatusItemChangeEvent.bind(this);
@@ -70,11 +65,14 @@ class OrderHistorySearch extends Component {
     btnSearch.innerHTML = '조회';
     btnSearch.className = "btn"
     btnSearch.addEventListener('click', function() {
-      searchCallEvent();
+            // 조회 요청 callback
+            searchCallEvent();
+            // 조회 후 사용된 값 초기화
       resetState();
     })
   }
 
+  // 조회값 초기화
   resetState() {
     this.setState({
       odrNo: '',
@@ -84,18 +82,22 @@ class OrderHistorySearch extends Component {
     })
   }
 
+  // inputtext - 엔터 키 동작이벤트
   keyPressEvent(e) {
     const searchCallEvent = this.searchCallEvent;
     const resetState = this.resetState;
     if (e.charCode === 13) {
-      searchCallEvent();
+            // 조회 요청 callback
+            searchCallEvent();
+            // 조회 후 사용된 값 초기화
       resetState();
     }
   }
 
+  // 조회 요청 함수
   searchCallEvent() {
     const { email, ordererNm, odrNo, fromDt, toDt, realEstateType, status } = this.state;
-
+    // 값 전달을 위한 변수 생성
     let searchValue = {
       email: email,
       ordererNm: ordererNm,
@@ -173,6 +175,7 @@ class OrderHistorySearch extends Component {
     }
   }
 
+  // 권한체크 함수
   roleCheckFieldRendering(role) {
     if (role === 'ROLE_ADMIN' || role === 'ROLE_SYSADMIN') {
       const orderCheckItems = [

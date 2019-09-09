@@ -16,6 +16,9 @@ import {InputText} from 'primereact/inputtext';
 import storage from '../../../common/storage';
 import { addQuestion, updateQuestion } from '../../api/questionAxios';
 
+import { Dropdown } from 'primereact/dropdown';
+
+let toastEditor;
 class QuestionRegister extends Component {
 
   constructor(props) {
@@ -25,8 +28,10 @@ class QuestionRegister extends Component {
         questionTitle: null,
         questionTxt: null,
         reportingDt: null
-      }
+      },
+      questionType: 'normal'
     }
+    this.questionTypeItemsChangeEvent = this.questionTypeItemsChangeEvent.bind(this);
   }
 
   componentDidMount() {
@@ -59,7 +64,7 @@ class QuestionRegister extends Component {
       }
     })
 
-    const toastEditor = new Editor({
+    toastEditor = new Editor({
       el: document.querySelector('#editSection'),
       language: 'ko_KR',
       previewStyle: 'vertical',
@@ -180,10 +185,31 @@ class QuestionRegister extends Component {
     })
   }
 
+  questionTypeItemsChangeEvent(e) {
+    this.setState({questionType: e.value})
+    if (e.value === 'secedeUser') {
+      toastEditor.setValue('탈퇴사유 : \n충전포인트 정산 반환계좌 : \n연락처 : ')
+    } else {
+      toastEditor.setValue('')
+    }
+  }
+
   render() {
+    const drQuestionTypeItems = [
+      {label: '일반문의', value: 'normal'},
+      {label: '회원탈퇴', value: 'secedeUser'}
+    ]
+
     return (
       <Fragment>
         {/* <vaadin-text-field id="tfTitle"/> */}
+        <div className="div-question-type">
+          <Dropdown id="drQuestionType" 
+                    className="dropdown-width-100"
+                    value={this.state.questionType}
+                    options={drQuestionTypeItems}
+                    onChange={e=>this.questionTypeItemsChangeEvent(e)} />
+        </div>
         <InputText id="tfTitle"/>
         <div id="toastEditor">
           <div id="editSection" />

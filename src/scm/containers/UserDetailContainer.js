@@ -26,22 +26,27 @@ class UserManageContainer extends Component {
 
   }
 
+  // 회원정보 수정 팝업열기
   userUpdatePopupOpen() {
     this.setState({update_visiblility: true});
   }
 
+  // 회원정보 수정 팝업닫기
   userUpdatePopupClose() {
     this.setState({update_visiblility: false});
   }
 
+  // 비밀번호 수정 팝업열기
   passwordResetPopupOpen() {
     this.setState({reset_visiblility: true});
   }
 
+  // 비밀번호 수정 팝업닫기
   passwordResetPopupClose() {
     this.setState({reset_visiblility: false});
   }
 
+  // 회원정보 수정 요청
   userUpdateAttemptCallback(dto) {
     const token = storage.get('token');
     updateUser(dto, token).then(res => {
@@ -53,6 +58,7 @@ class UserManageContainer extends Component {
     })
   }
 
+  // 비밀번호 변경 요청
   passwordResetAttemptCallback(beforepw, afterpw) {
     const token = storage.get('token');
     const loggedInfo = storage.get('loggedInfo');

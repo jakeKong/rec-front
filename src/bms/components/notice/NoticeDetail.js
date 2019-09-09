@@ -1,26 +1,31 @@
 import React, { Component, Fragment } from 'react';
 
-import '@vaadin/vaadin-ordered-layout';
 import '@vaadin/vaadin-button';
 import '../../../styles/components/ToastEditor.scss';
 
+// 회원정보를 담고있는 로컬 스토리지
 import storage from '../../../common/storage';
+// 동기작업에 필요한 삭제 api
 import { deleteNotice } from '../../api/noticeAxios'
 
 // deps for viewer.
 require('tui-editor/dist/tui-editor-contents.css'); // editor content
 require('highlight.js/styles/github.css'); // code block highlight
 
+// 뷰어
 const Viewer = require('tui-editor/dist/tui-editor-Viewer');
 
 // 공지사항 상세조회 컴포넌트
 class NoticeDetail extends Component {
 
+  // 초기 마운트
   componentDidMount() {
     const { notice } = this.props;
+    // 상단 컴포넌트인 공지사항 상세 컴포넌트에서 전달받은 값이 존재하는지 여부 체크
     if (!notice || notice === undefined) {
       return
     }
+    // date 라이브러리 호출
     let moment = require('moment');
 
     const lbTitle = document.querySelector('#lbTitle')

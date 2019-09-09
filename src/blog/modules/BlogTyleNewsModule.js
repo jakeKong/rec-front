@@ -37,6 +37,7 @@ const DELETE_BLOG_TYLE_NEWS_BY_LIST_RECEIVED = 'blog/DELETE_BLOG_TYLE_NEWS_BY_LI
 const DELETE_BLOG_TYLE_NEWS_BY_LIST_FAILURE = 'blog/DELETE_BLOG_TYLE_NEWS_BY_LIST_FAILURE';
 
 // Actions
+// 모듈과 연결된 컴포넌트(주로 컨테이너)에서 요청 이벤트로 사용되는 액션
 export const getBlogTylenewsList = createAction(GET_BLOG_TYLE_NEWS_LIST);
 export const getBlogTylenewsListBySpec = createAction(GET_BLOG_TYLE_NEWS_LIST_BY_SPEC, search => search);
 export const addBlogTylenews = createAction(ADD_BLOG_TYLE_NEWS, dto => dto);
@@ -54,6 +55,7 @@ const initialState = Map({
   blogTyleNewsList: List(),
 });
 
+// 블로그 목록 조회 SAGA
 function* getBlogTyleNewsListSaga() {
   try {
     const response = yield call(api.getBlogTylenewsList);
@@ -64,6 +66,7 @@ function* getBlogTyleNewsListSaga() {
   }
 }
 
+// 조건별 블로그 목록 조회 SAGA
 function* getBlogTyleNewsListBySpecSaga(action) {
   try {
     const response = yield call(api.getBlogTylenewsListBySpec, action.payload);
@@ -73,7 +76,7 @@ function* getBlogTyleNewsListBySpecSaga(action) {
   }
 }
 
-
+// 블로그 등록 SAGA
 function* addBlogTyleNewsSaga(action) {
   try {
     const response = yield call(api.addBlogTylenews, action.payload);
@@ -85,6 +88,7 @@ function* addBlogTyleNewsSaga(action) {
   }
 }
 
+// 블로그 수정 SAGA
 function* updateBlogTyleNewsSaga(action) {
   try {
     const response = yield call(api.updateBlogTylenews, action.payload.tylenewsSid, action.payload.dto);
@@ -96,6 +100,7 @@ function* updateBlogTyleNewsSaga(action) {
   }
 }
 
+// 블로그 활성화여부 수정 SAGA
 function* updateBlogTyleNewsVisibilitySaga(action) {
   try {
     const response = yield call(api.updateBlogTylenewsVisibility, action.payload.tylenewsSid, action.payload.tylenewsVisibility);
@@ -107,6 +112,7 @@ function* updateBlogTyleNewsVisibilitySaga(action) {
   }
 }
 
+// 블로그 삭제 SAGA
 function* deleteBlogTyleNewsSaga(action) {
   try {
     const response = yield call(api.deleteBlogTylenews, action.payload);
@@ -118,6 +124,7 @@ function* deleteBlogTyleNewsSaga(action) {
   }
 }
 
+// 블로그 선택항목 삭제 SAGA
 function* deleteBlogTyleNewsByListSaga(action) {
   try {
     const response = yield call(api.deleteBlogTylenewsByList, action.payload);
