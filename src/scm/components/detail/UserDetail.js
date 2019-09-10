@@ -39,6 +39,11 @@ class UserDetail extends Component {
       // 비밀번호 변경 팝업 호출
       passwordResetPopupOpen();
     })
+
+    document.querySelector('#btnUserOut').innerHTML = '회원탈퇴'
+    document.querySelector('#btnUserOut').addEventListener('click', function() {
+      window.alert('회원탈퇴가 완료되었습니다.');
+    })
   }
 
   render() {
@@ -80,6 +85,7 @@ class UserDetail extends Component {
           <div>
             <button id="btnUserUpdate"/>
             <button id="btnPasswordReset" hidden={loggedInfo.division === 'NAVER'}/>
+            <button id="btnUserOut"/>
           </div>
         </div>
       </Fragment>

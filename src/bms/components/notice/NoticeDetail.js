@@ -28,21 +28,26 @@ class NoticeDetail extends Component {
     // date 라이브러리 호출
     let moment = require('moment');
 
+    // 공지사항 타이틀명
     const lbTitle = document.querySelector('#lbTitle')
     lbTitle.innerHTML = notice.noticeTitle;
     
+    // 공지사항 작성일자
     document.querySelector('#lbReportingDt').innerHTML = '작성일 : '+moment(notice.reportingDt).format('YYYY년MM월DD')+'&nbsp&nbsp';
     document.querySelector('#lbNoticeWriter').innerHTML = '작성자 : '+notice.noticeWriter;
 
+    // 뷰어 (공지사항 내용)
     this.toastEditor = new Viewer({
       el: document.querySelector('#viewerSection'),
       height: 'auto',
       initialValue: notice.noticeTxt
     });
 
+    // 돌아가기 버튼
     const btnGoList = document.querySelector('#btnGoList');
     btnGoList.textContent = "돌아가기";
 
+    // 사용자정보 체크
     if (storage.get('loggedInfo')) {
       if (storage.get('loggedInfo').assignedRoles.indexOf('ROLE_ADMIN') === -1) {
         btnGoList.addEventListener('click', function() {
