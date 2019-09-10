@@ -128,7 +128,7 @@ class LandInfoViewContainer extends Component {
   }
   
   popupAddAndUpdateCheckOpenEvent(popupOpened) {
-    const { search, mngNo } = this.state;
+    const { search, mngNo, pricePoint } = this.state;
     if (mngNo !== '' && mngNo !== undefined) {
       let result = {
         jibunAddr: search.jibunAddr,
@@ -137,7 +137,8 @@ class LandInfoViewContainer extends Component {
         comment: search.comment,
         userId: search.userId,
         userNm: search.userNm,
-        mngNo: mngNo
+        mngNo: mngNo,
+        pricePoint: pricePoint
       }
       return <LandInfoOrderCommentPopup popupCallback={ this.popupCallback } popupOpened={ popupOpened } popupClose={ this.popupClose } result={result}/>      
     } else {
