@@ -48,6 +48,7 @@ class RegisterContainer extends Component {
     document.querySelector('#lbInput').innerHTML = '회원정보 입력';
     document.querySelector('#lbComplete').innerHTML = '가입완료';
 
+    // 현재 설정된 포인트값 가져오기 (주문포인트, 회원가입 시 지급 포인트, 추천인 코드 입력 시 지급 포인트))
     getDefaultPointList().then(res => {
       this.setState({registerPoint: res.data[0].registerPoint})
       this.setState({referrerPoint: res.data[0].referrerPoint})
@@ -57,24 +58,35 @@ class RegisterContainer extends Component {
     });
 
     const { unrefined_userinfo } = this.props;
+    // 네이버 회원가입으로 요청된 url 일 경우 (/register:userinfo)
     if (unrefined_userinfo !== '' && unrefined_userinfo !== null && unrefined_userinfo !== undefined) {
+      // 값이 존재하면 전달받은 props의 값을 정제하여 사용 (이메일, 이름)
+      // props값의 ? 값을 공백 문자열로 변환
       let userinfo = unrefined_userinfo.replace('?','');
+      // 이름이 시작되는 인덱스 찾기
       let nameIndex = userinfo.indexOf('&name=')
 
+      // 이메일 값
       let email = userinfo.substring(0, nameIndex);
+      // 이름 값
       let name = userinfo.substring(nameIndex+6, userinfo.length);
 
       try {
+        // 기본 설정된 (root)guest@test.com으로 default 토큰 접근
+        // 기본 guest@test.com으로 설정된 유저정보가 존재하지 않을 경우 내용수정 혹은 유저정보 생성 필요
         oauth_web.owner.getToken('guest@test.com', 'test123').then((result) => {
           this.setState({token: result.accessToken});
           storage.set('token', result.accessToken)
   
+          // 가입된 사용자 존재여부 체크
           getUser(email, result.accessToken).then(e => {
             console.log(e)
             if (e.data !== '' && e.data !== null && e.data !== undefined) {
+              // 네이버로부터 인증받아 로그인된 이메일로 가입된 사용자 정보가 존재할 경우
               window.alert('가입된 이메일이 존재합니다.')
               window.location.href = '/login';
             } else {
+              // 네이버정보로 가입된 회원정보가 존재하지 않을 경우 이메일과 이름값을 저장하고 다음단계로 이동 (네이버전용 추가입력)
               this.setState({userinfo: {
                                         email: email,
                                         name: name

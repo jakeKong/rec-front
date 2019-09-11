@@ -101,15 +101,19 @@ class Login extends Component {
       }
     })
 
-    // 네이버 로그인 sdk 설정
+    /* 네이버 로그인 sdk 설정 */
+    // 참고 url : https://developers.naver.com/docs/login/web/#2--javascript%EB%A1%9C-%EB%84%A4%EC%9D%B4%EB%B2%84-%EC%95%84%EC%9D%B4%EB%94%94%EB%A1%9C-%EB%A1%9C%EA%B7%B8%EC%9D%B8-%EC%A0%81%EC%9A%A9%ED%95%98%EA%B8%B0
+    // LoginWithNaverId Javascript 설정 정보 및 초기화
     let naverLogin = new window.naver.LoginWithNaverId({
+      // algozip 등록 clientID
       clientId: "1iW5r3Qytlk4tte3X_UX",
       // clientSecret = 'jdC9xJas1b';
+      // 로그인에 사용할 callback url
       callbackUrl: "http://algozip.co.kr/naver/log/pop",
       isPopup: true, /* 팝업을 통한 연동처리 여부 */
       loginButton: {color: "white", type: 3, height: 60} /* 로그인 버튼의 타입을 지정 */
     })
-    // 네이버 로그인 sdk 호출
+    // 설정 정보를 초기화하고 연동을 준비
     naverLogin.init();
 
     // 회원가입 버튼
@@ -180,23 +184,18 @@ class Login extends Component {
               <div className="div-login-form-id">
                 <label id="lbLoginId" className="label-login-id"/>
                 <vaadin-text-field id="tfLoginId"/>
-                {/* <InputText id="tfLoginId" value={this.state.id} onChange={e => this.setState({id: e.target.value})}></InputText> */}
                 <label id="lbLoginIdExample" style={{size: '9px', textAlign: 'left', color: 'lightgray'}} />
               </div>
               <div className="div-login-form-pw">
                 <label id="lbLoginPw" className="label-login-pw"/>
                 <vaadin-password-field id="pfLoginPw"/>
-                {/* <Password id="pfLoginPw" value={this.state.password} onChange={e => this.setState({password: e.target.value})}></Password> */}
               </div>
-              {/* <Checkbox checked={this.state.checked} onChange={e => this.idTextSavedCheckEvent(e)} /> */}
               <ToggleButton checked={this.state.checked} onChange={e => this.idTextSavedCheckEvent(e)} onLabel="아이디 저장" offLabel="아이디 저장" onIcon="pi pi-check" offIcon="pi pi-times" style={{width: '120px'}}></ToggleButton>
             </div>
             <div className="div-login-button-field">
               <vaadin-button id="btnLogin"/>
-              {/* <vaadin-button id="btnNaverLogin"/> */}
-              {/* <div id="naver_id_login"></div> */}
+              {/* 네이버 로그인 버튼이 들어갈 위치 선언, ID는 반드시 지정된 값으로 설정하여야 함. */}
               <div id="naverIdLogin"></div>
-              {/* <a id="naverLogin"><img src='http://static.nid.naver.com/oauth/small_g_in.PNG' height='50'/></a> */}
             </div>
           </div>
           <div className="div-sub-field">
