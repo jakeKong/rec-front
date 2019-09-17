@@ -57,9 +57,11 @@ class LoginContainer extends Component {
   }
 
   // 네이버 로그인 요청
+  // componentDidMount()에 있음
   NaverLoginAttempt = async(email) => {
     try {
       // 기본 설정된 (root)guest@test.com으로 default 토큰 접근
+      // 기본 guest@test.com으로 설정된 유저정보가 존재하지 않을 경우 내용수정 혹은 유저정보 생성 필요
       await oauth_web.owner.getToken('guest@test.com', 'test123').then((result) => {
         this.setState({token: result.accessToken});
         storage.set('token', result.accessToken)
@@ -72,7 +74,7 @@ class LoginContainer extends Component {
             storage.remove('token');
             window.location.href="/register";
           } else {
-            // 네이버로부터 인증받아 로그인된 이메일로 가입된 사용자 정보가 존재할 경우
+            // 네이버로부터 인증받아 로그인된 이메일로 가입된 사용자 정보가 존재할 경우 userInfo에 결과값 저장
             this.setState({userInfo: e.data});
           }
         }).catch(err => {
@@ -80,6 +82,7 @@ class LoginContainer extends Component {
           window.confirm('계정이 존재하지 않습니다.\n회원가입 후 다시 시도해주세요.');
           storage.remove('loggedInfo');
           storage.remove('token');
+          // 회원가입 실패 시 회원가입 초기화면으로
           window.location.href="/register";
         })
 
@@ -94,6 +97,7 @@ class LoginContainer extends Component {
   componentDidMount() {
     const { email } = this.props;
     if (email !== undefined && email !== null && email !== '') {
+      // props.email값이 존재할 경우 네이버 로그인 이벤트 발생
       this.NaverLoginAttempt(email);
     }
   }
