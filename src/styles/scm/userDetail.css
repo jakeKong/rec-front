@@ -40,6 +40,10 @@
 .section-profile ul + div button:hover {
   background: #4dbf21;
 }
+
+#btnUserOut {
+  margin-top: 10px;
+}
 /* PAGE-profile END */
 
 

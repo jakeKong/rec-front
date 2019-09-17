@@ -58,6 +58,7 @@ class RegisterAuth extends Component {
     });
   }
 
+  // 인증완료여부 체크
   numberAuthCheck() {
     const {responseAuthNumber, authNumber} = this.state;
     if (responseAuthNumber !== null && responseAuthNumber !== undefined && responseAuthNumber !== '') {

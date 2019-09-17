@@ -14,6 +14,7 @@ class NoticeContainer extends Component {
     this.detailCallback = this.detailCallback.bind(this);
   }
 
+  // 컴포넌트가 만들어지고 첫 렌더링을 다 마친 후 실행되는 메소드입니다.
   componentDidMount() {
       this.getNoticeList();
   }

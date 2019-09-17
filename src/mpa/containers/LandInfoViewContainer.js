@@ -61,10 +61,15 @@ class LandInfoViewContainer extends Component {
   popupOpenStateEvent() {
     const { mngNo } = this.state;
     const { pending } = this.props;
+    const { landInfoData } = this.props;
     if (pending === true) {
       window.alert('로딩중인 정보가 존재합니다.\n잠시 후 다시 시도해주세요.')
       return
     }
+    //if (landInfoData.get("analysisTradeInfo").get("result").get("trade").size <= 1) {
+    //  window.alert('분석에 필요한 유사매매사례 건수가 부족합니다.\n유사매매사례가 2건 이상인 주소에 대해서만 시세주문이 가능합니다.')
+    //  return;
+    //}
     // const btnMakePdf = document.querySelector('#btnMakePdf');
     if (mngNo !== '' && mngNo !== undefined) {
       // btnMakePdf.className = "btn-make-pdf-abled"
@@ -123,7 +128,7 @@ class LandInfoViewContainer extends Component {
   }
   
   popupAddAndUpdateCheckOpenEvent(popupOpened) {
-    const { search, mngNo } = this.state;
+    const { search, mngNo, pricePoint } = this.state;
     if (mngNo !== '' && mngNo !== undefined) {
       let result = {
         jibunAddr: search.jibunAddr,
@@ -132,7 +137,8 @@ class LandInfoViewContainer extends Component {
         comment: search.comment,
         userId: search.userId,
         userNm: search.userNm,
-        mngNo: mngNo
+        mngNo: mngNo,
+        pricePoint: pricePoint
       }
       return <LandInfoOrderCommentPopup popupCallback={ this.popupCallback } popupOpened={ popupOpened } popupClose={ this.popupClose } result={result}/>      
     } else {
@@ -350,7 +356,8 @@ class LandInfoViewContainer extends Component {
             'pdfFileNm': '/'+makeResult,
             'status': 'TRADE_COMPLETE',
             'activated': true,
-            'jibunAddr': this.state.search.jibunAddr
+            'jibunAddr': this.state.search.jibunAddr,
+            'comment': this.state.commentRes
           })
         }).then(res => {
           console.log(res)

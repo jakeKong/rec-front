@@ -54,14 +54,17 @@ class RegisterNaver extends Component {
     });
   }
 
+  // 회원가입 요청
   userRecommentAddCallEvent() {
     const { addCallback, addRecommendToAddCallback } = this.props;
     const { recommendCode, tTellStation, tTellByNumber, tTellNumberByNumber } = this.state;
 
+    // 전화번호 입력여부 체크
     if (tTellStation === '' || tTellByNumber === '' || tTellNumberByNumber === '') {
       window.alert('전화번호를 입력해 주세요.')
       return;
     }
+    // 휴대폰 인증완료여부 체크
     if (this.state.authStatus === false) {
       window.alert('휴대폰 인증이 진행되지 않았습니다.\n인증절차 진행 후 다시 시도해주세요.')
       return;
@@ -82,8 +85,10 @@ class RegisterNaver extends Component {
       division: 'NAVER'
     }
     if (recommendCode !== null && recommendCode !== '' && recommendCode !== undefined) {
+      // 추천인 코드 입력 시 추천인코드 회원가입 요청
       addRecommendToAddCallback(createDto, recommendCode);
     } else {
+      // 추천인 코드가 입력되지 않았을 경우 일반 회원가입 요청
       addCallback(createDto);
     }
   }
@@ -140,6 +145,7 @@ class RegisterNaver extends Component {
     } 
   }
 
+  // 휴대폰 인증요청
   authAttempt() {
     const { tTellStation, tTellByNumber, tTellNumberByNumber } = this.state;
     let phoneNumber;
@@ -156,6 +162,7 @@ class RegisterNaver extends Component {
 
     const token = storage.get('token');
 
+    // 입력한 번호로 가입된 회원정보 존재여부 체크
     checkUserByTellNo(tTellStation+'-'+tTellByNumber+'-'+tTellNumberByNumber, token).then(res => {
       if (res.data !== '' && res.data === true) {
         window.confirm('해당 번호로 가입된 회원정보가 존재합니다.');

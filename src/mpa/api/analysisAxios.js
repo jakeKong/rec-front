@@ -6,7 +6,7 @@ import config from '../../config';
 export const getLandInfoView = (search) => 
 axios({
     method: 'POST',
-    url: `${config.marketPriceService}/analysis/landInfo`,
+    url: `${config.marketPriceService}/analysisV2/landInfo`,
     headers: {
         'Content-Type': 'application/json; charset=UTF-8',
         'Accept': 'application/json'

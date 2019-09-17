@@ -1,5 +1,6 @@
 /** OMS UTIL */
 // orderHistory
+// 주문 상태
 export const statusItems = [
   {value: 'ALL', label: '전체'},
   {value: 'TRADE_COMPLETE', label: '주문완료'},
@@ -7,6 +8,7 @@ export const statusItems = [
   {value: 'TRADE_CANCLE_ATTEMPT', label: '취소신청'},
 ];
 
+// 부동산 유형
 export const realEstateTypeItems = [
   {value: 'ALL', label: '전체'},
   {value: 'APARTMENT', label: '아파트'},
@@ -26,6 +28,7 @@ export const reportTypeItems = [
 ];
 */
 
+// 변동 타입
 export const changeTypeItems = [
   {value: 'ALL', label: '전체'},
   {value: 'PAYMENT_ADD', label: '결제'},

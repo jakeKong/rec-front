@@ -15,6 +15,7 @@ const LoginPage = (props) => {
     // <div>
       <PageTemplate>
         <div className="page-description">로그인</div>
+        {/* /login이 아닌 /login/:email (naver로그인)으로 호출될 경우 파라미터값 props를 하위 로그인컨테이너에 전달 */}
         <LoginContainer email={props.location.search.replace('?','')}/>
       </PageTemplate>
     // </div>

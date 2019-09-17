@@ -19,6 +19,7 @@ class LandInfoOrderCommentPopup extends Component {
   constructor(props) {
     super(props);
     this.state ={
+      pricePoint: '',
       clicked: {
         type: Boolean,
         value: false
@@ -74,8 +75,8 @@ class LandInfoOrderCommentPopup extends Component {
         if (storage.get('loggedInfo')) {
           document.querySelector('#lbEstateResult').innerHTML = result.jibunAddr;
           document.querySelector('#lbMngNoResult').innerHTML = result.mngNo;
-          document.querySelector('#lbUsedPointResult').innerHTML = 900+'P';
-          document.querySelector('#lbBalancePointResult').innerHTML = comma(storage.get('loggedInfo').balancePoint-900)+'P';
+          document.querySelector('#lbUsedPointResult').innerHTML = comma(result.pricePoint)+'P';
+          document.querySelector('#lbBalancePointResult').innerHTML = comma(storage.get('loggedInfo').balancePoint-result.pricePoint)+'P';
         }
       }
     

@@ -14,8 +14,6 @@ class NoticeGrid extends Component {
       selectedItem: null
     }
     this.noticeTitleClickLabelTemplate = this.noticeTitleClickLabelTemplate.bind(this);
-    this.roleCheckColumnRenderingEvent = this.roleCheckColumnRenderingEvent.bind(this);
-    this.selectChangedEvent = this.selectChangedEvent.bind(this);
   }
   
   componentDidMount() {
@@ -49,17 +47,7 @@ class NoticeGrid extends Component {
     return <label className="" onClick={titleClickEvent} >{rowData.noticeTitle}</label>;
   }
 
-  selectChangedEvent(e) {
-    this.setState({selectedItem: e.value})
-    const {selectCallback} = this.props;
-    let selectList = [];
-    e.value.forEach(e => {
-      selectList.push(e.noticeSid);
-    })
-    selectCallback(selectList)
-  }
-
-  roleCheckColumnRenderingEvent() {
+  render() {
     return (
       <Fragment>
         <section className="section-table-notice">
@@ -73,12 +61,8 @@ class NoticeGrid extends Component {
             <Column field="reportingDt" header="작성일자"/>
           </DataTable>
         </section>
-      </Fragment>
+    </Fragment>
     );
-  }
-
-  render() {
-    return this.roleCheckColumnRenderingEvent();
   }
 }
 export default NoticeGrid;

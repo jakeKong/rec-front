@@ -29,58 +29,62 @@ class LandInfoView extends Component {
         analysisReturnedCallback(landInfoData.get("mngNo"));          
       // }, 3000);
     }
-    document.querySelector('#tdJibunAddr').innerHTML = landInfoData.get("jibunAddr");
-    document.querySelector('#tdRoadAddr').innerHTML = landInfoData.get("roadAddr");
+
+    //Choi
+    const reportSHtarget = landInfoData.get("reportSH").get("result").get("target");
+    const reportSHappraisal = landInfoData.get("reportSH").get("result").get("appraisal");
+
+    document.querySelector('#tdJibunAddr').innerHTML = reportSHtarget.get("building").get("platPlc");
+    document.querySelector('#tdRoadAddr').innerHTML = reportSHtarget.get("building").get("newPlatPlc");
     //건축물표제부
     // eslint-disable-next-line no-lone-blocks
     {
-      document.querySelector('#tdBldNm').innerHTML = landInfoData.get("bldNm");//건물명
-      document.querySelector('#tdMainPurpsCdNm').innerHTML = landInfoData.get("mainPurpsCdNm");//주용도코드명
-      document.querySelector('#tdEtcPurps').innerHTML = landInfoData.get("etcPurps");//기타용도
-      document.querySelector('#tdStrctCdNm').innerHTML = landInfoData.get("strctCdNm");//구조코드명
-      document.querySelector('#tdArchArea').innerHTML = landInfoData.get("archArea");//건축면적(㎡)
-      document.querySelector('#tdHeit').innerHTML = landInfoData.get("heit");//높이(m)
-      document.querySelector('#tdTotArea').innerHTML = landInfoData.get("totArea");//연면적(㎡)
-      document.querySelector('#tdHoCnt').innerHTML = landInfoData.get("hoCnt");//호수
-      document.querySelector('#tdHhldCnt').innerHTML = landInfoData.get("hhldCnt");//세대수
-      document.querySelector('#tdFmlyCnt').innerHTML = landInfoData.get("fmlyCnt");//가구수
-      document.querySelector('#tdBcRat').innerHTML = landInfoData.get("bcRat");//건폐율(%)
-      document.querySelector('#tdVlRat').innerHTML = landInfoData.get("vlRat");//용적률(%)
-      document.querySelector('#tdUseAprDay').innerHTML = landInfoData.get("useAprDay");//사용승인일
+      document.querySelector('#tdBldNm').innerHTML = reportSHtarget.get("building").get("bldNm");//건물명
+      document.querySelector('#tdMainPurpsCdNm').innerHTML = reportSHtarget.get("building").get("mainPurpsCdNm");//주용도코드명
+      document.querySelector('#tdEtcPurps').innerHTML = reportSHtarget.get("building").get("etcPurps");//기타용도
+      document.querySelector('#tdStrctCdNm').innerHTML = reportSHtarget.get("building").get("strctCdNm");//구조코드명
+      document.querySelector('#tdArchArea').innerHTML = reportSHtarget.get("building").get("archArea");//건축면적(㎡)
+      document.querySelector('#tdHeit').innerHTML = reportSHtarget.get("building").get("heit");//높이(m)
+      document.querySelector('#tdTotArea').innerHTML = reportSHtarget.get("building").get("totArea");//연면적(㎡)
+      document.querySelector('#tdHoCnt').innerHTML = reportSHtarget.get("building").get("hoCnt");//호수
+      document.querySelector('#tdHhldCnt').innerHTML = reportSHtarget.get("building").get("hhldCnt");//세대수
+      document.querySelector('#tdFmlyCnt').innerHTML = reportSHtarget.get("building").get("fmlyCnt");//가구수
+      document.querySelector('#tdBcRat').innerHTML = reportSHtarget.get("building").get("bcRat");//건폐율(%)
+      document.querySelector('#tdVlRat').innerHTML = reportSHtarget.get("building").get("vlRat");//용적률(%)
+      document.querySelector('#tdUseAprDay').innerHTML = reportSHtarget.get("building").get("useAprDay");//사용승인일
       // document.querySelector('#tdUseAprDay').innerHTML = dateFormat(new Date(landInfoData.get("useAprDay")), 'yyyy년mm월dd일');//사용승인일
     }
-    //토지대장
+    //토지소유자 정보
     // eslint-disable-next-line no-lone-blocks
     {	
-      document.querySelector('#tdPosesnSeCodeNm').innerHTML = landInfoData.get("posesnSeCodeNm");//소유구분
-      document.querySelector('#tdOwnshipChgCauseCodeNm').innerHTML = landInfoData.get("ownshipChgCauseCodeNm");//소유변경원인
-      document.querySelector('#tdOwnshipChgDe').innerHTML = landInfoData.get("ownshipChgDe");//소유권변경일자
-      document.querySelector('#tdCnrsPsnCo').innerHTML = landInfoData.get("cnrsPsnCo");//공유 인원수
+      document.querySelector('#tdPosesnSeCodeNm').innerHTML = reportSHtarget.get("landPossession").get("posesnSeCodeNm");//소유구분
+      document.querySelector('#tdOwnshipChgCauseCodeNm').innerHTML = reportSHtarget.get("landPossession").get("ownshipChgCauseCodeNm");//소유변경원인
+      document.querySelector('#tdOwnshipChgDe').innerHTML = reportSHtarget.get("landPossession").get("ownshipChgDe");//소유권변경일자
+      document.querySelector('#tdCnrsPsnCo').innerHTML = reportSHtarget.get("landPossession").get("cnrsPsnCo");//공유 인원수
       // const cnrsPsnCo = landInfoData.get("mnnmSlno");//지번
       // const pnu = landInfoData.get("pnu");//pnu
     }
     //대지속성 
     // eslint-disable-next-line no-lone-blocks
     {
-      document.querySelector('#tdLndcgrCodeNm').innerHTML = landInfoData.get("lndcgrCodeNm");//지목
-      document.querySelector('#tdLndpclAr').innerHTML = landInfoData.get("lndpclAr");//면적
-      document.querySelector('#tdTpgrphFrmCodeNm').innerHTML = landInfoData.get("tpgrphFrmCodeNm");//형상
-      document.querySelector('#tdTpgrphHgCode').innerHTML = landInfoData.get("tpgrphHgCode");//고저
-      document.querySelector('#tdRoadSideCodeNm').innerHTML = landInfoData.get("roadSideCodeNm");//도로접면
+      document.querySelector('#tdLndcgrCodeNm').innerHTML = reportSHtarget.get("land").get("lndcgrCodeNm");//지목
+      document.querySelector('#tdLndpclAr').innerHTML = reportSHtarget.get("land").get("lndpclAr");//면적
+      document.querySelector('#tdTpgrphFrmCodeNm').innerHTML = reportSHtarget.get("land").get("tpgrphFrmCodeNm");//형상
+      document.querySelector('#tdTpgrphHgCode').innerHTML = reportSHtarget.get("land").get("tpgrphHgCode");//고저
+      document.querySelector('#tdRoadSideCodeNm').innerHTML = reportSHtarget.get("land").get("roadSideCodeNm");//도로접면
       
 
     }
     //분석결과
     {
-      const analysisTradeInfo = landInfoData.get("analysisTradeInfo").get("result");
-      
       // V2 적용 에러코드 확인
-      if (landInfoData.get("analysisTradeInfo").get("error").get("errorCode") !== '0') {
-        window.alert(landInfoData.get("analysisTradeInfo").get("error").get("userMessage"));
+      if (landInfoData.get("reportSH").get("error").get("errorCode") !== 0) {
+        window.alert(landInfoData.get("reportSH").get("error").get("userMessage"));
         return;
       }
       // console.log(isSearched);
-      const tradList = analysisTradeInfo.get("trade");
+      const tradList = reportSHappraisal.get("trade");  
+      //reportSHcomparison
       // console.log(tradList);
       // console.log(tradList.get(0));
       // console.log(tradList.get(0).get("지번주소"));
@@ -160,7 +164,7 @@ class LandInfoView extends Component {
         }
       }
     }
-    document.querySelector('#imgMap').src = landInfoData.get("analysisTradeInfo").get("result").get("mapUrl");//도로접면
+    document.querySelector('#imgMap').src = landInfoData.get("urlMap");//유사 매매 사례 지도
   }
   render() {
       return (
