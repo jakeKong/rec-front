@@ -160,7 +160,7 @@ class LandInfoViewContainer extends Component {
     if (selectedSuggestion !== undefined) {
       axios({
         method: 'GET',
-        url: `${config.gosmService}/utility/Utility/getPNUByFullAddress/`,
+        url: `${config.gosmService}/utility/getPNUByFullAddress/`,
         headers: {
           'Content-Type': 'application/json; charset=UTF-8',
           'Accept': 'application/json'
@@ -200,7 +200,7 @@ class LandInfoViewContainer extends Component {
     if (this.state.selectedSuggestion !== null && selectedSuggestion !== undefined) {
       axios({
         method: 'GET',
-        url: `${config.gosmService}/utility/Utility/getPNUByFullAddress/`,
+        url: `${config.gosmService}/utility/getPNUByFullAddress/`,
         headers: {
           'Content-Type': 'application/json; charset=UTF-8',
           'Accept': 'application/json'
@@ -288,7 +288,7 @@ class LandInfoViewContainer extends Component {
       isSearched = false;
       axios({
         method: 'GET',
-        url: `${config.gosmService}/utility/Utility/getPNUByFullAddress/`,
+        url: `${config.gosmService}/utility/getPNUByFullAddress/`,
         headers: {
           'Content-Type': 'application/json; charset=UTF-8',
           'Accept': 'application/json'

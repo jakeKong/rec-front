@@ -34,7 +34,7 @@ class LandInfoView extends Component {
     const reportSHtarget = landInfoData.get("reportSH").get("result").get("target");
     const reportSHappraisal = landInfoData.get("reportSH").get("result").get("appraisal");
 
-    document.querySelector('#tdJibunAddr').innerHTML = reportSHtarget.get("building").get("platPlc");
+    document.querySelector('#tdJibunAddr').innerHTML = reportSHtarget.get("land").get("ldCodeNm") + " " + reportSHtarget.get("land").get("mnnmSlno");
     document.querySelector('#tdRoadAddr').innerHTML = reportSHtarget.get("building").get("newPlatPlc");
     //건축물표제부
     // eslint-disable-next-line no-lone-blocks
