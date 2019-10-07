@@ -2,15 +2,14 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import shallowEqualArrays from 'shallow-equal/arrays';
 import Autowhatever from 'react-autowhatever';
-import { mapToAutowhateverTheme } from './theme';
-//import customTheme from "../../../styles/components/autosuggest.scss";
+import { defaultTheme, mapToAutowhateverTheme } from './theme';
 
 const alwaysTrue = () => true;
 const defaultShouldRenderSuggestions = value => value.trim().length > 0;
 const defaultRenderSuggestionsContainer = ({ containerProps, children }) => (
   <div {...containerProps}>{children}</div>
 );
-//https://github.com/moroshko/react-autosuggest 라이브러리 참조
+
 export default class Autosuggest extends Component {
   static propTypes = {
     suggestions: PropTypes.array.isRequired,
@@ -92,7 +91,7 @@ export default class Autosuggest extends Component {
     multiSection: false,
     focusInputOnSuggestionClick: true,
     highlightFirstSuggestion: false,
-    //theme: customTheme,
+    theme: defaultTheme,
     id: '1'
   };
 
@@ -109,9 +108,6 @@ export default class Autosuggest extends Component {
     };
 
     this.justPressedUpDown = false;
-    this.justMouseEntered = false;
-
-    this.pressedSuggestion = null;
   }
 
   componentDidMount() {
@@ -134,6 +130,10 @@ export default class Autosuggest extends Component {
       }
     } else {
       if (this.willRenderSuggestions(nextProps)) {
+        if (nextProps.highlightFirstSuggestion) {
+          this.highlightFirstSuggestion();
+        }
+
         if (this.state.isCollapsed && !this.justSelectedSuggestion) {
           this.revealSuggestions();
         }
@@ -145,29 +145,38 @@ export default class Autosuggest extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     const {
-      suggestions,
-      onSuggestionHighlighted,
-      highlightFirstSuggestion
+        suggestions,
+        onSuggestionHighlighted,
+        highlightFirstSuggestion
     } = this.props;
 
-    if (
-      !shallowEqualArrays(suggestions, prevProps.suggestions) &&
-      suggestions.length > 0 &&
-      highlightFirstSuggestion
-    ) {
-      this.highlightFirstSuggestion();
+    if (!shallowEqualArrays(suggestions, prevProps.suggestions) &&
+        suggestions.length > 0 &&
+        highlightFirstSuggestion ) {
+        this.highlightFirstSuggestion();
+        return;
+    }
+
+    if (!onSuggestionHighlighted) {
       return;
     }
 
-    if (onSuggestionHighlighted) {
-      const highlightedSuggestion = this.getHighlightedSuggestion();
-      const prevHighlightedSuggestion = prevState.highlightedSuggestion;
+    // const highlightedSuggestion = this.getHighlightedSuggestion();
+    // const prevHighlightedSuggestion = prevState.highlightedSuggestion;
+    // if (highlightedSuggestion !== prevHighlightedSuggestion) {
+    //     onSuggestionHighlighted({
+    //       suggestion: highlightedSuggestion
+    //     });
+    // }
+    const { highlightedSectionIndex, highlightedSuggestionIndex } = this.state;
 
-      if (highlightedSuggestion !== prevHighlightedSuggestion) {
-        onSuggestionHighlighted({
-          suggestion: highlightedSuggestion
-        });
-      }
+    if (
+      highlightedSectionIndex !== prevState.highlightedSectionIndex ||
+      highlightedSuggestionIndex !== prevState.highlightedSuggestionIndex
+    ) {
+      const suggestion = this.getHighlightedSuggestion();
+
+      onSuggestionHighlighted({ suggestion });
     }
   }
 
@@ -193,9 +202,9 @@ export default class Autosuggest extends Component {
         highlightedSectionIndex: sectionIndex,
         highlightedSuggestionIndex: suggestionIndex,
         highlightedSuggestion:
-          suggestionIndex === null
-            ? null
-            : this.getSuggestion(sectionIndex, suggestionIndex),
+        suggestionIndex === null
+          ? null
+          : this.getSuggestion(sectionIndex, suggestionIndex),
         valueBeforeUpDown
       };
     });
@@ -224,10 +233,10 @@ export default class Autosuggest extends Component {
 
   closeSuggestions() {
     this.setState({
-      highlightedSectionIndex: null,
-      highlightedSuggestionIndex: null,
-      highlightedSuggestion: null,
-      valueBeforeUpDown: null,
+        highlightedSectionIndex: null,
+        highlightedSuggestionIndex: null,
+        highlightedSuggestion: null,
+        valueBeforeUpDown: null,
       isCollapsed: true
     });
   }
@@ -270,8 +279,9 @@ export default class Autosuggest extends Component {
     );
 
     return {
-      sectionIndex:
-        typeof sectionIndex === 'string' ? parseInt(sectionIndex, 10) : null,
+      sectionIndex: typeof sectionIndex === 'string'
+        ? parseInt(sectionIndex, 10)
+        : null,
       suggestionIndex: parseInt(suggestionIndex, 10)
     };
   }
@@ -317,7 +327,7 @@ export default class Autosuggest extends Component {
   maybeCallOnChange(event, newValue, method) {
     const { value, onChange } = this.props.inputProps;
 
-    if (newValue !== value) {
+    if (newValue && newValue !== value) {
       onChange(event, { newValue, method });
     }
   }
@@ -337,22 +347,21 @@ export default class Autosuggest extends Component {
 
   onSuggestionMouseEnter = (event, { sectionIndex, itemIndex }) => {
     this.updateHighlightedSuggestion(sectionIndex, itemIndex);
-
+    
     if (event.target === this.pressedSuggestion) {
-      this.justSelectedSuggestion = true;
-    }
-
-    this.justMouseEntered = true;
-
-    setTimeout(() => {
-      this.justMouseEntered = false;
-    });
+        this.justSelectedSuggestion = true;
+      }
+  
+      this.justMouseEntered = true;
+  
+      setTimeout(() => {
+        this.justMouseEntered = false;
+      });
   };
 
   highlightFirstSuggestion = () => {
     this.updateHighlightedSuggestion(this.props.multiSection ? 0 : null, 0);
   };
-
   onDocumentMouseUp = () => {
     if (this.pressedSuggestion && !this.justSelectedSuggestion) {
       this.input.focus();
@@ -364,9 +373,9 @@ export default class Autosuggest extends Component {
     // Checking if this.justSelectedSuggestion is already true to not duplicate touch events in chrome
     // See: https://github.com/facebook/react/issues/9809#issuecomment-413978405
     if (!this.justSelectedSuggestion) {
-      this.justSelectedSuggestion = true;
-      this.pressedSuggestion = event.target;
-    }
+        this.justSelectedSuggestion = true;
+        this.pressedSuggestion = event.target;
+      }
   };
 
   onSuggestionsClearRequested = () => {
@@ -437,11 +446,11 @@ export default class Autosuggest extends Component {
     const shouldRender = shouldRenderSuggestions(value);
 
     this.setState({
-      isFocused: false,
-      highlightedSectionIndex: null,
-      highlightedSuggestionIndex: null,
-      highlightedSuggestion: null,
-      valueBeforeUpDown: null,
+        isFocused: false,
+        highlightedSectionIndex: null,
+        highlightedSuggestionIndex: null,
+        highlightedSuggestion: null,
+        valueBeforeUpDown: null,
       isCollapsed: !shouldRender
     });
 
@@ -464,12 +473,16 @@ export default class Autosuggest extends Component {
     // todo: event.preventDefault when https://github.com/facebook/react/issues/2043
     // todo: gets released so onSuggestionMouseDown won't fire in chrome
   };
-
+  
   onSuggestionTouchMove = () => {
     this.justSelectedSuggestion = false;
     this.pressedSuggestion = null;
     this.input.focus();
   };
+
+//   resetHighlightedSuggestionOnMouseLeave = () => {
+//     this.resetHighlightedSuggestion(false); // shouldResetValueBeforeUpDown
+//   };
 
   itemProps = ({ sectionIndex, itemIndex }) => {
     return {
@@ -578,18 +591,9 @@ export default class Autosuggest extends Component {
 
         this.maybeCallOnChange(event, value, 'type');
 
-        if (this.suggestionsContainer) {
-          this.suggestionsContainer.scrollTop = 0;
-        }
-
         this.setState({
-          ...(highlightFirstSuggestion
-            ? {}
-            : {
-                highlightedSectionIndex: null,
-                highlightedSuggestionIndex: null,
-                highlightedSuggestion: null
-              }),
+          highlightedSectionIndex: null,
+          highlightedSuggestionIndex: null,
           valueBeforeUpDown: null,
           isCollapsed: !shouldRender
         });
@@ -601,12 +605,9 @@ export default class Autosuggest extends Component {
         }
       },
       onKeyDown: (event, data) => {
-        const { keyCode } = event;
-
-        // eslint-disable-next-line default-case
-        switch (keyCode) {
-          case 40: // ArrowDown
-          case 38: // ArrowUp
+        switch (event.key) {
+          case 'ArrowDown':
+          case 'ArrowUp':
             if (isCollapsed) {
               if (shouldRenderSuggestions(value)) {
                 onSuggestionsFetchRequested({
@@ -627,8 +628,9 @@ export default class Autosuggest extends Component {
                 // valueBeforeUpDown can be null if, for example, user
                 // hovers on the first suggestion and then pressed Up.
                 // If that happens, use the original input value.
-                newValue =
-                  valueBeforeUpDown === null ? value : valueBeforeUpDown;
+                newValue = valueBeforeUpDown === null
+                  ? value
+                  : valueBeforeUpDown;
               } else {
                 newValue = this.getSuggestionValueByIndex(
                   newHighlightedSectionIndex,
@@ -644,7 +646,7 @@ export default class Autosuggest extends Component {
               this.maybeCallOnChange(
                 event,
                 newValue,
-                keyCode === 40 ? 'down' : 'up'
+                event.key === 'ArrowDown' ? 'down' : 'up'
               );
             }
 
@@ -658,8 +660,7 @@ export default class Autosuggest extends Component {
 
             break;
 
-          // Enter
-          case 13: {
+          case 'Enter': {
             // See #388
             if (event.keyCode === 229) {
               break;
@@ -694,8 +695,7 @@ export default class Autosuggest extends Component {
             break;
           }
 
-          // Escape
-          case 27: {
+          case 'Escape': {
             if (isOpen) {
               // If input.type === 'search', the browser clears the input
               // when Escape is pressed. We want to disable this default
@@ -736,6 +736,7 @@ export default class Autosuggest extends Component {
 
             break;
           }
+          default: ;
         }
 
         onKeyDown && onKeyDown(event);

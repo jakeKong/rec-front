@@ -123,7 +123,7 @@ class PaymentContainer extends Component {
         // IMP.request_pay(param, callback) 호출
         const loggedInfo = storage.get('loggedInfo');
         IMP.request_pay({ // param
-          pg: "kcp.A52CY",
+          pg: "kcp",
           pay_method: "card",
           // pay_method: "phone",
           merchant_uid: merchantUid,

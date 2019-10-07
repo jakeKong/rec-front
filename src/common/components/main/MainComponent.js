@@ -1,7 +1,8 @@
 import React, { Component, Fragment } from 'react';
 import {Redirect} from 'react-router';
 import CountUp from 'react-countup';
-import { AddressSearch } from '../../../common';
+// import { AddressSearch } from '../../../common';
+import  AddressSearch_prime from '../address/AddressSearch_prime'
 // import customTheme from '../../../styles/agz/main_suggest_thema.css';
 
 import config from '../../../config';
@@ -72,8 +73,9 @@ class MainComponent extends Component {
         <div className="illust-main" />
         <div className="wrap-content-main">
           <div className="div-home-search wrap-searchbox">
-            <div className="searchbox">
-                <AddressSearch onComplete={this.onComplete} onSearchClick={this.onSearchClick} theme={this.customTheme}/>
+            <div className="searchbox">            
+              <AddressSearch_prime onComplete={this.onComplete} onSearchClick={this.onSearchClick}/>
+                {/* <AddressSearch onComplete={this.onComplete} onSearchClick={this.onSearchClick} theme={this.customTheme}/> */}
             </div>
           </div>
           <p className="box-summary">

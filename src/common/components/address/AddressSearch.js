@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import '@vaadin/vaadin-button';
-import Autosuggest from 'react-autosuggest';
+import Autosuggest from '../autosuggest/Autosuggest_ie';
 
 import config from '../../../config';
 
