@@ -1,9 +1,10 @@
 import React, { Component, Fragment } from 'react';
 import {Redirect} from 'react-router';
 import CountUp from 'react-countup';
-// import { AddressSearch } from '../../../common';
-import  AddressSearch_prime from '../address/AddressSearch_prime'
-// import customTheme from '../../../styles/agz/main_suggest_thema.css';
+import { AddressSearch } from '../../../common';
+import customTheme from '../../../styles/agz/main_suggest_thema.css';
+// import  AddressSearch_prime from '../address/AddressSearch_prime'
+
 
 import config from '../../../config';
 const duration=5;
@@ -74,8 +75,8 @@ class MainComponent extends Component {
         <div className="wrap-content-main">
           <div className="div-home-search wrap-searchbox">
             <div className="searchbox">            
-              <AddressSearch_prime onComplete={this.onComplete} onSearchClick={this.onSearchClick}/>
-                {/* <AddressSearch onComplete={this.onComplete} onSearchClick={this.onSearchClick} theme={this.customTheme}/> */}
+              {/* <AddressSearch_prime onComplete={this.onComplete} onSearchClick={this.onSearchClick}/> */}
+              <AddressSearch onComplete={this.onComplete} onSearchClick={this.onSearchClick} theme={this.customTheme}/>
             </div>
           </div>
           <p className="box-summary">

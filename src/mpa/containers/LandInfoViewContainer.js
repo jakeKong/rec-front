@@ -5,9 +5,9 @@ import * as landInfoViewActions from "../modules/LandInfoViewModule";
 import { LandInfoView } from "../index";
 import '@vaadin/vaadin-button';
 
-// import { AddressSearch } from '../../common';
-import  AddressSearch_prime from '../../common/components/address/AddressSearch_prime'
-// import customTheme from '../../styles/agz/landInfo_suggest_thema.css';
+import { AddressSearch } from '../../common';
+import customTheme from '../../styles/agz/landInfo_suggest_thema.css';
+// import  AddressSearch_prime from '../../common/components/address/AddressSearch_prime'
 import LandInfoOrderCommentPopup from "../components/LandInfoOrderCommentPopup";
 import LandInfoResultPop from '../components/LandInfoResultPop';
 
@@ -442,8 +442,8 @@ class LandInfoViewContainer extends Component {
       <Fragment>
         <div >
           <div className="searchbox">
-              <AddressSearch_prime onComplete={this.onComplete} onSearchClick={this.onSearchClick}/>
-            {/* <AddressSearch onComplete={this.onComplete} onSearchClick={this.onSearchClick} theme={customTheme} btnClassName='button-address-search'/> */}
+              {/* <AddressSearch_prime onComplete={this.onComplete} onSearchClick={this.onSearchClick}/> */}
+            <AddressSearch onComplete={this.onComplete} onSearchClick={this.onSearchClick} theme={customTheme} btnClassName='button-address-search'/>
           </div>
           <div style={{marginTop:'2px'}}>
             {pending && <div className="boxLoading" />}

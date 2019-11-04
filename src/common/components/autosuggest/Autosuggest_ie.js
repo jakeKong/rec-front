@@ -330,6 +330,10 @@ export default class Autosuggest extends Component {
     if (newValue && newValue !== value) {
       onChange(event, { newValue, method });
     }
+    //새 값이 빈 값일 경우 전달 해준다.
+    else {
+      onChange(event, { newValue, method });
+    }
   }
 
   willRenderSuggestions(props) {
@@ -585,6 +589,7 @@ export default class Autosuggest extends Component {
           this.onSuggestionsClearRequested();
         }
       },
+      // onChange: event => {
       [isIE11 ? 'onInput' : 'onChange']: event => {
         const { value } = event.target;
         const shouldRender = shouldRenderSuggestions(value);
@@ -606,6 +611,27 @@ export default class Autosuggest extends Component {
       },
       onKeyDown: (event, data) => {
         switch (event.key) {
+          case 'Backspace':
+          case 'Delete':
+              if(data !== null && data.length === 1) {
+                const shouldRender = shouldRenderSuggestions("");
+
+                this.maybeCallOnChange(event, "", 'type');
+        
+                this.setState({
+                  highlightedSectionIndex: null,
+                  highlightedSuggestionIndex: null,
+                  valueBeforeUpDown: null,
+                  isCollapsed: !shouldRender
+                });
+        
+                if (shouldRender) {
+                  onSuggestionsFetchRequested({ value, reason: 'input-changed' });
+                } else {
+                  this.onSuggestionsClearRequested();
+                }
+              }
+            break;
           case 'ArrowDown':
           case 'ArrowUp':
             if (isCollapsed) {

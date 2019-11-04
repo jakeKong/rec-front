@@ -8,7 +8,7 @@
     position: relative;
     display: inline-block;
 }
-
+.p-input-overlay-hidden{opacity:0;-webkit-transform:translateY(5%);transform:translateY(5%);-webkit-transition:transform .3s,opacity .15s;-webkit-transition:opacity .15s,-webkit-transform .3s;transition:opacity .15s,-webkit-transform .3s;transition:transform .3s,opacity .15s;transition:transform .3s,opacity .15s,-webkit-transform .3s}
 .p-autocomplete .p-autocomplete-dropdown {
     height: 100%;
     width: 2em;

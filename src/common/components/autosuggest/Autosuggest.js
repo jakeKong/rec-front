@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import shallowEqualArrays from 'shallow-equal/arrays';
 import Autowhatever from 'react-autowhatever';
 import { mapToAutowhateverTheme } from './theme';
+import {isIE} from 'react-device-detect';
 //import customTheme from "../../../styles/components/autosuggest.scss";
 
 const alwaysTrue = () => true;
@@ -534,10 +535,11 @@ export default class Autosuggest extends Component {
       alwaysRenderSuggestions ||
       (isFocused && !isCollapsed && willRenderSuggestions);
     const items = isOpen ? suggestions : [];
-    const isIE11 =
-      typeof window !== 'undefined' &&
-      !!window.MSInputMethodContext &&
-      !!document.documentMode;
+    // const isIE11 =
+    //   typeof window !== 'undefined' &&
+    //   !!window.MSInputMethodContext &&
+    //   !!document.documentMode;
+    //   console.log("----"+isIE11);
     const autowhateverInputProps = {
       ...inputProps,
       onFocus: event => {
@@ -572,7 +574,9 @@ export default class Autosuggest extends Component {
           this.onSuggestionsClearRequested();
         }
       },
-      [isIE11 ? 'onInput' : 'onChange']: event => {
+      // onChange: event => {
+      [isIE ? 'onInput' : 'onChange']: event => {
+        console.log(isIE);
         const { value } = event.target;
         const shouldRender = shouldRenderSuggestions(value);
 

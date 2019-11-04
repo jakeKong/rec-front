@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import '@vaadin/vaadin-button';
+//import Autosuggest from 'react-autosuggest';
 import Autosuggest from '../autosuggest/Autosuggest_ie';
 
 import config from '../../../config';
@@ -58,7 +59,7 @@ class AddressSearch extends Component {
   getSuggestions = value => {
     const inputValue = value.trim().toLowerCase();
     //2글자 이상 입력해야 검색하기
-    if(inputValue.length >= 2) {
+    if(inputValue.length >= 5) {
       fetch(url + value)
             .then(res => res.json())
             .then((data) => {     
