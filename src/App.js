@@ -9,7 +9,7 @@ import { OrderHistoryByEmailPage, ChangePointHistoryByEmailPage } from './oms';
 import { NoticePage, NoticeDetailPage,
          QuestionPage, QuestionDetailPage, QuestionRegisterPage, QuestionUpdatePage } from './bms';
 import { PaymentPage } from './payment';
-import { BrRecapTitleInfoPage, LandInfoViewPage } from './mpa';
+import { BrRecapTitleInfoPage, RealestateInfoViewPage, SHouseInfoViewPage, SBuildingInfoViewPage, LandInfoViewPage, RHouseInfoViewPage, RBuildingInfoViewPage } from './mpa';
 
 import { checkInfo } from './common/loggedInfoCheck'
 class App extends Component {
@@ -42,10 +42,20 @@ class App extends Component {
         
         {/* 블로그 */}
         <Route exact path="/blog/tyle" component={BlogTyleNewsPage} />
-  
-        {/* 주택정보 조회 */}
-        <Route exact path="/mpa" component={LandInfoViewPage} />
-  
+
+        {/* 통합 부동산 정보 조회 */}
+        <Route exact path="/mpa" component={RealestateInfoViewPage} />  
+        {/* 단독/다가구 정보 조회 */}
+        <Route exact path="/mpa/shouse" component={SHouseInfoViewPage} />
+        {/* 상업/업무용빌딩 정보 조회 */}
+        <Route exact path="/mpa/sbuilding" component={SBuildingInfoViewPage} />
+        {/* 토지 정보 조회 */}
+        <Route exact path="/mpa/land" component={LandInfoViewPage} />
+        {/* 연립/빌라 정보 조회 */}
+        <Route exact path="/mpa/rhouse" component={RHouseInfoViewPage} />
+        {/* 구분상업/업무용 정보 조회 */}
+        <Route exact path="/mpa/rbuilding" component={RBuildingInfoViewPage} />
+
         {/* 회원정보 */}
         <Route exact path="/user/details" component={ UserDetailPage }/>
   

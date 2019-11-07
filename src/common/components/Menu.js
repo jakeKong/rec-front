@@ -23,7 +23,11 @@ class RCMenu extends Component {
               <MenuItem key="/blog/tyle">타일뉴스</MenuItem> 
             </SubMenu>
             <SubMenu title={ <span className="submenu-title-wrapper">부동산 시세</span> } key="housing">
-              <MenuItem key="/mpa">단독/다가구</MenuItem> 
+              <MenuItem key="/mpa/shouse">단독/다가구</MenuItem> 
+              <MenuItem key="/mpa/sbuilding">상업/업무용빌딩</MenuItem> 
+              <MenuItem key="/mpa/land">토지</MenuItem> 
+              <MenuItem key="/mpa/rhouse" disabled>연립/빌라</MenuItem> 
+              <MenuItem key="/mpa/rbuilding" disabled>구분상업/업무용</MenuItem> 
             </SubMenu>
             <MenuItem key="/bms/question">문의사항</MenuItem>
             <SubMenu title={ <span className="submenu-title-wrapper">마이페이지</span> } key="mypage">

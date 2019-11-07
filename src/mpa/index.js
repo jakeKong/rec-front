@@ -14,8 +14,18 @@ export { getLandInfoView, makeLandInfoView } from './api/analysisAxios';
 export { default as LandInfoView } from './components/LandInfoView';
 // CONTAINERS - 건축물대장정보 총괄표제부
 export { default as LandInfoViewContainer } from './containers/LandInfoViewContainer';
-// PAGES - 건축물대장정보 총괄표제부
+// PAGES - 통합 부동산정보 조회
+export { default as RealestateInfoViewPage } from './pages/RealestateInfoViewPage';
+// PAGES - 단독/다가구 부동산정보 조회
+export { default as SHouseInfoViewPage } from './pages/SHouseInfoViewPage';
+// PAGES - 상업/업무용 빌딩 정보 조회
+export { default as SBuildingInfoViewPage } from './pages/SBuildingInfoViewPage';
+// PAGES - 토지 정보 조회
 export { default as LandInfoViewPage } from './pages/LandInfoViewPage';
+// PAGES - 연립/빌라 정보 조회
+export { default as RHouseInfoViewPage } from './pages/RHouseInfoViewPage';
+// PAGES - 구분상업/업무용 정보 조회
+export { default as RBuildingInfoViewPage } from './pages/RBuildingInfoViewPage';
 
 // API - 토지소유정보속성조회
 // export { getpossessionList } from './api/possessionAxios';
