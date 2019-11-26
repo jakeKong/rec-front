@@ -65,7 +65,8 @@ module.exports = function(app) {
   );
   app.use(
     proxy('/crosswalk', { 
-      target: 'http://srd.iptime.org:8080',
+      // target: 'http://srd.iptime.org:8080',
+      target: 'http://bdre.algozip.co.kr:8080',
       changeOrigin: true
     })
   );
